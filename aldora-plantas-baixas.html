@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AL'DORA City — Plantas Baixas Sugeridas P1–P5</title>
+<style>
+  :root {
+    --verde: #1a3a2a; --verde-m: #2d5a3d; --verde-c: #3d7a52;
+    --ouro: #c9a84c; --ouro-c: #e8c97a; --creme: #f5f0e8;
+    --branco: #ffffff; --cinza: #8a8a8a; --texto: #1a1a1a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Georgia', serif; background: #f8f5f0; color: var(--texto); }
+
+  nav {
+    background: var(--verde); padding: 14px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 100;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+  }
+  .nav-logo { color: var(--ouro); font-size: 14px; letter-spacing: 2px; font-weight: bold; }
+  .nav-sub { color: rgba(255,255,255,0.5); font-size: 11px; font-family: Arial, sans-serif; letter-spacing: 1px; }
+
+  .hero {
+    background: linear-gradient(160deg, #0d2a1a, #1a3a2a);
+    padding: 60px 40px;
+    text-align: center;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  .hero-tag { color: var(--ouro); font-size: 11px; letter-spacing: 3px; font-family: Arial, sans-serif; text-transform: uppercase; margin-bottom: 16px; display: block; }
+  .hero h1 { font-size: 40px; color: var(--branco); font-weight: normal; margin-bottom: 12px; }
+  .hero p { font-size: 15px; color: rgba(255,255,255,0.55); font-style: italic; }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+  .produto-section { padding: 64px 0; border-bottom: 1px solid #e0d8cc; }
+  .produto-section:last-child { border-bottom: none; }
+
+  .produto-header {
+    display: flex; align-items: center; gap: 20px; margin-bottom: 40px;
+  }
+  .produto-badge {
+    display: flex; align-items: center; justify-content: center;
+    width: 64px; height: 64px; font-size: 20px; font-weight: bold;
+    font-family: Arial, sans-serif; flex-shrink: 0;
+  }
+  .badge-p1 { background: #2d5a35; color: #90c89a; border: 2px solid #3d7a45; }
+  .badge-p2 { background: #1a4060; color: #7ab0d0; border: 2px solid #2a6090; }
+  .badge-p3 { background: #5a2a30; color: #c08090; border: 2px solid #7a3a40; }
+  .badge-p4 { background: #5a4a10; color: #d0b060; border: 2px solid #8a7020; }
+  .badge-p5 { background: var(--verde); color: var(--ouro); border: 2px solid var(--ouro); }
+
+  .produto-meta h2 { font-size: 28px; color: var(--verde); font-weight: normal; margin-bottom: 4px; }
+  .produto-meta .config { font-size: 13px; color: var(--cinza); font-family: Arial, sans-serif; margin-bottom: 8px; }
+  .produto-meta .ticket { font-size: 22px; color: var(--ouro); font-weight: bold; }
+
+  .produto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+
+  /* PLANTA SVG */
+  .planta-wrap {
+    background: var(--branco);
+    border: 1px solid #e0d8cc;
+    padding: 24px;
+  }
+  .planta-titulo { font-size: 11px; color: var(--cinza); font-family: Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #e8e0d4; }
+  svg.planta { width: 100%; max-width: 480px; display: block; margin: 0 auto; }
+
+  /* FICHA TÉCNICA */
+  .ficha { background: var(--creme); padding: 28px; }
+  .ficha-titulo { font-size: 11px; color: var(--verde-c); font-family: Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--ouro); }
+  .ficha-row { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid #e0d8cc; font-size: 13px; }
+  .ficha-row:last-of-type { border-bottom: none; }
+  .ficha-label { color: #666; }
+  .ficha-val { color: var(--verde); font-weight: bold; }
+
+  .publico-box { background: var(--verde); padding: 24px; margin-top: 20px; }
+  .publico-titulo { font-size: 11px; color: var(--ouro); font-family: Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+  .publico-lista { list-style: none; }
+  .publico-lista li { font-size: 13px; color: rgba(255,255,255,0.8); padding: 5px 0; padding-left: 16px; position: relative; line-height: 1.5; }
+  .publico-lista li::before { content: '→'; position: absolute; left: 0; color: var(--ouro); font-size: 11px; top: 6px; }
+
+  .diferenciais { margin-top: 20px; }
+  .dif-titulo { font-size: 11px; color: var(--cinza); font-family: Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+  .dif-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .dif-tag { background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3); color: #7a6020; padding: 5px 12px; font-size: 11px; font-family: Arial, sans-serif; }
+
+  .papel-box { background: #f0f8f2; border-left: 3px solid var(--verde-c); padding: 14px 16px; margin-top: 16px; font-size: 13px; color: #444; line-height: 1.7; }
+  .papel-box strong { color: var(--verde); }
+
+  footer { background: var(--verde); padding: 32px 40px; text-align: center; }
+  footer p { color: rgba(255,255,255,0.4); font-size: 12px; font-family: Arial, sans-serif; }
+  footer .logo { color: var(--ouro); font-size: 16px; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">AL'DORA CITY</div>
+  <div class="nav-sub">PLANTAS BAIXAS SUGERIDAS — P1 A P5</div>
+</nav>
+
+<div class="hero">
+  <span class="hero-tag">Cidade Jardim Urbanismo · Jardim Versailles · Uberlândia/MG</span>
+  <h1>Plantas Baixas Sugeridas</h1>
+  <p>Escada de Produtos P1 → P5 · Configurações, áreas, público-alvo e papel na esteira</p>
+</div>
+
+<div style="background: var(--branco); padding: 20px 40px; border-bottom: 1px solid #e0d8cc; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;">
+  <span style="background: #e8f0ea; color: #2a5a35; padding: 6px 16px; font-size: 12px; font-family: Arial; font-weight: bold;">P1 · Studio Urban</span>
+  <span style="background: #e4ecf0; color: #1a4060; padding: 6px 16px; font-size: 12px; font-family: Arial; font-weight: bold;">P2 · Compacto Smart</span>
+  <span style="background: #f0e8ea; color: #5a2a30; padding: 6px 16px; font-size: 12px; font-family: Arial; font-weight: bold;">P3 · Garden Suite</span>
+  <span style="background: #f0ede0; color: #5a4a10; padding: 6px 16px; font-size: 12px; font-family: Arial; font-weight: bold;">P4 · Alto Padrão</span>
+  <span style="background: var(--verde); color: var(--ouro); padding: 6px 16px; font-size: 12px; font-family: Arial; font-weight: bold;">P5 · Signature</span>
+</div>
+
+<div class="container">
+
+<!-- ===== P1 ===== -->
+<div class="produto-section">
+  <div class="produto-header">
+    <div class="produto-badge badge-p1">P1</div>
+    <div class="produto-meta">
+      <h2>Studio Urban</h2>
+      <div class="config">Studio · 1 vaga · 28–35 m² · Torres A/B</div>
+      <div class="ticket">R$230–290K · R$8.000–8.500/m²</div>
+    </div>
+  </div>
+  <div class="produto-grid">
+    <div class="planta-wrap">
+      <div class="planta-titulo">Planta Sugerida — Studio 32 m²</div>
+      <svg class="planta" viewBox="0 0 320 280" xmlns="http://www.w3.org/2000/svg">
+        <!-- WALLS -->
+        <rect x="10" y="10" width="300" height="260" fill="#f5f0e8" stroke="#1a3a2a" stroke-width="3"/>
+        <!-- VARANDA -->
+        <rect x="10" y="10" width="300" height="50" fill="#e8f5ee" stroke="#1a3a2a" stroke-width="2"/>
+        <text x="160" y="23" text-anchor="middle" font-size="10" fill="#2d5a3d" font-family="Arial" font-weight="bold">VARANDA 5 m²</text>
+        <!-- Varanda furniture: small table + 2 chairs + plant -->
+        <ellipse cx="160" cy="36" rx="14" ry="10" fill="none" stroke="#2d5a3d" stroke-width="1.2"/>
+        <rect x="148" y="40" width="10" height="10" rx="2" fill="rgba(45,90,61,0.18)" stroke="#2d5a3d" stroke-width="1.0"/>
+        <rect x="163" y="40" width="10" height="10" rx="2" fill="rgba(45,90,61,0.18)" stroke="#2d5a3d" stroke-width="1.0"/>
+        <!-- Varanda plant -->
+        <circle cx="295" cy="32" r="7" fill="rgba(60,120,70,0.22)" stroke="#2d5a3d" stroke-width="1.2"/>
+        <line x1="291" y1="32" x2="299" y2="32" stroke="#2d5a3d" stroke-width="0.8"/><line x1="295" y1="28" x2="295" y2="36" stroke="#2d5a3d" stroke-width="0.8"/>
+        <circle cx="22" cy="32" r="7" fill="rgba(60,120,70,0.22)" stroke="#2d5a3d" stroke-width="1.2"/>
+        <line x1="18" y1="32" x2="26" y2="32" stroke="#2d5a3d" stroke-width="0.8"/><line x1="22" y1="28" x2="22" y2="36" stroke="#2d5a3d" stroke-width="0.8"/>
+        <!-- LIVING + KITCHEN -->
+        <rect x="10" y="60" width="200" height="120" fill="#fff" stroke="#1a3a2a" stroke-width="1.5"/>
+        <text x="72" y="72" text-anchor="middle" font-size="9" fill="#1a3a2a" font-family="Arial" font-weight="bold">LIVING + COZINHA · 16m²</text>
+        <!-- Kitchen counter (top-left L-shape) -->
+        <rect x="14" y="64" width="70" height="10" fill="#d8cfc0" stroke="#6a5a40" stroke-width="0.8" rx="1"/>
+        <rect x="14" y="64" width="10" height="38" fill="#d8cfc0" stroke="#6a5a40" stroke-width="0.8" rx="1"/>
+        <!-- Stove (4 burners) -->
+        <rect x="16" y="66" width="22" height="14" fill="#bbb" stroke="#888" stroke-width="0.6" rx="1"/>
+        <circle cx="20" cy="70" r="2.5" fill="none" stroke="#555" stroke-width="0.8"/>
+        <circle cx="26" cy="70" r="2.5" fill="none" stroke="#555" stroke-width="0.8"/>
+        <circle cx="20" cy="76" r="2.5" fill="none" stroke="#555" stroke-width="0.8"/>
+        <circle cx="26" cy="76" r="2.5" fill="none" stroke="#555" stroke-width="0.8"/>
+        <!-- Sink -->
+        <rect x="42" y="66" width="18" height="10" fill="rgba(150,200,230,0.40)" stroke="#5a8aaa" stroke-width="0.8" rx="1"/>
+        <line x1="51" y1="66" x2="51" y2="76" stroke="#5a8aaa" stroke-width="0.6"/>
+        <!-- Sofa (L-shape facing varanda) -->
+        <rect x="40" y="100" width="80" height="16" fill="rgba(42,65,90,0.14)" stroke="#3a5060" stroke-width="1.2" rx="2"/>
+        <rect x="40" y="100" width="16" height="36" fill="rgba(42,65,90,0.14)" stroke="#3a5060" stroke-width="1.2" rx="2"/>
+        <rect x="40" y="100" width="80" height="5" fill="rgba(42,65,90,0.22)" rx="1"/>
+        <!-- Coffee table -->
+        <rect x="68" y="122" width="36" height="22" fill="rgba(180,160,120,0.25)" stroke="#8a7040" stroke-width="1.0" rx="2"/>
+        <!-- Person in living (bird's eye) -->
+        <ellipse cx="120" cy="108" rx="7" ry="9" fill="rgba(200,168,75,0.32)" stroke="#c9a84c" stroke-width="1.0"/>
+        <circle cx="120" cy="101" r="3.5" fill="rgba(200,168,75,0.45)" stroke="#c9a84c" stroke-width="0.8"/>
+        <!-- SUITE -->
+        <rect x="210" y="60" width="100" height="120" fill="#f0f8ff" stroke="#1a3a2a" stroke-width="1.5"/>
+        <text x="260" y="72" text-anchor="middle" font-size="9" fill="#1a3a2a" font-family="Arial" font-weight="bold">SUÍTE · 7m²</text>
+        <!-- Bed (queen, top-down view) -->
+        <rect x="222" y="82" width="76" height="52" fill="rgba(200,220,245,0.55)" stroke="#3a5a7a" stroke-width="1.2" rx="2"/>
+        <!-- Pillows -->
+        <rect x="226" y="84" width="28" height="12" fill="rgba(255,255,255,0.80)" stroke="#3a5a7a" stroke-width="0.7" rx="2"/>
+        <rect x="260" y="84" width="28" height="12" fill="rgba(255,255,255,0.80)" stroke="#3a5a7a" stroke-width="0.7" rx="2"/>
+        <!-- Headboard -->
+        <rect x="222" y="80" width="76" height="6" fill="rgba(60,90,120,0.28)" rx="1"/>
+        <!-- Nightstand -->
+        <rect x="222" y="138" width="16" height="14" fill="rgba(180,160,120,0.35)" stroke="#8a7040" stroke-width="0.8" rx="1"/>
+        <rect x="282" y="138" width="16" height="14" fill="rgba(180,160,120,0.35)" stroke="#8a7040" stroke-width="0.8" rx="1"/>
+        <!-- Plant -->
+        <circle cx="300" cy="165" r="7" fill="rgba(60,120,70,0.22)" stroke="#2d5a3d" stroke-width="1.0"/>
+        <line x1="296" y1="165" x2="304" y2="165" stroke="#2d5a3d" stroke-width="0.8"/><line x1="300" y1="161" x2="300" y2="169" stroke="#2d5a3d" stroke-width="0.8"/>
+        <!-- BATHROOM -->
+        <rect x="210" y="180" width="100" height="55" fill="#f0f5ff" stroke="#1a3a2a" stroke-width="1.5"/>
+        <text x="260" y="191" text-anchor="middle" font-size="9" fill="#1a3a2a" font-family="Arial" font-weight="bold">BANHEIRO · 3,5m²</text>
+        <!-- Toilet -->
+        <ellipse cx="225" cy="210" rx="10" ry="13" fill="rgba(200,220,245,0.45)" stroke="#5a6a8a" stroke-width="1.0"/>
+        <rect x="216" y="198" width="18" height="10" fill="rgba(180,200,230,0.55)" stroke="#5a6a8a" stroke-width="0.8" rx="1"/>
+        <!-- Sink -->
+        <rect x="244" y="198" width="16" height="13" fill="rgba(150,200,230,0.40)" stroke="#5a8aaa" stroke-width="0.9" rx="3"/>
+        <circle cx="252" cy="204" r="2" fill="none" stroke="#5a8aaa" stroke-width="0.7"/>
+        <!-- Shower -->
+        <rect x="266" y="198" width="38" height="30" fill="rgba(200,225,245,0.30)" stroke="#5a8aaa" stroke-width="0.9" rx="2"/>
+        <circle cx="285" cy="213" r="5" fill="none" stroke="#5a8aaa" stroke-width="0.7" stroke-dasharray="2,1.5"/>
+        <!-- SERVIÇO -->
+        <rect x="10" y="180" width="80" height="55" fill="#f8f0e8" stroke="#1a3a2a" stroke-width="1.5"/>
+        <text x="50" y="192" text-anchor="middle" font-size="9" fill="#1a3a2a" font-family="Arial" font-weight="bold">SERVIÇO</text>
+        <!-- Washer -->
+        <rect x="15" y="197" width="24" height="24" fill="rgba(180,200,210,0.40)" stroke="#5a7080" stroke-width="0.9" rx="3"/>
+        <circle cx="27" cy="209" r="7" fill="none" stroke="#5a7080" stroke-width="0.8"/>
+        <circle cx="27" cy="209" r="4" fill="none" stroke="#5a7080" stroke-width="0.5"/>
+        <!-- Sink -->
+        <rect x="44" y="198" width="16" height="14" fill="rgba(150,200,230,0.40)" stroke="#5a8aaa" stroke-width="0.9" rx="2"/>
+        <!-- HOME OFFICE -->
+        <rect x="90" y="180" width="120" height="55" fill="#f0ffe8" stroke="#1a3a2a" stroke-width="1.5"/>
+        <text x="150" y="192" text-anchor="middle" font-size="9" fill="#2d5a35" font-family="Arial" font-weight="bold">HOME OFFICE NOOK</text>
+        <!-- Desk -->
+        <rect x="95" y="197" width="80" height="18" fill="rgba(180,200,160,0.40)" stroke="#4a7040" stroke-width="1.0" rx="1"/>
+        <!-- Chair -->
+        <ellipse cx="140" cy="222" rx="10" ry="8" fill="rgba(150,180,140,0.35)" stroke="#4a7040" stroke-width="0.9"/>
+        <!-- Monitor -->
+        <rect x="122" y="199" width="18" height="12" fill="rgba(50,80,60,0.25)" stroke="#4a7040" stroke-width="0.7" rx="1"/>
+        <!-- Porta entrada -->
+        <line x1="130" y1="235" x2="170" y2="235" stroke="#c9a84c" stroke-width="2"/>
+        <path d="M130,235 Q130,220 145,220" fill="none" stroke="#c9a84c" stroke-width="1.2" stroke-dasharray="3,2"/>
+        <text x="150" y="250" text-anchor="middle" font-size="9" fill="#c9a84c" font-family="Arial">ENTRADA</text>
+        <!-- Norte -->
+        <text x="295" y="272" text-anchor="middle" font-size="10" fill="#aaa" font-family="Arial">↑N</text>
+        <text x="155" y="272" text-anchor="middle" font-size="8" fill="#bbb" font-family="Arial">ÁREA TOTAL: ~32 m² · ESCALA SUGERIDA</text>
+      </svg>
+    </div>
+    <div>
+      <div class="ficha">
+        <div class="ficha-titulo">Ficha Técnica</div>
+        <div class="ficha-row"><span class="ficha-label">Área privativa</span><span class="ficha-val">28–35 m²</span></div>
+        <div class="ficha-row"><span class="ficha-label">Dormitórios</span><span class="ficha-val">1 suíte reversível</span></div>
+        <div class="ficha-row"><span class="ficha-label">Banheiros</span><span class="ficha-val">1</span></div>
+        <div class="ficha-row"><span class="ficha-label">Vagas</span><span class="ficha-val">1</span></div>
+        <div class="ficha-row"><span class="ficha-label">Varanda</span><span class="ficha-val">4–6 m² integrada</span></div>
+        <div class="ficha-row"><span class="ficha-label">Home office</span><span class="ficha-val">Nook embutido</span></div>
+        <div class="ficha-row"><span class="ficha-label">Cozinha</span><span class="ficha-val">Americana integrada</span></div>
+        <div class="ficha-row"><span class="ficha-label">Ticket</span><span class="ficha-val">R$230–290K</span></div>
+        <div class="ficha-row"><span class="ficha-label">Ticket/m²</span><span class="ficha-val">R$8.000–8.500</span></div>
+        <div class="ficha-row"><span class="ficha-label">Torres</span><span class="ficha-val">A (foco) e B</span></div>
+      </div>
+      <div class="publico-box">
+        <div class="publico-titulo">Público-Alvo</div>
+        <ul class="publico-lista">
+          <li>Investidor compra-para-alugar (rentabilidade máxima)</li>
+          <li>Jovem profissional 25–35 anos, renda R$5–8K</li>
+          <li>Solteiro(a) que prioriza localização e lifestyle</li>
+          <li>Casal sem filhos em fase de acumulação</li>
+          <li>Migração campo→cidade em Uberlândia (agronegócio junior)</li>
+        </ul>
+      </div>
+      <div class="diferenciais" style="margin-top: 16px;">
+        <div class="dif-titulo">Diferenciais do Produto</div>
+        <div class="dif-tags">
+          <span class="dif-tag">Home office nook</span>
+          <span class="dif-tag">Planta aberta</span>
+          <span class="dif-tag">Varanda integrada</span>
+          <span class="dif-tag">Portaria 24h</span>
+          <span class="dif-tag">Alta liquidez</span>
+          <span class="dif-tag">Coworking no térreo</span>
+        </div>
+      </div>
+      <div class="papel-box"><strong>Papel na esteira:</strong> Volume e velocidade de vendas. Âncora de preço do bairro. Alimenta tráfego de compradores/investidores e valida o mercado para fases seguintes.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== P2 ===== -->
+<div class="produto-section">
+  <div class="produto-header">
+    <div class="produto-badge badge-p2">P2</div>
+    <div class="produto-meta">
+      <h2>Compacto Smart</h2>
+      <div class="config">2 dormitórios · 1 vaga · 42–55 m² · Torres A/B/C</div>
+      <div class="ticket">R$380–500K · R$8.500–9.500/m²</div>
+    </div>
+  </div>
+  <div class="produto-grid">
+    <div class="planta-wrap">
+      <div class="planta-titulo">Planta Sugerida — 2 Dorms 48 m²</div>
+      <svg class="planta" viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- WALLS -->
+        <rect x="10" y="10" width="320" height="280" fill="#f5f0e8" stroke="#1a3a2a" stroke-width="3"/>
+        <!-- VARANDA GOURMET -->
+        <rect x="10" y="10" width="320" height="55" fill="#e8f5ee" stroke="#1a3a2a" stroke-width="2"/>
+        <text x="170" y="23" text-anchor="middle" font-size="10" fill="#2d5a3d" font-family="Arial" font-weight="bold">VARANDA GOURMET · 8m²</text>
+        <!-- Varanda: BBQ + table + 4 chairs -->
+        <rect x="22" y="26" width="22" height="18" fill="rgba(80,50,30,0.25)" stroke="#5a3a1a" stroke-width="1.0" rx="2"/>
+        <text x="33" y="38" text-anchor="middle" font-size="7" fill="#5a3a1a" font-family="Arial">BBQ</text>
+        <ellipse cx="175" cy="38" rx="22" ry="13" fill="rgba(45,90,61,0.15)" stroke="#2d5a3d" stroke-width="1.1"/>
+        <rect x="158" y="44" width="12" height="11" rx="2" fill="rgba(45,90,61,0.20)" stroke="#2d5a3d" stroke-width="0.9"/>
+        <rect x="173" y="44" width="12" height="11" rx="2" fill="rgba(45,90,61,0.20)" stroke="#2d5a3d" stroke-width="0.9"/>
+        <rect x="158" y="27" width="12" height="11" rx="2" fill="rgba(45,90,61,0.20)" stroke="#2d5a3d" stroke-width="0.9"/>
+        <rect x="173" y="27" width="12" height="11" rx="2" fill="rgba(45,90,61,0.20)" stroke="#2d5a3d" stroke-width="0.9"/>
+        <!-- Plants varanda -->
+        <circle cx="305" cy="35" r="8" fill="rgba(60,120,70,0.22)" stroke="#2d5a3d" stroke-width="1.1"/>
+        <line x1="301" y1="35" x2="309" y2="35" stroke="#2d5a3d" stroke-width="0.8"/><line x1="305" y1="31" x2="305" y2="39" stroke="#2d5a3d" stroke-width="0.8"/>
+        <!-- LIVING + JANTAR -->
+        <rect x="10" y="65" width="200" height="90" fill="#fff" stroke="#1a3a2a" stroke-width="1.5"/>
+        <text x="70" y="76" text-anchor="middle" font-size="9" fill="#1a3a2a" font-family="Arial" font-weight="bold">LIVING + JANTAR · 18m²</text>
+        <!-- Sofa (L-shape) -->
+        <rect x="16" y="80" width="85" height="14" fill="rgba(42,65,90,0.16)" stroke="#3a5060" stroke-width="1.1" rx="2"/>
+        <rect x="16" y="80" width="14" height="36" fill="rgba(42,65,90,0.16)" stroke="#3a5060" stroke-width="1.1" rx="2"/>
+        <rect x="16" y="80" width="85" height="5" fill="rgba(42,65,90,0.25)" rx="1"/>
+        <!-- Coffee table -->
+        <rect x="40" y="100" width="38" height="24" fill="rgba(180,160,120,0.28)" stroke="#8a7040" stroke-width="1.0" rx="2"/>
+        <!-- Dining table + 4 chairs (right of living) -->
+        <rect x="120" y="80" width="70" height="50" fill="rgba(200,180,140,0.22)" stroke="#8a7040" stroke-width="1.1" rx="2"/>
+        <rect x="118" y="85" width="10" height="14" rx="2" fill="rgba(200,180,140,0.40)" stroke="#8a7040" stroke-width="0.8"/>
+        <rect x="192" y="85" width="10" height="14" rx="2" fill="rgba(200,180,140,0.40)" stroke="#8a7040" stroke-width="0.8"/>
+        <rect x="118" y="104" width="10" height="14" rx="2" fill="rgba(200,180,140,0.40)" stroke="#8a7040" stroke-width="0.8"/>
+        <rect x="192" y="104" width="10" height="14" rx="2" fill="rgba(200,180,140,0.40)" stroke="#8a7040" stroke-width="0.8"/>
+        <rect x="137" y="68" width="16" height="10" rx="2" fill="rgba(200,180,140,0.40)" stroke="#8a7040" stroke-width="0.8"/>
+        <rect x="157" y="68" width="16" height="10" rx="2" fill="rgba(200,180,140,0.40)" stroke="#8a7040" stroke-width="0.8"/>
+        <!-- People -->
+        <ellipse cx="75" cy="110" rx="7" ry="9" fill="rgba(200,168,75,0.32)" stroke="#c9a84c" stroke-width="1.0"/>
+        <circle cx="75" cy="103" r="3.5" fill="rgba(200,168,75,0.45)" stroke="#c9a84c" stroke-width="0.8"/>
+        <ellipse cx="100" cy="100" rx="7" ry="8" fill="rgba(150,200,180,0.30)" stroke="#4a8a70" stroke-width="0.9"/>
+        <circle cx="100" cy="93" r="3" fill="rgba(150,200,180,0.45)" stroke="#4a8a70" stroke-width="0.8"/>
+        <!-- COZINHA -->
+        <rect x="210" y="65" width="120" height="90" fill="#fff8f0" stroke="#1a3a2a" stroke-width="1.5"/>
+        <text x="270" y="76" text-anchor="middle" font-size="9" fill="#1a3a2a" font-family="Arial" font-weight="bold">COZINHA · 10m²</text>
+        <!-- Kitchen counter L-shape -->
+        <rect x="214" y="69" width="112" height="10" fill="#d8cfc0" stroke="#6a5a40" stroke-width="0.8" rx="1"/>
+        <rect x="214" y="69" width="10" height="75" fill="#d8cfc0" stroke="#6a5a40" stroke-width="0.8" rx="1"/>
+        <!-- Stove -->
+        <rect x="215" y="71" width="28" height="16" fill="#bbb" stroke="#888" stroke-width="0.6" rx="1"/>
+        <circle cx="221" cy="76" r="2.5" fill="none" stroke="#555" stroke-width="0.8"/>
+        <circle cx="228" cy="76" r="2.5" fill="none" stroke="#555" stroke-width="0.8"/>
+        <circle cx="221" cy="83" r="2.5" fill="none" stroke="#555" stroke-width="0.8"/>
+        <circle cx="228" cy="83" r="2.5" fill="none" stroke="#555" stroke-width="0.8"/>
+        <!-- Sink -->
+        <rect x="250" y="71" width="22" height="12" fill="rgba(150,200,230,0.40)" stroke="#5a8aaa" stroke-width="0.8" rx="1"/>
+        <line x1="261" y1="71" x2="261" y2="83" stroke="#5a8aaa" stroke-width="0.6"/>
+        <!-- Fridge -->
+        <rect x="295" y="71" width="24" height="30" fill="rgba(200,200,220,0.40)" stroke="#5a6080" stroke-width="0.9" rx="1"/>
+        <line x1="307" y1="71" x2="307" y2="101" stroke="#5a6080" stroke-width="0.5"/>
+        <!-- Kitchen island -->
+        <rect x="234" y="95" width="68" height="34" fill="rgba(220,205,170,0.35)" stroke="#8a7040" stroke-width="1.0" rx="2"/>
+        <text x="268" y="115" text-anchor="middle" font-size="7" fill="#6a5030" font-family="Arial">ILHA</text>
+        <!-- SUÍTE MASTER -->
+        <rect x="10" y="155" width="160" height="80" fill="#f0f8ff" stroke="#1a3a2a" stroke-width="1.5"/>
+        <text x="60" y="165" text-anchor="middle" font-size="9" fill="#1a3a2a" font-family="Arial" font-weight="bold">SUÍTE MASTER · 11m²</text>
+        <!-- Queen bed -->
+        <rect x="16" y="172" width="90" height="57" fill="rgba(200,220,245,0.55)" stroke="#3a5a7a" stroke-width="1.2" rx="2"/>
+        <rect x="16" y="170" width="90" height="6" fill="rgba(60,90,120,0.28)" rx="1"/>
+        <rect x="20" y="174" width="36" height="14" fill="rgba(255,255,255,0.80)" stroke="#3a5a7a" stroke-width="0.7" rx="2"/>
+        <rect x="62" y="174" width="36" height="14" fill="rgba(255,255,255,0.80)" stroke="#3a5a7a" stroke-width="0.7" rx="2"/>
+        <!-- Nightstands -->
+        <rect x="16" y="200" width="14" height="14" fill="rgba(180,160,120,0.35)" stroke="#8a7040" stroke-width="0.8" rx="1"/>
+        <rect x="92" y="200" width="14" height="14" fill="rgba(180,160,120,0.35)" stroke="#8a7040" stroke-width="0.8" rx="1"/>
+        <!-- Closet -->
+        <rect x="120" y="172" width="46" height="56" fill="rgba(200,190,160,0.30)" stroke="#8a7040" stroke-width="1.0" rx="1"/>
+        <text x="143" y="203" text-anchor="middle" font-size="8" fill="#6a5030" font-family="Arial">CLOSET</text>
+        <line x1="120" y1="195" x2="166" y2="195" stroke="#8a7040" stroke-width="0.6"/>
+        <!-- DORM 2 -->
+        <rect x="170" y="155" width="100" height="80" fill="#f5f5ff" stroke="#1a3a2a" stroke-width="1.5"/>
+        <text x="220" y="165" text-anchor="middle" font-size="9" fill="#1a3a2a" font-family="Arial" font-weight="bold">DORM 2 · 8m²</text>
+        <!-- Single bed -->
+        <rect x="178" y="172" width="54" height="52" fill="rgba(210,215,240,0.55)" stroke="#4a5080" stroke-width="1.1" rx="2"/>
+        <rect x="178" y="170" width="54" height="6" fill="rgba(60,70,120,0.25)" rx="1"/>
+        <rect x="182" y="174" width="46" height="14" fill="rgba(255,255,255,0.75)" stroke="#4a5080" stroke-width="0.7" rx="2"/>
+        <!-- Desk -->
+        <rect x="238" y="160" width="26" height="48" fill="rgba(180,200,160,0.38)" stroke="#4a7040" stroke-width="0.9" rx="1"/>
+        <!-- Chair -->
+        <ellipse cx="252" cy="220" rx="8" ry="7" fill="rgba(150,180,140,0.35)" stroke="#4a7040" stroke-width="0.8"/>
+        <!-- BWC 1 -->
+        <rect x="270" y="155" width="60" height="40" fill="#f0f5ff" stroke="#1a3a2a" stroke-width="1.5"/>
+        <text x="300" y="165" text-anchor="middle" font-size="8" fill="#1a3a2a" font-family="Arial" font-weight="bold">BWC 1</text>
+        <rect x="274" y="170" width="13" height="18" fill="rgba(200,220,245,0.45)" stroke="#5a6a8a" stroke-width="0.9" rx="1"/>
+        <ellipse cx="280" cy="179" rx="5" ry="7" fill="rgba(200,220,245,0.45)" stroke="#5a6a8a" stroke-width="0.8"/>
+        <rect x="293" y="170" width="12" height="10" fill="rgba(150,200,230,0.40)" stroke="#5a8aaa" stroke-width="0.8" rx="2"/>
+        <!-- BWC 2 -->
+        <rect x="270" y="195" width="60" height="40" fill="#f0f5ff" stroke="#1a3a2a" stroke-width="1.5"/>
+        <text x="300" y="205" text-anchor="middle" font-size="8" fill="#1a3a2a" font-family="Arial" font-weight="bold">BWC 2</text>
+        <ellipse cx="285" cy="218" rx="9" ry="11" fill="rgba(200,220,245,0.45)" stroke="#5a6a8a" stroke-width="0.9"/>
+        <rect x="278" y="207" width="14" height="8" fill="rgba(180,200,230,0.55)" stroke="#5a6a8a" stroke-width="0.7" rx="1"/>
+        <rect x="298" y="207" width="12" height="10" fill="rgba(150,200,230,0.40)" stroke="#5a8aaa" stroke-width="0.8" rx="2"/>
+        <!-- SERVIÇO + HALL -->
+        <rect x="10" y="235" width="260" height="45" fill="#f8f0e8" stroke="#1a3a2a" stroke-width="1.5"/>
+        <text x="80" y="254" text-anchor="middle" font-size="9" fill="#1a3a2a" font-family="Arial" font-weight="bold">ÁREA DE SERVIÇO</text>
+        <text x="200" y="254" text-anchor="middle" font-size="9" fill="#1a3a2a" font-family="Arial" font-weight="bold">HALL ENTRADA</text>
+        <!-- Washer + dryer -->
+        <rect x="16" y="242" width="22" height="22" fill="rgba(180,200,210,0.40)" stroke="#5a7080" stroke-width="0.9" rx="2"/>
+        <circle cx="27" cy="253" r="6.5" fill="none" stroke="#5a7080" stroke-width="0.8"/>
+        <rect x="42" y="242" width="22" height="22" fill="rgba(200,200,200,0.40)" stroke="#5a7080" stroke-width="0.9" rx="2"/>
+        <circle cx="53" cy="253" r="6.5" fill="none" stroke="#5a7080" stroke-width="0.8"/>
+        <!-- Entrada door arc -->
+        <line x1="155" y1="235" x2="195" y2="235" stroke="#c9a84c" stroke-width="1.8"/>
+        <path d="M155,235 Q155,218 172,218" fill="none" stroke="#c9a84c" stroke-width="1.1" stroke-dasharray="3,2"/>
+        <!-- Norte + Area -->
+        <text x="322" y="285" text-anchor="middle" font-size="10" fill="#aaa" font-family="Arial">↑N</text>
+        <text x="170" y="293" text-anchor="middle" font-size="8" fill="#bbb" font-family="Arial">ÁREA TOTAL: ~48 m² · ESCALA SUGERIDA</text>
+      </svg>
+    </div>
+    <div>
+      <div class="ficha">
+        <div class="ficha-titulo">Ficha Técnica</div>
+        <div class="ficha-row"><span class="ficha-label">Área privativa</span><span class="ficha-val">42–55 m²</span></div>
+        <div class="ficha-row"><span class="ficha-label">Dormitórios</span><span class="ficha-val">2 (1 suíte + 1 dorm)</span></div>
+        <div class="ficha-row"><span class="ficha-label">Banheiros</span><span class="ficha-val">2</span></div>
+        <div class="ficha-row"><span class="ficha-label">Vagas</span><span class="ficha-val">1</span></div>
+        <div class="ficha-row"><span class="ficha-label">Varanda</span><span class="ficha-val">6–10 m² gourmet</span></div>
+        <div class="ficha-row"><span class="ficha-label">Cozinha</span><span class="ficha-val">Americana (open plan)</span></div>
+        <div class="ficha-row"><span class="ficha-label">Closet</span><span class="ficha-val">Suíte master</span></div>
+        <div class="ficha-row"><span class="ficha-label">Ticket</span><span class="ficha-val">R$380–500K</span></div>
+        <div class="ficha-row"><span class="ficha-label">Ticket/m²</span><span class="ficha-val">R$8.500–9.500</span></div>
+        <div class="ficha-row"><span class="ficha-label">Torres</span><span class="ficha-val">A, B, C</span></div>
+      </div>
+      <div class="publico-box">
+        <div class="publico-titulo">Público-Alvo</div>
+        <ul class="publico-lista">
+          <li>Casal jovem 28–40 anos, renda R$8–15K</li>
+          <li>Profissionais liberais (médicos, engenheiros, advogados)</li>
+          <li>Família pequena (1 filho) em busca de primeiro AP premium</li>
+          <li>Investidor que busca renda + valorização balanceadas</li>
+          <li>Servidor público, empresário local consolidado</li>
+        </ul>
+      </div>
+      <div class="diferenciais" style="margin-top: 16px;">
+        <div class="dif-titulo">Diferenciais do Produto</div>
+        <div class="dif-tags">
+          <span class="dif-tag">Varanda gourmet</span>
+          <span class="dif-tag">2 banheiros</span>
+          <span class="dif-tag">Closet master</span>
+          <span class="dif-tag">Open plan</span>
+          <span class="dif-tag">Flex home office</span>
+          <span class="dif-tag">Melhor custo/benefício</span>
+        </div>
+      </div>
+      <div class="papel-box"><strong>Papel na esteira:</strong> Base e margem. Equilíbrio entre velocidade de vendas (P1) e ticket unitário mais alto. Sustenta o fluxo de caixa do empreendimento durante a construção.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== P3 ===== -->
+<div class="produto-section">
+  <div class="produto-header">
+    <div class="produto-badge badge-p3">P3</div>
+    <div class="produto-meta">
+      <h2>Garden Suite</h2>
+      <div class="config">3 dormitórios · 2 vagas · 68–85 m² · Torres C/D/E</div>
+      <div class="ticket">R$650–820K · R$9.000–10.000/m²</div>
+    </div>
+  </div>
+  <div class="produto-grid">
+    <div class="planta-wrap">
+      <div class="planta-titulo">Planta Sugerida — 3 Dorms 78 m²</div>
+      <svg class="planta" viewBox="0 0 380 340" xmlns="http://www.w3.org/2000/svg">
+        <!-- WALLS -->
+        <rect x="10" y="10" width="360" height="320" fill="#f5f0e8" stroke="#1a3a2a" stroke-width="3"/>
+        <!-- VARANDA GARDEN -->
+        <rect x="10" y="10" width="360" height="60" fill="#e8f5ee" stroke="#1a3a2a" stroke-width="2"/>
+        <text x="190" y="22" text-anchor="middle" font-size="10" fill="#2d5a3d" font-family="Arial" font-weight="bold">VARANDA GARDEN · 12m² · Pergolado + jardim</text>
+        <!-- Garden: loungers + table + plants -->
+        <rect x="50" y="28" width="38" height="18" fill="rgba(45,90,61,0.15)" stroke="#2d5a3d" stroke-width="1.0" rx="8"/>
+        <rect x="94" y="28" width="38" height="18" fill="rgba(45,90,61,0.15)" stroke="#2d5a3d" stroke-width="1.0" rx="8"/>
+        <ellipse cx="175" cy="40" rx="20" ry="14" fill="rgba(45,90,61,0.15)" stroke="#2d5a3d" stroke-width="1.1"/>
+        <rect x="160" y="48" width="12" height="12" rx="2" fill="rgba(45,90,61,0.20)" stroke="#2d5a3d" stroke-width="0.9"/>
+        <rect x="178" y="48" width="12" height="12" rx="2" fill="rgba(45,90,61,0.20)" stroke="#2d5a3d" stroke-width="0.9"/>
+        <!-- BBQ unit -->
+        <rect x="246" y="24" width="30" height="20" fill="rgba(80,50,30,0.25)" stroke="#5a3a1a" stroke-width="1.0" rx="2"/>
+        <text x="261" y="37" text-anchor="middle" font-size="7" fill="#5a3a1a" font-family="Arial">BBQ</text>
+        <!-- Pots/plants -->
+        <circle cx="25" cy="40" r="9" fill="rgba(60,120,70,0.25)" stroke="#2d5a3d" stroke-width="1.1"/>
+        <line x1="20" y1="40" x2="30" y2="40" stroke="#2d5a3d" stroke-width="0.8"/><line x1="25" y1="35" x2="25" y2="45" stroke="#2d5a3d" stroke-width="0.8"/>
+        <circle cx="355" cy="40" r="9" fill="rgba(60,120,70,0.25)" stroke="#2d5a3d" stroke-width="1.1"/>
+        <line x1="350" y1="40" x2="360" y2="40" stroke="#2d5a3d" stroke-width="0.8"/><line x1="355" y1="35" x2="355" y2="45" stroke="#2d5a3d" stroke-width="0.8"/>
+        <circle cx="306" cy="40" r="8" fill="rgba(60,120,70,0.20)" stroke="#2d5a3d" stroke-width="1.0"/>
+        <line x1="302" y1="40" x2="310" y2="40" stroke="#2d5a3d" stroke-width="0.7"/><line x1="306" y1="36" x2="306" y2="44" stroke="#2d5a3d" stroke-width="0.7"/>
+        <!-- LIVING + JANTAR -->
+        <rect x="10" y="70" width="180" height="90" fill="#fff" stroke="#1a3a2a" stroke-width="1.5"/>
+        <text x="90" y="81" text-anchor="middle" font-size="9" fill="#1a3a2a" font-family="Arial" font-weight="bold">LIVING + JANTAR · 22m²</text>
+        <!-- Sectional sofa -->
+        <rect x="16" y="88" width="100" height="16" fill="rgba(42,65,90,0.16)" stroke="#3a5060" stroke-width="1.1" rx="2"/>
+        <rect x="16" y="88" width="16" height="42" fill="rgba(42,65,90,0.16)" stroke="#3a5060" stroke-width="1.1" rx="2"/>
+        <rect x="16" y="88" width="100" height="5" fill="rgba(42,65,90,0.25)" rx="1"/>
+        <!-- Coffee table -->
+        <rect x="42" y="112" width="52" height="28" fill="rgba(180,160,120,0.28)" stroke="#8a7040" stroke-width="1.0" rx="2"/>
+        <!-- Dining table (round for 6) -->
+        <ellipse cx="152" cy="118" rx="26" ry="22" fill="rgba(200,180,140,0.22)" stroke="#8a7040" stroke-width="1.1"/>
+        <!-- Dining chairs -->
+        <rect x="127" y="93" width="12" height="12" rx="2" fill="rgba(200,180,140,0.40)" stroke="#8a7040" stroke-width="0.8"/>
+        <rect x="143" y="93" width="12" height="12" rx="2" fill="rgba(200,180,140,0.40)" stroke="#8a7040" stroke-width="0.8"/>
+        <rect x="160" y="93" width="12" height="12" rx="2" fill="rgba(200,180,140,0.40)" stroke="#8a7040" stroke-width="0.8"/>
+        <rect x="127" y="131" width="12" height="12" rx="2" fill="rgba(200,180,140,0.40)" stroke="#8a7040" stroke-width="0.8"/>
+        <rect x="143" y="131" width="12" height="12" rx="2" fill="rgba(200,180,140,0.40)" stroke="#8a7040" stroke-width="0.8"/>
+        <rect x="160" y="131" width="12" height="12" rx="2" fill="rgba(200,180,140,0.40)" stroke="#8a7040" stroke-width="0.8"/>
+        <!-- TV unit -->
+        <rect x="110" y="88" width="72" height="8" fill="rgba(50,50,70,0.25)" stroke="#303050" stroke-width="0.8" rx="1"/>
+        <!-- People -->
+        <ellipse cx="75" cy="120" rx="7" ry="9" fill="rgba(200,168,75,0.32)" stroke="#c9a84c" stroke-width="1.0"/>
+        <circle cx="75" cy="113" r="3.5" fill="rgba(200,168,75,0.48)" stroke="#c9a84c" stroke-width="0.8"/>
+        <!-- COZINHA GOURMET -->
+        <rect x="190" y="70" width="180" height="90" fill="#fff8f0" stroke="#1a3a2a" stroke-width="1.5"/>
+        <text x="280" y="81" text-anchor="middle" font-size="9" fill="#1a3a2a" font-family="Arial" font-weight="bold">COZINHA GOURMET + DML · 14m²</text>
+        <!-- Counter L-shape -->
+        <rect x="194" y="74" width="172" height="11" fill="#d8cfc0" stroke="#6a5a40" stroke-width="0.8" rx="1"/>
+        <rect x="194" y="74" width="11" height="72" fill="#d8cfc0" stroke="#6a5a40" stroke-width="0.8" rx="1"/>
+        <!-- Stove -->
+        <rect x="196" y="76" width="32" height="18" fill="#bbb" stroke="#888" stroke-width="0.6" rx="1"/>
+        <circle cx="203" cy="82" r="3" fill="none" stroke="#555" stroke-width="0.8"/>
+        <circle cx="213" cy="82" r="3" fill="none" stroke="#555" stroke-width="0.8"/>
+        <circle cx="203" cy="91" r="3" fill="none" stroke="#555" stroke-width="0.8"/>
+        <circle cx="213" cy="91" r="3" fill="none" stroke="#555" stroke-width="0.8"/>
+        <!-- Sink -->
+        <rect x="235" y="76" width="26" height="14" fill="rgba(150,200,230,0.40)" stroke="#5a8aaa" stroke-width="0.8" rx="1"/>
+        <line x1="248" y1="76" x2="248" y2="90" stroke="#5a8aaa" stroke-width="0.6"/>
+        <!-- Fridge -->
+        <rect x="330" y="76" width="28" height="36" fill="rgba(200,200,220,0.40)" stroke="#5a6080" stroke-width="0.9" rx="1"/>
+        <line x1="344" y1="76" x2="344" y2="112" stroke="#5a6080" stroke-width="0.5"/>
+        <!-- Kitchen island gourmet -->
+        <rect x="218" y="100" width="106" height="48" fill="rgba(220,205,170,0.35)" stroke="#8a7040" stroke-width="1.0" rx="2"/>
+        <text x="271" y="128" text-anchor="middle" font-size="8" fill="#6a5030" font-family="Arial">ILHA GOURMET</text>
+        <!-- DML door -->
+        <rect x="355" y="100" width="28" height="38" fill="rgba(200,185,155,0.30)" stroke="#8a7040" stroke-width="0.9" rx="1"/>
+        <text x="369" y="121" text-anchor="middle" font-size="7" fill="#6a5030" font-family="Arial">DML</text>
+        <!-- SUÍTE MASTER -->
+        <rect x="10" y="160" width="180" height="90" fill="#f0f8ff" stroke="#1a3a2a" stroke-width="2"/>
+        <text x="95" y="170" text-anchor="middle" font-size="9" fill="#1a3a2a" font-family="Arial" font-weight="bold">SUÍTE MASTER · 14m² + closet + BWC</text>
+        <!-- King bed -->
+        <rect x="16" y="178" width="100" height="62" fill="rgba(200,220,245,0.55)" stroke="#3a5a7a" stroke-width="1.2" rx="2"/>
+        <rect x="16" y="176" width="100" height="7" fill="rgba(60,90,120,0.28)" rx="1"/>
+        <rect x="20" y="180" width="40" height="16" fill="rgba(255,255,255,0.80)" stroke="#3a5a7a" stroke-width="0.7" rx="2"/>
+        <rect x="66" y="180" width="40" height="16" fill="rgba(255,255,255,0.80)" stroke="#3a5a7a" stroke-width="0.7" rx="2"/>
+        <rect x="16" y="212" width="18" height="14" fill="rgba(180,160,120,0.35)" stroke="#8a7040" stroke-width="0.8" rx="1"/>
+        <rect x="98" y="212" width="18" height="14" fill="rgba(180,160,120,0.35)" stroke="#8a7040" stroke-width="0.8" rx="1"/>
+        <!-- Closet walk-in -->
+        <rect x="128" y="178" width="58" height="44" fill="rgba(200,190,160,0.30)" stroke="#8a7040" stroke-width="1.0" rx="1"/>
+        <text x="157" y="205" text-anchor="middle" font-size="7" fill="#6a5030" font-family="Arial">CLOSET</text>
+        <!-- BWC master (within room area, implied) -->
+        <rect x="128" y="226" width="58" height="22" fill="rgba(200,220,245,0.30)" stroke="#5a6a8a" stroke-width="0.9" rx="1"/>
+        <text x="157" y="238" text-anchor="middle" font-size="7" fill="#4a5a7a" font-family="Arial">BWC MASTER</text>
+        <!-- SUÍTE 2 -->
+        <rect x="190" y="160" width="95" height="90" fill="#f5f5ff" stroke="#1a3a2a" stroke-width="1.5"/>
+        <text x="237" y="170" text-anchor="middle" font-size="9" fill="#1a3a2a" font-family="Arial" font-weight="bold">SUÍTE 2 · 11m²</text>
+        <!-- Queen bed -->
+        <rect x="196" y="178" width="60" height="50" fill="rgba(210,215,240,0.55)" stroke="#4a5080" stroke-width="1.1" rx="2"/>
+        <rect x="196" y="176" width="60" height="6" fill="rgba(60,70,120,0.25)" rx="1"/>
+        <rect x="200" y="180" width="24" height="14" fill="rgba(255,255,255,0.75)" stroke="#4a5080" stroke-width="0.7" rx="2"/>
+        <rect x="228" y="180" width="24" height="14" fill="rgba(255,255,255,0.75)" stroke="#4a5080" stroke-width="0.7" rx="2"/>
+        <rect x="196" y="200" width="12" height="12" fill="rgba(180,160,120,0.35)" stroke="#8a7040" stroke-width="0.7" rx="1"/>
+        <rect x="244" y="200" width="12" height="12" fill="rgba(180,160,120,0.35)" stroke="#8a7040" stroke-width="0.7" rx="1"/>
+        <!-- DORM 3 / Home office -->
+        <rect x="285" y="160" width="85" height="90" fill="#f0ffe8" stroke="#1a3a2a" stroke-width="1.5"/>
+        <text x="327" y="170" text-anchor="middle" font-size="9" fill="#2d5a35" font-family="Arial" font-weight="bold">DORM 3 / HOME</text>
+        <!-- Desk (can flip to bed) -->
+        <rect x="291" y="178" width="65" height="18" fill="rgba(180,200,160,0.40)" stroke="#4a7040" stroke-width="0.9" rx="1"/>
+        <ellipse cx="327" cy="205" rx="10" ry="8" fill="rgba(150,180,140,0.35)" stroke="#4a7040" stroke-width="0.8"/>
+        <rect x="306" y="180" width="22" height="14" fill="rgba(50,80,60,0.22)" stroke="#4a7040" stroke-width="0.7" rx="1"/>
+        <!-- SERVIÇO + HALL -->
+        <rect x="10" y="250" width="370" height="60" fill="#f8f0e8" stroke="#1a3a2a" stroke-width="1.5"/>
+        <text x="100" y="265" text-anchor="middle" font-size="9" fill="#1a3a2a" font-family="Arial" font-weight="bold">ÁREA SERVIÇO + LAVABO</text>
+        <text x="270" y="265" text-anchor="middle" font-size="9" fill="#1a3a2a" font-family="Arial" font-weight="bold">HALL + CIRCULAÇÃO</text>
+        <!-- Washer/dryer -->
+        <rect x="16" y="258" width="22" height="22" fill="rgba(180,200,210,0.40)" stroke="#5a7080" stroke-width="0.9" rx="2"/>
+        <circle cx="27" cy="269" r="7" fill="none" stroke="#5a7080" stroke-width="0.8"/>
+        <rect x="42" y="258" width="22" height="22" fill="rgba(200,200,200,0.40)" stroke="#5a7080" stroke-width="0.9" rx="2"/>
+        <circle cx="53" cy="269" r="7" fill="none" stroke="#5a7080" stroke-width="0.8"/>
+        <!-- Lavabo toilet + sink -->
+        <ellipse cx="158" cy="274" rx="9" ry="11" fill="rgba(200,220,245,0.45)" stroke="#5a6a8a" stroke-width="0.9"/>
+        <rect x="150" y="263" width="16" height="9" fill="rgba(180,200,230,0.55)" stroke="#5a6a8a" stroke-width="0.7" rx="1"/>
+        <rect x="172" y="264" width="14" height="11" fill="rgba(150,200,230,0.40)" stroke="#5a8aaa" stroke-width="0.8" rx="2"/>
+        <!-- Entrada door -->
+        <line x1="180" y1="250" x2="220" y2="250" stroke="#c9a84c" stroke-width="1.8"/>
+        <path d="M180,250 Q180,232 200,232" fill="none" stroke="#c9a84c" stroke-width="1.1" stroke-dasharray="3,2"/>
+        <!-- Norte + area -->
+        <text x="366" y="328" text-anchor="middle" font-size="10" fill="#aaa" font-family="Arial">↑N</text>
+        <text x="185" y="330" text-anchor="middle" font-size="8" fill="#bbb" font-family="Arial">ÁREA TOTAL: ~78 m² · ESCALA SUGERIDA</text>
+      </svg>
+    </div>
+    <div>
+      <div class="ficha">
+        <div class="ficha-titulo">Ficha Técnica</div>
+        <div class="ficha-row"><span class="ficha-label">Área privativa</span><span class="ficha-val">68–85 m²</span></div>
+        <div class="ficha-row"><span class="ficha-label">Dormitórios</span><span class="ficha-val">3 (suíte master + 2)</span></div>
+        <div class="ficha-row"><span class="ficha-label">Banheiros</span><span class="ficha-val">2 suítes + lavabo</span></div>
+        <div class="ficha-row"><span class="ficha-label">Vagas</span><span class="ficha-val">2</span></div>
+        <div class="ficha-row"><span class="ficha-label">Varanda</span><span class="ficha-val">10–15 m² garden</span></div>
+        <div class="ficha-row"><span class="ficha-label">Cozinha</span><span class="ficha-val">Gourmet com DML</span></div>
+        <div class="ficha-row"><span class="ficha-label">Closet</span><span class="ficha-val">Suíte master walk-in</span></div>
+        <div class="ficha-row"><span class="ficha-label">Dorm 3</span><span class="ficha-val">Reversível home office</span></div>
+        <div class="ficha-row"><span class="ficha-label">Ticket</span><span class="ficha-val">R$650–820K</span></div>
+        <div class="ficha-row"><span class="ficha-label">Torres</span><span class="ficha-val">C, D (foco), E</span></div>
+      </div>
+      <div class="publico-box">
+        <div class="publico-titulo">Público-Alvo</div>
+        <ul class="publico-lista">
+          <li>Família 2–3 filhos, renda R$15–30K</li>
+          <li>Profissional liberal consolidado (40–55 anos)</li>
+          <li>Casal que vende casa no bairro e "sobe" para vertical</li>
+          <li>Agropecuarista de médio porte (UDI é hub do agro)</li>
+          <li>Executivo relocado por empresa (Uberlândia corporativo)</li>
+        </ul>
+      </div>
+      <div class="diferenciais" style="margin-top: 16px;">
+        <div class="dif-titulo">Diferenciais do Produto</div>
+        <div class="dif-tags">
+          <span class="dif-tag">Varanda garden</span>
+          <span class="dif-tag">Suíte master ampla</span>
+          <span class="dif-tag">Closet walk-in</span>
+          <span class="dif-tag">3 dorms flex</span>
+          <span class="dif-tag">Cozinha gourmet</span>
+          <span class="dif-tag">2 vagas</span>
+        </div>
+      </div>
+      <div class="papel-box"><strong>Papel na esteira:</strong> Tração e família. Produto de maior absorção no mercado UDI — equilíbrio perfeito entre área, preço e funcionalidade. Ancora os empreendimentos 2 e 3.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== P4 ===== -->
+<div class="produto-section">
+  <div class="produto-header">
+    <div class="produto-badge badge-p4">P4</div>
+    <div class="produto-meta">
+      <h2>Alto Padrão</h2>
+      <div class="config">3–4 dormitórios · 3 vagas · 105–135 m² · Torres F/G</div>
+      <div class="ticket">R$1,1–1,5M · R$10.500–11.500/m²</div>
+    </div>
+  </div>
+  <div class="produto-grid">
+    <div class="planta-wrap">
+      <div class="planta-titulo">Planta Sugerida — 4 Dorms 120 m²</div>
+      <svg class="planta" viewBox="0 0 420 380" xmlns="http://www.w3.org/2000/svg">
+        <!-- Floor base -->
+        <rect x="10" y="10" width="400" height="360" fill="#f9f5ed" stroke="#1a3a2a" stroke-width="3"/>
+        <!-- ===== VARANDA GOURMET (y=10→75) ===== -->
+        <rect x="10" y="10" width="400" height="65" fill="#e4f0e8" stroke="#1a3a2a" stroke-width="2"/>
+        <!-- Pergolado slats -->
+        <line x1="85" y1="10" x2="85" y2="75" stroke="#2d7a48" stroke-width="0.7" stroke-dasharray="4,5" opacity="0.5"/>
+        <line x1="160" y1="10" x2="160" y2="75" stroke="#2d7a48" stroke-width="0.7" stroke-dasharray="4,5" opacity="0.5"/>
+        <line x1="235" y1="10" x2="235" y2="75" stroke="#2d7a48" stroke-width="0.7" stroke-dasharray="4,5" opacity="0.5"/>
+        <line x1="310" y1="10" x2="310" y2="75" stroke="#2d7a48" stroke-width="0.7" stroke-dasharray="4,5" opacity="0.5"/>
+        <!-- BBQ counter -->
+        <rect x="358" y="16" width="50" height="36" rx="2" fill="#6a5a4a" stroke="#4a3a2a" stroke-width="1.2"/>
+        <rect x="361" y="19" width="44" height="10" rx="1" fill="#5a4a3a"/>
+        <line x1="363" y1="33" x2="401" y2="33" stroke="#7a6a5a" stroke-width="1"/>
+        <line x1="363" y1="37" x2="401" y2="37" stroke="#7a6a5a" stroke-width="1"/>
+        <line x1="363" y1="41" x2="401" y2="41" stroke="#7a6a5a" stroke-width="1"/>
+        <text x="383" y="58" text-anchor="middle" font-size="7" fill="#3a2a1a" font-family="Arial">CHURRAS.</text>
+        <!-- Dining table oval 8 places -->
+        <ellipse cx="196" cy="43" rx="72" ry="25" fill="white" stroke="#7a6a50" stroke-width="1.2"/>
+        <rect x="144" y="14" width="18" height="10" rx="2" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.8"/>
+        <rect x="187" y="14" width="18" height="10" rx="2" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.8"/>
+        <rect x="230" y="14" width="18" height="10" rx="2" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.8"/>
+        <rect x="144" y="62" width="18" height="10" rx="2" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.8"/>
+        <rect x="187" y="62" width="18" height="10" rx="2" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.8"/>
+        <rect x="230" y="62" width="18" height="10" rx="2" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.8"/>
+        <rect x="120" y="34" width="10" height="16" rx="2" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.8"/>
+        <rect x="266" y="34" width="10" height="16" rx="2" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.8"/>
+        <!-- Plants -->
+        <circle cx="30" cy="43" r="14" fill="#2d8040" opacity="0.70"/>
+        <circle cx="30" cy="43" r="7" fill="#3da050" opacity="0.55"/>
+        <line x1="30" y1="29" x2="30" y2="57" stroke="#1a5a2a" stroke-width="0.9"/>
+        <line x1="16" y1="43" x2="44" y2="43" stroke="#1a5a2a" stroke-width="0.9"/>
+        <circle cx="338" cy="43" r="12" fill="#2d8040" opacity="0.70"/>
+        <circle cx="338" cy="43" r="6" fill="#3da050" opacity="0.55"/>
+        <!-- ===== ROOM WALLS ===== -->
+        <line x1="210" y1="75" x2="210" y2="275" stroke="#1a3a2a" stroke-width="1.8"/>
+        <line x1="310" y1="175" x2="310" y2="275" stroke="#1a3a2a" stroke-width="1.5"/>
+        <line x1="310" y1="225" x2="410" y2="225" stroke="#1a3a2a" stroke-width="1.2"/>
+        <line x1="10" y1="275" x2="410" y2="275" stroke="#1a3a2a" stroke-width="2"/>
+        <!-- ===== LIVING + JANTAR (x=10-210, y=75-175) ===== -->
+        <rect x="10" y="75" width="200" height="100" fill="#fffcf6" stroke="#1a3a2a" stroke-width="1.5"/>
+        <rect x="12" y="93" width="6" height="40" rx="1" fill="#1a1a2a"/>
+        <!-- Sectional sofa -->
+        <rect x="28" y="108" width="74" height="28" rx="3" fill="#c2baa8" stroke="#9a9080" stroke-width="1"/>
+        <rect x="28" y="108" width="74" height="8" rx="2" fill="#a89878"/>
+        <rect x="98" y="108" width="22" height="50" rx="3" fill="#c2baa8" stroke="#9a9080" stroke-width="1"/>
+        <rect x="98" y="108" width="8" height="50" rx="2" fill="#a89878"/>
+        <!-- Coffee table -->
+        <rect x="38" y="140" width="50" height="26" rx="3" fill="#d4c8a0" stroke="#8a7840" stroke-width="1"/>
+        <!-- Dining round table -->
+        <circle cx="167" cy="120" r="24" fill="white" stroke="#7a6a50" stroke-width="1.2"/>
+        <rect x="150" y="92" width="10" height="8" rx="1.5" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.8"/>
+        <rect x="163" y="92" width="10" height="8" rx="1.5" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.8"/>
+        <rect x="176" y="92" width="10" height="8" rx="1.5" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.8"/>
+        <rect x="150" y="140" width="10" height="8" rx="1.5" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.8"/>
+        <rect x="163" y="140" width="10" height="8" rx="1.5" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.8"/>
+        <rect x="176" y="140" width="10" height="8" rx="1.5" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.8"/>
+        <!-- Person silhouette -->
+        <ellipse cx="70" cy="163" rx="8" ry="10" fill="#c9a84c" opacity="0.60"/>
+        <circle cx="70" cy="151" r="5.5" fill="#c9a84c" opacity="0.70"/>
+        <text x="108" y="173" text-anchor="middle" font-size="7.5" fill="#888" font-family="Arial" font-style="italic">LIVING + JANTAR 26 m²</text>
+        <!-- ===== COZINHA GOURMET (x=210-410, y=75-175) ===== -->
+        <rect x="210" y="75" width="200" height="100" fill="#fffaf2" stroke="#1a3a2a" stroke-width="1.5"/>
+        <rect x="212" y="77" width="196" height="20" rx="1" fill="#e0d4c0" stroke="#b0a080" stroke-width="1"/>
+        <circle cx="248" cy="87" r="5.5" fill="none" stroke="#5a4a3a" stroke-width="1.2"/>
+        <circle cx="263" cy="87" r="5.5" fill="none" stroke="#5a4a3a" stroke-width="1.2"/>
+        <circle cx="278" cy="87" r="5.5" fill="none" stroke="#5a4a3a" stroke-width="1.2"/>
+        <circle cx="293" cy="87" r="5.5" fill="none" stroke="#5a4a3a" stroke-width="1.2"/>
+        <rect x="309" y="79" width="24" height="15" rx="2" fill="#c0d8e8" stroke="#80a8c0" stroke-width="1"/>
+        <line x1="321" y1="81" x2="321" y2="92" stroke="#80a8c0" stroke-width="0.9"/>
+        <rect x="367" y="78" width="20" height="28" rx="2" fill="#d8d8e0" stroke="#9090a0" stroke-width="1"/>
+        <line x1="367" y1="92" x2="387" y2="92" stroke="#808090" stroke-width="0.7"/>
+        <rect x="393" y="77" width="15" height="96" rx="1" fill="#e0d4c0" stroke="#b0a080" stroke-width="1"/>
+        <!-- Island -->
+        <rect x="230" y="118" width="115" height="30" rx="3" fill="#d4c8b0" stroke="#98884a" stroke-width="1.2"/>
+        <text x="287" y="135" text-anchor="middle" font-size="7" fill="#5a4a2a" font-family="Arial">ILHA GOURMET</text>
+        <rect x="213" y="152" width="50" height="20" rx="1" fill="#ece4d4" stroke="#a09070" stroke-width="0.8"/>
+        <text x="238" y="164" text-anchor="middle" font-size="7" fill="#7a6040" font-family="Arial">D.M.L.</text>
+        <text x="296" y="173" text-anchor="middle" font-size="7.5" fill="#888" font-family="Arial" font-style="italic">COZINHA GOURMET 18 m²</text>
+        <!-- ===== SUÍTE MASTER (x=10-210, y=175-275) ===== -->
+        <rect x="10" y="175" width="200" height="100" fill="#f2f8fe" stroke="#1a3a2a" stroke-width="2.5"/>
+        <line x1="150" y1="175" x2="150" y2="240" stroke="#1a3a2a" stroke-width="1.2" stroke-dasharray="5,3"/>
+        <!-- King bed -->
+        <rect x="26" y="190" width="112" height="70" rx="4" fill="#cdc5b5" stroke="#9a9080" stroke-width="1.2"/>
+        <rect x="26" y="190" width="112" height="14" rx="3" fill="#b4a284" stroke="#9a8060" stroke-width="1"/>
+        <rect x="34" y="195" width="42" height="8" rx="2" fill="white" stroke="#c4b898" stroke-width="0.8"/>
+        <rect x="84" y="195" width="42" height="8" rx="2" fill="white" stroke="#c4b898" stroke-width="0.8"/>
+        <rect x="14" y="204" width="10" height="15" rx="1.5" fill="#c8b890" stroke="#9a8860" stroke-width="0.8"/>
+        <rect x="140" y="204" width="10" height="15" rx="1.5" fill="#c8b890" stroke="#9a8860" stroke-width="0.8"/>
+        <!-- Closet -->
+        <rect x="152" y="177" width="56" height="48" fill="#eae4d8" stroke="#9a8868" stroke-width="0.8" rx="1"/>
+        <text x="180" y="193" text-anchor="middle" font-size="7" fill="#6a5840" font-family="Arial">CLOSET</text>
+        <line x1="156" y1="197" x2="202" y2="197" stroke="#9a8868" stroke-width="0.6"/>
+        <line x1="162" y1="201" x2="162" y2="218" stroke="#9a8868" stroke-width="0.7"/>
+        <line x1="172" y1="201" x2="172" y2="218" stroke="#9a8868" stroke-width="0.7"/>
+        <line x1="182" y1="201" x2="182" y2="218" stroke="#9a8868" stroke-width="0.7"/>
+        <line x1="192" y1="201" x2="192" y2="218" stroke="#9a8868" stroke-width="0.7"/>
+        <!-- BWC Master -->
+        <rect x="152" y="228" width="56" height="46" fill="#edf5fa" stroke="#8ab0c8" stroke-width="0.8" rx="1"/>
+        <text x="180" y="241" text-anchor="middle" font-size="7" fill="#5a8090" font-family="Arial">BWC</text>
+        <ellipse cx="172" cy="256" rx="8" ry="10" fill="white" stroke="#8ab0c8" stroke-width="0.9"/>
+        <rect x="164" y="246" width="16" height="8" rx="1" fill="white" stroke="#8ab0c8" stroke-width="0.9"/>
+        <rect x="188" y="248" width="14" height="11" rx="2" fill="white" stroke="#8ab0c8" stroke-width="0.9"/>
+        <circle cx="195" cy="253" r="2.5" fill="#8ab0c8"/>
+        <!-- Person gold -->
+        <ellipse cx="78" cy="264" rx="9" ry="7" fill="#c9a84c" opacity="0.55"/>
+        <circle cx="78" cy="255" r="5.5" fill="#c9a84c" opacity="0.65"/>
+        <text x="70" y="274" text-anchor="middle" font-size="7.5" fill="#1a4060" font-family="Arial" font-style="italic">SUÍTE MASTER 18 m²</text>
+        <!-- ===== SUÍTE 2 (x=210-310, y=175-275) ===== -->
+        <rect x="210" y="175" width="100" height="100" fill="#f4f8fc" stroke="#1a3a2a" stroke-width="1.5"/>
+        <rect x="218" y="186" width="70" height="55" rx="3" fill="#cdc5b5" stroke="#9a9080" stroke-width="1"/>
+        <rect x="218" y="186" width="70" height="12" rx="2" fill="#b4a284"/>
+        <rect x="224" y="190" width="26" height="7" rx="1.5" fill="white" stroke="#c4b898" stroke-width="0.7"/>
+        <rect x="256" y="190" width="26" height="7" rx="1.5" fill="white" stroke="#c4b898" stroke-width="0.7"/>
+        <rect x="212" y="198" width="5" height="14" rx="1" fill="#c8b890" stroke="#9a8860" stroke-width="0.7"/>
+        <rect x="218" y="250" width="50" height="20" rx="2" fill="#d4c8a0" stroke="#8a7840" stroke-width="0.9"/>
+        <ellipse cx="243" cy="264" rx="10" ry="8" fill="#c0b898" stroke="#9a8868" stroke-width="0.7"/>
+        <text x="260" y="273" text-anchor="middle" font-size="7.5" fill="#555" font-family="Arial" font-style="italic">SUÍTE 2 12m²</text>
+        <!-- ===== DORM 3 (x=310-410, y=175-225) ===== -->
+        <rect x="310" y="175" width="100" height="50" fill="#f4f4ff" stroke="#1a3a2a" stroke-width="1.5"/>
+        <rect x="317" y="180" width="62" height="38" rx="3" fill="#cdc5b5" stroke="#9a9080" stroke-width="1"/>
+        <rect x="317" y="180" width="62" height="10" rx="2" fill="#b4a284"/>
+        <rect x="322" y="183" width="52" height="6" rx="1.5" fill="white" stroke="#c4b898" stroke-width="0.7"/>
+        <rect x="311" y="190" width="5" height="12" rx="1" fill="#c8b890" stroke="#9a8860" stroke-width="0.7"/>
+        <text x="360" y="221" text-anchor="middle" font-size="7.5" fill="#555" font-family="Arial" font-style="italic">DORM 3</text>
+        <!-- ===== ESCRITÓRIO (x=310-410, y=225-275) ===== -->
+        <rect x="310" y="225" width="100" height="50" fill="#f0ffe8" stroke="#1a3a2a" stroke-width="1.5"/>
+        <rect x="314" y="230" width="60" height="20" rx="2" fill="#d4c8a0" stroke="#8a7840" stroke-width="1"/>
+        <rect x="354" y="230" width="20" height="38" rx="2" fill="#d4c8a0" stroke="#8a7840" stroke-width="1"/>
+        <rect x="323" y="233" width="28" height="14" rx="1.5" fill="#1a1a2a" stroke="#0a0a1a" stroke-width="0.8"/>
+        <rect x="334" y="247" width="6" height="4" fill="#3a3a4a"/>
+        <ellipse cx="336" cy="262" rx="11" ry="9" fill="#c0b898" stroke="#9a8868" stroke-width="0.8"/>
+        <circle cx="321" cy="268" r="6" fill="#2d8040" opacity="0.70"/>
+        <circle cx="321" cy="268" r="3" fill="#3da050" opacity="0.55"/>
+        <text x="362" y="272" text-anchor="middle" font-size="7.5" fill="#2d5a35" font-family="Arial" font-style="italic">ESCRITÓRIO</text>
+        <!-- ===== SERVIÇO (x=10-410, y=275-340) ===== -->
+        <rect x="10" y="275" width="400" height="65" fill="#faf0e8" stroke="#1a3a2a" stroke-width="1.5"/>
+        <!-- Lavabo -->
+        <ellipse cx="38" cy="307" rx="9" ry="11" fill="white" stroke="#8ab0c8" stroke-width="1"/>
+        <rect x="29" y="296" width="18" height="9" rx="1.5" fill="white" stroke="#8ab0c8" stroke-width="1"/>
+        <rect x="56" y="298" width="15" height="12" rx="3" fill="white" stroke="#8ab0c8" stroke-width="1"/>
+        <circle cx="63" cy="304" r="2.5" fill="#8ab0c8"/>
+        <text x="55" y="324" text-anchor="middle" font-size="7" fill="#5a8090" font-family="Arial">LAVABO</text>
+        <!-- Washer -->
+        <rect x="87" y="284" width="27" height="27" rx="2" fill="#dde8f0" stroke="#8ab0c8" stroke-width="1"/>
+        <circle cx="100" cy="297" r="10" fill="none" stroke="#8ab0c8" stroke-width="1"/>
+        <circle cx="100" cy="297" r="5" fill="none" stroke="#8ab0c8" stroke-width="0.7"/>
+        <text x="100" y="318" text-anchor="middle" font-size="6.5" fill="#5a8090" font-family="Arial">LAVAR</text>
+        <!-- Dryer -->
+        <rect x="118" y="284" width="27" height="27" rx="2" fill="#ece0ec" stroke="#a890a8" stroke-width="1"/>
+        <circle cx="131" cy="297" r="10" fill="none" stroke="#a890a8" stroke-width="1"/>
+        <circle cx="131" cy="297" r="5" fill="none" stroke="#a890a8" stroke-width="0.7"/>
+        <text x="131" y="318" text-anchor="middle" font-size="6.5" fill="#7a607a" font-family="Arial">SECAR</text>
+        <!-- Depósito -->
+        <rect x="153" y="284" width="44" height="27" rx="1" fill="#e8ddc8" stroke="#a09070" stroke-width="0.8"/>
+        <text x="175" y="300" text-anchor="middle" font-size="7" fill="#7a6040" font-family="Arial">DEPÓSITO</text>
+        <!-- Hall -->
+        <text x="310" y="305" text-anchor="middle" font-size="8" fill="#555" font-family="Arial">HALL DE ENTRADA</text>
+        <line x1="255" y1="275" x2="255" y2="308" stroke="#1a3a2a" stroke-width="1.2"/>
+        <path d="M255,275 Q238,275 238,292" fill="none" stroke="#1a3a2a" stroke-width="0.9" stroke-dasharray="3,2"/>
+        <text x="406" y="370" text-anchor="end" font-size="9" fill="#c9a84c" font-family="Arial">↑N</text>
+        <text x="210" y="378" text-anchor="middle" font-size="9" fill="#aaa" font-family="Arial">ÁREA TOTAL: ~120 m² · ESCALA SUGERIDA</text>
+      </svg>
+    </div>
+    <div>
+      <div class="ficha">
+        <div class="ficha-titulo">Ficha Técnica</div>
+        <div class="ficha-row"><span class="ficha-label">Área privativa</span><span class="ficha-val">105–135 m²</span></div>
+        <div class="ficha-row"><span class="ficha-label">Dormitórios</span><span class="ficha-val">4 (2 suítes + 2 dorms)</span></div>
+        <div class="ficha-row"><span class="ficha-label">Banheiros</span><span class="ficha-val">2 suítes + lavabo</span></div>
+        <div class="ficha-row"><span class="ficha-label">Vagas</span><span class="ficha-val">3</span></div>
+        <div class="ficha-row"><span class="ficha-label">Varanda</span><span class="ficha-val">16–20 m² churrasqueira</span></div>
+        <div class="ficha-row"><span class="ficha-label">Cozinha</span><span class="ficha-val">Gourmet + DML</span></div>
+        <div class="ficha-row"><span class="ficha-label">Escritório</span><span class="ficha-val">Dorm 4 reversível</span></div>
+        <div class="ficha-row"><span class="ficha-label">Suíte master</span><span class="ficha-val">18 m² + closet walk-in</span></div>
+        <div class="ficha-row"><span class="ficha-label">Ticket</span><span class="ficha-val">R$1,1–1,5M</span></div>
+        <div class="ficha-row"><span class="ficha-label">Torres</span><span class="ficha-val">F, G (foco)</span></div>
+      </div>
+      <div class="publico-box">
+        <div class="publico-titulo">Público-Alvo</div>
+        <ul class="publico-lista">
+          <li>Família premium 3–4 membros, renda R$30–60K</li>
+          <li>Empresário regional consolidado (40–60 anos)</li>
+          <li>Médico/advogado sócio de escritório</li>
+          <li>Produtor rural / agropecuarista grande porte</li>
+          <li>Executivo C-level de empresa instalada em UDI</li>
+          <li>Comprador que vende imóvel horizontal para subir de padrão</li>
+        </ul>
+      </div>
+      <div class="diferenciais" style="margin-top: 16px;">
+        <div class="dif-titulo">Diferenciais do Produto</div>
+        <div class="dif-tags">
+          <span class="dif-tag">4 dorms reais</span>
+          <span class="dif-tag">Churrasqueira na varanda</span>
+          <span class="dif-tag">Escritório dedicado</span>
+          <span class="dif-tag">3 vagas</span>
+          <span class="dif-tag">Suíte master 18m²</span>
+          <span class="dif-tag">Alto VGV unitário</span>
+        </div>
+      </div>
+      <div class="papel-box"><strong>Papel na esteira:</strong> Margem premium. Produto de maior ticket unitário depois do P5. Ancora financeiramente o Empreendimento 4 e estabelece o brand equity AL'DORA no segmento A.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== P5 ===== -->
+<div class="produto-section" style="background: #f5f0e0;">
+  <div class="container">
+  <div class="produto-header">
+    <div class="produto-badge badge-p5">P5</div>
+    <div class="produto-meta">
+      <h2 style="color: var(--ouro);">Cobertura Signature</h2>
+      <div class="config">4 dorms · duplex · 4 vagas · 200–280 m² · Torre H</div>
+      <div class="ticket">R$2,8–4,2M · R$13.000–16.000/m²</div>
+    </div>
+  </div>
+  <div class="produto-grid">
+    <div class="planta-wrap" style="border-color: var(--ouro);">
+      <div class="planta-titulo">Planta Sugerida — Cobertura Duplex 240 m² (2 pavimentos)</div>
+      <!-- Dois andares lado a lado -->
+      <svg class="planta" viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg">
+        <text x="120" y="20" text-anchor="middle" font-size="11" fill="#c9a84c" font-family="Arial" font-weight="bold">PAVIMENTO INFERIOR (120 m²)</text>
+        <text x="375" y="20" text-anchor="middle" font-size="11" fill="#c9a84c" font-family="Arial" font-weight="bold">PAVIMENTO SUPERIOR (120 m²)</text>
+        <!-- ===== PAV INFERIOR ===== -->
+        <rect x="10" y="25" width="220" height="280" fill="#faf5e8" stroke="#c9a84c" stroke-width="2.5"/>
+        <!-- TERRAÇO + PISCINA (y=25-95) -->
+        <rect x="10" y="25" width="220" height="70" fill="#d8efe0" stroke="#c9a84c" stroke-width="1.5"/>
+        <!-- Pool water -->
+        <rect x="20" y="32" width="98" height="52" rx="4" fill="#4dc8e8" stroke="#2a90b8" stroke-width="1.5"/>
+        <line x1="28" y1="38" x2="42" y2="52" stroke="rgba(255,255,255,0.45)" stroke-width="0.9"/>
+        <line x1="40" y1="35" x2="56" y2="49" stroke="rgba(255,255,255,0.45)" stroke-width="0.9"/>
+        <line x1="54" y1="34" x2="70" y2="48" stroke="rgba(255,255,255,0.45)" stroke-width="0.9"/>
+        <text x="69" y="64" text-anchor="middle" font-size="7" fill="white" font-family="Arial" font-weight="bold">PISCINA</text>
+        <!-- Loungers beside pool -->
+        <rect x="124" y="34" width="30" height="12" rx="2" fill="#e8d8b8" stroke="#9a8868" stroke-width="0.9"/>
+        <rect x="124" y="50" width="30" height="12" rx="2" fill="#e8d8b8" stroke="#9a8868" stroke-width="0.9"/>
+        <!-- Deck plants -->
+        <circle cx="166" cy="36" r="9" fill="#2d8040" opacity="0.80"/>
+        <circle cx="166" cy="36" r="4" fill="#3da050" opacity="0.65"/>
+        <circle cx="166" cy="67" r="9" fill="#2d8040" opacity="0.80"/>
+        <circle cx="166" cy="67" r="4" fill="#3da050" opacity="0.65"/>
+        <!-- BBQ right -->
+        <rect x="183" y="30" width="42" height="28" rx="2" fill="#6a5a4a" stroke="#4a3a2a" stroke-width="1"/>
+        <rect x="186" y="32" width="36" height="9" rx="1" fill="#5a4a3a"/>
+        <line x1="187" y1="44" x2="221" y2="44" stroke="#7a6a5a" stroke-width="0.9"/>
+        <line x1="187" y1="48" x2="221" y2="48" stroke="#7a6a5a" stroke-width="0.9"/>
+        <text x="204" y="64" text-anchor="middle" font-size="6.5" fill="#3a2a1a" font-family="Arial">CHURRAS.</text>
+        <text x="120" y="91" text-anchor="middle" font-size="7" fill="#1a5a30" font-family="Arial" font-style="italic">TERRAÇO PRIVATIVO 35 m²</text>
+        <!-- LIVING (x=10-150, y=95-175) -->
+        <rect x="10" y="95" width="140" height="80" fill="#fffcf6" stroke="#c9a84c" stroke-width="1.5"/>
+        <line x1="150" y1="95" x2="150" y2="245" stroke="#c9a84c" stroke-width="1.5"/>
+        <rect x="12" y="106" width="5" height="35" rx="1" fill="#1a1a2a"/>
+        <!-- Sectional sofa -->
+        <rect x="26" y="113" width="64" height="24" rx="3" fill="#c8c0b0" stroke="#9a9080" stroke-width="1"/>
+        <rect x="26" y="113" width="64" height="7" rx="2" fill="#a89878"/>
+        <rect x="86" y="113" width="20" height="42" rx="3" fill="#c8c0b0" stroke="#9a9080" stroke-width="1"/>
+        <rect x="86" y="113" width="7" height="42" rx="2" fill="#a89878"/>
+        <!-- Coffee table -->
+        <rect x="36" y="140" width="42" height="22" rx="2" fill="#d4c8a0" stroke="#8a7840" stroke-width="0.9"/>
+        <!-- Person gold -->
+        <ellipse cx="60" cy="163" rx="7" ry="9" fill="#c9a84c" opacity="0.60"/>
+        <circle cx="60" cy="153" r="5" fill="#c9a84c" opacity="0.70"/>
+        <text x="74" y="172" text-anchor="middle" font-size="7" fill="#888" font-family="Arial" font-style="italic">LIVING 20 m²</text>
+        <!-- COZINHA (x=150-230, y=95-175) -->
+        <rect x="150" y="95" width="80" height="80" fill="#fffaf2" stroke="#c9a84c" stroke-width="1.5"/>
+        <rect x="152" y="97" width="76" height="17" rx="1" fill="#e0d4c0" stroke="#b0a080" stroke-width="1"/>
+        <circle cx="167" cy="106" r="4" fill="none" stroke="#5a4a3a" stroke-width="1.1"/>
+        <circle cx="178" cy="106" r="4" fill="none" stroke="#5a4a3a" stroke-width="1.1"/>
+        <circle cx="189" cy="106" r="4" fill="none" stroke="#5a4a3a" stroke-width="1.1"/>
+        <circle cx="200" cy="106" r="4" fill="none" stroke="#5a4a3a" stroke-width="1.1"/>
+        <rect x="211" y="99" width="16" height="12" rx="2" fill="#c0d8e8" stroke="#80a8c0" stroke-width="1"/>
+        <rect x="224" y="97" width="14" height="76" rx="1" fill="#e0d4c0" stroke="#b0a080" stroke-width="1"/>
+        <rect x="154" y="116" width="16" height="22" rx="2" fill="#d8d8e0" stroke="#9090a0" stroke-width="1"/>
+        <line x1="154" y1="127" x2="170" y2="127" stroke="#808090" stroke-width="0.6"/>
+        <rect x="158" y="148" width="56" height="20" rx="2" fill="#d4c8b0" stroke="#98884a" stroke-width="1"/>
+        <text x="186" y="160" text-anchor="middle" font-size="6.5" fill="#5a4a2a" font-family="Arial">ILHA</text>
+        <text x="192" y="172" text-anchor="middle" font-size="7" fill="#888" font-family="Arial" font-style="italic">COZINHA 16 m²</text>
+        <!-- SALA JANTAR (x=10-150, y=175-245) -->
+        <rect x="10" y="175" width="140" height="70" fill="#fffcf6" stroke="#c9a84c" stroke-width="1.5"/>
+        <line x1="10" y1="245" x2="230" y2="245" stroke="#c9a84c" stroke-width="1.5"/>
+        <ellipse cx="76" cy="208" rx="50" ry="22" fill="white" stroke="#7a6a50" stroke-width="1.2"/>
+        <rect x="38" y="182" width="12" height="8" rx="1.5" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.7"/>
+        <rect x="54" y="182" width="12" height="8" rx="1.5" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.7"/>
+        <rect x="70" y="182" width="12" height="8" rx="1.5" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.7"/>
+        <rect x="86" y="182" width="12" height="8" rx="1.5" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.7"/>
+        <rect x="38" y="226" width="12" height="8" rx="1.5" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.7"/>
+        <rect x="54" y="226" width="12" height="8" rx="1.5" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.7"/>
+        <rect x="70" y="226" width="12" height="8" rx="1.5" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.7"/>
+        <rect x="86" y="226" width="12" height="8" rx="1.5" fill="#d4c8a8" stroke="#8a7a5a" stroke-width="0.7"/>
+        <!-- Adega -->
+        <rect x="116" y="180" width="28" height="32" rx="2" fill="#2a1a0a" stroke="#c9a84c" stroke-width="0.8"/>
+        <line x1="118" y1="185" x2="142" y2="185" stroke="#c9a84c" stroke-width="0.5" opacity="0.6"/>
+        <line x1="118" y1="190" x2="142" y2="190" stroke="#c9a84c" stroke-width="0.5" opacity="0.6"/>
+        <line x1="118" y1="195" x2="142" y2="195" stroke="#c9a84c" stroke-width="0.5" opacity="0.6"/>
+        <text x="130" y="220" text-anchor="middle" font-size="6" fill="#c9a84c" font-family="Arial">ADEGA</text>
+        <text x="74" y="242" text-anchor="middle" font-size="7" fill="#888" font-family="Arial" font-style="italic">JANTAR 18 m²</text>
+        <!-- SERVIÇO (x=150-230, y=175-245) -->
+        <rect x="150" y="175" width="80" height="70" fill="#faf0e8" stroke="#c9a84c" stroke-width="1.5"/>
+        <ellipse cx="168" cy="200" rx="7" ry="9" fill="white" stroke="#8ab0c8" stroke-width="0.9"/>
+        <rect x="161" y="191" width="14" height="7" rx="1" fill="white" stroke="#8ab0c8" stroke-width="0.9"/>
+        <rect x="178" y="192" width="11" height="9" rx="2" fill="white" stroke="#8ab0c8" stroke-width="0.9"/>
+        <text x="180" y="208" text-anchor="middle" font-size="6" fill="#5a8090" font-family="Arial">LAVABO</text>
+        <rect x="156" y="216" width="24" height="24" rx="2" fill="#dde8f0" stroke="#8ab0c8" stroke-width="0.9"/>
+        <circle cx="168" cy="228" r="9" fill="none" stroke="#8ab0c8" stroke-width="0.9"/>
+        <circle cx="168" cy="228" r="4" fill="none" stroke="#8ab0c8" stroke-width="0.6"/>
+        <rect x="184" y="216" width="24" height="24" rx="2" fill="#ece0ec" stroke="#a890a8" stroke-width="0.9"/>
+        <circle cx="196" cy="228" r="9" fill="none" stroke="#a890a8" stroke-width="0.9"/>
+        <circle cx="196" cy="228" r="4" fill="none" stroke="#a890a8" stroke-width="0.6"/>
+        <text x="190" y="242" text-anchor="middle" font-size="6.5" fill="#7a8090" font-family="Arial">SERVIÇO</text>
+        <!-- ESCADA (y=245-305) -->
+        <rect x="10" y="245" width="220" height="60" fill="#ede8d8" stroke="#c9a84c" stroke-width="1.5"/>
+        <line x1="30" y1="252" x2="80" y2="252" stroke="#9a8868" stroke-width="0.9"/>
+        <line x1="30" y1="258" x2="80" y2="258" stroke="#9a8868" stroke-width="0.9"/>
+        <line x1="30" y1="264" x2="80" y2="264" stroke="#9a8868" stroke-width="0.9"/>
+        <line x1="30" y1="270" x2="80" y2="270" stroke="#9a8868" stroke-width="0.9"/>
+        <line x1="30" y1="276" x2="80" y2="276" stroke="#9a8868" stroke-width="0.9"/>
+        <line x1="30" y1="282" x2="80" y2="282" stroke="#9a8868" stroke-width="0.9"/>
+        <line x1="30" y1="288" x2="80" y2="288" stroke="#9a8868" stroke-width="0.9"/>
+        <line x1="30" y1="294" x2="80" y2="294" stroke="#9a8868" stroke-width="0.9"/>
+        <line x1="30" y1="252" x2="30" y2="298" stroke="#7a6848" stroke-width="1.2"/>
+        <line x1="80" y1="252" x2="80" y2="298" stroke="#7a6848" stroke-width="1.2"/>
+        <line x1="55" y1="296" x2="55" y2="254" stroke="#c9a84c" stroke-width="1.2"/>
+        <path d="M50,260 L55,254 L60,260" fill="none" stroke="#c9a84c" stroke-width="1.2"/>
+        <text x="148" y="274" text-anchor="middle" font-size="8" fill="#7a6020" font-family="Arial" font-weight="bold">ESCADA PRIVATIVA</text>
+        <text x="148" y="288" text-anchor="middle" font-size="7" fill="#7a6848" font-family="Arial">→ Pavimento Superior</text>
+        <!-- ===== PAV SUPERIOR ===== -->
+        <rect x="260" y="25" width="230" height="280" fill="#faf5e8" stroke="#c9a84c" stroke-width="2.5"/>
+        <!-- SUÍTE MASTER (y=25-125) -->
+        <rect x="260" y="25" width="230" height="100" fill="#f2f8fe" stroke="#c9a84c" stroke-width="2"/>
+        <line x1="418" y1="25" x2="418" y2="92" stroke="#c9a84c" stroke-width="1.2" stroke-dasharray="5,3"/>
+        <line x1="418" y1="92" x2="490" y2="92" stroke="#c9a84c" stroke-width="1.2" stroke-dasharray="4,3"/>
+        <!-- King bed -->
+        <rect x="272" y="38" width="130" height="72" rx="4" fill="#cdc5b5" stroke="#9a9080" stroke-width="1.2"/>
+        <rect x="272" y="38" width="130" height="15" rx="3" fill="#b4a284" stroke="#9a8060" stroke-width="1"/>
+        <rect x="280" y="43" width="52" height="9" rx="2" fill="white" stroke="#c4b898" stroke-width="0.8"/>
+        <rect x="340" y="43" width="52" height="9" rx="2" fill="white" stroke="#c4b898" stroke-width="0.8"/>
+        <rect x="263" y="50" width="8" height="16" rx="1.5" fill="#c8b890" stroke="#9a8860" stroke-width="0.8"/>
+        <rect x="404" y="50" width="8" height="16" rx="1.5" fill="#c8b890" stroke="#9a8860" stroke-width="0.8"/>
+        <!-- Closet -->
+        <rect x="420" y="27" width="68" height="64" fill="#eae4d8" stroke="#9a8868" stroke-width="0.8" rx="1"/>
+        <text x="454" y="44" text-anchor="middle" font-size="7" fill="#6a5840" font-family="Arial">CLOSET</text>
+        <text x="454" y="53" text-anchor="middle" font-size="6" fill="#8a7858" font-family="Arial">12 m²</text>
+        <line x1="424" y1="58" x2="486" y2="58" stroke="#9a8868" stroke-width="0.6"/>
+        <line x1="432" y1="62" x2="432" y2="84" stroke="#9a8868" stroke-width="0.7"/>
+        <line x1="443" y1="62" x2="443" y2="84" stroke="#9a8868" stroke-width="0.7"/>
+        <line x1="454" y1="62" x2="454" y2="84" stroke="#9a8868" stroke-width="0.7"/>
+        <line x1="465" y1="62" x2="465" y2="84" stroke="#9a8868" stroke-width="0.7"/>
+        <!-- BWC Master -->
+        <rect x="420" y="94" width="68" height="30" fill="#edf5fa" stroke="#8ab0c8" stroke-width="0.8" rx="1"/>
+        <text x="454" y="105" text-anchor="middle" font-size="6.5" fill="#5a8090" font-family="Arial">BWC MASTER</text>
+        <ellipse cx="436" cy="116" rx="7" ry="9" fill="white" stroke="#8ab0c8" stroke-width="0.9"/>
+        <rect x="429" y="107" width="14" height="7" rx="1" fill="white" stroke="#8ab0c8" stroke-width="0.9"/>
+        <rect x="452" y="109" width="12" height="10" rx="2" fill="white" stroke="#8ab0c8" stroke-width="0.9"/>
+        <!-- Person gold -->
+        <ellipse cx="328" cy="117" rx="9" ry="7" fill="#c9a84c" opacity="0.55"/>
+        <circle cx="328" cy="108" r="5.5" fill="#c9a84c" opacity="0.65"/>
+        <text x="348" y="122" text-anchor="middle" font-size="7.5" fill="#1a4060" font-family="Arial" font-style="italic">SUÍTE MASTER 28 m²</text>
+        <!-- SUÍTE 2 (x=260-375, y=125-205) -->
+        <rect x="260" y="125" width="115" height="80" fill="#f4f8fc" stroke="#c9a84c" stroke-width="1.5"/>
+        <line x1="375" y1="125" x2="375" y2="265" stroke="#c9a84c" stroke-width="1.5"/>
+        <rect x="268" y="133" width="72" height="52" rx="3" fill="#cdc5b5" stroke="#9a9080" stroke-width="1"/>
+        <rect x="268" y="133" width="72" height="12" rx="2" fill="#b4a284"/>
+        <rect x="274" y="137" width="28" height="7" rx="1.5" fill="white" stroke="#c4b898" stroke-width="0.7"/>
+        <rect x="306" y="137" width="28" height="7" rx="1.5" fill="white" stroke="#c4b898" stroke-width="0.7"/>
+        <rect x="262" y="144" width="5" height="14" rx="1" fill="#c8b890" stroke="#9a8860" stroke-width="0.7"/>
+        <circle cx="353" cy="192" r="8" fill="#2d8040" opacity="0.70"/>
+        <circle cx="353" cy="192" r="4" fill="#3da050" opacity="0.55"/>
+        <text x="318" y="203" text-anchor="middle" font-size="7.5" fill="#555" font-family="Arial" font-style="italic">SUÍTE 2 16 m²</text>
+        <!-- SUÍTE 3 (x=375-490, y=125-205) -->
+        <rect x="375" y="125" width="115" height="80" fill="#f5f5ff" stroke="#c9a84c" stroke-width="1.5"/>
+        <rect x="383" y="133" width="72" height="52" rx="3" fill="#cdc5b5" stroke="#9a9080" stroke-width="1"/>
+        <rect x="383" y="133" width="72" height="12" rx="2" fill="#b4a284"/>
+        <rect x="389" y="137" width="28" height="7" rx="1.5" fill="white" stroke="#c4b898" stroke-width="0.7"/>
+        <rect x="421" y="137" width="28" height="7" rx="1.5" fill="white" stroke="#c4b898" stroke-width="0.7"/>
+        <rect x="377" y="144" width="5" height="14" rx="1" fill="#c8b890" stroke="#9a8860" stroke-width="0.7"/>
+        <text x="432" y="203" text-anchor="middle" font-size="7.5" fill="#555" font-family="Arial" font-style="italic">SUÍTE 3 14 m²</text>
+        <!-- HOME OFFICE (x=260-375, y=205-265) -->
+        <rect x="260" y="205" width="115" height="60" fill="#f0ffe8" stroke="#c9a84c" stroke-width="1.5"/>
+        <line x1="260" y1="265" x2="490" y2="265" stroke="#c9a84c" stroke-width="1.5"/>
+        <rect x="265" y="210" width="62" height="18" rx="2" fill="#d4c8a0" stroke="#8a7840" stroke-width="1"/>
+        <rect x="307" y="210" width="18" height="38" rx="2" fill="#d4c8a0" stroke="#8a7840" stroke-width="1"/>
+        <rect x="273" y="213" width="26" height="12" rx="1.5" fill="#1a1a2a" stroke="#0a0a1a" stroke-width="0.8"/>
+        <rect x="283" y="225" width="6" height="4" fill="#3a3a4a"/>
+        <ellipse cx="285" cy="250" rx="11" ry="9" fill="#c0b898" stroke="#9a8868" stroke-width="0.8"/>
+        <circle cx="268" cy="255" r="7" fill="#2d8040" opacity="0.70"/>
+        <circle cx="268" cy="255" r="3.5" fill="#3da050" opacity="0.55"/>
+        <text x="317" y="261" text-anchor="middle" font-size="7.5" fill="#2d5a35" font-family="Arial" font-style="italic">HOME OFFICE</text>
+        <!-- LOUNGE (x=375-490, y=205-265) -->
+        <rect x="375" y="205" width="115" height="60" fill="#fff8f0" stroke="#c9a84c" stroke-width="1.5"/>
+        <rect x="382" y="214" width="54" height="22" rx="3" fill="#c8c0b0" stroke="#9a9080" stroke-width="1"/>
+        <rect x="382" y="214" width="54" height="7" rx="2" fill="#a89878"/>
+        <rect x="382" y="232" width="22" height="24" rx="2" fill="#c8c0b0" stroke="#9a9080" stroke-width="0.9"/>
+        <rect x="398" y="240" width="34" height="20" rx="2" fill="#d4c8a0" stroke="#8a7840" stroke-width="0.9"/>
+        <text x="432" y="261" text-anchor="middle" font-size="7.5" fill="#7a6020" font-family="Arial" font-style="italic">LOUNGE</text>
+        <!-- CIRCULAÇÃO (y=265-305) -->
+        <rect x="260" y="265" width="230" height="40" fill="#e8e0cc" stroke="#c9a84c" stroke-width="1.5"/>
+        <text x="375" y="283" text-anchor="middle" font-size="8" fill="#7a6020" font-family="Arial">CIRCULAÇÃO + HALL</text>
+        <line x1="350" y1="265" x2="350" y2="296" stroke="#c9a84c" stroke-width="1.2"/>
+        <path d="M350,265 Q332,265 332,283" fill="none" stroke="#c9a84c" stroke-width="0.9" stroke-dasharray="3,2"/>
+        <text x="490" y="315" text-anchor="end" font-size="9" fill="#c9a84c" font-family="Arial">↑N</text>
+        <text x="255" y="315" text-anchor="middle" font-size="9" fill="#aaa" font-family="Arial">ÁREA TOTAL: ~240 m² · ESCALA SUGERIDA</text>
+      </svg>
+    </div>
+    <div>
+      <div class="ficha" style="border-color: var(--ouro); border: 2px solid var(--ouro);">
+        <div class="ficha-titulo">Ficha Técnica · Signature</div>
+        <div class="ficha-row"><span class="ficha-label">Área privativa</span><span class="ficha-val">200–280 m² (duplex)</span></div>
+        <div class="ficha-row"><span class="ficha-label">Dormitórios</span><span class="ficha-val">4 suítes completas</span></div>
+        <div class="ficha-row"><span class="ficha-label">Banheiros</span><span class="ficha-val">4 privativas + lavabo</span></div>
+        <div class="ficha-row"><span class="ficha-label">Vagas</span><span class="ficha-val">4 (2 cobertas privativas)</span></div>
+        <div class="ficha-row"><span class="ficha-label">Terraço</span><span class="ficha-val">35–50 m² piscina + deck</span></div>
+        <div class="ficha-row"><span class="ficha-label">Suíte master</span><span class="ficha-val">28m² + closet 12m²</span></div>
+        <div class="ficha-row"><span class="ficha-label">Adega</span><span class="ficha-val">Climatizada embutida</span></div>
+        <div class="ficha-row"><span class="ficha-label">Home office</span><span class="ficha-val">Pavimento superior</span></div>
+        <div class="ficha-row"><span class="ficha-label">Pé-direito</span><span class="ficha-val">Living duplex</span></div>
+        <div class="ficha-row"><span class="ficha-label">Ticket</span><span class="ficha-val" style="color: var(--ouro);">R$2,8–4,2M</span></div>
+        <div class="ficha-row"><span class="ficha-label">Torre</span><span class="ficha-val">H (exclusiva)</span></div>
+      </div>
+      <div class="publico-box" style="background: #0d2a1a; border: 1px solid var(--ouro);">
+        <div class="publico-titulo">Público-Alvo Signature</div>
+        <ul class="publico-lista">
+          <li>UHNWI regional — empresário com patrimônio R$10M+</li>
+          <li>Fazendeiro / agropecuarista grande produtor</li>
+          <li>CEO/Sócio de grupo empresarial sediado em UDI</li>
+          <li>Médico de alto padrão (cirurgião, especialista)</li>
+          <li>Investidor que busca ativo imobiliário "troféu" + valorização</li>
+          <li>Comprador que tem casa de campo e quer AP de cidade premium</li>
+        </ul>
+      </div>
+      <div class="diferenciais" style="margin-top: 16px;">
+        <div class="dif-titulo">Diferenciais Exclusivos</div>
+        <div class="dif-tags">
+          <span class="dif-tag" style="border-color: var(--ouro); color: #7a5010;">Piscina privativa no terraço</span>
+          <span class="dif-tag" style="border-color: var(--ouro); color: #7a5010;">Living duplex pé-direito</span>
+          <span class="dif-tag" style="border-color: var(--ouro); color: #7a5010;">Adega climatizada</span>
+          <span class="dif-tag" style="border-color: var(--ouro); color: #7a5010;">Vista panorâmica 360°</span>
+          <span class="dif-tag" style="border-color: var(--ouro); color: #7a5010;">4 vagas privativas</span>
+          <span class="dif-tag" style="border-color: var(--ouro); color: #7a5010;">Concierge exclusivo</span>
+        </div>
+      </div>
+      <div class="papel-box" style="background: #f5f0e0; border-left-color: var(--ouro);"><strong>Papel na esteira:</strong> Coroamento e imagem máxima. Transforma o AL'DORA em destino, não apenas endereço. VGV concentrado em pouquíssimas unidades — vendidas com antecipação para compradores pré-qualificados.</div>
+    </div>
+  </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<footer>
+  <div class="logo">AL'DORA CITY · CIDADE JARDIM URBANISMO</div>
+  <p>Plantas baixas sugeridas — conceitual, sujeito a aprovação municipal e desenvolvimento de projeto arquitetônico.</p>
+  <p style="margin-top: 6px;">Uberlândia/MG · ZR2/SVA · CA 4,0 · Março 2026</p>
+</footer>
+
+</body>
+</html>

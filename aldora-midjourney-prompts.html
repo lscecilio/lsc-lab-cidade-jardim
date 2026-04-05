@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AL'DORA City — Prompts Midjourney</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--verde:#0a2416;--verde-m:#1a4a2e;--ouro:#C8A84B;--ouro-l:#E8C876;--bege:#F5F0E8;--branco:#fff;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:var(--verde);color:var(--branco);min-height:100vh;}
+header{padding:48px 64px 40px;border-bottom:1px solid rgba(200,168,75,0.2);}
+.logo{font-family:'Playfair Display',serif;font-size:13px;letter-spacing:4px;color:var(--ouro);text-transform:uppercase;margin-bottom:12px;}
+header h1{font-family:'Playfair Display',serif;font-size:36px;color:var(--branco);margin-bottom:8px;}
+header p{font-size:14px;color:rgba(245,240,232,0.55);max-width:620px;line-height:1.7;}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(200,168,75,0.12);border:1px solid rgba(200,168,75,0.3);color:var(--ouro);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;margin-top:20px;}
+.badge::before{content:'◆';font-size:7px;}
+main{padding:48px 64px 80px;max-width:1080px;}
+.section-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--ouro);margin-bottom:32px;padding-bottom:10px;border-bottom:1px solid rgba(200,168,75,0.2);}
+.prompts-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:48px;}
+.prompt-card{background:rgba(255,255,255,0.04);border:1px solid rgba(200,168,75,0.15);overflow:hidden;position:relative;transition:border-color .3s;}
+.prompt-card:hover{border-color:rgba(200,168,75,0.4);}
+.prompt-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--ouro),transparent);opacity:0;transition:opacity .3s;}
+.prompt-card:hover::before{opacity:1;}
+.pc-header{padding:20px 24px 16px;background:rgba(200,168,75,0.06);border-bottom:1px solid rgba(200,168,75,0.1);}
+.pc-num{font-size:10px;letter-spacing:3px;color:rgba(200,168,75,0.5);text-transform:uppercase;margin-bottom:4px;}
+.pc-title{font-family:'Playfair Display',serif;font-size:17px;color:var(--ouro);}
+.pc-desc{font-size:12px;color:rgba(245,240,232,0.5);margin-top:4px;line-height:1.5;}
+.pc-body{padding:20px 24px;}
+.pc-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(200,168,75,0.5);margin-bottom:10px;}
+.pc-prompt{background:rgba(0,0,0,0.35);border-left:2px solid rgba(200,168,75,0.4);padding:14px 16px;font-size:12px;color:rgba(245,240,232,0.8);font-family:'Courier New',monospace;line-height:1.7;word-break:break-all;cursor:pointer;position:relative;transition:background .2s;}
+.pc-prompt:hover{background:rgba(0,0,0,0.5);}
+.copy-hint{font-size:10px;color:rgba(200,168,75,0.4);margin-top:8px;letter-spacing:1px;}
+.copy-hint::before{content:'↑ '}
+.pc-settings{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+.pc-tag{background:rgba(200,168,75,0.08);border:1px solid rgba(200,168,75,0.2);color:rgba(200,168,75,0.75);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;}
+.workflow{background:rgba(200,168,75,0.06);border:1px solid rgba(200,168,75,0.2);padding:32px;margin-top:16px;}
+.workflow h3{font-family:'Playfair Display',serif;font-size:18px;color:var(--ouro);margin-bottom:20px;}
+.workflow-steps{display:flex;gap:0;align-items:center;}
+.wf-step{flex:1;text-align:center;padding:16px 8px;}
+.wf-tool{font-size:12px;font-weight:600;color:var(--ouro-l);margin-bottom:4px;}
+.wf-action{font-size:11px;color:rgba(245,240,232,0.5);line-height:1.4;}
+.wf-arrow{color:rgba(200,168,75,0.3);font-size:18px;flex-shrink:0;}
+.tips{background:rgba(255,255,255,0.03);border:1px solid rgba(200,168,75,0.12);padding:28px 32px;margin-top:20px;}
+.tips h4{font-family:'Playfair Display',serif;font-size:16px;color:var(--ouro);margin-bottom:16px;}
+.tips ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.tips li{font-size:13px;color:rgba(245,240,232,0.65);padding-left:18px;position:relative;line-height:1.6;}
+.tips li::before{content:'→';position:absolute;left:0;color:var(--ouro);}
+.brand-ref{padding:28px 32px;background:rgba(10,36,22,0.5);border:1px solid rgba(200,168,75,0.15);margin-top:20px;}
+.brand-ref h4{font-family:'Playfair Display',serif;color:var(--ouro);margin-bottom:16px;}
+.brand-items{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.bi{font-size:13px;color:rgba(245,240,232,0.65);}
+.bi strong{display:block;color:var(--ouro-l);margin-bottom:4px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;}
+.copied-msg{display:none;position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:var(--ouro);color:var(--verde);padding:12px 28px;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;z-index:9999;}
+@media(max-width:768px){main{padding:32px 24px 64px;}header{padding:32px 24px 28px;}.prompts-grid{grid-template-columns:1fr;}.workflow-steps{flex-direction:column;}.brand-items{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">AL'DORA City · Cidade Jardim Urbanismo</div>
+  <h1>Prompts Midjourney</h1>
+  <p>8 prompts profissionais prontos para gerar renders fotorrealistas do AL'DORA City. Clique em qualquer prompt para copiar. Use Midjourney v6.1 ou superior para melhores resultados.</p>
+  <div class="badge">Midjourney v6.1 · --style raw · --ar 16:9</div>
+</header>
+
+<main>
+  <div class="section-label">Renders Externos — Fachadas e Masterplan</div>
+  <div class="prompts-grid">
+
+    <div class="prompt-card">
+      <div class="pc-header">
+        <div class="pc-num">Prompt 01</div>
+        <div class="pc-title">Vista Aérea — Masterplan Completo</div>
+        <div class="pc-desc">Drone view sobre o complexo, mostrando as 3 quadras e todas as torres</div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-label">Prompt</div>
+        <div class="pc-prompt" onclick="copyPrompt(this)">aerial drone view luxury residential masterplan, 8 dark green glass towers with gold accent trim, rooftop infinity pools glowing blue, tropical landscaping between towers, Uberlândia Brazil mid-size city context, late afternoon golden hour light casting long shadows, hyperrealistic architectural visualization, Zaha Hadid scale development, 8k render --ar 16:9 --style raw --v 6.1 --q 2</div>
+        <div class="copy-hint">Clique para copiar</div>
+        <div class="pc-settings">
+          <span class="pc-tag">Drone</span><span class="pc-tag">Masterplan</span><span class="pc-tag">Golden Hour</span><span class="pc-tag">--ar 16:9</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="pc-header">
+        <div class="pc-num">Prompt 02</div>
+        <div class="pc-title">Perspectiva Street Level — AL'DORA Jardins</div>
+        <div class="pc-desc">Olhar para cima nas Torres A e B da calçada com praça e jardins</div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-label">Prompt</div>
+        <div class="pc-prompt" onclick="copyPrompt(this)">street level perspective looking up at two luxury residential towers, dark forest green glass curtain wall facade with thin gold vertical trim lines, modern ground floor lobby entrance with water feature, lush tropical landscaping, paved plaza with people walking, clear blue sky, photorealistic architectural render, high-end real estate marketing image, Brazil luxury development, 8k resolution --ar 16:9 --style raw --v 6.1</div>
+        <div class="copy-hint">Clique para copiar</div>
+        <div class="pc-settings">
+          <span class="pc-tag">Street Level</span><span class="pc-tag">Jardins</span><span class="pc-tag">Torres A+B</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="pc-header">
+        <div class="pc-num">Prompt 03</div>
+        <div class="pc-title">Golden Hour — AL'DORA Versailles</div>
+        <div class="pc-desc">Pôr do sol dramático refletindo nas fachadas das Torres C e D</div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-label">Prompt</div>
+        <div class="pc-prompt" onclick="copyPrompt(this)">two luxury high-rise residential towers at golden hour, dark emerald green glass facade reflecting warm amber sunset light, gold metallic trim catching last sunlight, long dramatic shadows on ground plaza, upscale tropical landscaping with palm trees silhouetted, cinematic architectural photography, Uberlândia Brazil luxury real estate, rich warm color palette, 8k --ar 16:9 --style raw --v 6.1</div>
+        <div class="copy-hint">Clique para copiar</div>
+        <div class="pc-settings">
+          <span class="pc-tag">Golden Hour</span><span class="pc-tag">Versailles</span><span class="pc-tag">Cinematic</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="pc-header">
+        <div class="pc-num">Prompt 04</div>
+        <div class="pc-title">Noite Premium — AL'DORA Signature</div>
+        <div class="pc-desc">Render noturno das Torres G e H com rooftop pool iluminada</div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-label">Prompt</div>
+        <div class="pc-prompt" onclick="copyPrompt(this)">two ultra-luxury residential skyscrapers at night, dark glass towers with hundreds of lit warm windows, illuminated rooftop infinity pool glowing turquoise blue at top, gold crown architectural spire with beacon light, dramatic night sky with stars, ground level lit plaza with luxury vehicles, premium Brazilian real estate, nighttime architectural photography, Dubai-level luxury residential, 8k --ar 16:9 --style raw --v 6.1</div>
+        <div class="copy-hint">Clique para copiar</div>
+        <div class="pc-settings">
+          <span class="pc-tag">Night</span><span class="pc-tag">Signature</span><span class="pc-tag">Rooftop</span><span class="pc-tag">Premium</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-label">Renders Internos — Amenities e Tipologias</div>
+  <div class="prompts-grid">
+
+    <div class="prompt-card">
+      <div class="pc-header">
+        <div class="pc-num">Prompt 05</div>
+        <div class="pc-title">Rooftop Pool — AL'DORA Signature</div>
+        <div class="pc-desc">Piscina infinita no último andar com vista panorâmica da cidade</div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-label">Prompt</div>
+        <div class="pc-prompt" onclick="copyPrompt(this)">luxurious rooftop infinity pool at dusk, crystal clear turquoise water with city lights reflection, dark green marble deck with gold accents, modern sun loungers with white cushions, panoramic city skyline view, warm ambient lighting, tropical plants in large planters, few guests in resort wear, upscale Brazilian condo amenity, Uberlândia cityscape background, 8k architectural visualization --ar 16:9 --style raw --v 6.1</div>
+        <div class="copy-hint">Clique para copiar</div>
+        <div class="pc-settings">
+          <span class="pc-tag">Rooftop</span><span class="pc-tag">Interior</span><span class="pc-tag">Pool</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="pc-header">
+        <div class="pc-num">Prompt 06</div>
+        <div class="pc-title">Living Room P4 — Alto Padrão</div>
+        <div class="pc-desc">Sala de estar de 105–135m² com vista para a cidade</div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-label">Prompt</div>
+        <div class="pc-prompt" onclick="copyPrompt(this)">luxury apartment living room interior, floor to ceiling dark forest green tinted glass windows with panoramic city view, high ceilings with indirect gold ambient lighting, Italian marble floors, designer furniture in cream and dark leather, open plan kitchen visible in background, warm evening light, upper class Brazilian apartment, architectural interior photography, 8k --ar 16:9 --style raw --v 6.1</div>
+        <div class="copy-hint">Clique para copiar</div>
+        <div class="pc-settings">
+          <span class="pc-tag">Interior</span><span class="pc-tag">P4</span><span class="pc-tag">Living</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="pc-header">
+        <div class="pc-num">Prompt 07</div>
+        <div class="pc-title">Lobby de Entrada — Torre Signature</div>
+        <div class="pc-desc">Hall de entrada luxuoso com pé direito duplo e recepção 24h</div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-label">Prompt</div>
+        <div class="pc-prompt" onclick="copyPrompt(this)">ultra-luxury residential tower lobby entrance, double height ceiling with custom chandelier in gold and crystal, dark green veined marble floors, concierge desk with staff in elegant uniform, water wall feature with tropical plants, natural stone walls with brass accents, soft warm lighting, people arriving with luggage, premium condo Brazil, architectural interior render, 8k --ar 16:9 --style raw --v 6.1</div>
+        <div class="copy-hint">Clique para copiar</div>
+        <div class="pc-settings">
+          <span class="pc-tag">Lobby</span><span class="pc-tag">Interior</span><span class="pc-tag">Signature</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="pc-header">
+        <div class="pc-num">Prompt 08</div>
+        <div class="pc-title">Cobertura P5 — Terraço Privativo</div>
+        <div class="pc-desc">Terraço duplex da cobertura com piscina privativa e vista 360°</div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-label">Prompt</div>
+        <div class="pc-prompt" onclick="copyPrompt(this)">penthouse terrace duplex with private pool, emerald green glass balustrade, dark wood deck, plunge pool with glowing blue water, outdoor kitchen and living area with linen sofas, 360 degree panoramic city view at dusk, warm ambient lights, Uberlândia Brazil skyline visible, ultra-premium residential real estate marketing image, Architectural Digest quality, 8k --ar 16:9 --style raw --v 6.1</div>
+        <div class="copy-hint">Clique para copiar</div>
+        <div class="pc-settings">
+          <span class="pc-tag">Penthouse</span><span class="pc-tag">P5</span><span class="pc-tag">Terraço</span><span class="pc-tag">Cobertura</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Workflow -->
+  <div class="workflow">
+    <h3>Fluxo de Produção Recomendado</h3>
+    <div class="workflow-steps">
+      <div class="wf-step">
+        <div class="wf-tool">Midjourney v6.1</div>
+        <div class="wf-action">Gerar renders base com os prompts acima. Usar /imagine no Discord ou midjourney.com</div>
+      </div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step">
+        <div class="wf-tool">Adobe Firefly / PS</div>
+        <div class="wf-action">Retocar detalhes, adicionar logo AL'DORA nas fachadas, ajustar cores para a paleta exata</div>
+      </div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step">
+        <div class="wf-tool">Runway Gen-3</div>
+        <div class="wf-action">Animar os renders: câmera flythrough, zoom dramático, day-to-night transition</div>
+      </div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step">
+        <div class="wf-tool">CapCut / Premiere</div>
+        <div class="wf-action">Montar vídeo de pitch com os renders animados + trilha orquestral (Suno AI)</div>
+      </div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step">
+        <div class="wf-tool">Dossiê HTML</div>
+        <div class="wf-action">Substituir os renders CSS do dossiê pelas imagens finais fotorrealistas</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tips -->
+  <div class="tips">
+    <h4>Dicas para Melhores Resultados</h4>
+    <ul>
+      <li>Use <strong>--style raw</strong> para renders mais realistas e menos "painterly". Sem esse flag o Midjourney adiciona efeitos artísticos.</li>
+      <li>Para fachada verde escura exata: adicione <strong>"hex color #0a2416 dark forest green glass"</strong> ao prompt.</li>
+      <li>Para os detalhes dourados: <strong>"champagne gold #C8A84B metallic trim accents"</strong> garante consistência com a identidade AL'DORA.</li>
+      <li>Gere 4 variações de cada prompt e use <strong>Vary (Strong)</strong> para explorar diferentes composições.</li>
+      <li>Para imagens de marketing use <strong>--ar 9:16</strong> (Story/Reels) e <strong>--ar 4:3</strong> (impressos).</li>
+      <li>Use <strong>--no cars, --no people</strong> nas versões de fachada para renders mais limpos e atemporais.</li>
+      <li>Para referências de estilo, adicione: <strong>"inspired by One Hyde Park London, Fasano buildings, Cyrela premium"</strong>.</li>
+    </ul>
+  </div>
+
+  <!-- Brand reference -->
+  <div class="brand-ref">
+    <h4>Referência de Identidade AL'DORA</h4>
+    <div class="brand-items">
+      <div class="bi"><strong>Cor Principal</strong>#0a2416 — Verde floresta escuro · Fachadas e interiores base</div>
+      <div class="bi"><strong>Cor Secundária</strong>#C8A84B — Ouro champagne · Trim, molduras, logos</div>
+      <div class="bi"><strong>Cor de Apoio</strong>#F5F0E8 — Bege pérola · Interiores, mármore claro</div>
+      <div class="bi"><strong>Tipografia Render</strong>Playfair Display + Inter · Inserir nos mockups finais</div>
+      <div class="bi"><strong>Referências Globais</strong>One Hyde Park Londres · Fasano SP · Grandverse UDI · Parque Global SP</div>
+      <div class="bi"><strong>Atmosfera</strong>Sóbrio, premium, orgânico · Sem excessos · Luxo discreto</div>
+    </div>
+  </div>
+
+</main>
+
+<div class="copied-msg" id="copied-msg">✓ Prompt copiado!</div>
+
+<script>
+function copyPrompt(el) {
+  const text = el.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const msg = document.getElementById('copied-msg');
+    msg.style.display = 'block';
+    el.style.borderLeftColor = 'rgba(200,168,75,0.9)';
+    el.style.background = 'rgba(200,168,75,0.08)';
+    setTimeout(() => {
+      msg.style.display = 'none';
+      el.style.borderLeftColor = 'rgba(200,168,75,0.4)';
+      el.style.background = 'rgba(0,0,0,0.35)';
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>

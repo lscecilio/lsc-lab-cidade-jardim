@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cidade Jardim — Pesquisa de Mercado 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#080c14; --bg2:#0d1525; --bg3:#111d35; --border:#1e3a5f;
+    --text:#e2e8f0; --text2:#94a3b8; --accent:#38bdf8; --accent2:#818cf8;
+    --green:#34d399; --gold:#fbbf24; --red:#f87171; --purple:#c084fc;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Inter',system-ui,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+
+  header { background:linear-gradient(135deg,#060e1c 0%,#0c1a30 60%,#0a1628 100%); border-bottom:1px solid var(--border); padding:40px 48px; position:relative; overflow:hidden; }
+  header::before { content:''; position:absolute; top:-30%; right:-5%; width:500px; height:500px; background:radial-gradient(circle,rgba(56,189,248,.06) 0%,transparent 65%); border-radius:50%; }
+  header::after { content:''; position:absolute; bottom:-40%; left:10%; width:300px; height:300px; background:radial-gradient(circle,rgba(129,140,248,.05) 0%,transparent 65%); border-radius:50%; }
+  .h-eyebrow { display:inline-flex; align-items:center; gap:8px; background:rgba(56,189,248,.08); border:1px solid rgba(56,189,248,.25); color:var(--accent); font-size:11px; font-weight:700; letter-spacing:.8px; text-transform:uppercase; padding:5px 14px; border-radius:20px; margin-bottom:16px; }
+  header h1 { font-size:38px; font-weight:800; letter-spacing:-1px; background:linear-gradient(135deg,#e2e8f0 0%,#94a3b8 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:10px; }
+  header p { font-size:15px; color:var(--text2); max-width:640px; }
+  .h-meta { margin-top:24px; display:flex; gap:32px; flex-wrap:wrap; }
+  .h-meta span { font-size:12px; color:var(--text2); display:flex; align-items:center; gap:6px; }
+  .dot-live { width:7px; height:7px; border-radius:50%; background:var(--green); display:inline-block; animation:pulse 2s infinite; }
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+  nav { background:var(--bg2); border-bottom:1px solid var(--border); padding:0 48px; display:flex; gap:0; overflow-x:auto; position:sticky; top:0; z-index:100; }
+  nav a { padding:14px 18px; font-size:13px; color:var(--text2); text-decoration:none; border-bottom:2px solid transparent; white-space:nowrap; transition:.2s; }
+  nav a:hover { color:var(--accent); border-bottom-color:rgba(56,189,248,.4); }
+
+  .wrap { max-width:1140px; margin:0 auto; padding:48px; }
+  .section { margin-bottom:72px; }
+  .s-tag { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--accent); margin-bottom:8px; }
+  .s-title { font-size:26px; font-weight:800; color:var(--text); margin-bottom:8px; letter-spacing:-.5px; }
+  .s-sub { font-size:14px; color:var(--text2); }
+
+  .metrics-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:16px; margin-bottom:32px; }
+  .metric-card { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:20px; }
+  .metric-card.hi { border-color:rgba(56,189,248,.35); background:linear-gradient(135deg,rgba(56,189,248,.05) 0%,var(--bg2) 100%); }
+  .metric-card.go { border-color:rgba(52,211,153,.35); background:linear-gradient(135deg,rgba(52,211,153,.05) 0%,var(--bg2) 100%); }
+  .metric-card.wa { border-color:rgba(251,191,36,.35); background:linear-gradient(135deg,rgba(251,191,36,.05) 0%,var(--bg2) 100%); }
+  .metric-card.pu { border-color:rgba(192,132,252,.35); background:linear-gradient(135deg,rgba(192,132,252,.05) 0%,var(--bg2) 100%); }
+  .metric-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.6px; color:var(--text2); margin-bottom:6px; }
+  .metric-value { font-size:28px; font-weight:800; color:var(--accent); line-height:1; }
+  .metric-card.go .metric-value { color:var(--green); }
+  .metric-card.wa .metric-value { color:var(--gold); }
+  .metric-card.pu .metric-value { color:var(--purple); }
+  .metric-sub { font-size:12px; color:var(--text2); margin-top:4px; }
+
+  .card { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:22px; margin-bottom:16px; }
+  .card-title { font-size:15px; font-weight:700; color:var(--text); margin-bottom:10px; display:flex; align-items:center; gap:10px; }
+  .card-body { font-size:13px; color:var(--text2); line-height:1.8; }
+
+  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+  @media(max-width:860px){.grid-2,.grid-3{grid-template-columns:1fr} .wrap{padding:24px 20px} nav,header{padding-left:20px;padding-right:20px} header h1{font-size:26px}}
+
+  table { width:100%; border-collapse:collapse; }
+  th { background:var(--bg3); padding:11px 16px; text-align:left; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--text2); border-bottom:1px solid var(--border); }
+  td { padding:11px 16px; font-size:13px; color:var(--text2); border-bottom:1px solid rgba(30,58,95,.4); vertical-align:top; }
+  tr:hover td { background:rgba(56,189,248,.03); }
+  td:first-child { color:var(--text); font-weight:600; }
+  .badge { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:.4px; }
+  .b-hi { background:rgba(52,211,153,.15); color:var(--green); }
+  .b-med { background:rgba(251,191,36,.15); color:var(--gold); }
+  .b-low { background:rgba(148,163,184,.15); color:var(--text2); }
+
+  .timeline-h { display:flex; gap:0; position:relative; margin-bottom:48px; }
+  .timeline-h::before { content:''; position:absolute; top:20px; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--accent),var(--accent2),var(--purple)); border-radius:2px; }
+  .tl-step { flex:1; text-align:center; position:relative; }
+  .tl-dot { width:14px; height:14px; border-radius:50%; background:var(--accent); border:2px solid var(--bg); margin:0 auto 14px; position:relative; z-index:1; }
+  .tl-dot.future { background:var(--text2); }
+  .tl-dot.gold { background:var(--gold); }
+  .tl-label { font-size:11px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:.5px; }
+  .tl-label.future { color:var(--text2); }
+  .tl-label.gold { color:var(--gold); }
+  .tl-desc { font-size:12px; color:var(--text2); margin-top:6px; line-height:1.5; }
+
+  .construtora-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px; }
+  .const-card { background:var(--bg3); border:1px solid rgba(30,58,95,.6); border-radius:10px; padding:14px 16px; }
+  .const-name { font-size:13px; font-weight:700; color:var(--text); margin-bottom:4px; }
+  .const-desc { font-size:12px; color:var(--text2); }
+
+  .feature-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; }
+  .feat-chip { background:var(--bg3); border:1px solid rgba(30,58,95,.6); border-radius:8px; padding:10px 14px; font-size:12px; color:var(--text2); }
+  .feat-chip strong { color:var(--text); display:block; font-size:13px; margin-bottom:3px; }
+
+  .modelo-row { display:grid; grid-template-columns:160px 180px 1fr 110px; gap:12px; align-items:start; padding:14px 16px; border-bottom:1px solid rgba(30,58,95,.4); font-size:13px; }
+  .modelo-row.header { background:var(--bg3); border-radius:8px 8px 0 0; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--text2); }
+
+  .vgv-bar { background:var(--bg3); border-radius:10px; overflow:hidden; height:8px; margin-top:6px; }
+  .vgv-fill { height:100%; border-radius:10px; }
+
+  .action-cta { background:linear-gradient(135deg,rgba(56,189,248,.06) 0%,rgba(129,140,248,.06) 100%); border:1px solid rgba(56,189,248,.2); border-radius:16px; padding:28px 32px; margin-top:48px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+  .cta-btn { background:var(--accent); color:#000; font-size:13px; font-weight:700; padding:10px 22px; border-radius:8px; text-decoration:none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-eyebrow"><span class="dot-live"></span> Pesquisa de Mercado · 20/03/2026</div>
+  <h1>Cidade Jardim — Verticalização</h1>
+  <p>Inteligência de mercado para atração de construtoras e estruturação da esteira de produtos residenciais verticais em Uberlândia/MG.</p>
+  <div class="h-meta">
+    <span>📍 Uberlândia, MG — Triângulo Mineiro</span>
+    <span>🏗️ Foco: Verticalização Residencial</span>
+    <span>🎯 Objetivo: Apresentação para Investidores e Construtoras</span>
+    <span>📊 Fontes: DataZAP · Sinduscon-MG · CBIC · Diário do Comércio UDI</span>
+  </div>
+</header>
+
+<nav>
+  <a href="#mercado">🏙️ Mercado UDI</a>
+  <a href="#tipologias">📐 Tipologias</a>
+  <a href="#viabilidade">💰 Viabilidade</a>
+  <a href="#construtoras">🏢 Construtoras</a>
+  <a href="#parceria">🤝 Modelos de Parceria</a>
+  <a href="#esteira">🗺️ Esteira de Produtos</a>
+</nav>
+
+<div class="wrap">
+
+  <!-- MÉTRICAS CHAVE -->
+  <div class="metrics-row" style="margin-top:8px">
+    <div class="metric-card hi">
+      <div class="metric-label">Preço médio m² (venda)</div>
+      <div class="metric-value">R$6.477</div>
+      <div class="metric-sub">Santa Mônica · DataZAP 2026</div>
+    </div>
+    <div class="metric-card go">
+      <div class="metric-label">CUB-MG (jan/2026)</div>
+      <div class="metric-value">R$2.839</div>
+      <div class="metric-sub">Custo unitário básico · Sinduscon-MG</div>
+    </div>
+    <div class="metric-card wa">
+      <div class="metric-label">Lançamentos verticais H1/2024</div>
+      <div class="metric-value">2.372</div>
+      <div class="metric-sub">Unidades em 24 empreendimentos</div>
+    </div>
+    <div class="metric-card pu">
+      <div class="metric-label">Participação vertical nas vendas</div>
+      <div class="metric-value">69%</div>
+      <div class="metric-sub">2.741 vert. vs 1.209 horiz. · 2024</div>
+    </div>
+    <div class="metric-card go">
+      <div class="metric-label">TIR estimada (médio padrão)</div>
+      <div class="metric-value">18–28%</div>
+      <div class="metric-sub">a.a. — interior de MG</div>
+    </div>
+    <div class="metric-card hi">
+      <div class="metric-label">Margem bruta típica</div>
+      <div class="metric-value">25–38%</div>
+      <div class="metric-sub">% sobre VGV — incorporação vertical</div>
+    </div>
+  </div>
+
+  <!-- MERCADO UBERLÂNDIA -->
+  <div class="section" id="mercado">
+    <div class="s-tag">📍 Mercado Local</div>
+    <div class="s-title">Uberlândia — Potencial de Verticalização</div>
+    <div class="s-sub">Terceira maior cidade de MG · 700 mil habitantes · PIB per capita acima da média nacional</div>
+
+    <div class="grid-2" style="margin-top:24px">
+      <div class="card">
+        <div class="card-title">📈 Panorama 2025–2026</div>
+        <div class="card-body">
+          Uberlândia inicia 2026 consolidada como um dos <strong style="color:var(--accent)">mercados imobiliários mais dinâmicos do interior brasileiro</strong>, com histórico recente de crescimento sustentado, avanço urbano e diversificação econômica.<br><br>
+          O mercado vertical superou o horizontal em 2024: <strong style="color:var(--green)">2.741 unidades verticais</strong> vendidas contra apenas 1.209 horizontais — <strong>69% das vendas totais foram apartamentos</strong>. O segmento vertical é claramente o vetor de crescimento da cidade.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">⚠️ Fatores de Atenção em 2026</div>
+        <div class="card-body">
+          <ul style="list-style:none;padding:0">
+            <li style="padding:5px 0;border-bottom:1px solid rgba(30,58,95,.4)">📌 Crédito imobiliário ainda caro (Selic elevada) — comprador precisa de mais entrada</li>
+            <li style="padding:5px 0;border-bottom:1px solid rgba(30,58,95,.4)">📌 Menor volume de lançamentos previsto, porém maior qualidade por empreendimento</li>
+            <li style="padding:5px 0;border-bottom:1px solid rgba(30,58,95,.4)">📌 Localização, tipologia e preço serão mais determinantes do que em ciclos anteriores</li>
+            <li style="padding:5px 0">📌 Oportunidade: mercado mais técnico favorece empreendimentos bem planejados e diferenciados</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:0">
+      <div class="card-title">💲 Mapa de Preços por Segmento — Uberlândia 2026</div>
+      <table>
+        <tr><th>Segmento</th><th>Preço m² (venda)</th><th>Ticket médio unidade</th><th>Localização típica</th></tr>
+        <tr>
+          <td>MCMV / Econômico</td>
+          <td>R$3.500–4.500/m²</td>
+          <td>R$180.000–280.000</td>
+          <td>Periferia / programas gov.</td>
+        </tr>
+        <tr>
+          <td>Padrão Médio</td>
+          <td>R$5.500–7.500/m²</td>
+          <td>R$300.000–650.000</td>
+          <td>Bairros intermediários</td>
+        </tr>
+        <tr>
+          <td>Médio-Alto (Santa Mônica, Saraiva)</td>
+          <td>R$6.477–8.500/m²</td>
+          <td>R$550.000–1.100.000</td>
+          <td>Bairros nobres consolidados</td>
+        </tr>
+        <tr>
+          <td>Alto Padrão / Lançamento Premium</td>
+          <td>R$8.500–12.000/m²</td>
+          <td>R$900.000–3.500.000</td>
+          <td>Setores de valorização / eixos novos</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- TIPOLOGIAS -->
+  <div class="section" id="tipologias">
+    <div class="s-tag">📐 Produto</div>
+    <div class="s-title">Tipologias em Alta — O que o Mercado Compra</div>
+    <div class="s-sub">Dados nacionais CBIC 2025 + tendências para Uberlândia 2026</div>
+
+    <div style="margin-top:24px">
+      <table>
+        <tr>
+          <th>Tipologia</th><th>Metragem</th><th>Participação Mercado</th><th>Ticket Estimado UDI</th><th>Demanda</th><th>Público-Alvo</th>
+        </tr>
+        <tr>
+          <td>Studio / 1 dorm.</td>
+          <td>22–45 m²</td>
+          <td>29% dos lançamentos</td>
+          <td>R$280k–420k</td>
+          <td><span class="badge b-hi">Alta</span></td>
+          <td>Jovens, investidores, locação</td>
+        </tr>
+        <tr>
+          <td>2 quartos compacto</td>
+          <td>46–70 m²</td>
+          <td style="color:var(--green);font-weight:700">38,6% — nº 1 Brasil</td>
+          <td>R$380k–600k</td>
+          <td><span class="badge b-hi">Muito Alta</span></td>
+          <td>Casal jovem, família pequena, home office</td>
+        </tr>
+        <tr>
+          <td>2 quartos médio</td>
+          <td>70–90 m²</td>
+          <td>18% dos lançamentos</td>
+          <td>R$550k–750k</td>
+          <td><span class="badge b-hi">Alta</span></td>
+          <td>Família 2-3 pessoas, upgrade</td>
+        </tr>
+        <tr>
+          <td>3 quartos (suíte master)</td>
+          <td>90–120 m²</td>
+          <td>11% dos lançamentos</td>
+          <td>R$750k–1,1M</td>
+          <td><span class="badge b-med">Média-Alta</span></td>
+          <td>Família maior, classe média-alta</td>
+        </tr>
+        <tr>
+          <td>Cobertura / Duplex</td>
+          <td>150–280 m²</td>
+          <td>2–4% (diferencial)</td>
+          <td>R$1,5M–3,5M</td>
+          <td><span class="badge b-low">Nicho Premium</span></td>
+          <td>Alto padrão, investidor</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="grid-2" style="margin-top:20px">
+      <div class="card">
+        <div class="card-title">🏆 Features Obrigatórias em 2026</div>
+        <div class="feature-grid">
+          <div class="feat-chip"><strong>Varanda Gourmet</strong>Feature #1 mais buscada — diferencial de conversão</div>
+          <div class="feat-chip"><strong>Piscina</strong>Esperada em qualquer condomínio médio padrão</div>
+          <div class="feat-chip"><strong>Academia</strong>Equipada, com espelho e piso emborrachado</div>
+          <div class="feat-chip"><strong>Pet-Friendly</strong>Espaço para pets — critério eliminatório para 30%+ dos compradores</div>
+          <div class="feat-chip"><strong>Segurança 24h</strong>Portaria física ou virtual + biometria + câmeras</div>
+          <div class="feat-chip"><strong>Coworking</strong>Espaço de home office compartilhado — pós-pandemia</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">⭐ Diferenciais de 2026</div>
+        <div class="feature-grid">
+          <div class="feat-chip"><strong>EV Charging</strong>Tomadas para carro elétrico — crescimento 400% a.a.</div>
+          <div class="feat-chip"><strong>App do Condomínio</strong>Reservas, votações, comunicados no celular</div>
+          <div class="feat-chip"><strong>Energia Solar</strong>Reduz taxa de condomínio — argumento de venda poderoso</div>
+          <div class="feat-chip"><strong>Planta Reversível</strong>Quarto vira escritório — flexibilidade valorizada</div>
+          <div class="feat-chip"><strong>Depósito Individual</strong>Por unidade — especialmente para studios</div>
+          <div class="feat-chip"><strong>Fachada Natural</strong>Madeira, jardim vertical, integração com paisagismo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIABILIDADE FINANCEIRA -->
+  <div class="section" id="viabilidade">
+    <div class="s-tag">💰 Financeiro</div>
+    <div class="s-title">Viabilidade — Números do Negócio</div>
+    <div class="s-sub">Estimativas baseadas em CUB/MG Sinduscon e dados de mercado de incorporação vertical no interior de MG</div>
+
+    <div class="grid-3" style="margin-top:24px">
+      <div class="card">
+        <div class="card-title">🧱 Custo de Construção</div>
+        <div class="card-body">
+          <div style="margin-bottom:10px">
+            <div style="font-size:11px;color:var(--text2);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">CUB-MG (jan/2026)</div>
+            <div style="font-size:22px;font-weight:800;color:var(--accent)">R$2.839/m²</div>
+            <div style="font-size:12px;color:var(--text2)">Padrão R1-N · Sinduscon-MG</div>
+          </div>
+          <hr style="border-color:var(--border);margin:12px 0">
+          <div style="font-size:13px;color:var(--text2);line-height:1.9">
+            <div>Econômico: <strong style="color:var(--text)">R$3.200–3.800/m²</strong></div>
+            <div>Médio padrão: <strong style="color:var(--text)">R$3.800–4.800/m²</strong></div>
+            <div>Alto padrão: <strong style="color:var(--text)">R$5.000–7.000/m²</strong></div>
+          </div>
+          <div style="font-size:11px;color:var(--text2);margin-top:10px;border-top:1px solid var(--border);padding-top:8px">
+            Inclui: CUB + BDI (18–25%) + projetos + regularização. Não inclui terreno.
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📊 Margens Típicas da Incorporação</div>
+        <div class="card-body">
+          <div style="margin-bottom:12px">
+            <div style="font-size:12px;color:var(--text2);margin-bottom:6px">Margem Bruta sobre VGV</div>
+            <div style="font-size:24px;font-weight:800;color:var(--green)">25–38%</div>
+            <div class="vgv-bar"><div class="vgv-fill" style="width:30%;background:var(--green)"></div></div>
+          </div>
+          <div style="margin-bottom:12px">
+            <div style="font-size:12px;color:var(--text2);margin-bottom:6px">Margem Líquida sobre VGV</div>
+            <div style="font-size:24px;font-weight:800;color:var(--gold)">15–22%</div>
+            <div class="vgv-bar"><div class="vgv-fill" style="width:18%;background:var(--gold)"></div></div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--text2);margin-bottom:6px">TIR (Taxa Interna de Retorno)</div>
+            <div style="font-size:24px;font-weight:800;color:var(--accent)">18–28% a.a.</div>
+            <div class="vgv-bar"><div class="vgv-fill" style="width:22%;background:var(--accent)"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">⏱️ Prazos do Projeto</div>
+        <div class="card-body" style="font-size:13px;line-height:2">
+          <div>Aprovação na Prefeitura: <strong style="color:var(--gold)">6–18 meses</strong></div>
+          <div>Construção: <strong style="color:var(--accent)">24–36 meses</strong></div>
+          <div>Pré-venda (lançamento): <strong style="color:var(--green)">antes da obra</strong></div>
+          <div>Prazo total: <strong style="color:var(--text)">36–60 meses</strong></div>
+          <hr style="border-color:var(--border);margin:10px 0">
+          <div style="font-size:12px;color:var(--text2)">💡 Lançamentos com pré-venda permitem financiar a obra com recursos dos compradores — reduzindo necessidade de capital externo.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:rgba(52,211,153,.3);background:linear-gradient(135deg,rgba(52,211,153,.04) 0%,var(--bg2) 100%)">
+      <div class="card-title">🏗️ Exemplo de Viabilidade — Empreendimento Âncora 120 unidades</div>
+      <table>
+        <tr><th>Item</th><th>Qtd/Valor</th><th>Base de Cálculo</th></tr>
+        <tr><td>Unidades tipo A (2q/65m²)</td><td>80 unidades × R$520.000</td><td>= R$41,6 milhões VGV</td></tr>
+        <tr><td>Unidades tipo B (3q/100m²)</td><td>30 unidades × R$780.000</td><td>= R$23,4 milhões VGV</td></tr>
+        <tr><td>Coberturas (140m²)</td><td>10 unidades × R$1.400.000</td><td>= R$14 milhões VGV</td></tr>
+        <tr><td style="color:var(--accent)">VGV Total Estimado</td><td style="color:var(--accent);font-weight:700">—</td><td style="color:var(--accent);font-weight:700">R$79 milhões</td></tr>
+        <tr><td>Custo de construção (médio padrão)</td><td>~10.000 m² × R$4.200/m²</td><td>= R$42 milhões</td></tr>
+        <tr><td style="color:var(--green)">Lucro Bruto Estimado</td><td style="color:var(--green);font-weight:700">~33%</td><td style="color:var(--green);font-weight:700">R$26–35 milhões</td></tr>
+      </table>
+      <div style="font-size:12px;color:var(--text2);margin-top:12px;font-style:italic">* Não inclui custo do terreno (considerado como permuta). Valores estimados para planejamento. Estudo de viabilidade detalhado deve ser realizado com projetistas e advogados especializados.</div>
+    </div>
+  </div>
+
+  <!-- CONSTRUTORAS -->
+  <div class="section" id="construtoras">
+    <div class="s-tag">🏢 Mercado</div>
+    <div class="s-title">Construtoras e Incorporadoras em Uberlândia</div>
+    <div class="s-sub">Players verticais ativos — potenciais parceiras para o projeto Cidade Jardim</div>
+
+    <div class="construtora-grid" style="margin-top:24px">
+      <div class="const-card" style="border-color:rgba(56,189,248,.4)">
+        <div class="const-name">⭐ Perplan</div>
+        <div class="const-desc">Maior incorporadora de UDI. 2 lançamentos verticais previstos em 2025. Referência de mercado.</div>
+      </div>
+      <div class="const-card" style="border-color:rgba(56,189,248,.4)">
+        <div class="const-name">⭐ Construtora Pacheco</div>
+        <div class="const-desc">Fundada nos anos 1980. "Dita tendências" no mercado imobiliário de UDI. Alto prestígio local.</div>
+      </div>
+      <div class="const-card">
+        <div class="const-name">R. Freitas</div>
+        <div class="const-desc">38 anos de atuação em UDI. Construtora e incorporadora consolidada.</div>
+      </div>
+      <div class="const-card">
+        <div class="const-name">ZP Empreendimentos</div>
+        <div class="const-desc">Médio e alto padrão desde 2002. Especialista em apartamentos e casas em condomínio.</div>
+      </div>
+      <div class="const-card">
+        <div class="const-name">Manzan Construtora</div>
+        <div class="const-desc">Edifícios residenciais de padrão elevado. Qualidade como diferencial.</div>
+      </div>
+      <div class="const-card">
+        <div class="const-name">DRF Incorporação</div>
+        <div class="const-desc">Fundada em 2010. Médio e alto padrão. Ativa no mercado vertical de UDI.</div>
+      </div>
+      <div class="const-card">
+        <div class="const-name">Senza Construtora</div>
+        <div class="const-desc">Lazer completo e design moderno. Sócios com 15+ anos de experiência.</div>
+      </div>
+      <div class="const-card">
+        <div class="const-name">Inconew</div>
+        <div class="const-desc">Obras residenciais, comerciais, industriais e loteamentos. Uma das mais requisitadas.</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px">
+      <div class="card-title">📌 Como Abordar Construtoras — Pitch do Terreno</div>
+      <div class="card-body">
+        Para atrair construtoras para o projeto, a apresentação deve responder estas perguntas-chave:<br><br>
+        <div class="grid-2">
+          <div>
+            <strong style="color:var(--accent)">Sobre o Terreno:</strong>
+            <ul style="margin:8px 0 0 16px;font-size:13px;color:var(--text2);line-height:2">
+              <li>Área total e área aproveitável construível</li>
+              <li>Zoneamento e parâmetros urbanísticos (TO, CA, gabarito)</li>
+              <li>Localização e acessos (distância do centro, eixos viários)</li>
+              <li>Status da documentação (matrícula, IPTU, dívidas)</li>
+            </ul>
+          </div>
+          <div>
+            <strong style="color:var(--green)">Sobre a Proposta:</strong>
+            <ul style="margin:8px 0 0 16px;font-size:13px;color:var(--text2);line-height:2">
+              <li>Modelo de negócio proposto (permuta, SPE, venda)</li>
+              <li>% do VGV ou unidades para o terrenista</li>
+              <li>Estudo de viabilidade preliminar</li>
+              <li>Cronograma de aprovação e lançamento</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODELOS DE PARCERIA -->
+  <div class="section" id="parceria">
+    <div class="s-tag">🤝 Estruturação</div>
+    <div class="s-title">Modelos de Parceria — Terreno × Construtora</div>
+    <div class="s-sub">Instrumentos jurídicos mais utilizados na incorporação imobiliária brasileira</div>
+
+    <div style="margin-top:24px">
+      <div class="modelo-row header">
+        <div>Modelo</div><div>Split Típico</div><div>Como Funciona</div><div>Melhor Para</div>
+      </div>
+      <div class="modelo-row">
+        <div style="color:var(--accent);font-weight:700">Permuta Física</div>
+        <div style="color:var(--green)">15–25% das unidades</div>
+        <div>Proprietário recebe unidades prontas ao habite-se. Nenhum desembolso de caixa.</div>
+        <div><span class="badge b-hi">Patrimônio</span></div>
+      </div>
+      <div class="modelo-row">
+        <div style="color:var(--gold);font-weight:700">Permuta Financeira</div>
+        <div style="color:var(--green)">12–20% do VGV</div>
+        <div>Proprietário recebe % do VGV em dinheiro conforme vendas realizadas ao longo da obra.</div>
+        <div><span class="badge b-hi">Liquidez</span></div>
+      </div>
+      <div class="modelo-row">
+        <div style="color:var(--purple);font-weight:700">SPE</div>
+        <div style="color:var(--green)">Prop. ao capital (terreno)</div>
+        <div>Terrenista + construtora constituem uma empresa só para o empreendimento. Participação nos lucros.</div>
+        <div><span class="badge b-med">Controle</span></div>
+      </div>
+      <div class="modelo-row" style="border-bottom:none">
+        <div style="color:var(--text2);font-weight:700">Venda Pura</div>
+        <div style="color:var(--text2)">100% à vista</div>
+        <div>Vende o terreno. Simplicidade total. Perde upside do empreendimento.</div>
+        <div><span class="badge b-low">Simples</span></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;border-color:rgba(251,191,36,.3)">
+      <div class="card-title">💡 Recomendação para Cidade Jardim</div>
+      <div class="card-body">
+        Para maximizar o valor do projeto e atrair construtoras de médio e grande porte, recomendamos o modelo de <strong style="color:var(--gold)">Permuta Financeira + SPE</strong> como estrutura-base da proposta:<br><br>
+        Constituição de SPE com a construtora parceira, onde a entrada do terreno equivale a uma participação de <strong>18–22% do VGV</strong>, recebida em dinheiro conforme vendas e na entrega. Isso oferece liquidez ao terrenista, clareza jurídica e alinha interesses de todas as partes.
+      </div>
+    </div>
+  </div>
+
+  <!-- ESTEIRA DE PRODUTOS -->
+  <div class="section" id="esteira">
+    <div class="s-tag">🗺️ Produto</div>
+    <div class="s-title">Esteira de Produtos Recomendada</div>
+    <div class="s-sub">Sequência de lançamentos 2026–2030 para maximizar VGV e aprovação de mercado</div>
+
+    <div class="timeline-h" style="margin-top:40px">
+      <div class="tl-step">
+        <div class="tl-dot"></div>
+        <div class="tl-label">2026</div>
+        <div class="tl-desc">Aprovações<br>Parceiro<br>Projeto</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot gold"></div>
+        <div class="tl-label gold">2026–2027</div>
+        <div class="tl-desc">Fase 1<br>Lançamento Âncora</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot gold"></div>
+        <div class="tl-label gold">2027–2028</div>
+        <div class="tl-desc">Fase 2<br>Consolidação</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot future"></div>
+        <div class="tl-label future">2028–2030</div>
+        <div class="tl-desc">Fase 3<br>Premium</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot future"></div>
+        <div class="tl-label future">2030+</div>
+        <div class="tl-desc">Expansão<br>ou Desinvestimento</div>
+      </div>
+    </div>
+
+    <table style="margin-top:8px">
+      <tr>
+        <th>Fase</th><th>Empreendimento</th><th>Tipologia Mix</th><th>Unidades</th><th>VGV Estimado</th><th>Público-Alvo</th>
+      </tr>
+      <tr>
+        <td><span class="badge b-hi">Fase 1</span></td>
+        <td>Torre Âncora</td>
+        <td>Studios 30–45m² + 2q 60–75m²</td>
+        <td>120 un.</td>
+        <td style="color:var(--green);font-weight:700">R$55–65M</td>
+        <td>Jovens, investidores, locação</td>
+      </tr>
+      <tr>
+        <td><span class="badge b-med">Fase 2</span></td>
+        <td>Torre Família</td>
+        <td>2q 70–85m² + 3q 95–120m²</td>
+        <td>80 un.</td>
+        <td style="color:var(--gold);font-weight:700">R$65–80M</td>
+        <td>Família padrão médio, upgrade</td>
+      </tr>
+      <tr>
+        <td><span class="badge b-low">Fase 3</span></td>
+        <td>Residencial Premium</td>
+        <td>3q 110–140m² + coberturas</td>
+        <td>40 un.</td>
+        <td style="color:var(--purple);font-weight:700">R$70–100M</td>
+        <td>Alto padrão, investidor premium</td>
+      </tr>
+      <tr style="background:rgba(56,189,248,.04)">
+        <td style="color:var(--accent)">TOTAL</td>
+        <td style="color:var(--accent)">3 torres</td>
+        <td style="color:var(--accent)">Mix completo</td>
+        <td style="color:var(--accent);font-weight:800">240 un.</td>
+        <td style="color:var(--accent);font-weight:800;font-size:16px">R$190–245M VGV</td>
+        <td style="color:var(--accent)">Múltiplos perfis</td>
+      </tr>
+    </table>
+
+    <div class="grid-2" style="margin-top:20px">
+      <div class="card" style="border-color:rgba(52,211,153,.3)">
+        <div class="card-title" style="color:var(--green)">✅ Por que essa sequência</div>
+        <div class="card-body">
+          A Fase 1 (studios e 2q compactos) captura a <strong style="color:var(--green)">maior demanda do mercado</strong> (69% das vendas são verticais), gera caixa rápido, prova o produto e valoriza o terreno para as fases seguintes.<br><br>
+          A Fase 3 (premium) só é possível com a valorização gerada pelas fases anteriores — o histórico de vendas e a ocupação do entorno elevam o preço por m² do premium.
+        </div>
+      </div>
+      <div class="card" style="border-color:rgba(251,191,36,.3)">
+        <div class="card-title" style="color:var(--gold)">⚠️ Próximos Passos Imediatos</div>
+        <div class="card-body">
+          <ul style="list-style:none;padding:0;font-size:13px;color:var(--text2);line-height:2">
+            <li>1. Levantar parâmetros urbanísticos do terreno (TO, CA, gabarito)</li>
+            <li>2. Contratar estudo de viabilidade técnica e financeira</li>
+            <li>3. Regularizar documentação do terreno</li>
+            <li>4. Montar dossiê de apresentação com KMZ, fotos e análise de zoneamento</li>
+            <li>5. Agendar reuniões com Perplan, Pacheco e ZP Empreendimentos</li>
+            <li>6. Definir modelo de parceria e % oferecido ao parceiro</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-cta">
+    <div>
+      <div style="font-size:14px;color:var(--text2)">Próximo passo: <strong style="color:var(--accent)">Integrar KMZ do terreno + documentação urbanística + criar apresentação para investidores</strong></div>
+      <div style="font-size:12px;color:var(--text2);margin-top:4px">Envie os arquivos KMZ, PDFs e plantas para o Cowork para integrar à apresentação final.</div>
+    </div>
+    <div style="font-size:12px;color:var(--text2)">Cidade Jardim Empreendimentos · Pesquisa 20/03/2026</div>
+  </div>
+
+</div>
+</body>
+</html>

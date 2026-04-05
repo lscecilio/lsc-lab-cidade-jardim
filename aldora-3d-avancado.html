@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AL'DORA City — Render 3D Cinematográfico</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#000; overflow:hidden; font-family:'Georgia',serif; }
+    #c { display:block; width:100vw; height:100vh; }
+
+    #brand {
+      position:fixed; top:22px; left:26px; pointer-events:none; z-index:10;
+    }
+    .bname {
+      font-size:26px; font-weight:bold; letter-spacing:0.2em; color:#C8A84B;
+      text-shadow:0 0 40px #C8A84B55, 0 2px 10px rgba(0,0,0,1);
+    }
+    .bsub { font-size:10px; letter-spacing:0.3em; color:#ffffff55; margin-top:4px; }
+
+    #stats {
+      position:fixed; top:22px; right:22px; z-index:10; pointer-events:none;
+      background:rgba(0,0,0,0.65); border:1px solid #C8A84B33;
+      padding:12px 18px; border-radius:6px; text-align:right;
+      backdrop-filter:blur(4px);
+    }
+    .sv { font-size:20px; color:#C8A84B; font-weight:bold; }
+    .sl { font-size:9px; color:#ffffff44; letter-spacing:0.2em; }
+    .ss { font-size:9px; color:#ffffff44; margin-top:5px; line-height:1.8; }
+
+    #phases {
+      position:fixed; bottom:28px; left:50%; transform:translateX(-50%);
+      display:flex; gap:8px; z-index:10;
+    }
+    .pb {
+      background:rgba(0,0,0,0.8); border:1px solid #C8A84B55;
+      color:#C8A84Baa; padding:8px 18px; border-radius:4px;
+      cursor:pointer; font-size:11px; letter-spacing:0.1em;
+      transition:all 0.2s; font-family:inherit;
+    }
+    .pb:hover { border-color:#C8A84B; color:#C8A84B; }
+    .pb.on { background:linear-gradient(135deg,#C8A84B,#9a7010); color:#000; border-color:transparent; font-weight:bold; }
+
+    #legend {
+      position:fixed; bottom:28px; right:22px; z-index:10;
+      background:rgba(0,0,0,0.75); border:1px solid #C8A84B22;
+      padding:10px 14px; border-radius:5px; backdrop-filter:blur(4px);
+    }
+    .lt { font-size:9px; color:#C8A84B77; letter-spacing:0.2em; margin-bottom:6px; }
+    .li { display:flex; align-items:center; gap:6px; font-size:10px; color:#aaa; margin-bottom:3px; }
+    .ld { width:10px; height:7px; border-radius:1px; }
+
+    #modetgl {
+      position:fixed; top:22px; left:50%; transform:translateX(-50%);
+      display:flex; gap:5px; z-index:10;
+    }
+    .mt {
+      background:rgba(0,0,0,0.75); border:1px solid #ffffff18;
+      color:#ffffff66; padding:5px 13px; border-radius:20px;
+      cursor:pointer; font-size:10px; letter-spacing:0.08em;
+      transition:all 0.2s; font-family:inherit;
+    }
+    .mt:hover { border-color:#C8A84B66; color:#C8A84B; }
+    .mt.on { background:rgba(200,168,75,0.18); border-color:#C8A84B; color:#C8A84B; }
+
+    #hint {
+      position:fixed; bottom:28px; left:22px; z-index:10;
+      font-size:9px; color:#ffffff22; letter-spacing:0.08em; line-height:2;
+      pointer-events:none;
+    }
+  </style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<div id="brand">
+  <div class="bname">AL'DORA CITY</div>
+  <div class="bsub">JARDINS · VERSAILLES · RESERVA · SIGNATURE</div>
+</div>
+
+<div id="modetgl">
+  <button class="mt on"  onclick="setMode('night')"  >🌙 NOTURNO</button>
+  <button class="mt"     onclick="setMode('golden')" >🌅 GOLDEN HOUR</button>
+  <button class="mt"     onclick="setMode('day')"    >☀️ DIA</button>
+</div>
+
+<div id="stats">
+  <div class="sl">VGV REFERENCIAL QC01</div>
+  <div class="sv">R$ 299,7M</div>
+  <div class="ss">3 Quadras · 14 Torres · 125.684 m²<br>CA 4,0 · ZR2/SVA · Uberlândia MG</div>
+</div>
+
+<div id="phases">
+  <button class="pb on" onclick="flyTo(0)">🌐 OVERVIEW</button>
+  <button class="pb"    onclick="flyTo(1)">FASE 1 · JARDINS</button>
+  <button class="pb"    onclick="flyTo(2)">FASE 2 · VERSAILLES</button>
+  <button class="pb"    onclick="flyTo(3)">FASE 3 · SIGNATURE</button>
+</div>
+
+<div id="legend">
+  <div class="lt">QUADRAS · AL'DORA CITY</div>
+  <div class="li"><div class="ld" style="background:#C8A84B"></div>QC01 · Jardins · Torres A–D</div>
+  <div class="li"><div class="ld" style="background:#A07020"></div>QC02 · Reserva · Torres E+F</div>
+  <div class="li"><div class="ld" style="background:#FFD060"></div>QC03 · Signature · Torres G+H</div>
+</div>
+
+<div id="hint">ARRASTAR — rotacionar &nbsp; SCROLL — zoom &nbsp; 0–3 — focar fases</div>
+
+<script>
+'use strict';
+
+// ─────────────────────────────────────────────────────────────────
+// TEXTURE FACTORY
+// ─────────────────────────────────────────────────────────────────
+function makeWindowTex(seed, litFraction, warmth) {
+  // warmth: 0=cool blue, 1=warm amber
+  var W=512, H=1024;
+  var cv=document.createElement('canvas'); cv.width=W; cv.height=H;
+  var ctx=cv.getContext('2d');
+
+  // Facade gradient (dark glass/concrete)
+  var grd=ctx.createLinearGradient(0,0,W,0);
+  grd.addColorStop(0,   '#0d1810');
+  grd.addColorStop(0.45,'#162414');
+  grd.addColorStop(1,   '#0a1510');
+  ctx.fillStyle=grd; ctx.fillRect(0,0,W,H);
+
+  // Vertical structural lines
+  for(var s=0;s<8;s++) {
+    var sx=(W/8)*s;
+    ctx.fillStyle='rgba(5,10,6,0.8)';
+    ctx.fillRect(sx,0,2,H);
+  }
+  // Floor slab lines
+  for(var f=0;f<28;f++) {
+    ctx.fillStyle='rgba(8,15,9,0.9)';
+    ctx.fillRect(0,(H/28)*f,W,2);
+  }
+
+  // Window grid
+  var ww=34, wh=22, gx=14, gy=16;
+  var totalRows=Math.floor((H-24)/(wh+gy));
+  var totalCols=Math.floor((W-24)/(ww+gx));
+  var startX=(W-totalCols*(ww+gx)+gx)/2;
+  var startY=22;
+
+  function rnd(r,c) {
+    var v=Math.sin(seed*127.3+r*31.7+c*17.3)*43758.5453;
+    return v-Math.floor(v);
+  }
+
+  for(var r=0;r<totalRows;r++) {
+    for(var c=0;c<totalCols;c++) {
+      var x=startX+c*(ww+gx);
+      var y=startY+r*(wh+gy);
+      var lit=rnd(r,c)<litFraction;
+      if(lit) {
+        var brt=Math.floor(160+rnd(r*3,c*5)*95);
+        var G=Math.floor(brt*(0.82+warmth*0.12));
+        var B=Math.floor(brt*(0.35+warmth*0.1));
+        if(warmth<0.3) { G=Math.floor(brt*0.88); B=Math.floor(brt*0.95); }
+        ctx.fillStyle='rgba('+brt+','+G+','+B+',0.95)';
+        ctx.fillRect(x,y,ww,wh);
+        // Subtle interior glow
+        ctx.shadowBlur=6; ctx.shadowColor='rgba(255,200,80,0.5)';
+        ctx.fillStyle='rgba(255,230,150,0.22)';
+        ctx.fillRect(x+2,y+2,ww-4,wh-4);
+        ctx.shadowBlur=0;
+        // Top reflection
+        ctx.fillStyle='rgba(255,255,255,0.15)';
+        ctx.fillRect(x+2,y+2,ww-4,3);
+      } else {
+        ctx.fillStyle='rgba(18,32,20,0.9)';
+        ctx.fillRect(x,y,ww,wh);
+        // Dark glass faint reflection
+        ctx.fillStyle='rgba(40,80,50,0.2)';
+        ctx.fillRect(x+1,y+1,ww/3,2);
+      }
+      // Frame
+      ctx.strokeStyle='rgba(50,80,55,0.4)';
+      ctx.lineWidth=0.5;
+      ctx.strokeRect(x,y,ww,wh);
+    }
+  }
+
+  var tex=new THREE.CanvasTexture(cv);
+  return tex;
+}
+
+function makeGroundTex(mode) {
+  var W=1024, H=1024;
+  var cv=document.createElement('canvas'); cv.width=W; cv.height=H;
+  var ctx=cv.getContext('2d');
+
+  if(mode==='night') {
+    // Dark asphalt
+    ctx.fillStyle='#060809'; ctx.fillRect(0,0,W,H);
+    // Noise
+    for(var i=0;i<8000;i++) {
+      var px=Math.random()*W, py=Math.random()*H;
+      var v=Math.floor(Math.random()*12+6);
+      ctx.fillStyle='rgba('+v+','+Math.floor(v*1.1)+','+v+',0.4)';
+      ctx.fillRect(px,py,1.5,1.5);
+    }
+    // Subtle road lines
+    ctx.strokeStyle='rgba(40,60,42,0.5)';
+    ctx.lineWidth=2;
+    ctx.setLineDash([20,15]);
+    ctx.beginPath(); ctx.moveTo(W/2,0); ctx.lineTo(W/2,H); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0,H/2); ctx.lineTo(W,H/2); ctx.stroke();
+    ctx.setLineDash([]);
+  } else if(mode==='golden') {
+    ctx.fillStyle='#100a04'; ctx.fillRect(0,0,W,H);
+    for(var i=0;i<6000;i++) {
+      var px=Math.random()*W, py=Math.random()*H;
+      var v=Math.floor(Math.random()*15+8);
+      ctx.fillStyle='rgba('+Math.floor(v*1.3)+','+v+','+Math.floor(v*0.5)+',0.4)';
+      ctx.fillRect(px,py,1.5,1.5);
+    }
+  } else {
+    // Day — concrete
+    ctx.fillStyle='#9a9888'; ctx.fillRect(0,0,W,H);
+    for(var i=0;i<5000;i++) {
+      var px=Math.random()*W, py=Math.random()*H;
+      var v=Math.floor(140+Math.random()*25);
+      ctx.fillStyle='rgba('+v+','+v+','+Math.floor(v*0.9)+',0.15)';
+      ctx.fillRect(px,py,2,2);
+    }
+    ctx.strokeStyle='rgba(80,78,65,0.3)';
+    ctx.lineWidth=3;
+    ctx.setLineDash([25,18]);
+    ctx.beginPath(); ctx.moveTo(W/2,0); ctx.lineTo(W/2,H); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0,H/2); ctx.lineTo(W,H/2); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  var tex=new THREE.CanvasTexture(cv);
+  tex.wrapS=tex.wrapT=THREE.RepeatWrapping;
+  tex.repeat.set(3,3);
+  return tex;
+}
+
+// Pre-generate textures
+var NIGHT_TEXTURES = [
+  makeWindowTex(1, 0.72, 0.9),
+  makeWindowTex(2, 0.68, 0.85),
+  makeWindowTex(3, 0.75, 0.95),
+  makeWindowTex(4, 0.65, 0.88),
+];
+var SURROUND_NIGHT_TEXTURES = [
+  makeWindowTex(5,  0.55, 0.8),
+  makeWindowTex(6,  0.48, 0.75),
+  makeWindowTex(7,  0.60, 0.82),
+  makeWindowTex(8,  0.42, 0.70),
+  makeWindowTex(9,  0.50, 0.78),
+  makeWindowTex(10, 0.35, 0.65),
+];
+var DAY_TEXTURES = [
+  makeWindowTex(1,  0.40, 0.2),
+  makeWindowTex(2,  0.35, 0.2),
+  makeWindowTex(3,  0.45, 0.2),
+  makeWindowTex(4,  0.38, 0.2),
+];
+
+// ─────────────────────────────────────────────────────────────────
+// RENDERER & SCENE
+// ─────────────────────────────────────────────────────────────────
+var canvas=document.getElementById('c');
+var renderer=new THREE.WebGLRenderer({canvas:canvas, antialias:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.05;
+
+var scene=new THREE.Scene();
+var camera=new THREE.PerspectiveCamera(52, window.innerWidth/window.innerHeight, 0.5, 2500);
+
+window.addEventListener('resize',function(){
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect=window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+});
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+// ─────────────────────────────────────────────────────────────────
+// SCENE OBJECTS REGISTRY (for cleanup)
+// ─────────────────────────────────────────────────────────────────
+var sceneObjects=[];
+function addToScene(obj) { scene.add(obj); sceneObjects.push(obj); return obj; }
+function clearScene() {
+  sceneObjects.forEach(function(o){ scene.remove(o); });
+  sceneObjects=[];
+}
+
+// ─────────────────────────────────────────────────────────────────
+// LIGHTS
+// ─────────────────────────────────────────────────────────────────
+function buildLights(mode) {
+  if(mode==='night') {
+    // Very dark ambient with warm city glow tint
+    addToScene(new THREE.AmbientLight(0x0d1a10, 2.0));
+    // Moon/sky directional (very dim, cool)
+    var moon=new THREE.DirectionalLight(0x1a2a40, 0.6);
+    moon.position.set(-80, 160, -100);
+    addToScene(moon);
+    // Warm horizon fill (city glow from ground up)
+    var horizon=new THREE.DirectionalLight(0x5c2800, 0.45);
+    horizon.position.set(0, -30, 0);
+    addToScene(horizon);
+    // Key rim light (behind towers — dramatic silhouette)
+    var rim=new THREE.DirectionalLight(0xC8A84B, 0.35);
+    rim.position.set(-60, 80, -150);
+    addToScene(rim);
+    // Subtle front fill
+    var fill=new THREE.DirectionalLight(0x102015, 0.5);
+    fill.position.set(40, 60, 80);
+    fill.castShadow=true;
+    fill.shadow.mapSize.set(2048,2048);
+    fill.shadow.camera.left=-120; fill.shadow.camera.right=120;
+    fill.shadow.camera.top=120;   fill.shadow.camera.bottom=-120;
+    addToScene(fill);
+  } else if(mode==='golden') {
+    addToScene(new THREE.AmbientLight(0x1a0d04, 2.2));
+    var sun=new THREE.DirectionalLight(0xff7010, 3.5);
+    sun.position.set(-80, 35, 120);
+    sun.castShadow=true;
+    sun.shadow.mapSize.set(2048,2048);
+    sun.shadow.camera.left=-120; sun.shadow.camera.right=120;
+    sun.shadow.camera.top=120;   sun.shadow.camera.bottom=-120;
+    addToScene(sun);
+    var fill2=new THREE.DirectionalLight(0x602010, 0.8);
+    fill2.position.set(80,80,-60); addToScene(fill2);
+    var rim2=new THREE.DirectionalLight(0xffb040,0.5);
+    rim2.position.set(-40,60,-100); addToScene(rim2);
+  } else {
+    // Day
+    addToScene(new THREE.AmbientLight(0x8899aa, 1.8));
+    var daylight=new THREE.DirectionalLight(0xfff8e8, 3.2);
+    daylight.position.set(80,200,80);
+    daylight.castShadow=true;
+    daylight.shadow.mapSize.set(2048,2048);
+    daylight.shadow.camera.left=-150; daylight.shadow.camera.right=150;
+    daylight.shadow.camera.top=150;   daylight.shadow.camera.bottom=-150;
+    addToScene(daylight);
+    addToScene(new THREE.HemisphereLight(0x7aadcc, 0x3a5a30, 0.9));
+    var back=new THREE.DirectionalLight(0xffffff, 0.3);
+    back.position.set(-80,50,-80); addToScene(back);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// SKY
+// ─────────────────────────────────────────────────────────────────
+function buildSky(mode) {
+  if(mode==='night') {
+    scene.background=new THREE.Color(0x010408);
+    scene.fog=new THREE.FogExp2(0x010408, 0.0045);
+
+    // Stars
+    var sv=[];
+    for(var i=0;i<1500;i++) {
+      var th=Math.random()*Math.PI*2, ph=Math.random()*Math.PI*0.5+0.1;
+      var r=1000;
+      sv.push(r*Math.sin(ph)*Math.cos(th), r*Math.cos(ph), r*Math.sin(ph)*Math.sin(th));
+    }
+    var sg=new THREE.BufferGeometry();
+    sg.setAttribute('position',new THREE.Float32BufferAttribute(sv,3));
+    var stars=addToScene(new THREE.Points(sg, new THREE.PointsMaterial({
+      color:0xffffff, size:0.9, transparent:true, opacity:0.75,
+      sizeAttenuation:false
+    })));
+
+    // City glow on horizon (ambient orange band)
+    var glowGeo=new THREE.CylinderGeometry(600,600,15,32,1,true);
+    var glowMat=new THREE.MeshBasicMaterial({
+      color:0x3a1800, side:THREE.BackSide, transparent:true, opacity:0.35
+    });
+    var glow=addToScene(new THREE.Mesh(glowGeo,glowMat));
+    glow.position.y=2;
+
+    // Moon
+    var moon=addToScene(new THREE.Mesh(
+      new THREE.SphereGeometry(5,16,16),
+      new THREE.MeshBasicMaterial({color:0xfff5e8})
+    ));
+    moon.position.set(-250,380,-600);
+
+    // Moon halo
+    var moonHalo=addToScene(new THREE.Mesh(
+      new THREE.SphereGeometry(8,16,16),
+      new THREE.MeshBasicMaterial({color:0xfff0cc,transparent:true,opacity:0.12})
+    ));
+    moonHalo.position.copy(moon.position);
+
+  } else if(mode==='golden') {
+    scene.background=new THREE.Color(0x200c02);
+    scene.fog=new THREE.FogExp2(0x3a1005, 0.004);
+
+    // Gradient sky dome
+    var skyGeo=new THREE.SphereGeometry(900,16,8);
+    var skyMat=new THREE.ShaderMaterial({
+      side:THREE.BackSide,
+      uniforms:{
+        top:{value:new THREE.Color(0x0d0408)},
+        bottom:{value:new THREE.Color(0xff5500)},
+        mid:{value:new THREE.Color(0xff2200)},
+      },
+      vertexShader:[
+        'varying float vY;',
+        'void main(){',
+        '  vY = normalize((modelMatrix*vec4(position,1.0)).xyz).y;',
+        '  gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0);',
+        '}'
+      ].join('\n'),
+      fragmentShader:[
+        'uniform vec3 top,bottom,mid;',
+        'varying float vY;',
+        'void main(){',
+        '  float t=clamp(vY,0.0,1.0);',
+        '  vec3 c=mix(bottom,mid,smoothstep(0.0,0.15,t));',
+        '  c=mix(c,top,smoothstep(0.15,1.0,t));',
+        '  gl_FragColor=vec4(c,1.0);',
+        '}'
+      ].join('\n')
+    });
+    addToScene(new THREE.Mesh(skyGeo,skyMat));
+    // Sun disc
+    var sunD=addToScene(new THREE.Mesh(
+      new THREE.SphereGeometry(18,16,16),
+      new THREE.MeshBasicMaterial({color:0xffcc40})
+    ));
+    sunD.position.set(-280,60,500);
+    // Glow
+    var sunG=addToScene(new THREE.Mesh(
+      new THREE.SphereGeometry(30,16,16),
+      new THREE.MeshBasicMaterial({color:0xff8020,transparent:true,opacity:0.18})
+    ));
+    sunG.position.copy(sunD.position);
+
+  } else {
+    // Day
+    scene.background=new THREE.Color(0x7ab8d8);
+    scene.fog=new THREE.FogExp2(0xadd4e8, 0.003);
+
+    // Sky dome
+    var domeGeo=new THREE.SphereGeometry(900,16,8);
+    var domeMat=new THREE.ShaderMaterial({
+      side:THREE.BackSide,
+      uniforms:{
+        top:{value:new THREE.Color(0x1460a0)},
+        bottom:{value:new THREE.Color(0x8fcce0)},
+      },
+      vertexShader:[
+        'varying float vY;',
+        'void main(){',
+        '  vY = normalize((modelMatrix*vec4(position,1.0)).xyz).y;',
+        '  gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0);',
+        '}'
+      ].join('\n'),
+      fragmentShader:[
+        'uniform vec3 top,bottom;',
+        'varying float vY;',
+        'void main(){',
+        '  gl_FragColor=vec4(mix(bottom,top,clamp(vY*1.5,0.0,1.0)),1.0);',
+        '}'
+      ].join('\n')
+    });
+    addToScene(new THREE.Mesh(domeGeo,domeMat));
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// GROUND
+// ─────────────────────────────────────────────────────────────────
+function buildGround(mode) {
+  var tex=makeGroundTex(mode);
+  var gColor = mode==='night' ? 0x060809 : (mode==='golden' ? 0x0e0804 : 0x888070);
+  var roughness = mode==='day' ? 0.95 : 0.98;
+
+  var gnd=addToScene(new THREE.Mesh(
+    new THREE.PlaneGeometry(1200,1200,1,1),
+    new THREE.MeshStandardMaterial({
+      map:tex, color:gColor, roughness:roughness, metalness:0.0
+    })
+  ));
+  gnd.rotation.x=-Math.PI/2;
+  gnd.receiveShadow=true;
+
+  // Streets
+  buildStreets(mode);
+}
+
+function buildStreets(mode) {
+  var roadColor = mode==='night' ? 0x050606 : (mode==='golden' ? 0x0d0802 : 0x666050);
+  var roadMat=new THREE.MeshStandardMaterial({color:roadColor, roughness:0.98});
+
+  // H road
+  var rh=addToScene(new THREE.Mesh(new THREE.PlaneGeometry(400,12),roadMat));
+  rh.rotation.x=-Math.PI/2; rh.position.y=0.05;
+  // V road
+  var rv=addToScene(new THREE.Mesh(new THREE.PlaneGeometry(12,400),roadMat));
+  rv.rotation.x=-Math.PI/2; rv.position.y=0.05;
+
+  // Dashed center lines
+  if(mode!=='day') {
+    var lineMat=new THREE.MeshBasicMaterial({color:0xffe070,transparent:true,opacity:0.5});
+    for(var i=-8;i<=8;i++) {
+      var lm=addToScene(new THREE.Mesh(new THREE.PlaneGeometry(0.25,3),lineMat));
+      lm.rotation.x=-Math.PI/2; lm.position.set(0,0.08,i*6);
+    }
+  }
+
+  // Street lights
+  var poleColor = mode==='night' ? 0x282828 : 0x666666;
+  var pMat=new THREE.MeshLambertMaterial({color:poleColor});
+  var lampEmissive = mode==='night' ? 1.5 : 0.0;
+  var lPositions=[[-20,-28],[20,-28],[-20,28],[20,28],[0,-48],[0,48],[-40,0],[40,0]];
+  lPositions.forEach(function(lp){
+    var pole=addToScene(new THREE.Mesh(new THREE.CylinderGeometry(0.07,0.1,7,5),pMat));
+    pole.position.set(lp[0],3.5,lp[1]);
+    var lampMat=new THREE.MeshStandardMaterial({
+      color:0xffe8a0, emissive:new THREE.Color(0xffe8a0), emissiveIntensity:lampEmissive
+    });
+    var lamp=addToScene(new THREE.Mesh(new THREE.SphereGeometry(0.28,8,8),lampMat));
+    lamp.position.set(lp[0],7.2,lp[1]);
+    if(mode!=='day') {
+      var pl=addToScene(new THREE.PointLight(0xffe8a0,0.55,22));
+      pl.position.set(lp[0],6.8,lp[1]);
+    }
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────
+// SURROUNDING CITY CONTEXT (buildings with window textures)
+// ─────────────────────────────────────────────────────────────────
+function buildCity(mode) {
+  // Ring of city buildings around the towers
+  // These have window textures to look like real city at night
+  var surroundDefs=[
+    // Far ring — varied height, random positions
+    [-90,-65,22,18,7],[-115,-35,18,24,6],[-100, 20,24,16,8],[-95, 55,20,20,5],
+    [ 90,-55,20,16,5],[ 112,-22,16,22,7],[ 95,  30,22,18,6],[ 108,60,18,16,4],
+    [-28,-88,28,20,5],[  18,-95,22,18,4],[  52,-80,20,20,6],  [80,-75,16,18,3],
+    [-42, 85,26,18,4],[  14, 92,20,22,5],[  55, 85,22,18,4],[ 85, 72,18,16,3],
+    [-130,-75,16,14,3],[130,-75,18,16,3],[-130,75,14,18,3],[130, 72,20,14,3],
+    // Medium distance
+    [-55,-52,14,12,4],[ 55,-48,12,14,3],[-52, 42,13,12,4],[ 52, 45,14,12,3],
+    [-70,-12,10,14,5],[ 68,-10,12,10,4],[-68, 18,11,13,4],[ 70, 18,10,12,5],
+  ];
+
+  surroundDefs.forEach(function(def, idx){
+    var bx=def[0],bz=def[1],bw=def[2],bd=def[3],floors=def[4];
+    var bh=floors*3.0;
+
+    var texIdx=idx%SURROUND_NIGHT_TEXTURES.length;
+    var winTex = mode==='night' ? SURROUND_NIGHT_TEXTURES[texIdx] :
+                 mode==='golden' ? SURROUND_NIGHT_TEXTURES[texIdx] : null;
+
+    var bColor = mode==='night' ? 0x0a1010 : (mode==='golden' ? 0x1a0f06 : 0xb8b0a2);
+    var facadeMat = winTex ?
+      new THREE.MeshStandardMaterial({
+        map:winTex, color:bColor, roughness:0.7, metalness:0.2,
+        emissiveMap:winTex, emissive:new THREE.Color(0.04,0.025,0.005)
+      }) :
+      new THREE.MeshStandardMaterial({color:bColor, roughness:0.8});
+
+    // Box building
+    var bg=addToScene(new THREE.Mesh(new THREE.BoxGeometry(bw,bh,bd),facadeMat));
+    bg.position.set(bx, bh/2, bz);
+    bg.castShadow=true; bg.receiveShadow=true;
+
+    // Rooftop accent
+    if(mode!=='day') {
+      var roofColor = idx%3===0 ? 0xC8A84B : (idx%3===1 ? 0x808080 : 0x606060);
+      var rf=addToScene(new THREE.Mesh(
+        new THREE.BoxGeometry(bw*0.7, 0.3, bd*0.7),
+        new THREE.MeshLambertMaterial({color:roofColor})
+      ));
+      rf.position.set(bx, bh+0.15, bz);
+    }
+
+    // Occasional rooftop water tank or antenna
+    if(idx%4===0) {
+      var ant=addToScene(new THREE.Mesh(
+        new THREE.CylinderGeometry(0.06,0.1,4,5),
+        new THREE.MeshLambertMaterial({color:0x444444})
+      ));
+      ant.position.set(bx, bh+2, bz);
+    }
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────
+// TREES
+// ─────────────────────────────────────────────────────────────────
+function buildTrees(mode) {
+  var trunkColor = mode==='night' ? 0x1a0e06 : 0x3a2008;
+  var tMat=new THREE.MeshLambertMaterial({color:trunkColor});
+
+  var canopyColors = mode==='night' ?
+    [0x0a1e0c, 0x071808, 0x0d2010, 0x091508] :
+    (mode==='golden' ?
+    [0x1a3008, 0x241c04, 0x1e2806, 0x1c2a08] :
+    [0x205520, 0x2a6028, 0x185018, 0x226022]);
+
+  var treeSpots=[
+    [-14,-22],[14,-22],[-18,-10],[18,-10],[-20, 2],[20, 2],[-18,14],[18,14],
+    [-14,26],[14,26],[-6,-40],[6,-40],[-6,42],[6,42],
+    [-28,-8],[28,-8],[-28, 8],[28, 8],
+    [-8,-30],[8,-30],[-8, 32],[8, 32],
+    [0,-18],[0,20],[-24,-20],[24,-20],[-24,18],[24,18],
+    [-12,-48],[12,-48],[-12,46],[12,46],
+  ];
+
+  treeSpots.forEach(function(tp,i){
+    var tx=tp[0]+( Math.sin(i*5.7)-0.5 )*3.5;
+    var tz=tp[1]+( Math.cos(i*7.3)-0.5 )*3.5;
+    var h=4.5+Math.sin(i*3.14)*2.5;
+    var tr=h*0.32;
+    var tg=new THREE.Group();
+
+    // Trunk
+    var trunk=new THREE.Mesh(new THREE.CylinderGeometry(0.07,0.13,h*0.42,5),tMat);
+    trunk.position.y=h*0.21; tg.add(trunk);
+
+    // Multi-sphere canopy for more natural look
+    var cIdx=i%canopyColors.length;
+    var cMat=new THREE.MeshLambertMaterial({color:canopyColors[cIdx]});
+    var cMat2=new THREE.MeshLambertMaterial({color:canopyColors[(cIdx+2)%canopyColors.length]});
+
+    var c1=new THREE.Mesh(new THREE.SphereGeometry(tr,7,5),cMat);
+    c1.position.y=h*0.56; c1.scale.y=1.3; tg.add(c1);
+    var c2=new THREE.Mesh(new THREE.SphereGeometry(tr*0.65,6,4),cMat2);
+    c2.position.set(tr*0.5, h*0.45, 0); c2.scale.y=1.1; tg.add(c2);
+    var c3=new THREE.Mesh(new THREE.SphereGeometry(tr*0.6,6,4),cMat);
+    c3.position.set(-tr*0.45, h*0.42, tr*0.3); c3.scale.y=1.1; tg.add(c3);
+
+    tg.position.set(tx, 0, tz);
+    addToScene(tg);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────
+// MAIN TOWER FACTORY
+// ─────────────────────────────────────────────────────────────────
+var beaconMeshes=[];
+
+function buildTower(cx, cz, w, d, floors, color, texIdx, mode) {
+  var flH=3.1;
+  var totalH=floors*flH;
+  var bH=4.5, bodyH=totalH*0.70, midH=totalH*0.18, topH=totalH*0.12;
+  var g=new THREE.Group();
+
+  // ── Material selector ──
+  function getTex(ti) {
+    if(mode==='night')   return NIGHT_TEXTURES[ti%NIGHT_TEXTURES.length];
+    if(mode==='golden')  return NIGHT_TEXTURES[ti%NIGHT_TEXTURES.length];
+    return DAY_TEXTURES[ti%DAY_TEXTURES.length];
+  }
+  function facadeMat(ti, emit) {
+    var t=getTex(ti);
+    var col = mode==='night' ? 0x0e1812 : (mode==='golden' ? 0x1a1006 : 0xd5d0c8);
+    var m=new THREE.MeshStandardMaterial({
+      map:t, color:col, roughness:0.5, metalness:0.3
+    });
+    if(emit && mode!=='day') {
+      m.emissiveMap=t;
+      m.emissive=new THREE.Color(0.05, 0.03, 0.005);
+    }
+    return m;
+  }
+
+  // ── PODIUM ──
+  var podColor = mode==='night' ? 0x141e14 : (mode==='golden' ? 0x241808 : 0xc8c4b8);
+  var podMat=new THREE.MeshStandardMaterial({color:podColor, roughness:0.85, metalness:0.05});
+  var pod=new THREE.Mesh(new THREE.BoxGeometry(w*1.4, bH, d*1.4), podMat);
+  pod.position.y=bH/2; pod.castShadow=true; pod.receiveShadow=true;
+  g.add(pod);
+  // Podium ledge
+  var ledge=new THREE.Mesh(new THREE.BoxGeometry(w*1.45,0.3,d*1.45), new THREE.MeshStandardMaterial({
+    color:color, roughness:0.3, metalness:0.7
+  }));
+  ledge.position.y=bH; g.add(ledge);
+
+  // ── MAIN BODY ──
+  var body=new THREE.Mesh(new THREE.BoxGeometry(w,bodyH,d), facadeMat(texIdx,true));
+  body.position.y=bH+bodyH/2; body.castShadow=true; g.add(body);
+
+  // Vertical corner fins (structural lines on edges)
+  var finMat=new THREE.MeshStandardMaterial({color:color,roughness:0.2,metalness:0.85});
+  var fins=[
+    {x: w/2+0.06, z:0,      fw:0.14, fd:d*0.9},
+    {x:-w/2-0.06, z:0,      fw:0.14, fd:d*0.9},
+    {x:0,         z: d/2+0.06, fw:w*0.9, fd:0.14},
+    {x:0,         z:-d/2-0.06, fw:w*0.9, fd:0.14},
+  ];
+  fins.forEach(function(fi){
+    var fin=new THREE.Mesh(new THREE.BoxGeometry(fi.fw, bodyH, fi.fd), finMat);
+    fin.position.set(fi.x, bH+bodyH/2, fi.z);
+    g.add(fin);
+  });
+
+  // Mid setback slab
+  var slab1=new THREE.Mesh(new THREE.BoxGeometry(w*1.06,0.45,d*1.06),
+    new THREE.MeshStandardMaterial({color:color,roughness:0.2,metalness:0.85}));
+  slab1.position.y=bH+bodyH; g.add(slab1);
+
+  // ── MID TOWER ──
+  var mid=new THREE.Mesh(new THREE.BoxGeometry(w*0.85,midH,d*0.85), facadeMat(texIdx+1,true));
+  mid.position.y=bH+bodyH+midH/2; mid.castShadow=true; g.add(mid);
+
+  // Mid slab
+  var slab2=new THREE.Mesh(new THREE.BoxGeometry(w*0.92,0.38,d*0.92),
+    new THREE.MeshStandardMaterial({color:color,roughness:0.2,metalness:0.85}));
+  slab2.position.y=bH+bodyH+midH; g.add(slab2);
+
+  // ── CROWN ──
+  var crownY=bH+bodyH+midH;
+  var crownMat=new THREE.MeshStandardMaterial({
+    color:color, roughness:0.15, metalness:0.92,
+    emissive:new THREE.Color(color).multiplyScalar(mode==='night'?0.12:(mode==='golden'?0.15:0.02))
+  });
+  var crown=new THREE.Mesh(new THREE.BoxGeometry(w*0.65,topH,d*0.65), crownMat);
+  crown.position.y=crownY+topH/2; crown.castShadow=true; g.add(crown);
+
+  // Crown top cap
+  var cap=new THREE.Mesh(new THREE.BoxGeometry(w*0.7,0.5,d*0.7),
+    new THREE.MeshStandardMaterial({color:color,roughness:0.1,metalness:0.95}));
+  cap.position.y=crownY+topH; g.add(cap);
+
+  // ── BALCONIES ──
+  var balMat=new THREE.MeshStandardMaterial({
+    color: mode==='night'?0x1a2820:(mode==='golden'?0x2a1a08:0xd8d4cc),
+    roughness:0.7, metalness:0.15
+  });
+  var glassMat=new THREE.MeshStandardMaterial({
+    color:0x88aacc, transparent:true, opacity:0.30, roughness:0.05, metalness:0.1
+  });
+  for(var f=2; f<Math.floor(bodyH/flH)-2; f+=4) {
+    var by=bH+f*flH;
+    // Balcony slab
+    var bal=new THREE.Mesh(new THREE.BoxGeometry(w*1.12,0.14,d*0.22),balMat);
+    bal.position.set(0,by,d*0.54); g.add(bal);
+    // Glass panel
+    var railing=new THREE.Mesh(new THREE.BoxGeometry(w*1.08,0.9,0.04),glassMat);
+    railing.position.set(0,by+0.52,d*0.65); g.add(railing);
+  }
+
+  // ── ROOFTOP ──
+  var roofY=crownY+topH+0.5;
+  // Pool
+  var poolMat=new THREE.MeshStandardMaterial({
+    color:0x1a8ecc, roughness:0.02, metalness:0.05, transparent:true, opacity:0.92
+  });
+  var pool=new THREE.Mesh(new THREE.BoxGeometry(w*0.52,0.38,d*0.38),poolMat);
+  pool.position.set(w*0.07,roofY+0.19,0); g.add(pool);
+  var poolRim=new THREE.Mesh(new THREE.BoxGeometry(w*0.60,0.14,d*0.46),
+    new THREE.MeshStandardMaterial({color:0xe8e0d0,roughness:0.45,metalness:0.3}));
+  poolRim.position.set(w*0.07,roofY+0.07,0); g.add(poolRim);
+  // Deck
+  var deck=new THREE.Mesh(new THREE.BoxGeometry(w*0.42,0.06,d*0.36),
+    new THREE.MeshStandardMaterial({color:0x8B5E3C,roughness:0.8}));
+  deck.position.set(-w*0.18,roofY+0.03,0); g.add(deck);
+
+  // ── ANTENNA ──
+  var antMat=new THREE.MeshLambertMaterial({color:0x666666});
+  var ant=new THREE.Mesh(new THREE.CylinderGeometry(0.045,0.08,7,5),antMat);
+  ant.position.set(0,roofY+3.5,0); g.add(ant);
+
+  // ── BEACON LIGHT ──
+  if(mode!=='day') {
+    var beacon=new THREE.Mesh(new THREE.SphereGeometry(0.25,8,8),
+      new THREE.MeshStandardMaterial({
+        color:0xff1111, emissive:new THREE.Color(1,0,0), emissiveIntensity:2.0
+      })
+    );
+    beacon.position.set(0,roofY+7.2,0);
+    beacon.userData.beacon=true;
+    g.add(beacon);
+    beaconMeshes.push(beacon);
+
+    // Ground accent lights
+    var accentPts=[[w*0.65,d*0.65],[w*0.65,-d*0.65],[-w*0.65,d*0.65],[-w*0.65,-d*0.65]];
+    accentPts.forEach(function(ap){
+      var accentGeo=new THREE.SphereGeometry(0.18,6,6);
+      var accentMat=new THREE.MeshStandardMaterial({
+        color:color, emissive:new THREE.Color(color), emissiveIntensity:0.8
+      });
+      var acc=new THREE.Mesh(accentGeo,accentMat); acc.position.set(ap[0],0.4,ap[1]);
+      g.add(acc);
+      var pl=new THREE.PointLight(color,0.9,18);
+      pl.position.set(ap[0],0.8,ap[1]); g.add(pl);
+    });
+  }
+
+  g.position.set(cx,0,cz);
+  addToScene(g);
+}
+
+// ─────────────────────────────────────────────────────────────────
+// PLOT OUTLINES
+// ─────────────────────────────────────────────────────────────────
+function buildPlots(mode) {
+  if(mode==='day') return;
+  var plotData=[
+    {x:  0, z:-17, w:62, d:30, c:0xC8A84B, label:'QC01'},
+    {x:  0, z: 12, w:46, d:22, c:0xA07020, label:'QC02'},
+    {x:  0, z: 34, w:36, d:20, c:0xFFD060, label:'QC03'},
+  ];
+  plotData.forEach(function(pd){
+    var pMat=new THREE.MeshBasicMaterial({color:pd.c,transparent:true,opacity:0.07});
+    var p=addToScene(new THREE.Mesh(new THREE.PlaneGeometry(pd.w,pd.d),pMat));
+    p.rotation.x=-Math.PI/2; p.position.set(pd.x,0.06,pd.z);
+    var edge=new THREE.EdgesGeometry(new THREE.BoxGeometry(pd.w,0.1,pd.d));
+    var line=addToScene(new THREE.LineSegments(edge,
+      new THREE.LineBasicMaterial({color:pd.c,transparent:true,opacity:0.5})));
+    line.position.set(pd.x,0.06,pd.z);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────
+// BUILD FULL SCENE
+// ─────────────────────────────────────────────────────────────────
+var currentMode='night';
+
+function buildScene(mode) {
+  currentMode=mode;
+  beaconMeshes=[];
+  clearScene();
+
+  buildSky(mode);
+  buildLights(mode);
+  buildGround(mode);
+  buildCity(mode);
+  buildTrees(mode);
+  buildPlots(mode);
+
+  // ── TOWERS ──
+  // QC01 — AL'DORA Jardins — 4 torres A/B/C/D
+  buildTower(-12,-22, 8, 9, 18, 0xC8A84B, 0, mode); // A
+  buildTower(  4,-22, 8, 9, 18, 0xC8A84B, 1, mode); // B
+  buildTower(-12,-8,  7, 8, 16, 0xB8921A, 2, mode); // C
+  buildTower(  4,-8,  7, 8, 16, 0xB8921A, 3, mode); // D
+
+  // QC02 — AL'DORA Reserva — torres E/F
+  buildTower(-7,  12, 9,10, 16, 0xA07020, 0, mode); // E
+  buildTower( 8,  12, 9,10, 16, 0xA07020, 1, mode); // F
+
+  // QC03 — AL'DORA Signature — torres G/H (premium)
+  buildTower(-6,  32, 7, 8, 24, 0xFFD060, 2, mode); // G
+  buildTower( 6,  32, 7, 8, 24, 0xFFD060, 3, mode); // H
+}
+
+// ─────────────────────────────────────────────────────────────────
+// CAMERA ORBIT
+// ─────────────────────────────────────────────────────────────────
+var theta=-0.38, phi=0.70, radius=175;
+var target=new THREE.Vector3(0, 10, 6);
+var dragging=false, lastX=0, lastY=0;
+
+function updateCam() {
+  camera.position.set(
+    target.x + radius*Math.sin(phi)*Math.sin(theta),
+    target.y + radius*Math.cos(phi),
+    target.z + radius*Math.sin(phi)*Math.cos(theta)
+  );
+  camera.lookAt(target);
+}
+
+canvas.addEventListener('mousedown',function(e){ dragging=true; lastX=e.clientX; lastY=e.clientY; });
+window.addEventListener('mouseup',  function(){ dragging=false; });
+window.addEventListener('mousemove',function(e){
+  if(!dragging) return;
+  theta -= (e.clientX-lastX)*0.004;
+  phi = Math.max(0.12, Math.min(1.48, phi+(e.clientY-lastY)*0.004));
+  lastX=e.clientX; lastY=e.clientY;
+  updateCam();
+});
+canvas.addEventListener('wheel',function(e){
+  radius=Math.max(25, Math.min(600, radius+e.deltaY*0.2));
+  updateCam();
+},{passive:true});
+canvas.addEventListener('touchstart', function(e){ lastX=e.touches[0].clientX; lastY=e.touches[0].clientY; dragging=true; });
+canvas.addEventListener('touchend',   function(){ dragging=false; });
+canvas.addEventListener('touchmove',  function(e){
+  if(!dragging) return;
+  theta -= (e.touches[0].clientX-lastX)*0.005;
+  phi = Math.max(0.12, Math.min(1.48, phi+(e.touches[0].clientY-lastY)*0.005));
+  lastX=e.touches[0].clientX; lastY=e.touches[0].clientY;
+  updateCam(); e.preventDefault();
+},{passive:false});
+
+// ── FLY-TO ──
+var flyActive=false, flyT=0, flyDur=2.2;
+var flyFrom={theta:0,phi:0,radius:0,tx:0,ty:0,tz:0};
+var flyTo_={theta:0,phi:0,radius:0,tx:0,ty:0,tz:0};
+
+function eio(t){ return t<0.5?2*t*t:-1+(4-2*t)*t; }
+
+function flyTo(n) {
+  document.querySelectorAll('.pb').forEach(function(b,i){ b.classList.toggle('on',i===n); });
+  var views=[
+    {theta:-0.38,phi:0.70,radius:175,tx:0,  ty:10,tz:6 },
+    {theta: 0.25,phi:0.62,radius:95, tx:-4, ty:12,tz:-15},
+    {theta:-0.2, phi:0.60,radius:85, tx:1,  ty:10,tz:12 },
+    {theta:-0.5, phi:0.56,radius:80, tx:0,  ty:14,tz:32 },
+  ][n];
+  flyFrom={theta:theta,phi:phi,radius:radius,tx:target.x,ty:target.y,tz:target.z};
+  flyTo_=views;
+  flyT=0; flyActive=true;
+}
+
+function setMode(mode) {
+  document.querySelectorAll('.mt').forEach(function(b){ b.classList.remove('on'); });
+  var map={'night':0,'golden':1,'day':2};
+  document.querySelectorAll('.mt')[map[mode]].classList.add('on');
+  buildScene(mode);
+}
+
+document.addEventListener('keydown',function(e){
+  if(e.key>='0'&&e.key<='3') flyTo(parseInt(e.key));
+});
+
+// ─────────────────────────────────────────────────────────────────
+// ANIMATE
+// ─────────────────────────────────────────────────────────────────
+var lastT=performance.now();
+var beaconBlink=true;
+var blinkTimer=0;
+
+function animate() {
+  requestAnimationFrame(animate);
+  var now=performance.now(), dt=(now-lastT)/1000; lastT=now;
+
+  // Auto-rotate (slow, cinematic)
+  if(!dragging && !flyActive) {
+    theta += 0.00025;
+    updateCam();
+  }
+
+  // Fly lerp
+  if(flyActive) {
+    flyT=Math.min(flyT+dt/flyDur,1);
+    var t=eio(flyT);
+    theta=flyFrom.theta+(flyTo_.theta-flyFrom.theta)*t;
+    phi=flyFrom.phi+(flyTo_.phi-flyFrom.phi)*t;
+    radius=flyFrom.radius+(flyTo_.radius-flyFrom.radius)*t;
+    target.set(
+      flyFrom.tx+(flyTo_.tx-flyFrom.tx)*t,
+      flyFrom.ty+(flyTo_.ty-flyFrom.ty)*t,
+      flyFrom.tz+(flyTo_.tz-flyFrom.tz)*t
+    );
+    updateCam();
+    if(flyT>=1) flyActive=false;
+  }
+
+  // Beacon blink (every ~1s)
+  blinkTimer+=dt;
+  if(blinkTimer>0.9) { beaconBlink=!beaconBlink; blinkTimer=0; }
+  beaconMeshes.forEach(function(b){
+    if(b.material) b.material.emissiveIntensity=beaconBlink?2.5:0.2;
+  });
+
+  renderer.render(scene, camera);
+}
+
+// ── START ──
+buildScene('night');
+updateCam();
+animate();
+</script>
+</body>
+</html>

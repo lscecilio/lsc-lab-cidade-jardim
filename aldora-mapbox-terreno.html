@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AL'DORA City — Terreno Real 3D · Mapbox</title>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet"/>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Georgia', serif; background: #04100a; color: #fff; overflow: hidden; }
+
+    /* TOKEN BAR */
+    #token-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: rgba(4,10,6,0.96);
+      border-bottom: 1px solid #C8A84B55;
+      padding: 10px 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    #token-bar label { color: #C8A84B; font-size: 12px; white-space: nowrap; letter-spacing: 0.08em; }
+    #token-input {
+      flex: 1; background: #0d1f10; border: 1px solid #C8A84B44;
+      color: #e8d47a; padding: 7px 12px; border-radius: 4px;
+      font-size: 12px; font-family: monospace; outline: none;
+    }
+    #token-input:focus { border-color: #C8A84B99; }
+    #token-btn {
+      background: linear-gradient(135deg, #C8A84B, #A07020);
+      color: #000; border: none; padding: 8px 20px;
+      border-radius: 4px; cursor: pointer; font-weight: bold;
+      font-size: 12px; letter-spacing: 0.08em; white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+    #token-btn:hover { opacity: 0.85; }
+    #get-token {
+      color: #C8A84Baa; font-size: 11px; text-decoration: none;
+      white-space: nowrap; letter-spacing: 0.06em;
+    }
+    #get-token:hover { color: #C8A84B; }
+
+    /* MAP */
+    #map { position: fixed; top: 44px; left: 0; right: 0; bottom: 0; }
+
+    /* SPLASH */
+    #splash {
+      position: fixed; top: 44px; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at center, #0d2a12 0%, #04100a 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 100; gap: 18px;
+    }
+    .splash-title { font-size: 32px; font-weight: bold; letter-spacing: 0.2em; color: #C8A84B; }
+    .splash-sub { font-size: 13px; letter-spacing: 0.25em; color: #ffffff66; }
+    .splash-box {
+      background: rgba(0,0,0,0.5); border: 1px solid #C8A84B44;
+      padding: 24px 32px; border-radius: 8px; text-align: center; max-width: 480px;
+    }
+    .splash-box h3 { color: #C8A84B; margin-bottom: 10px; font-size: 16px; }
+    .splash-box p { color: #aaa; font-size: 13px; line-height: 1.6; }
+    .splash-box a { color: #C8A84B; }
+    .step {
+      display: flex; align-items: flex-start; gap: 10px;
+      text-align: left; margin-top: 12px; font-size: 12px; color: #999;
+    }
+    .step-num {
+      background: #C8A84B22; border: 1px solid #C8A84B66;
+      color: #C8A84B; border-radius: 50%; width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; flex-shrink: 0; margin-top: 1px;
+    }
+
+    /* HUD BRAND */
+    #hud {
+      position: fixed; top: 60px; left: 18px; z-index: 10;
+      pointer-events: none;
+    }
+    .brand { font-size: 24px; font-weight: bold; letter-spacing: 0.18em; color: #C8A84B; text-shadow: 0 2px 12px rgba(0,0,0,0.95); }
+    .brand-sub { font-size: 10px; letter-spacing: 0.3em; color: #ffffffaa; margin-top: 3px; }
+
+    /* VGV BADGE */
+    #vgv {
+      position: fixed; top: 62px; right: 18px; z-index: 10;
+      background: rgba(0,0,0,0.75); border: 1px solid #C8A84B55;
+      padding: 10px 16px; border-radius: 6px; text-align: right;
+      pointer-events: none;
+    }
+    .vgv-label { font-size: 10px; color: #ffffff66; letter-spacing: 0.2em; }
+    .vgv-value { font-size: 20px; color: #C8A84B; font-weight: bold; letter-spacing: 0.05em; }
+    .vgv-sub { font-size: 10px; color: #ffffff55; }
+
+    /* PHASE BUTTONS */
+    #phase-btns {
+      position: fixed; bottom: 28px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; gap: 10px; z-index: 10;
+    }
+    .pbtn {
+      background: rgba(0,0,0,0.8); border: 1px solid #C8A84B66;
+      color: #C8A84Bcc; padding: 9px 18px; border-radius: 5px;
+      cursor: pointer; font-size: 12px; letter-spacing: 0.1em;
+      transition: all 0.25s; font-family: inherit; white-space: nowrap;
+    }
+    .pbtn:hover { background: rgba(200,168,75,0.15); color: #C8A84B; border-color: #C8A84B; }
+    .pbtn.active { background: linear-gradient(135deg,#C8A84B,#A07020); color: #000; border-color: transparent; }
+
+    /* LEGEND */
+    #legend {
+      position: fixed; bottom: 28px; right: 18px; z-index: 10;
+      background: rgba(0,0,0,0.8); border: 1px solid #C8A84B33;
+      padding: 12px 16px; border-radius: 6px;
+    }
+    .leg-title { font-size: 10px; color: #C8A84B88; letter-spacing: 0.2em; margin-bottom: 8px; }
+    .leg-item { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; font-size: 11px; color: #ccc; }
+    .leg-dot { width: 14px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+    /* INFO PANEL */
+    #info-panel {
+      position: fixed; bottom: 80px; left: 18px; z-index: 10;
+      background: rgba(0,0,0,0.8); border: 1px solid #C8A84B33;
+      padding: 14px 18px; border-radius: 6px; min-width: 200px;
+      display: none;
+    }
+    .info-title { font-size: 14px; color: #C8A84B; font-weight: bold; margin-bottom: 6px; }
+    .info-row { font-size: 11px; color: #aaa; display: flex; justify-content: space-between; gap: 16px; margin-bottom: 3px; }
+    .info-val { color: #e8d47a; }
+
+    /* LOADING */
+    #loading {
+      position: fixed; top: 44px; left: 0; right: 0; bottom: 0;
+      background: rgba(4,10,6,0.9); display: none;
+      flex-direction: column; align-items: center; justify-content: center;
+      z-index: 50; gap: 16px;
+    }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid #C8A84B22;
+      border-top-color: #C8A84B;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { color: #C8A84B; font-size: 13px; letter-spacing: 0.15em; }
+
+    /* LIGHTING TOGGLE */
+    #lighting {
+      position: fixed; top: 62px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 6px; z-index: 10; display: none;
+    }
+    .lbtn {
+      background: rgba(0,0,0,0.7); border: 1px solid #ffffff22;
+      color: #ffffffaa; padding: 5px 12px; border-radius: 20px;
+      cursor: pointer; font-size: 11px; letter-spacing: 0.08em;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .lbtn:hover { border-color: #C8A84B88; color: #C8A84B; }
+    .lbtn.active { background: rgba(200,168,75,0.2); border-color: #C8A84B; color: #C8A84B; }
+
+    /* WATERMARK */
+    #wm {
+      position: fixed; bottom: 8px; left: 50%; transform: translateX(-50%);
+      font-size: 10px; color: #ffffff22; letter-spacing: 0.15em; z-index: 10;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOKEN BAR -->
+<div id="token-bar">
+  <label>🔑 MAPBOX TOKEN</label>
+  <input type="text" id="token-input" placeholder="Cole aqui: pk.eyJ1Ijoixxxxxxx..." spellcheck="false"/>
+  <button id="token-btn" onclick="initMap()">▶ CARREGAR MAPA REAL</button>
+  <a id="get-token" href="https://account.mapbox.com/auth/signup/" target="_blank">→ Criar conta gratuita</a>
+</div>
+
+<!-- MAP CONTAINER -->
+<div id="map"></div>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-title">AL'DORA CITY</div>
+  <div class="splash-sub">MASTERPLAN VERTICAL ESCALONADO · JARDIM VERSAILLES · UBERLÂNDIA MG</div>
+  <div class="splash-box">
+    <h3>🛰️ Vista Satelital Real do Terreno</h3>
+    <p>Esta visualização usa imagens de satélite reais do terreno em Uberlândia com as 3 quadras do AL'DORA City extrudidas como torres 3D no local exato.</p>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>Acesse <a href="https://account.mapbox.com/auth/signup/" target="_blank">account.mapbox.com</a> e crie uma conta gratuita (50.000 carregamentos/mês incluídos)</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>Copie seu <strong style="color:#e8d47a">Default public token</strong> que começa com <code style="color:#e8d47a">pk.</code></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>Cole na barra acima e clique em <strong style="color:#e8d47a">CARREGAR MAPA REAL</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div id="loading">
+  <div class="spinner"></div>
+  <div class="loading-text">CARREGANDO SATÉLITE...</div>
+</div>
+
+<!-- HUD BRAND -->
+<div id="hud" style="display:none">
+  <div class="brand">AL'DORA CITY</div>
+  <div class="brand-sub">JARDINS · VERSAILLES · RESERVA · SIGNATURE</div>
+</div>
+
+<!-- VGV BADGE -->
+<div id="vgv" style="display:none">
+  <div class="vgv-label">VGV REFERENCIAL QC01</div>
+  <div class="vgv-value">R$ 299,7M</div>
+  <div class="vgv-sub">Brain Research · 2025</div>
+</div>
+
+<!-- LIGHTING TOGGLE -->
+<div id="lighting">
+  <button class="lbtn active" onclick="setLighting('dawn')">🌅 Amanhecer</button>
+  <button class="lbtn" onclick="setLighting('day')">☀️ Dia</button>
+  <button class="lbtn" onclick="setLighting('dusk')">🌆 Entardecer</button>
+  <button class="lbtn" onclick="setLighting('night')">🌙 Noite</button>
+</div>
+
+<!-- PHASE BUTTONS -->
+<div id="phase-btns" style="display:none">
+  <button class="pbtn active" onclick="focusPhase(0)">🗺️ VISÃO GERAL</button>
+  <button class="pbtn" onclick="focusPhase(1)">FASE 1 · JARDINS</button>
+  <button class="pbtn" onclick="focusPhase(2)">FASE 2 · VERSAILLES</button>
+  <button class="pbtn" onclick="focusPhase(3)">FASE 3 · SIGNATURE</button>
+</div>
+
+<!-- LEGEND -->
+<div id="legend" style="display:none">
+  <div class="leg-title">QUADRAS · AL'DORA CITY</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#C8A84B"></div>QC01 — AL'DORA Jardins · 49.908 m²</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#A07020"></div>QC02 — AL'DORA Versailles · 43.033 m²</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#FFD060"></div>QC03 — AL'DORA Signature · 32.743 m²</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#1a5a2a;border:1px solid #C8A84B66"></div>Masterplan Total · 42.783 m²</div>
+</div>
+
+<!-- INFO PANEL (shown on phase focus) -->
+<div id="info-panel">
+  <div class="info-title" id="ip-title">—</div>
+  <div class="info-row"><span>Área privativa</span><span class="info-val" id="ip-priv">—</span></div>
+  <div class="info-row"><span>Área construída</span><span class="info-val" id="ip-constr">—</span></div>
+  <div class="info-row"><span>Torres</span><span class="info-val" id="ip-torres">—</span></div>
+  <div class="info-row"><span>Tipologias</span><span class="info-val" id="ip-tipo">—</span></div>
+  <div class="info-row"><span>Altura estimada</span><span class="info-val" id="ip-alt">—</span></div>
+</div>
+
+<div id="wm">AL'DORA CITY · CIDADE JARDIM URBANISMO · DADOS CONFIDENCIAIS</div>
+
+<script>
+// ─────────────────────────────────────────────────────────
+// COORDENADAS KMZ → GeoJSON [longitude, latitude]
+// ─────────────────────────────────────────────────────────
+const CENTER = [-48.30626437422274, -18.959254896425335];
+
+const QC01 = [
+  [-48.30661248476868,-18.95637548103209],
+  [-48.30661283296286,-18.95912750380069],
+  [-48.30659420143432,-18.95910812448526],
+  [-48.30658211769109,-18.9589564381425],
+  [-48.30660548837058,-18.95888119381422],
+  [-48.30662132436068,-18.95895747653577],
+  [-48.30661754614533,-18.95903312038229],
+  [-48.30663334695388,-18.95910916093079],
+  [-48.30662857304971,-18.95920345864959],
+  [-48.30662661013304,-18.95924123537784],
+  [-48.30586672241777,-18.95916477945059],
+  [-48.30599422069318,-18.95666063429275],
+  [-48.30661248476868,-18.95637548103209],
+];
+
+const QC02 = [
+  [-48.30649698590301,-18.96068399537968],
+  [-48.30570204425496,-18.96080819354113],
+  [-48.30580263702252,-18.9592948397472],
+  [-48.3064822051777,-18.95938839506466],
+  [-48.30649698590301,-18.96068399537968],
+];
+
+const QC03 = [
+  [-48.30653455159076,-18.9622476389247],
+  [-48.30564296247557,-18.96225907775669],
+  [-48.30568865204588,-18.96113452087073],
+  [-48.30648108701291,-18.9610109976692],
+  [-48.30653455159076,-18.9622476389247],
+];
+
+const MASTER = [
+  [-48.30663152248352,-18.9563962855908],
+  [-48.30675359935989,-18.96830603602463],
+  [-48.30969133435216,-18.9792995868442],
+  [-48.30213820992651,-18.98238476278312],
+  [-48.29105253225089,-18.97512719755233],
+  [-48.29350239742982,-18.97094466996406],
+  [-48.29316698073505,-18.96704384149165],
+  [-48.29270352459724,-18.96453196849883],
+  [-48.29184122872005,-18.96324974106761],
+  [-48.29117868836932,-18.96259133217615],
+  [-48.2916916139812,-18.96101637217126],
+  [-48.29269931482375,-18.96116718518692],
+  [-48.29373496768546,-18.96545110721832],
+  [-48.29403130834654,-18.96768902613709],
+  [-48.30057601827118,-18.96765171465563],
+  [-48.30090063395427,-18.965967217515],
+  [-48.29906502897369,-18.96357639028897],
+  [-48.29832625002222,-18.9625607042466],
+  [-48.2981265299552,-18.9618217472342],
+  [-48.30135903586346,-18.96193180185874],
+  [-48.30565368852372,-18.96263857022372],
+  [-48.30663152248352,-18.9563962855908],
+];
+
+// Centroids for fly-to
+function centroid(coords) {
+  const n = coords.length - 1; // exclude closing point
+  let x = 0, y = 0;
+  for (let i = 0; i < n; i++) { x += coords[i][0]; y += coords[i][1]; }
+  return [x/n, y/n];
+}
+const C1 = centroid(QC01);
+const C2 = centroid(QC02);
+const C3 = centroid(QC03);
+
+// Phase info
+const PHASE_INFO = [
+  null,
+  { title: 'QC01 · AL\'DORA Jardins', priv: '49.908 m²', constr: '81.816 m²', torres: 'A + B (EMP1) · C + D (EMP2)', tipo: 'P1 / P2 / P3', alt: '~55m (EMP1) · ~48m (EMP2)' },
+  { title: 'QC02 · AL\'DORA Reserva', priv: '43.033 m²', constr: '70.546 m²', torres: 'E + F', tipo: 'P3 focus (família)', alt: '~50m' },
+  { title: 'QC03 · AL\'DORA Signature', priv: '32.743 m²', constr: '53.678 m²', torres: 'G + H', tipo: 'P4 / P5 premium', alt: '~72m' },
+];
+
+let map = null;
+let currentPhase = 0;
+let mapLoaded = false;
+
+// ─────────────────────────────────────────────────────────
+// INIT MAP
+// ─────────────────────────────────────────────────────────
+function initMap() {
+  const token = document.getElementById('token-input').value.trim();
+  if (!token || !token.startsWith('pk.')) {
+    document.getElementById('token-input').style.borderColor = '#ff4444';
+    setTimeout(() => { document.getElementById('token-input').style.borderColor = '#C8A84B44'; }, 1500);
+    return;
+  }
+
+  document.getElementById('splash').style.display = 'none';
+  document.getElementById('loading').style.display = 'flex';
+  document.getElementById('token-btn').disabled = true;
+  document.getElementById('token-btn').textContent = '⏳ Carregando...';
+
+  mapboxgl.accessToken = token;
+
+  map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/satellite-streets-v12',
+    center: CENTER,
+    zoom: 13.5,
+    pitch: 50,
+    bearing: -20,
+    antialias: true,
+  });
+
+  map.addControl(new mapboxgl.NavigationControl({ visualizePitch: true }), 'top-right');
+  map.addControl(new mapboxgl.ScaleControl({ unit: 'metric' }), 'bottom-left');
+
+  map.on('error', (e) => {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('splash').style.display = 'flex';
+    document.getElementById('token-btn').disabled = false;
+    document.getElementById('token-btn').textContent = '▶ CARREGAR MAPA REAL';
+    document.getElementById('token-input').style.borderColor = '#ff4444';
+    alert('Token inválido ou sem permissão. Verifique e tente novamente.');
+  });
+
+  map.on('load', onMapLoad);
+}
+
+function onMapLoad() {
+  mapLoaded = true;
+
+  // ── TERRAIN ──
+  map.addSource('mapbox-dem', {
+    type: 'raster-dem',
+    url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
+    tileSize: 512, maxzoom: 14,
+  });
+  map.setTerrain({ source: 'mapbox-dem', exaggeration: 1.2 });
+
+  // ── SKY ──
+  map.addLayer({
+    id: 'sky', type: 'sky',
+    paint: {
+      'sky-type': 'atmosphere',
+      'sky-atmosphere-sun': [0.0, 60.0],
+      'sky-atmosphere-sun-intensity': 15,
+    }
+  });
+
+  // ── MASTERPLAN ZONE ──
+  map.addSource('master', {
+    type: 'geojson',
+    data: { type: 'Feature', properties: {}, geometry: { type: 'Polygon', coordinates: [MASTER] } }
+  });
+  map.addLayer({
+    id: 'master-fill', type: 'fill', source: 'master',
+    paint: { 'fill-color': '#2a6a35', 'fill-opacity': 0.12 }
+  });
+  map.addLayer({
+    id: 'master-line', type: 'line', source: 'master',
+    paint: { 'line-color': '#C8A84B', 'line-width': 1.2, 'line-dasharray': [5, 3] }
+  });
+
+  // ── QC01 — AL'DORA JARDINS ──
+  addQuadra('qc01', QC01, '#C8A84B', '#FFE090', 56, 'QC01 · AL\'DORA Jardins');
+
+  // ── QC02 — AL'DORA VERSAILLES ──
+  addQuadra('qc02', QC02, '#B07A20', '#D4A040', 50, 'QC02 · AL\'DORA Versailles');
+
+  // ── QC03 — AL'DORA SIGNATURE ──
+  addQuadra('qc03', QC03, '#FFD060', '#FFF0A0', 72, 'QC03 · AL\'DORA Signature');
+
+  // ── LABELS ──
+  addLabel('label-qc01', C1, 'AL\'DORA\nJARDINS', '#C8A84B');
+  addLabel('label-qc02', C2, 'AL\'DORA\nVERSAILLES', '#D4A040');
+  addLabel('label-qc03', C3, 'AL\'DORA\nSIGNATURE', '#FFD060');
+
+  // ── UI ──
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('hud').style.display = 'block';
+  document.getElementById('vgv').style.display = 'block';
+  document.getElementById('phase-btns').style.display = 'flex';
+  document.getElementById('legend').style.display = 'block';
+  document.getElementById('lighting').style.display = 'flex';
+  document.getElementById('token-bar').style.display = 'none';
+
+  // ── FLY-IN ──
+  setTimeout(() => {
+    map.flyTo({
+      center: CENTER, zoom: 16.5, pitch: 68, bearing: -25,
+      duration: 4000, essential: true,
+      easing: t => t < 0.5 ? 2*t*t : -1+(4-2*t)*t,
+    });
+  }, 600);
+}
+
+function addQuadra(id, coords, fillColor, topColor, height, name) {
+  map.addSource(id, {
+    type: 'geojson',
+    data: {
+      type: 'Feature',
+      properties: { name, height },
+      geometry: { type: 'Polygon', coordinates: [coords] }
+    }
+  });
+
+  // Base fill glow
+  map.addLayer({
+    id: id + '-glow', type: 'fill', source: id,
+    paint: { 'fill-color': fillColor, 'fill-opacity': 0.18 }
+  });
+
+  // 3D extrusion — tower body
+  map.addLayer({
+    id: id + '-extrusion', type: 'fill-extrusion', source: id,
+    paint: {
+      'fill-extrusion-color': [
+        'interpolate', ['linear'], ['zoom'],
+        14, fillColor,
+        17, fillColor,
+      ],
+      'fill-extrusion-height': height,
+      'fill-extrusion-base': 0,
+      'fill-extrusion-opacity': [
+        'interpolate', ['linear'], ['zoom'],
+        13, 0.6, 16, 0.88, 18, 0.92
+      ],
+      'fill-extrusion-vertical-gradient': true,
+    }
+  });
+
+  // Outline
+  map.addLayer({
+    id: id + '-outline', type: 'line', source: id,
+    paint: {
+      'line-color': topColor,
+      'line-width': ['interpolate', ['linear'], ['zoom'], 14, 1, 17, 2.5],
+    }
+  });
+
+  // Click interaction
+  map.on('click', id + '-extrusion', (e) => {
+    const info = e.features[0].properties;
+    new mapboxgl.Popup({ closeButton: false, className: 'aldora-popup' })
+      .setLngLat(e.lngLat)
+      .setHTML(`<strong style="color:#C8A84B">${info.name}</strong><br>Altura estimada: <span style="color:#e8d47a">${info.height}m</span>`)
+      .addTo(map);
+  });
+
+  map.on('mouseenter', id + '-extrusion', () => { map.getCanvas().style.cursor = 'pointer'; });
+  map.on('mouseleave', id + '-extrusion', () => { map.getCanvas().style.cursor = ''; });
+}
+
+function addLabel(id, center, text, color) {
+  map.addSource(id, {
+    type: 'geojson',
+    data: { type: 'Feature', geometry: { type: 'Point', coordinates: center } }
+  });
+  map.addLayer({
+    id: id + '-layer', type: 'symbol', source: id,
+    layout: {
+      'text-field': text,
+      'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+      'text-size': ['interpolate', ['linear'], ['zoom'], 15, 0, 16, 11, 18, 14],
+      'text-anchor': 'center',
+      'text-justify': 'center',
+      'text-allow-overlap': true,
+    },
+    paint: {
+      'text-color': color,
+      'text-halo-color': 'rgba(0,0,0,0.85)',
+      'text-halo-width': 2,
+    }
+  });
+}
+
+// ─────────────────────────────────────────────────────────
+// FOCUS PHASE
+// ─────────────────────────────────────────────────────────
+function focusPhase(n) {
+  if (!mapLoaded) return;
+  currentPhase = n;
+  document.querySelectorAll('.pbtn').forEach((b, i) => b.classList.toggle('active', i === n));
+
+  const panel = document.getElementById('info-panel');
+  if (n > 0) {
+    const info = PHASE_INFO[n];
+    document.getElementById('ip-title').textContent = info.title;
+    document.getElementById('ip-priv').textContent = info.priv;
+    document.getElementById('ip-constr').textContent = info.constr;
+    document.getElementById('ip-torres').textContent = info.torres;
+    document.getElementById('ip-tipo').textContent = info.tipo;
+    document.getElementById('ip-alt').textContent = info.alt;
+    panel.style.display = 'block';
+  } else {
+    panel.style.display = 'none';
+  }
+
+  const views = [
+    { center: CENTER, zoom: 16.2, pitch: 65, bearing: -20, duration: 2800 },
+    { center: C1, zoom: 17.5, pitch: 68, bearing: 15,  duration: 2500 },
+    { center: C2, zoom: 17.8, pitch: 68, bearing: -15, duration: 2500 },
+    { center: C3, zoom: 18.2, pitch: 68, bearing: -35, duration: 2500 },
+  ][n];
+
+  map.flyTo({ ...views, essential: true, easing: t => t < 0.5 ? 2*t*t : -1+(4-2*t)*t });
+}
+
+// ─────────────────────────────────────────────────────────
+// LIGHTING PRESETS
+// ─────────────────────────────────────────────────────────
+function setLighting(preset) {
+  if (!mapLoaded) return;
+  document.querySelectorAll('.lbtn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  // Mapbox Standard style presets (dawn/day/dusk/night)
+  try {
+    map.setConfigProperty('basemap', 'lightPreset', preset);
+  } catch(e) {
+    // Satellite style — manual sun position
+    const sunPositions = {
+      dawn:  [0.0, 80.0],
+      day:   [0.0, 40.0],
+      dusk:  [0.0, 85.0],
+      night: [0.0, 95.0],
+    };
+    const sunIntensities = { dawn: 12, day: 15, dusk: 8, night: 3 };
+    map.setPaintProperty('sky', 'sky-atmosphere-sun', sunPositions[preset]);
+    map.setPaintProperty('sky', 'sky-atmosphere-sun-intensity', sunIntensities[preset]);
+
+    // Adjust extrusion opacity for night mood
+    ['qc01','qc02','qc03'].forEach(id => {
+      map.setPaintProperty(id + '-extrusion', 'fill-extrusion-opacity',
+        preset === 'night' ? 0.95 : 0.88
+      );
+    });
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+// KEYBOARD SHORTCUTS
+// ─────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (!mapLoaded) return;
+  if (e.key >= '0' && e.key <= '3') focusPhase(parseInt(e.key));
+});
+
+// ─────────────────────────────────────────────────────────
+// POPUP STYLE
+// ─────────────────────────────────────────────────────────
+const style = document.createElement('style');
+style.textContent = `
+  .aldora-popup .mapboxgl-popup-content {
+    background: rgba(4,10,6,0.92);
+    border: 1px solid #C8A84B55;
+    color: #ccc;
+    font-family: Georgia, serif;
+    font-size: 13px;
+    padding: 10px 14px;
+    border-radius: 5px;
+  }
+  .aldora-popup .mapboxgl-popup-tip { border-top-color: rgba(4,10,6,0.92) !important; }
+  .mapboxgl-ctrl-attrib { display: none !important; }
+`;
+document.head.appendChild(style);
+</script>
+</body>
+</html>

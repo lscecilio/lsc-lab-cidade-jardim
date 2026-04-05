@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AL'DORA City — Modelo de Governança Master Brand</title>
+<style>
+  :root {
+    --verde: #1a3a2a; --verde-m: #2d5a3d; --verde-c: #3d7a52;
+    --ouro: #c9a84c; --ouro-c: #e8c97a; --creme: #f5f0e8;
+    --branco: #ffffff; --cinza: #8a8a8a; --texto: #1a1a1a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Georgia', serif; background: #f8f5f0; color: var(--texto); }
+
+  nav { background: var(--verde); padding: 14px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(201,168,76,0.3); }
+  .nav-logo { color: var(--ouro); font-size: 14px; letter-spacing: 2px; font-weight: bold; }
+  .nav-sub { color: rgba(255,255,255,0.5); font-size: 11px; font-family: Arial, sans-serif; letter-spacing: 1px; }
+
+  .hero { background: linear-gradient(160deg, #0d2a1a, #1a3a2a); padding: 60px 40px; text-align: center; border-bottom: 1px solid rgba(201,168,76,0.2); }
+  .hero-tag { color: var(--ouro); font-size: 11px; letter-spacing: 3px; font-family: Arial; text-transform: uppercase; margin-bottom: 16px; display: block; }
+  .hero h1 { font-size: 38px; color: var(--branco); font-weight: normal; margin-bottom: 12px; }
+  .hero p { font-size: 15px; color: rgba(255,255,255,0.55); font-style: italic; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+  section { padding: 56px 0; }
+  .sec-tag { color: var(--verde-c); font-size: 11px; letter-spacing: 3px; font-family: Arial; text-transform: uppercase; display: block; margin-bottom: 10px; }
+  .sec-titulo { font-size: 32px; color: var(--verde); font-weight: normal; margin-bottom: 8px; }
+  .sec-sub { font-size: 15px; color: var(--cinza); margin-bottom: 40px; }
+  .divider { height: 2px; width: 50px; background: var(--ouro); margin: 12px 0 32px; }
+
+  /* ORGANOGRAMA */
+  .org-wrap { overflow-x: auto; margin-bottom: 40px; }
+
+  /* NÍVEL CARDS */
+  .nivel { margin-bottom: 32px; }
+  .nivel-label { font-size: 11px; font-family: Arial; letter-spacing: 2px; text-transform: uppercase; color: var(--cinza); margin-bottom: 12px; padding-left: 4px; border-left: 3px solid var(--ouro); padding-left: 10px; }
+  .nivel-cards { display: flex; gap: 16px; flex-wrap: wrap; }
+  .entidade-card { padding: 20px 24px; flex: 1; min-width: 200px; }
+  .ec-master { background: var(--verde); border: 2px solid var(--ouro); }
+  .ec-holding { background: #2a4a3a; border: 1px solid rgba(201,168,76,0.4); }
+  .ec-spe { background: var(--branco); border: 1px solid #e0d8cc; }
+  .ec-gestao { background: var(--creme); border: 1px solid #e0d8cc; }
+  .ec-nome { font-size: 15px; margin-bottom: 4px; }
+  .ec-master .ec-nome { color: var(--ouro); }
+  .ec-holding .ec-nome { color: rgba(255,255,255,0.9); }
+  .ec-spe .ec-nome { color: var(--verde); }
+  .ec-gestao .ec-nome { color: var(--verde); }
+  .ec-tipo { font-size: 11px; font-family: Arial; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+  .ec-master .ec-tipo { color: rgba(201,168,76,0.6); }
+  .ec-holding .ec-tipo { color: rgba(255,255,255,0.4); }
+  .ec-spe .ec-tipo { color: var(--cinza); }
+  .ec-gestao .ec-tipo { color: var(--cinza); }
+  .ec-resp { font-size: 12px; line-height: 1.7; }
+  .ec-master .ec-resp { color: rgba(255,255,255,0.75); }
+  .ec-holding .ec-resp { color: rgba(255,255,255,0.6); }
+  .ec-spe .ec-resp { color: #555; }
+  .ec-gestao .ec-resp { color: #555; }
+
+  /* REGRAS */
+  .regra-bloco { background: var(--branco); border: 1px solid #e0d8cc; margin-bottom: 20px; overflow: hidden; }
+  .regra-header { background: var(--verde); padding: 16px 24px; display: flex; align-items: center; gap: 16px; }
+  .regra-num { font-size: 22px; color: var(--ouro); font-weight: bold; font-family: Arial; }
+  .regra-titulo { font-size: 16px; color: var(--branco); }
+  .regra-body { padding: 24px; }
+  .regra-texto { font-size: 14px; color: #444; line-height: 1.8; margin-bottom: 16px; }
+  .regra-clausula { background: var(--creme); border-left: 3px solid var(--ouro); padding: 14px 16px; font-size: 13px; color: #444; font-style: italic; line-height: 1.7; margin-bottom: 12px; }
+  .regra-clausula strong { color: var(--verde); font-style: normal; }
+  .regra-exemplo { background: #f0f8f2; border-left: 3px solid var(--verde-c); padding: 12px 16px; font-size: 12px; color: #444; font-family: Arial; }
+  .regra-exemplo strong { color: var(--verde-c); }
+
+  /* FLUXO DECISÓRIO */
+  .fluxo-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; background: var(--verde); border: 1px solid rgba(201,168,76,0.3); }
+  .fluxo-item { padding: 24px 20px; border-right: 1px solid rgba(201,168,76,0.2); text-align: center; }
+  .fluxo-item:last-child { border-right: none; }
+  .fluxo-num { font-size: 32px; color: var(--ouro); font-weight: bold; display: block; margin-bottom: 8px; font-family: Arial; }
+  .fluxo-titulo { font-size: 13px; color: var(--branco); margin-bottom: 8px; }
+  .fluxo-desc { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.6; font-family: Arial; }
+
+  /* BRAND RULES */
+  .brand-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .brand-card { padding: 28px; }
+  .brand-pode { background: #f0f8f2; border: 1px solid #c0dcc8; border-top: 3px solid #3d7a52; }
+  .brand-nao { background: #fff0f2; border: 1px solid #dcc0c8; border-top: 3px solid #9a2a30; }
+  .brand-titulo { font-size: 14px; font-family: Arial; font-weight: bold; margin-bottom: 16px; }
+  .brand-pode .brand-titulo { color: #2d5a3d; }
+  .brand-nao .brand-titulo { color: #7a1a20; }
+  .brand-lista { list-style: none; }
+  .brand-lista li { font-size: 13px; color: #444; padding: 7px 0; border-bottom: 1px solid rgba(0,0,0,0.06); padding-left: 20px; position: relative; line-height: 1.5; }
+  .brand-pode .brand-lista li::before { content: '✓'; position: absolute; left: 0; color: #3d7a52; font-weight: bold; }
+  .brand-nao .brand-lista li::before { content: '✕'; position: absolute; left: 0; color: #9a2a30; font-weight: bold; }
+
+  /* COMITE */
+  .comite-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .comite-card { background: var(--branco); border: 1px solid #e0d8cc; padding: 24px; border-top: 3px solid; }
+  .cc-verde { border-top-color: var(--verde); }
+  .cc-ouro { border-top-color: var(--ouro); }
+  .cc-azul { border-top-color: #2a5078; }
+  .comite-nome { font-size: 15px; color: var(--verde); margin-bottom: 4px; font-family: Arial; font-weight: bold; }
+  .comite-tipo { font-size: 11px; color: var(--cinza); font-family: Arial; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid #e8e0d4; }
+  .comite-membros { font-size: 13px; color: #555; line-height: 1.8; }
+  .comite-freq { margin-top: 12px; font-size: 12px; font-family: Arial; color: var(--cinza); border-top: 1px solid #e8e0d4; padding-top: 10px; }
+
+  footer { background: var(--verde); padding: 32px 40px; text-align: center; }
+  footer p { color: rgba(255,255,255,0.4); font-size: 12px; font-family: Arial; }
+  footer .logo { color: var(--ouro); font-size: 16px; margin-bottom: 8px; }
+
+  .aviso-juridico { background: #fff8e8; border: 1px solid #e8d090; padding: 20px 24px; margin-top: 40px; font-size: 12px; color: #7a6020; font-family: Arial; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">AL'DORA CITY</div>
+  <div class="nav-sub">GOVERNANÇA · MASTER BRAND PROTECTION · MODELO SPE</div>
+</nav>
+
+<div class="hero">
+  <span class="hero-tag">Cidade Jardim Urbanismo · Documento Estratégico</span>
+  <h1>Modelo de Governança AL'DORA</h1>
+  <p>Proteção da marca master · Estrutura SPE por empreendimento · Comitês e regras de decisão</p>
+</div>
+
+<div class="container">
+
+<!-- POR QUE GOVERNANÇA -->
+<section>
+  <span class="sec-tag">Fundamento Estratégico</span>
+  <h2 class="sec-titulo">Por que a Governança é Crítica para o AL'DORA</h2>
+  <div class="divider"></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 40px;">
+    <div>
+      <p style="font-size: 15px; color: #444; line-height: 1.9; margin-bottom: 20px;">
+        O AL'DORA City é um <strong style="color: var(--verde);">Masterplan Vertical Escalonado</strong> com
+        4 empreendimentos, 14 torres, 3 quadras, e horizonte de 84 meses.
+        Cada empreendimento será uma SPE com possível entrada de parceiros diferentes.
+      </p>
+      <p style="font-size: 15px; color: #444; line-height: 1.9;">
+        O risco fundamental: uma <strong style="color: var(--verde);">decisão ruim em qualquer SPE</strong>
+        pode contaminar o brand equity do masterplan inteiro — afetando preços, velocidade de vendas
+        e capacidade de atrair parceiros nas fases seguintes.
+      </p>
+    </div>
+    <div style="background: var(--verde); padding: 28px;">
+      <div style="font-size: 12px; color: var(--ouro); font-family: Arial; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">Referência: Como as Grandes Fazem</div>
+      <ul style="list-style: none;">
+        <li style="font-size: 13px; color: rgba(255,255,255,0.8); padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-left: 16px; position: relative; line-height: 1.6;">
+          <span style="position: absolute; left: 0; color: var(--ouro);">→</span>
+          <strong style="color: var(--ouro-c);">Cyrela + BTG:</strong> SPE para R$3 bilhões em 7 projetos — isolamento de risco, brand Cyrela preservado
+        </li>
+        <li style="font-size: 13px; color: rgba(255,255,255,0.8); padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-left: 16px; position: relative; line-height: 1.6;">
+          <span style="position: absolute; left: 0; color: var(--ouro);">→</span>
+          <strong style="color: var(--ouro-c);">Cyrela sub-marcas:</strong> Lavvi (premium), Vivaz (MCMV) — cada SPE usa a sub-marca, nunca a master em caso de problema
+        </li>
+        <li style="font-size: 13px; color: rgba(255,255,255,0.8); padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-left: 16px; position: relative; line-height: 1.6;">
+          <span style="position: absolute; left: 0; color: var(--ouro);">→</span>
+          <strong style="color: var(--ouro-c);">YOO SP:</strong> Brand licensing — master brand licenciada por royalty para cada empreendimento, com regras de uso rígidas
+        </li>
+        <li style="font-size: 13px; color: rgba(255,255,255,0.8); padding: 8px 0; padding-left: 16px; position: relative; line-height: 1.6;">
+          <span style="position: absolute; left: 0; color: var(--ouro);">→</span>
+          <strong style="color: var(--ouro-c);">Even/EZtec:</strong> Conselho de gestão de marca separado da gestão operacional — proteção jurídica e estratégica
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ESTRUTURA SOCIETÁRIA -->
+<section style="padding-top: 0;">
+  <span class="sec-tag">Arquitetura Societária</span>
+  <h2 class="sec-titulo">Estrutura de Entidades</h2>
+  <div class="divider"></div>
+
+  <div class="nivel">
+    <div class="nivel-label">Nível 1 — Marca Master (Guarda-Chuva)</div>
+    <div class="nivel-cards">
+      <div class="entidade-card ec-master" style="max-width: 500px;">
+        <div class="ec-nome">AL'DORA · Cidade Jardim Urbanismo Ltda.</div>
+        <div class="ec-tipo">Master Brand Holder · Proprietária do Conceito</div>
+        <div class="ec-resp">Titular da marca AL'DORA, do masterplan e de todos os padrões de produto, design e serviço. Licencia a marca para cada SPE mediante contrato de uso e royalty. Não pode ser liquidada sem aprovação unânime de todos os sócios do ecossistema.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nivel">
+    <div class="nivel-label">Nível 2 — Holding de Participações (Opcional mas Recomendado)</div>
+    <div class="nivel-cards">
+      <div class="entidade-card ec-holding">
+        <div class="ec-nome">CJ Holding · Participações Imobiliárias</div>
+        <div class="ec-tipo">Holding · Concentra participações nas SPEs</div>
+        <div class="ec-resp">Detém cotas em todas as SPEs. Facilita entrada de investidores institucionais que preferem posição de portfólio a compromisso com SPE específica. Permite desinvestimento parcial sem afetar o masterplan.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nivel">
+    <div class="nivel-label">Nível 3 — SPEs Operacionais (Uma por Empreendimento)</div>
+    <div class="nivel-cards">
+      <div class="entidade-card ec-spe">
+        <div class="ec-nome">SPE Jardins Ltda.</div>
+        <div class="ec-tipo">SPE · EMP1 · Torres A+B</div>
+        <div class="ec-resp">Opera exclusivamente o AL'DORA Jardins. Sócios: CJ Holding + parceiro(s) EMP1. Usa marca AL'DORA via licença. Presta contas ao Conselho de Governança do Masterplan.</div>
+      </div>
+      <div class="entidade-card ec-spe">
+        <div class="ec-nome">SPE Versailles Ltda.</div>
+        <div class="ec-tipo">SPE · EMP2 · Torres C+D</div>
+        <div class="ec-resp">Opera o AL'DORA Versailles. Sócios podem ser distintos do EMP1. Contrato de licença de marca idêntico ao EMP1. Gate 2 ativa SPE.</div>
+      </div>
+      <div class="entidade-card ec-spe">
+        <div class="ec-nome">SPE Reserva Ltda.</div>
+        <div class="ec-tipo">SPE · EMP3 · Torres E+F</div>
+        <div class="ec-resp">Opera o AL'DORA Reserva em QC02. Independente financeiramente. Usa padrão AL'DORA sob licença. Ativada pelo Gate 3.</div>
+      </div>
+      <div class="entidade-card ec-spe" style="border-color: var(--ouro);">
+        <div class="ec-nome">SPE Signature Ltda.</div>
+        <div class="ec-tipo">SPE · EMP4 · Torres G+H</div>
+        <div class="ec-resp">Opera o AL'DORA Signature em QC03. Produto premium — sócios pré-qualificados com alinhamento total de posicionamento. Gate 4 ativa SPE. Nenhuma concessão de padrão.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nivel">
+    <div class="nivel-label">Nível 4 — Gestão de Áreas Comuns Compartilhadas</div>
+    <div class="nivel-cards">
+      <div class="entidade-card ec-gestao" style="max-width: 600px;">
+        <div class="ec-nome">Condomínio AL'DORA · Gestora de Masterplan</div>
+        <div class="ec-tipo">Pessoa Jurídica de Condomínio · Gestão das áreas comuns inter-SPEs</div>
+        <div class="ec-resp">Gerencia as áreas comuns que transcendem uma única SPE: praças centrais, sistema viário interno, segurança perimetral do masterplan, app AL'DORA, manutenção de padrões de limpeza e experiência. Receita via taxa de condomínio proporcional das 4 SPEs.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLUXO DECISÓRIO -->
+<section style="padding-top: 0;">
+  <span class="sec-tag">Processo</span>
+  <h2 class="sec-titulo">Fluxo Decisório · Do SPE ao Masterplan</h2>
+  <div class="divider"></div>
+
+  <div class="fluxo-grid">
+    <div class="fluxo-item">
+      <span class="fluxo-num">1</span>
+      <div class="fluxo-titulo">Decisão Operacional</div>
+      <div class="fluxo-desc">Cada SPE decide autonomamente sobre: cronograma de obra, financiamento construtivo, contratações, ajuste de preços dentro da banda aprovada, marketing tático.</div>
+    </div>
+    <div class="fluxo-item">
+      <span class="fluxo-num">2</span>
+      <div class="fluxo-titulo">Aprovação de Comitê</div>
+      <div class="fluxo-desc">Mudanças que afetam padrão de produto, uso de marca, mix de tipologias ou preço âncora exigem aprovação do Comitê de Masterplan (mínimo 2 de 3 representantes).</div>
+    </div>
+    <div class="fluxo-item">
+      <span class="fluxo-num">3</span>
+      <div class="fluxo-titulo">Veto Master Brand</div>
+      <div class="fluxo-desc">Cidade Jardim Urbanismo (titular AL'DORA) tem veto absoluto sobre qualquer decisão que afete: naming, posicionamento de preço, padrão de amenities, identidade visual.</div>
+    </div>
+    <div class="fluxo-item">
+      <span class="fluxo-num">4</span>
+      <div class="fluxo-titulo">Gate Review</div>
+      <div class="fluxo-desc">Antes de cada gate, reunião formal de todos os acionistas do masterplan valida se as condições estão cumpridas. Não há abertura de nova fase sem aprovação do Comitê de Gates.</div>
+    </div>
+  </div>
+</section>
+
+<!-- REGRAS DE PROTEÇÃO DA MARCA -->
+<section style="padding-top: 0;">
+  <span class="sec-tag">Cláusulas Essenciais</span>
+  <h2 class="sec-titulo">Regras de Proteção do Masterplan AL'DORA</h2>
+  <div class="divider"></div>
+
+  <div class="regra-bloco">
+    <div class="regra-header">
+      <div class="regra-num">R1</div>
+      <div class="regra-titulo">Licença de Marca com Padrão Mínimo Obrigatório</div>
+    </div>
+    <div class="regra-body">
+      <div class="regra-texto">Cada SPE utiliza a marca AL'DORA e o sub-nome do empreendimento mediante contrato de licença. A licença é revogável se os padrões mínimos do Masterplan Brand Book não forem cumpridos.</div>
+      <div class="regra-clausula">
+        <strong>Cláusula sugerida:</strong> "A SPE [NOME] licencia o uso da marca AL'DORA e AL'DORA [SUBTÍTULO] mediante o cumprimento integral das especificações do AL'DORA Brand Book (versão vigente), incluindo padrão mínimo de amenities por camada, acabamentos de lobby, identidade visual e programa de uso das áreas comuns. O descumprimento reiterado (≥2 notificações não atendidas em 60 dias) autoriza a Cidade Jardim Urbanismo a revogar a licença sem ônus."
+      </div>
+      <div class="regra-exemplo"><strong>Exemplo prático:</strong> Se o EMP2 (Versailles) decidir reduzir o padrão de acabamento do lobby para economizar 5%, o Comitê pode notificar e eventualmente revogar a licença — protegendo o brand equity para os EMPs 3 e 4.</div>
+    </div>
+  </div>
+
+  <div class="regra-bloco">
+    <div class="regra-header">
+      <div class="regra-num">R2</div>
+      <div class="regra-titulo">Preço Piso por Tipologia (Price Floor Protection)</div>
+    </div>
+    <div class="regra-body">
+      <div class="regra-texto">Cada SPE se compromete a não comercializar unidades abaixo do preço piso acordado para cada tipologia. Isso protege a tabela de valorização do masterplan e impede que uma SPE em dificuldade faça "queima de estoque" que comprometa o posicionamento das demais.</div>
+      <div class="regra-clausula">
+        <strong>Cláusula sugerida:</strong> "A SPE [NOME] compromete-se a não comercializar unidades do produto [P1/P2/P3/P4/P5] abaixo do preço piso de R$[VALOR]/m² definido pelo Comitê de Masterplan no ato do lançamento, salvo aprovação formal de ajuste pelo referido Comitê mediante justificativa de mercado documentada (pesquisa Brain Research ou CRECI-MG atualizada)."
+      </div>
+      <div class="regra-exemplo"><strong>Exemplo prático:</strong> Se o EMP1 quiser fazer desconto de 15% em unidades P1 para acelerar vendas, precisa de aprovação do Comitê — que avaliará se o desconto não vai contaminar o posicionamento do EMP2 que lançará P2/P3 em breve.</div>
+    </div>
+  </div>
+
+  <div class="regra-bloco">
+    <div class="regra-header">
+      <div class="regra-num">R3</div>
+      <div class="regra-titulo">Tag-Along e Drag-Along de Masterplan</div>
+    </div>
+    <div class="regra-body">
+      <div class="regra-texto">Se um sócio de qualquer SPE quiser vender sua participação, a CJ Holding (e/ou Cidade Jardim Urbanismo) tem direito de preferência e pode exercer tag-along — entrando no negócio — ou exigir que o comprador aceite as regras do Masterplan.</div>
+      <div class="regra-clausula">
+        <strong>Cláusula sugerida:</strong> "Qualquer cessão de cotas da SPE [NOME] a terceiro está condicionada à: (i) direito de preferência da Cidade Jardim Urbanismo pelo prazo de 30 dias; (ii) assinatura pelo novo cotista de Termo de Adesão ao Masterplan AL'DORA, reconhecendo todas as obrigações de padrão, preço piso e governança; (iii) aprovação do Comitê de Masterplan em caso de sócio estratégico (>20% das cotas)."
+      </div>
+      <div class="regra-exemplo"><strong>Exemplo prático:</strong> Se o parceiro do EMP2 quiser sair e vender para um terceiro com menor alinhamento estratégico, a CJ Holding pode bloquear a entrada ou exigir que o novo entrante assine o Masterplan Agreement.</div>
+    </div>
+  </div>
+
+  <div class="regra-bloco">
+    <div class="regra-header">
+      <div class="regra-num">R4</div>
+      <div class="regra-titulo">Gestão Unificada de Áreas Comuns (Masterplan Commons)</div>
+    </div>
+    <div class="regra-body">
+      <div class="regra-texto">As áreas comuns que transcendem uma SPE (praças centrais, sistema de segurança do masterplan, app AL'DORA, identidade do bairro) são geridas pela entidade "Condomínio AL'DORA" com participação proporcional de cada SPE. Nenhuma SPE pode privatizar áreas do Masterplan Commons.</div>
+      <div class="regra-clausula">
+        <strong>Cláusula sugerida:</strong> "As áreas designadas como 'Masterplan Commons' (listadas no Quadro de Áreas Comuns — Anexo I) são de uso compartilhado e geridas pela Condomínio AL'DORA. Nenhuma SPE pode restringir, privatizar, degradar ou modificar os Masterplan Commons sem aprovação do Comitê de Governança por maioria de 2/3 dos votos. Cada SPE contribui com [X]% do VGV pago na venda de cada unidade ao fundo de manutenção do Masterplan Commons."
+      </div>
+      <div class="regra-exemplo"><strong>Exemplo prático:</strong> O EMP3 não pode fechar a praça central do QC02 para um evento privado sem autorização — ela pertence ao masterplan. O app AL'DORA é da marca master, não de nenhuma SPE individualmente.</div>
+    </div>
+  </div>
+
+  <div class="regra-bloco">
+    <div class="regra-header">
+      <div class="regra-num">R5</div>
+      <div class="regra-titulo">Travamento de Gates (Gate Lock)</div>
+    </div>
+    <div class="regra-body">
+      <div class="regra-texto">Nenhuma fase nova pode ser iniciada sem que as condições do gate anterior sejam formalmente verificadas e aprovadas pelo Comitê. Isso protege investidores de fases posteriores e garante que o masterplan não seja atropelado por pressão de caixa.</div>
+      <div class="regra-clausula">
+        <strong>Cláusula sugerida:</strong> "A abertura de cada fase (G2, G3, G4) está condicionada ao cumprimento formal das métricas de gate listadas no Anexo de Gates do Masterplan Agreement. O Comitê de Masterplan deve se reunir formalmente no prazo máximo de 30 dias após o cumprimento das métricas, lavrar ata de aprovação e autorizar por escrito o início da próxima fase. Na ausência de aprovação formal, nenhuma ação de lançamento, aprovação municipal ou captação de recursos para a nova fase poderá ser iniciada."
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- O QUE PODE / NÃO PODE -->
+<section style="padding-top: 0;">
+  <span class="sec-tag">Brand Book Resumido</span>
+  <h2 class="sec-titulo">Cada SPE PODE e NÃO PODE Fazer</h2>
+  <div class="divider"></div>
+
+  <div class="brand-grid">
+    <div class="brand-card brand-pode">
+      <div class="brand-titulo">✓ PODE — Autonomia da SPE</div>
+      <ul class="brand-lista">
+        <li>Contratar empreiteiras e fornecedores próprios</li>
+        <li>Definir cronograma e ritmo da obra</li>
+        <li>Ajustar preços dentro da banda aprovada (±10% do preço âncora)</li>
+        <li>Captar financiamento construtivo e recursos próprios</li>
+        <li>Adaptar mix de unidades em ±15% sem alterar o produto principal</li>
+        <li>Contratar agência de publicidade local (dentro das diretrizes AL'DORA)</li>
+        <li>Criar ações de marketing tático para o empreendimento específico</li>
+        <li>Negociar condições de pagamento personalizadas por cliente</li>
+        <li>Distribuir lucros aos sócios da SPE conforme acordo</li>
+        <li>Criar eventos de lançamento e relacionamento com compradores</li>
+      </ul>
+    </div>
+    <div class="brand-card brand-nao">
+      <div class="brand-titulo">✕ NÃO PODE — Proteção do Masterplan</div>
+      <ul class="brand-lista">
+        <li>Usar a marca AL'DORA em empreendimento fora do masterplan</li>
+        <li>Vender unidades abaixo do preço piso sem aprovação do Comitê</li>
+        <li>Alterar o nome do empreendimento (AL'DORA [Subtítulo]) sem aprovação</li>
+        <li>Reduzir padrão de amenities abaixo do mínimo do Brand Book</li>
+        <li>Modificar fachada ou gabarito aprovado sem aprovação do Comitê</li>
+        <li>Iniciar fases sem aprovação formal de gate pelo Comitê</li>
+        <li>Transferir cotas a terceiro sem direito de preferência da CJ Holding</li>
+        <li>Privatizar ou alterar Masterplan Commons</li>
+        <li>Fazer comunicação que contradiga o posicionamento master AL'DORA</li>
+        <li>Contrair dívidas que comprometam a continuidade do masterplan</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- COMITÊS -->
+<section style="padding-top: 0;">
+  <span class="sec-tag">Estrutura de Governança</span>
+  <h2 class="sec-titulo">Comitês e Frequência de Reuniões</h2>
+  <div class="divider"></div>
+
+  <div class="comite-grid">
+    <div class="comite-card cc-verde">
+      <div class="comite-nome">Comitê de Masterplan</div>
+      <div class="comite-tipo">Estratégico · Máxima autoridade</div>
+      <div class="comite-membros">
+        <strong>Membros:</strong> Cidade Jardim Urbanismo (presidente), representante CJ Holding, 1 representante de cada SPE ativa.<br><br>
+        <strong>Competências:</strong> Aprovação de gates, mudanças de posicionamento, veto de marca, aprovação de novos sócios estratégicos, alterações no Masterplan Agreement.
+      </div>
+      <div class="comite-freq">📅 Trimestral (ordinária) + Extraordinária quando gate próximo</div>
+    </div>
+    <div class="comite-card cc-ouro">
+      <div class="comite-nome">Comitê de Produto e Marca</div>
+      <div class="comite-tipo">Tático · Padrão de qualidade</div>
+      <div class="comite-membros">
+        <strong>Membros:</strong> Gestor de Produto AL'DORA, arquiteto coordenador, representante de marketing, 1 representante da SPE ativa.<br><br>
+        <strong>Competências:</strong> Aprovação de materiais de comunicação, validação de projetos arquitetônicos, aprovação de amenities e acabamentos, atualização do Brand Book.
+      </div>
+      <div class="comite-freq">📅 Mensal + Ad hoc para aprovações urgentes</div>
+    </div>
+    <div class="comite-card cc-azul">
+      <div class="comite-nome">Comitê de Obras e Gates</div>
+      <div class="comite-tipo">Operacional · Acompanhamento</div>
+      <div class="comite-membros">
+        <strong>Membros:</strong> Gerente de obras de cada SPE ativa, engenheiro do masterplan, representante financeiro da CJ Holding.<br><br>
+        <strong>Competências:</strong> Acompanhamento de obra, validação de cronograma, monitoramento de KPIs de gate, alerta precoce de riscos de prazo ou qualidade.
+      </div>
+      <div class="comite-freq">📅 Quinzenal (em obra) + Relatório mensal ao Comitê de Masterplan</div>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKLIST DO PARCEIRO -->
+<section style="padding-top: 0;">
+  <span class="sec-tag">Onboarding de Parceiros</span>
+  <h2 class="sec-titulo">Checklist: Entrada de Novo Sócio em SPE</h2>
+  <div class="divider"></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+    <div style="background: var(--branco); border: 1px solid #e0d8cc; padding: 28px;">
+      <div style="font-size: 12px; color: var(--verde-c); font-family: Arial; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--ouro);">Due Diligence do Parceiro</div>
+      <ul style="list-style: none;">
+        <li style="font-size: 13px; color: #444; padding: 8px 0; border-bottom: 1px solid #f0ece4; padding-left: 20px; position: relative;">
+          <span style="position: absolute; left: 0; color: var(--ouro);">○</span> Track record em incorporação verificado
+        </li>
+        <li style="font-size: 13px; color: #444; padding: 8px 0; border-bottom: 1px solid #f0ece4; padding-left: 20px; position: relative;">
+          <span style="position: absolute; left: 0; color: var(--ouro);">○</span> Certidão negativa de débitos (Receita + Estadual + Municipal)
+        </li>
+        <li style="font-size: 13px; color: #444; padding: 8px 0; border-bottom: 1px solid #f0ece4; padding-left: 20px; position: relative;">
+          <span style="position: absolute; left: 0; color: var(--ouro);">○</span> Capacidade financeira comprovada para o aporte proposto
+        </li>
+        <li style="font-size: 13px; color: #444; padding: 8px 0; border-bottom: 1px solid #f0ece4; padding-left: 20px; position: relative;">
+          <span style="position: absolute; left: 0; color: var(--ouro);">○</span> Alinhamento com posicionamento AL'DORA (entrevista Comitê)
+        </li>
+        <li style="font-size: 13px; color: #444; padding: 8px 0; border-bottom: 1px solid #f0ece4; padding-left: 20px; position: relative;">
+          <span style="position: absolute; left: 0; color: var(--ouro);">○</span> Ausência de processos relevantes no Judiciário
+        </li>
+        <li style="font-size: 13px; color: #444; padding: 8px 0; padding-left: 20px; position: relative;">
+          <span style="position: absolute; left: 0; color: var(--ouro);">○</span> Aprovação pela Cidade Jardim Urbanismo (poder de veto)
+        </li>
+      </ul>
+    </div>
+    <div style="background: var(--branco); border: 1px solid #e0d8cc; padding: 28px;">
+      <div style="font-size: 12px; color: var(--verde-c); font-family: Arial; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--ouro);">Documentação de Entrada</div>
+      <ul style="list-style: none;">
+        <li style="font-size: 13px; color: #444; padding: 8px 0; border-bottom: 1px solid #f0ece4; padding-left: 20px; position: relative;">
+          <span style="position: absolute; left: 0; color: var(--ouro);">○</span> Contrato Social da SPE com cláusulas de governança AL'DORA
+        </li>
+        <li style="font-size: 13px; color: #444; padding: 8px 0; border-bottom: 1px solid #f0ece4; padding-left: 20px; position: relative;">
+          <span style="position: absolute; left: 0; color: var(--ouro);">○</span> Termo de Adesão ao Masterplan Agreement
+        </li>
+        <li style="font-size: 13px; color: #444; padding: 8px 0; border-bottom: 1px solid #f0ece4; padding-left: 20px; position: relative;">
+          <span style="position: absolute; left: 0; color: var(--ouro);">○</span> Contrato de Licença de Marca AL'DORA
+        </li>
+        <li style="font-size: 13px; color: #444; padding: 8px 0; border-bottom: 1px solid #f0ece4; padding-left: 20px; position: relative;">
+          <span style="position: absolute; left: 0; color: var(--ouro);">○</span> NDA bilateral (dados financeiros do masterplan)
+        </li>
+        <li style="font-size: 13px; color: #444; padding: 8px 0; border-bottom: 1px solid #f0ece4; padding-left: 20px; position: relative;">
+          <span style="position: absolute; left: 0; color: var(--ouro);">○</span> Recebimento e assinatura do AL'DORA Brand Book (versão vigente)
+        </li>
+        <li style="font-size: 13px; color: #444; padding: 8px 0; padding-left: 20px; position: relative;">
+          <span style="position: absolute; left: 0; color: var(--ouro);">○</span> Participação em reunião de onboarding com Comitê de Masterplan
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="aviso-juridico">
+    ⚠️ <strong>Aviso importante:</strong> Este documento é um framework estratégico e conceitual para governança do Masterplan AL'DORA.
+    As cláusulas sugeridas têm fins ilustrativos e devem ser revisadas, adaptadas e formalizadas por advogado especializado em direito societário e direito imobiliário antes de qualquer uso contratual.
+    Cidade Jardim Urbanismo recomenda contratar assessoria jurídica especializada para a formalização do Masterplan Agreement, contratos de SPE e contratos de licença de marca antes do início das negociações com parceiros.
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="logo">AL'DORA CITY · CIDADE JARDIM URBANISMO</div>
+  <p>Modelo de governança — documento estratégico conceitual. Sujeito a revisão jurídica antes de formalização.</p>
+  <p style="margin-top: 6px;">Uberlândia/MG · Março 2026 · Cidade Jardim Urbanismo Ltda.</p>
+</footer>
+
+</body>
+</html>

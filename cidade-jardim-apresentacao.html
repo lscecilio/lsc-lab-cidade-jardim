@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cidade Jardim — Masterplan Vertical Escalonado · Uberlândia/MG</title>
+<style>
+  :root {
+    --verde: #1a3a2a;
+    --verde-medio: #2d5a3d;
+    --verde-claro: #3d7a52;
+    --ouro: #c9a84c;
+    --ouro-claro: #e8c97a;
+    --creme: #f5f0e8;
+    --branco: #ffffff;
+    --cinza: #8a8a8a;
+    --cinza-escuro: #2a2a2a;
+    --texto: #1a1a1a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Georgia', serif;
+    background: #f8f5f0;
+    color: var(--texto);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(26,58,42,0.97);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+  }
+  .nav-logo { color: var(--ouro); font-size: 15px; font-weight: bold; letter-spacing: 2px; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 12px; font-family: 'Arial', sans-serif; letter-spacing: 1px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--ouro); }
+
+  /* SECTIONS GERAL */
+  section { padding: 80px 0; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+
+  /* CAPA */
+  #capa {
+    background: linear-gradient(160deg, #0d2a1a 0%, #1a3a2a 50%, #0f2218 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #capa::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+  }
+  #capa::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--ouro), transparent);
+  }
+  .capa-inner { position: relative; z-index: 2; }
+  .capa-tag {
+    display: inline-block;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--ouro);
+    padding: 6px 16px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 32px;
+    text-transform: uppercase;
+  }
+  .capa-titulo {
+    font-size: 62px;
+    font-weight: normal;
+    color: var(--branco);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .capa-titulo span { color: var(--ouro); }
+  .capa-sub {
+    font-size: 20px;
+    color: rgba(255,255,255,0.55);
+    font-style: italic;
+    margin-bottom: 48px;
+  }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(201,168,76,0.2);
+    border: 1px solid rgba(201,168,76,0.2);
+    margin-top: 48px;
+  }
+  .kpi-item {
+    background: rgba(26,58,42,0.8);
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .kpi-valor {
+    font-size: 28px;
+    color: var(--ouro);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .kpi-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    font-family: 'Arial', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .capa-nota {
+    margin-top: 32px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    font-family: 'Arial', sans-serif;
+  }
+
+  /* SEÇÃO GENÉRICA */
+  .sec-tag {
+    display: inline-block;
+    color: var(--verde-claro);
+    font-size: 11px;
+    letter-spacing: 3px;
+    font-family: 'Arial', sans-serif;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .sec-titulo {
+    font-size: 38px;
+    font-weight: normal;
+    color: var(--verde);
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .sec-sub {
+    font-size: 16px;
+    color: var(--cinza);
+    max-width: 600px;
+    margin-bottom: 48px;
+  }
+  .divider {
+    height: 2px;
+    width: 60px;
+    background: var(--ouro);
+    margin: 16px 0 40px;
+  }
+
+  /* TESE EXECUTIVA */
+  #tese { background: var(--branco); }
+  .macro-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid #e0d8cc;
+    margin-bottom: 48px;
+  }
+  .macro-item {
+    padding: 32px 28px;
+    border-right: 1px solid #e0d8cc;
+    text-align: center;
+  }
+  .macro-item:last-child { border-right: none; }
+  .macro-valor {
+    font-size: 36px;
+    color: var(--verde);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .macro-sub {
+    font-size: 12px;
+    color: var(--cinza);
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 8px;
+  }
+  .macro-desc {
+    font-size: 13px;
+    color: var(--texto);
+    font-style: italic;
+  }
+  .tese-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 40px;
+  }
+  .tese-card {
+    background: var(--creme);
+    padding: 28px;
+    border-left: 3px solid var(--ouro);
+  }
+  .tese-card h4 {
+    font-size: 14px;
+    color: var(--verde);
+    margin-bottom: 10px;
+    font-family: 'Arial', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .tese-card p { font-size: 14px; color: #555; line-height: 1.7; }
+
+  /* ATIVO */
+  #ativo { background: var(--verde); color: var(--branco); }
+  #ativo .sec-titulo { color: var(--ouro); }
+  #ativo .sec-sub { color: rgba(255,255,255,0.6); }
+  #ativo .sec-tag { color: rgba(201,168,76,0.7); }
+  .quadra-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: rgba(201,168,76,0.2);
+  }
+  .quadra-card {
+    background: rgba(255,255,255,0.05);
+    padding: 32px 24px;
+    border-top: 3px solid var(--ouro);
+    transition: background 0.2s;
+  }
+  .quadra-card:hover { background: rgba(255,255,255,0.1); }
+  .quadra-badge {
+    display: inline-block;
+    background: var(--ouro);
+    color: var(--verde);
+    padding: 4px 12px;
+    font-size: 11px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+  .quadra-card h3 {
+    font-size: 22px;
+    color: var(--branco);
+    margin-bottom: 20px;
+    font-weight: normal;
+  }
+  .area-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-size: 13px;
+  }
+  .area-linha:last-child { border-bottom: none; }
+  .area-label { color: rgba(255,255,255,0.6); font-family: 'Arial', sans-serif; }
+  .area-valor { color: var(--ouro-claro); font-weight: bold; }
+  .quadra-totais {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 2px;
+    text-align: center;
+  }
+  .total-item { padding: 12px; border-right: 1px solid rgba(201,168,76,0.2); }
+  .total-item:last-child { border-right: none; }
+  .total-valor { font-size: 22px; color: var(--ouro); font-weight: bold; display: block; }
+  .total-label { font-size: 11px; color: rgba(255,255,255,0.5); font-family: 'Arial', sans-serif; margin-top: 4px; }
+
+  /* MERCADO */
+  #mercado { background: #f8f5f0; }
+  .mercado-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .brain-card {
+    background: var(--branco);
+    border: 1px solid #e0d8cc;
+    padding: 32px;
+  }
+  .brain-tag {
+    font-size: 10px;
+    color: var(--cinza);
+    font-family: 'Arial', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: block;
+    border-bottom: 1px solid #e8e0d8;
+    padding-bottom: 12px;
+  }
+  .intent-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .intent-label {
+    font-size: 13px;
+    color: var(--texto);
+    width: 100px;
+    flex-shrink: 0;
+  }
+  .intent-bar-wrap { flex: 1; background: #f0ece4; height: 8px; border-radius: 0; }
+  .intent-bar { height: 8px; background: var(--verde-claro); }
+  .intent-pct { font-size: 14px; font-weight: bold; color: var(--verde); width: 40px; text-align: right; }
+  .sinal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .sinal-item {
+    background: var(--creme);
+    padding: 20px;
+    border-top: 2px solid var(--ouro);
+    text-align: center;
+  }
+  .sinal-valor { font-size: 24px; color: var(--verde); font-weight: bold; display: block; }
+  .sinal-label { font-size: 11px; color: var(--cinza); font-family: 'Arial', sans-serif; margin-top: 4px; }
+
+  /* ESCADA DE PRODUTOS */
+  #produtos { background: var(--branco); }
+  .escada-wrap { overflow-x: auto; }
+  .escada-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    font-family: 'Arial', sans-serif;
+  }
+  .escada-table thead tr {
+    background: var(--verde);
+    color: var(--ouro);
+  }
+  .escada-table thead th {
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: normal;
+  }
+  .escada-table tbody tr {
+    border-bottom: 1px solid #e8e0d4;
+    transition: background 0.15s;
+  }
+  .escada-table tbody tr:hover { background: var(--creme); }
+  .escada-table tbody td { padding: 18px 20px; color: var(--texto); vertical-align: middle; }
+  .prod-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border-radius: 0;
+  }
+  .p1 { background: #e8f0ea; color: #2a5a35; }
+  .p2 { background: #e4ecf0; color: #1a4060; }
+  .p3 { background: #f0e8ea; color: #5a2a30; }
+  .p4 { background: #f0ede0; color: #5a4a10; }
+  .p5 { background: #1a3a2a; color: #c9a84c; }
+  .prod-ticket { font-weight: bold; color: var(--verde); font-size: 15px; }
+  .planta-mini {
+    display: inline-block;
+    background: #f8f5f0;
+    border: 1px solid #ddd;
+    padding: 4px 8px;
+    font-size: 11px;
+    color: #666;
+    font-family: monospace;
+  }
+  .role-tag {
+    display: inline-block;
+    background: rgba(201,168,76,0.12);
+    color: #7a6020;
+    padding: 3px 10px;
+    font-size: 11px;
+    border: 1px solid rgba(201,168,76,0.3);
+  }
+  .prod-row-p5 { background: #f5f0e0 !important; }
+
+  /* ESTEIRA */
+  #esteira { background: var(--creme); }
+  .emp-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .emp-card {
+    background: var(--branco);
+    border: 1px solid #e0d8cc;
+    overflow: hidden;
+  }
+  .emp-header {
+    background: var(--verde);
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .emp-nome { color: var(--ouro); font-size: 16px; }
+  .emp-quadra { color: rgba(255,255,255,0.5); font-size: 12px; font-family: 'Arial', sans-serif; }
+  .emp-body { padding: 24px; }
+  .torre-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .torre-chip {
+    background: var(--creme);
+    border: 1px solid #d8d0c4;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-family: 'Arial', sans-serif;
+    color: var(--verde);
+  }
+  .emp-mix { font-size: 13px; color: #555; margin-bottom: 16px; line-height: 1.7; }
+  .emp-gate {
+    background: var(--creme);
+    border-left: 3px solid var(--ouro);
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #666;
+    font-family: 'Arial', sans-serif;
+    font-style: italic;
+  }
+  .emp-gate strong { color: var(--verde); font-style: normal; }
+
+  /* TIMELINE / GANTT */
+  #timeline { background: var(--verde); color: var(--branco); }
+  #timeline .sec-titulo { color: var(--ouro); }
+  #timeline .sec-sub { color: rgba(255,255,255,0.6); }
+  #timeline .sec-tag { color: rgba(201,168,76,0.6); }
+  .gantt-wrap { overflow-x: auto; }
+  .gantt-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Arial', sans-serif;
+    font-size: 12px;
+    min-width: 900px;
+  }
+  .gantt-table thead tr { border-bottom: 1px solid rgba(201,168,76,0.4); }
+  .gantt-table thead th {
+    padding: 10px 16px;
+    color: rgba(201,168,76,0.7);
+    text-align: left;
+    font-weight: normal;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+  .gantt-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .gantt-table tbody tr:hover { background: rgba(255,255,255,0.05); }
+  .gantt-table tbody td { padding: 14px 16px; color: rgba(255,255,255,0.85); }
+  .gantt-fase { color: var(--ouro-claro); font-weight: bold; }
+  .gantt-bar-wrap { display: flex; align-items: center; gap: 8px; }
+  .gantt-bar {
+    height: 14px;
+    background: linear-gradient(90deg, var(--verde-claro), var(--ouro));
+    opacity: 0.9;
+  }
+  .gate-badge {
+    display: inline-block;
+    border: 1px solid rgba(201,168,76,0.5);
+    color: var(--ouro);
+    padding: 3px 10px;
+    font-size: 10px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  .gates-list {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .gate-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 20px;
+    text-align: center;
+  }
+  .gate-num { font-size: 28px; color: var(--ouro); font-weight: bold; display: block; margin-bottom: 8px; }
+  .gate-desc { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+  /* AREAS COMUNS */
+  #comuns { background: var(--branco); }
+  .camadas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #e8e0d4; }
+  .camada-card {
+    background: var(--branco);
+    padding: 36px 28px;
+    border-top: 4px solid;
+  }
+  .camada-1 { border-color: var(--verde-claro); }
+  .camada-2 { border-color: var(--ouro); }
+  .camada-3 { border-color: var(--verde); }
+  .camada-num { font-size: 48px; color: #eae8e0; font-weight: bold; margin-bottom: 16px; font-family: 'Arial', sans-serif; }
+  .camada-nome { font-size: 18px; color: var(--verde); margin-bottom: 8px; }
+  .camada-sub { font-size: 13px; color: var(--ouro); font-family: 'Arial', sans-serif; margin-bottom: 16px; }
+  .camada-lista { list-style: none; }
+  .camada-lista li { font-size: 13px; color: #555; padding: 5px 0; border-bottom: 1px solid #f0ece4; }
+  .camada-lista li::before { content: '— '; color: var(--ouro); }
+
+  /* PARCERIA */
+  #parceria { background: var(--creme); }
+  .parceria-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  .parceria-block h3 { font-size: 20px; color: var(--verde); margin-bottom: 20px; font-weight: normal; }
+  .permuta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #e0d8cc;
+  }
+  .permuta-label { font-size: 14px; color: var(--texto); }
+  .permuta-valor { font-size: 16px; color: var(--verde); font-weight: bold; }
+  .checklist { list-style: none; margin-top: 16px; }
+  .checklist li {
+    font-size: 13px;
+    color: #444;
+    padding: 8px 0;
+    border-bottom: 1px solid #e8e0d4;
+    padding-left: 24px;
+    position: relative;
+  }
+  .checklist li::before {
+    content: '○';
+    position: absolute;
+    left: 0;
+    color: var(--ouro);
+    font-size: 12px;
+  }
+  .spe-box {
+    background: var(--verde);
+    color: var(--branco);
+    padding: 28px;
+    margin-top: 24px;
+  }
+  .spe-box h4 { color: var(--ouro); margin-bottom: 12px; font-family: 'Arial', sans-serif; letter-spacing: 1px; font-size: 12px; text-transform: uppercase; }
+  .spe-box p { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.8; }
+
+  /* FOOTER */
+  footer {
+    background: #0d2a1a;
+    padding: 48px 40px;
+    text-align: center;
+    border-top: 1px solid rgba(201,168,76,0.3);
+  }
+  .footer-logo { font-size: 24px; color: var(--ouro); margin-bottom: 8px; }
+  .footer-sub { font-size: 13px; color: rgba(255,255,255,0.4); font-family: 'Arial', sans-serif; margin-bottom: 24px; }
+  .footer-disclaimer { font-size: 11px; color: rgba(255,255,255,0.25); font-family: 'Arial', sans-serif; max-width: 600px; margin: 0 auto; line-height: 1.8; }
+
+  /* BENCHMARK */
+  #benchmark { background: #f8f5f0; }
+  .bench-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .bench-card {
+    background: var(--branco);
+    border: 1px solid #e0d8cc;
+    padding: 28px;
+  }
+  .bench-nome { font-size: 18px; color: var(--verde); margin-bottom: 4px; }
+  .bench-bairro { font-size: 12px; color: var(--cinza); font-family: 'Arial', sans-serif; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #e8e0d4; }
+  .bench-dados { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .bench-dado { text-align: center; }
+  .bench-dado-val { font-size: 20px; color: var(--verde); font-weight: bold; display: block; }
+  .bench-dado-label { font-size: 11px; color: var(--cinza); font-family: 'Arial', sans-serif; }
+
+  /* UTIL */
+  .gold { color: var(--ouro); }
+  .verde { color: var(--verde); }
+  .tag-fonte {
+    display: inline-block;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: #7a6020;
+    padding: 4px 10px;
+    font-size: 10px;
+    font-family: 'Arial', sans-serif;
+    letter-spacing: 1px;
+    margin-top: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .macro-grid { grid-template-columns: 1fr; }
+    .tese-cards { grid-template-columns: 1fr; }
+    .quadra-grid { grid-template-columns: 1fr; }
+    .mercado-grid { grid-template-columns: 1fr; }
+    .emp-grid { grid-template-columns: 1fr; }
+    .camadas-grid { grid-template-columns: 1fr; }
+    .parceria-grid { grid-template-columns: 1fr; }
+    .gates-list { grid-template-columns: repeat(2, 1fr); }
+    .capa-titulo { font-size: 38px; }
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .bench-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">CIDADE JARDIM</div>
+  <div class="nav-links">
+    <a href="#tese">TESE</a>
+    <a href="#ativo">O ATIVO</a>
+    <a href="#mercado">MERCADO</a>
+    <a href="#produtos">PRODUTOS</a>
+    <a href="#esteira">ESTEIRA</a>
+    <a href="#timeline">TIMELINE</a>
+    <a href="#parceria">PARCERIA</a>
+  </div>
+</nav>
+
+<!-- CAPA -->
+<section id="capa">
+  <div class="container capa-inner">
+    <div class="capa-tag">Apresentação Confidencial ao Investidor · Março 2026</div>
+    <h1 class="capa-titulo">
+      Masterplan<br>
+      <span>Vertical Escalonado</span>
+    </h1>
+    <p class="capa-sub">Uberlândia · Jardim Versailles · ZR2/SVA · CA 4,0</p>
+
+    <div style="display:flex; gap: 12px; flex-wrap: wrap;">
+      <div style="background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); padding: 10px 20px; font-size: 13px; color: rgba(255,255,255,0.8); font-family: Arial, sans-serif;">
+        Cidade Jardim Urbanismo
+      </div>
+      <div style="background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); padding: 10px 20px; font-size: 13px; color: rgba(255,255,255,0.8); font-family: Arial, sans-serif;">
+        AL'DORA City
+      </div>
+      <div style="background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); padding: 10px 20px; font-size: 13px; color: rgba(255,255,255,0.8); font-family: Arial, sans-serif;">
+        4 Empreendimentos · 14 Torres
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-item">
+        <span class="kpi-valor">42.784 m²</span>
+        <span class="kpi-label">Área Total do Ativo</span>
+      </div>
+      <div class="kpi-item">
+        <span class="kpi-valor">171.138 m²</span>
+        <span class="kpi-label">Potencial Computável</span>
+      </div>
+      <div class="kpi-item">
+        <span class="kpi-valor">R$299,68M</span>
+        <span class="kpi-label">VGV Ref. QC01 (Brain)</span>
+      </div>
+      <div class="kpi-item">
+        <span class="kpi-valor">CA 4,0</span>
+        <span class="kpi-label">ZR2/SVA — Alta Densidade</span>
+      </div>
+    </div>
+    <p class="capa-nota">* VGV referencial QC01 ciclo 1 — Brain Research 2025. Não constitui garantia ou promessa de resultado.</p>
+  </div>
+</section>
+
+<!-- TESE EXECUTIVA -->
+<section id="tese">
+  <div class="container">
+    <span class="sec-tag">Contexto Macro</span>
+    <h2 class="sec-titulo">Tese Executiva</h2>
+    <div class="divider"></div>
+
+    <div class="macro-grid">
+      <div class="macro-item">
+        <span class="macro-valor">15,25%</span>
+        <span class="macro-sub">Selic · Mar/2026</span>
+        <span class="macro-desc">Juros elevados aumentam barreira de entrada — consolida ativos bem posicionados e filtra concorrência</span>
+      </div>
+      <div class="macro-item">
+        <span class="macro-valor">24,5%</span>
+        <span class="macro-sub">IVV Uberlândia · 2T25</span>
+        <span class="macro-desc">Índice de Velocidade de Vendas acima da média nacional — mercado absorve oferta com eficiência</span>
+      </div>
+      <div class="macro-item">
+        <span class="macro-valor">R$8.341/m²</span>
+        <span class="macro-sub">Ticket médio vertical UDI · 2T25</span>
+        <span class="macro-desc">Preço médio atual do mercado vertical — nosso produto inicia abaixo e escala com tração</span>
+      </div>
+    </div>
+
+    <div class="tese-cards">
+      <div class="tese-card">
+        <h4>✓ Mercado Validado</h4>
+        <p>Brain Research aponta 44% de intenção de compra no Brasil e 61% no Sudeste. Uberlândia tem demanda anual superior a 1.000 unidades no raio de 15 min do ativo — mercado já testado, não especulativo.</p>
+      </div>
+      <div class="tese-card">
+        <h4>✓ Produto Ajustado ao Ciclo</h4>
+        <p>Esteira P1→P5 concebida para absorver diferentes faixas de renda com área, ticket e margem crescentes. Entrada acessível, coroamento premium — maximiza absorção em qualquer cenário de taxa.</p>
+      </div>
+      <div class="tese-card">
+        <h4>✓ Preserva Valor no Longo Prazo</h4>
+        <p>Masterplan Vertical Escalonado com 4 gates de execução condicionados a performance real — cada fase só abre quando a anterior entrega. Capital entrante tem proteção estrutural por design.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- O ATIVO -->
+<section id="ativo">
+  <div class="container">
+    <span class="sec-tag">Áreas e Potencial</span>
+    <h2 class="sec-titulo">O Ativo · 3 Quadras</h2>
+    <div class="divider"></div>
+    <p class="sec-sub">Jardim Versailles, Uberlândia/MG — Zoneamento ZR2/SVA · Coeficiente de Aproveitamento 4,0</p>
+
+    <div class="quadra-grid">
+      <div class="quadra-card">
+        <span class="quadra-badge">QC01</span>
+        <h3>Quadra 01</h3>
+        <div class="area-linha">
+          <span class="area-label">Área total do terreno</span>
+          <span class="area-valor">20.598 m²</span>
+        </div>
+        <div class="area-linha">
+          <span class="area-label">Área privativa total</span>
+          <span class="area-valor">49.908 m²</span>
+        </div>
+        <div class="area-linha">
+          <span class="area-label">Área construída total</span>
+          <span class="area-valor">81.816 m²</span>
+        </div>
+        <div class="area-linha">
+          <span class="area-label">Faseamento</span>
+          <span class="area-valor">Fase 1 · Entrada</span>
+        </div>
+      </div>
+      <div class="quadra-card">
+        <span class="quadra-badge">QC02</span>
+        <h3>Quadra 02</h3>
+        <div class="area-linha">
+          <span class="area-label">Área total do terreno</span>
+          <span class="area-valor">11.953 m²</span>
+        </div>
+        <div class="area-linha">
+          <span class="area-label">Área privativa total</span>
+          <span class="area-valor">43.033 m²</span>
+        </div>
+        <div class="area-linha">
+          <span class="area-label">Área construída total</span>
+          <span class="area-valor">70.546 m²</span>
+        </div>
+        <div class="area-linha">
+          <span class="area-label">Faseamento</span>
+          <span class="area-valor">Fase 2 · Expansão</span>
+        </div>
+      </div>
+      <div class="quadra-card">
+        <span class="quadra-badge">QC03</span>
+        <h3>Quadra 03</h3>
+        <div class="area-linha">
+          <span class="area-label">Área total do terreno</span>
+          <span class="area-valor">10.232 m²</span>
+        </div>
+        <div class="area-linha">
+          <span class="area-label">Área privativa total</span>
+          <span class="area-valor">32.743 m²</span>
+        </div>
+        <div class="area-linha">
+          <span class="area-label">Área construída total</span>
+          <span class="area-valor">53.678 m²</span>
+        </div>
+        <div class="area-linha">
+          <span class="area-label">Faseamento</span>
+          <span class="area-valor">Fase 3 · Coroamento</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="quadra-totais">
+      <div class="total-item">
+        <span class="total-valor">42.783 m²</span>
+        <span class="total-label">Terreno Total (3 Quadras)</span>
+      </div>
+      <div class="total-item">
+        <span class="total-valor">125.684 m²</span>
+        <span class="total-label">Área Privativa Total</span>
+      </div>
+      <div class="total-item">
+        <span class="total-valor">171.138 m²</span>
+        <span class="total-label">Potencial Computável (CA 4,0)</span>
+      </div>
+      <div class="total-item">
+        <span class="total-valor">4 Emprend.</span>
+        <span class="total-label">14 Torres Programadas</span>
+      </div>
+    </div>
+
+    <div class="tag-fonte">Fonte: Masterplan Vertical Escalonado · Cidade Jardim Urbanismo · 2026</div>
+  </div>
+</section>
+
+<!-- MERCADO -->
+<section id="mercado">
+  <div class="container">
+    <span class="sec-tag">Inteligência de Mercado</span>
+    <h2 class="sec-titulo">Demanda Real · Sinais de Mercado</h2>
+    <div class="divider"></div>
+
+    <div class="mercado-grid">
+      <div>
+        <div class="brain-card">
+          <span class="brain-tag">Brain Research · Verticalização Brasil 2025</span>
+          <p style="font-size:13px; color:#555; margin-bottom:20px;">Intenção declarada de compra de imóvel nos próximos 24 meses:</p>
+
+          <div class="intent-row">
+            <span class="intent-label">Brasil</span>
+            <div class="intent-bar-wrap">
+              <div class="intent-bar" style="width: 44%"></div>
+            </div>
+            <span class="intent-pct">44%</span>
+          </div>
+          <div class="intent-row">
+            <span class="intent-label">Sudeste</span>
+            <div class="intent-bar-wrap">
+              <div class="intent-bar" style="width: 61%"></div>
+            </div>
+            <span class="intent-pct">61%</span>
+          </div>
+          <div class="intent-row">
+            <span class="intent-label">Alta Renda</span>
+            <div class="intent-bar-wrap">
+              <div class="intent-bar" style="width: 24%; background: var(--ouro);"></div>
+            </div>
+            <span class="intent-pct">24%</span>
+          </div>
+
+          <p style="margin-top: 20px; font-size: 12px; color: #888; font-family: Arial, sans-serif; border-top: 1px solid #e8e0d4; padding-top: 12px;">
+            Demanda anual estimada no raio de 15 min do ativo: <strong style="color: var(--verde);">1.000+ unidades/ano</strong>
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <p style="font-size:15px; color:#444; margin-bottom:24px; line-height:1.8;">
+          O submercado imediato do ativo apresenta sinais robustos de absorção com oferta controlada — contexto ideal para lançamento faseado.
+        </p>
+        <div class="sinal-grid">
+          <div class="sinal-item">
+            <span class="sinal-valor">461</span>
+            <span class="sinal-label">Unidades lançadas no submercado</span>
+          </div>
+          <div class="sinal-item">
+            <span class="sinal-valor">67</span>
+            <span class="sinal-label">Disponíveis (estoque atual)</span>
+          </div>
+          <div class="sinal-item">
+            <span class="sinal-valor">24,5%</span>
+            <span class="sinal-label">IVV Uberlândia 2T25</span>
+          </div>
+          <div class="sinal-item">
+            <span class="sinal-valor">R$2.839</span>
+            <span class="sinal-label">CUB-MG Jan/2026 (/m²)</span>
+          </div>
+        </div>
+        <div style="margin-top: 24px; background: var(--verde); padding: 20px 24px;">
+          <p style="font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.8;">
+            <strong style="color: var(--ouro);">Diagnóstico:</strong> Estoque baixo + IVV alto = janela de entrada favorável.
+            Nosso produto entra abaixo do ticket médio de mercado (R$8.341/m²) e escala com aprovação do comprador.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESCADA DE PRODUTOS -->
+<section id="produtos">
+  <div class="container">
+    <span class="sec-tag">Portfólio</span>
+    <h2 class="sec-titulo">Escada de Produtos P1 → P5</h2>
+    <div class="divider"></div>
+    <p class="sec-sub">5 tipologias calibradas para absorção máxima em diferentes faixas de renda — da entrada ao coroamento premium.</p>
+
+    <div class="escada-wrap">
+      <table class="escada-table">
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Nome</th>
+            <th>Configuração</th>
+            <th>Área Privativa</th>
+            <th>Ticket</th>
+            <th>Ticket/m²</th>
+            <th>Papel na Esteira</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="prod-badge p1">P1</span></td>
+            <td><strong>Studio Urban</strong></td>
+            <td><span class="planta-mini">Studio · 1 vaga</span></td>
+            <td>28 – 35 m²</td>
+            <td class="prod-ticket">R$230–290K</td>
+            <td>R$8.000–8.500/m²</td>
+            <td><span class="role-tag">Volume · Velocidade</span></td>
+          </tr>
+          <tr>
+            <td><span class="prod-badge p2">P2</span></td>
+            <td><strong>Compacto Smart</strong></td>
+            <td><span class="planta-mini">2 dorms · 1 vaga</span></td>
+            <td>42 – 55 m²</td>
+            <td class="prod-ticket">R$380–500K</td>
+            <td>R$8.500–9.500/m²</td>
+            <td><span class="role-tag">Base · Margem</span></td>
+          </tr>
+          <tr>
+            <td><span class="prod-badge p3">P3</span></td>
+            <td><strong>Garden Suite</strong></td>
+            <td><span class="planta-mini">3 dorms · 2 vagas</span></td>
+            <td>68 – 85 m²</td>
+            <td class="prod-ticket">R$650–820K</td>
+            <td>R$9.000–10.000/m²</td>
+            <td><span class="role-tag">Tração · Família</span></td>
+          </tr>
+          <tr>
+            <td><span class="prod-badge p4">P4</span></td>
+            <td><strong>Alto Padrão</strong></td>
+            <td><span class="planta-mini">3–4 dorms · 3 vagas</span></td>
+            <td>105 – 135 m²</td>
+            <td class="prod-ticket">R$1,1–1,5M</td>
+            <td>R$10.500–11.500/m²</td>
+            <td><span class="role-tag">Margem Premium</span></td>
+          </tr>
+          <tr class="prod-row-p5">
+            <td><span class="prod-badge p5">P5</span></td>
+            <td><strong>Cobertura Signature</strong></td>
+            <td><span class="planta-mini">4 dorms · duplex · 4 vagas</span></td>
+            <td>200 – 280 m²</td>
+            <td class="prod-ticket">R$2,8–4,2M</td>
+            <td>R$13.000–16.000/m²</td>
+            <td><span class="role-tag">Coroamento · Imagem</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="display: flex; gap: 16px; margin-top: 24px; flex-wrap: wrap;">
+      <div class="tag-fonte">Fonte: Esteira Vertical Uberlândia · Documento Interno CJU 2026</div>
+      <div class="tag-fonte">CUB-MG Jan/2026: R$2.839/m²</div>
+      <div class="tag-fonte">Ticket médio mercado UDI 2T25: R$8.341/m²</div>
+    </div>
+  </div>
+</section>
+
+<!-- ESTEIRA DE EMPREENDIMENTOS -->
+<section id="esteira">
+  <div class="container">
+    <span class="sec-tag">Faseamento</span>
+    <h2 class="sec-titulo">Esteira · 4 Empreendimentos · 14 Torres</h2>
+    <div class="divider"></div>
+    <p class="sec-sub">Cada empreendimento é uma SPE independente. Gates de execução condicionados a performance — não a datas fixas.</p>
+
+    <div class="emp-grid">
+      <!-- EMP 1 -->
+      <div class="emp-card">
+        <div class="emp-header">
+          <div>
+            <div class="emp-nome">Empreendimento 1 · AL'DORA Jardins</div>
+            <div class="emp-quadra">QC01 · Fase 1 · Entrada no mercado</div>
+          </div>
+          <div style="text-align:right;">
+            <span style="font-size:22px; color: var(--ouro);">2 Torres</span>
+          </div>
+        </div>
+        <div class="emp-body">
+          <div class="torre-row">
+            <span class="torre-chip">Torre A · P1/P2 Focus</span>
+            <span class="torre-chip">Torre B · P2/P3 Focus</span>
+          </div>
+          <div class="emp-mix">
+            <strong>Mix:</strong> ~70% P1/P2 + 25% P3 + 5% P4 — máxima velocidade de vendas.
+            Torre A posicionada como âncora de preço do bairro.
+          </div>
+          <div class="emp-gate">
+            <strong>Gate de abertura:</strong> Disponível — primeira fase do masterplan. Aprovação municipal, comercialização e construção simultâneos.
+          </div>
+        </div>
+      </div>
+
+      <!-- EMP 2 -->
+      <div class="emp-card">
+        <div class="emp-header">
+          <div>
+            <div class="emp-nome">Empreendimento 2 · AL'DORA Versailles</div>
+            <div class="emp-quadra">QC01 · Fase 2 · Consolidação</div>
+          </div>
+          <div style="text-align:right;">
+            <span style="font-size:22px; color: var(--ouro);">2 Torres</span>
+          </div>
+        </div>
+        <div class="emp-body">
+          <div class="torre-row">
+            <span class="torre-chip">Torre C · P2/P3</span>
+            <span class="torre-chip">Torre D · P3/P4</span>
+          </div>
+          <div class="emp-mix">
+            <strong>Mix:</strong> ~50% P2 + 35% P3 + 15% P4 — equilíbrio entre volume e margem.
+            Beneficia do groundwork de imagem do Emp. 1.
+          </div>
+          <div class="emp-gate">
+            <strong>Gate 2:</strong> Preço testado ✓ · Vendas Emp.1 em ritmo ✓ · Aprovação em andamento ✓ · Térreo ativo ✓
+          </div>
+        </div>
+      </div>
+
+      <!-- EMP 3 -->
+      <div class="emp-card">
+        <div class="emp-header">
+          <div>
+            <div class="emp-nome">Empreendimento 3 · AL'DORA Reserva</div>
+            <div class="emp-quadra">QC02 · Fase 3 · Expansão</div>
+          </div>
+          <div style="text-align:right;">
+            <span style="font-size:22px; color: var(--ouro);">2 Torres</span>
+          </div>
+        </div>
+        <div class="emp-body">
+          <div class="torre-row">
+            <span class="torre-chip">Torre E · P3 Focus</span>
+            <span class="torre-chip">Torre F · P3/P4</span>
+          </div>
+          <div class="emp-mix">
+            <strong>Mix:</strong> ~30% P2 + 55% P3 + 15% P4 — produto familiar consolidado.
+            QC02 permite gabarito diferenciado com visão para QC01.
+          </div>
+          <div class="emp-gate">
+            <strong>Gate 3:</strong> Preço de revenda Emp.1/2 comprovado · VGV médio acima do projetado · Construção Emp.2 acima de 50%
+          </div>
+        </div>
+      </div>
+
+      <!-- EMP 4 -->
+      <div class="emp-card">
+        <div class="emp-header">
+          <div>
+            <div class="emp-nome">Empreendimento 4 · AL'DORA Signature</div>
+            <div class="emp-quadra">QC03 · Fase 4 · Coroamento</div>
+          </div>
+          <div style="text-align:right;">
+            <span style="font-size:22px; color: var(--ouro);">2 Torres</span>
+          </div>
+        </div>
+        <div class="emp-body">
+          <div class="torre-row">
+            <span class="torre-chip">Torre G · P4 Focus</span>
+            <span class="torre-chip">Torre H · P4/P5 Signature</span>
+          </div>
+          <div class="emp-mix">
+            <strong>Mix:</strong> ~20% P3 + 50% P4 + 30% P5 — produto de alta margem e imagem máxima.
+            Torre H com coberturas Signature (P5) como coroamento do masterplan.
+          </div>
+          <div class="emp-gate">
+            <strong>Gate 4:</strong> Bairro consolidado · brand equity estabelecido · compradores P5 pré-qualificados · backlog Emp.3 &gt; 60%
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background: var(--verde); padding: 24px 28px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+      <div style="flex: 1;">
+        <div style="font-size: 12px; color: rgba(201,168,76,0.7); font-family: Arial; letter-spacing: 1px; margin-bottom: 6px; text-transform: uppercase;">Lógica dos Gates</div>
+        <p style="font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.8;">
+          Os gates <strong style="color: var(--ouro);">não são datas</strong> — são condições de performance.
+          Cada fase só abre quando a anterior valida preço, absorção e construção.
+          Isso protege capital e maximiza o VGV total ao longo do ciclo.
+        </p>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-size: 36px; color: var(--ouro); font-weight: bold;">~84 meses</div>
+        <div style="font-size: 12px; color: rgba(255,255,255,0.5); font-family: Arial;">Horizonte total do masterplan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ÁREAS COMUNS -->
+<section id="comuns">
+  <div class="container">
+    <span class="sec-tag">Experiência do Morador</span>
+    <h2 class="sec-titulo">Áreas Comuns · 3 Camadas</h2>
+    <div class="divider"></div>
+    <p class="sec-sub">Infraestrutura de uso compartilhado concebida para evolução progressiva — de funcional a aspiracional.</p>
+
+    <div class="camadas-grid">
+      <div class="camada-card camada-1">
+        <div class="camada-num">01</div>
+        <div class="camada-nome">Base Funcional</div>
+        <div class="camada-sub">Entregue com o Empreendimento 1</div>
+        <ul class="camada-lista">
+          <li>Lobby com recepção 24h</li>
+          <li>Academia equipada</li>
+          <li>Salão de festas</li>
+          <li>Espaço kids</li>
+          <li>Coworking / sala multiuso</li>
+          <li>Quadra poliesportiva</li>
+          <li>Piscina adulto + infantil</li>
+          <li>Segurança perimetral</li>
+        </ul>
+      </div>
+      <div class="camada-card camada-2">
+        <div class="camada-num">02</div>
+        <div class="camada-nome">Família e Comunidade</div>
+        <div class="camada-sub">Expandida nos Empreendimentos 2 e 3</div>
+        <ul class="camada-lista">
+          <li>Praça central com paisagismo</li>
+          <li>Pet space e pet care</li>
+          <li>Espaço gourmet externo</li>
+          <li>Horta comunitária</li>
+          <li>Bicicletário e carregador EV</li>
+          <li>Espaço teen</li>
+          <li>Campo society gramado</li>
+          <li>Área de hambúrgueria / quiosques</li>
+        </ul>
+      </div>
+      <div class="camada-card camada-3">
+        <div class="camada-num">03</div>
+        <div class="camada-nome">Assinatura Premium</div>
+        <div class="camada-sub">Exclusivo do Empreendimento 4 (Signature)</div>
+        <ul class="camada-lista">
+          <li>Sky lounge no rooftop</li>
+          <li>Spa e sauna panorâmica</li>
+          <li>Wine cellar privativo</li>
+          <li>Cinema privativo</li>
+          <li>Concierge dedicado</li>
+          <li>Vaga de helicóptero (consulta municipal)</li>
+          <li>Clube de negócios exclusivo</li>
+          <li>Golf putting green</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENCHMARK -->
+<section id="benchmark">
+  <div class="container">
+    <span class="sec-tag">Referências de Mercado</span>
+    <h2 class="sec-titulo">Benchmark · Comparáveis Locais</h2>
+    <div class="divider"></div>
+    <p class="sec-sub">Empreendimentos de referência em Uberlândia e região que validam tese de preço, produto e velocidade de vendas.</p>
+
+    <div class="bench-grid">
+      <div class="bench-card">
+        <div class="bench-nome">Grandverse Place</div>
+        <div class="bench-bairro">Uberlândia · Vertical alto padrão · Referência P3/P4</div>
+        <div class="bench-dados">
+          <div class="bench-dado">
+            <span class="bench-dado-val">R$9.200+</span>
+            <span class="bench-dado-label">Ticket médio /m²</span>
+          </div>
+          <div class="bench-dado">
+            <span class="bench-dado-val">Alta</span>
+            <span class="bench-dado-label">Velocidade de vendas</span>
+          </div>
+        </div>
+      </div>
+      <div class="bench-card">
+        <div class="bench-nome">Grandverse Adapt</div>
+        <div class="bench-bairro">Uberlândia · Studios e compactos · Referência P1/P2</div>
+        <div class="bench-dados">
+          <div class="bench-dado">
+            <span class="bench-dado-val">R$8.000+</span>
+            <span class="bench-dado-label">Ticket médio /m²</span>
+          </div>
+          <div class="bench-dado">
+            <span class="bench-dado-val">Muito Alta</span>
+            <span class="bench-dado-label">IVV compactos</span>
+          </div>
+        </div>
+      </div>
+      <div class="bench-card">
+        <div class="bench-nome">Grandverse Garden</div>
+        <div class="bench-bairro">Uberlândia · Garden units · Referência P2/P3</div>
+        <div class="bench-dados">
+          <div class="bench-dado">
+            <span class="bench-dado-val">R$8.500+</span>
+            <span class="bench-dado-label">Ticket médio /m²</span>
+          </div>
+          <div class="bench-dado">
+            <span class="bench-dado-val">Boa</span>
+            <span class="bench-dado-label">Absorção</span>
+          </div>
+        </div>
+      </div>
+      <div class="bench-card">
+        <div class="bench-nome">Pátio São Paulo</div>
+        <div class="bench-bairro">Uberlândia · Referência mixed-use premium</div>
+        <div class="bench-dados">
+          <div class="bench-dado">
+            <span class="bench-dado-val">R$10.000+</span>
+            <span class="bench-dado-label">Ticket /m² premium</span>
+          </div>
+          <div class="bench-dado">
+            <span class="bench-dado-val">Premium</span>
+            <span class="bench-dado-label">Posicionamento</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background: var(--branco); border: 1px solid #e0d8cc; padding: 24px 28px; margin-top: 28px;">
+      <p style="font-size: 14px; color: #555; line-height: 1.8;">
+        <strong style="color: var(--verde);">Conclusão do benchmark:</strong> Nosso produto P1 (R$8.000–8.500/m²) está
+        <strong>alinhado ou ligeiramente abaixo do mercado</strong> nos comparáveis mais próximos,
+        garantindo competitividade na entrada. À medida que o bairro se consolida e a brand equity AL'DORA se estabelece,
+        P4/P5 pode superar os benchmarks atuais — tese já validada em masterplans similares.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="container">
+    <span class="sec-tag">Cronograma Executivo</span>
+    <h2 class="sec-titulo">Timeline · 84 Meses</h2>
+    <div class="divider" style="background: var(--ouro);"></div>
+    <p class="sec-sub">Horizonte condicionado a gates de performance — fases se superpõem conforme aprovação e absorção.</p>
+
+    <div class="gantt-wrap">
+      <table class="gantt-table">
+        <thead>
+          <tr>
+            <th style="width:200px;">Fase / Empreendimento</th>
+            <th>Atividade Principal</th>
+            <th>Horizonte</th>
+            <th>Gate</th>
+            <th style="width:300px;">Barra Visual</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="gantt-fase">EMP 1 · AL'DORA Jardins</td>
+            <td>Projeto + Aprovação Municipal</td>
+            <td>M0 → M12</td>
+            <td>—</td>
+            <td><div class="gantt-bar-wrap"><div class="gantt-bar" style="width: 14.3%"></div><span style="color:rgba(255,255,255,0.4);font-size:11px;">M0–12</span></div></td>
+          </tr>
+          <tr>
+            <td class="gantt-fase">EMP 1 · AL'DORA Jardins</td>
+            <td>Lançamento + Construção Torres A/B</td>
+            <td>M6 → M42</td>
+            <td>—</td>
+            <td><div class="gantt-bar-wrap"><div class="gantt-bar" style="width: 42.8%; margin-left: 7.1%"></div><span style="color:rgba(255,255,255,0.4);font-size:11px;">M6–42</span></div></td>
+          </tr>
+          <tr>
+            <td class="gantt-fase">EMP 2 · AL'DORA Versailles</td>
+            <td>Projeto + Lançamento + Torres C/D</td>
+            <td>M18 → M54</td>
+            <td><span class="gate-badge">GATE 2</span></td>
+            <td><div class="gantt-bar-wrap"><div class="gantt-bar" style="width: 42.8%; margin-left: 21.4%"></div><span style="color:rgba(255,255,255,0.4);font-size:11px;">M18–54</span></div></td>
+          </tr>
+          <tr>
+            <td class="gantt-fase">EMP 3 · AL'DORA Reserva</td>
+            <td>QC02 · Torres E/F · Expansão</td>
+            <td>M30 → M66</td>
+            <td><span class="gate-badge">GATE 3</span></td>
+            <td><div class="gantt-bar-wrap"><div class="gantt-bar" style="width: 42.8%; margin-left: 35.7%"></div><span style="color:rgba(255,255,255,0.4);font-size:11px;">M30–66</span></div></td>
+          </tr>
+          <tr>
+            <td class="gantt-fase">EMP 4 · AL'DORA Signature</td>
+            <td>QC03 · Torres G/H · Coroamento</td>
+            <td>M48 → M84</td>
+            <td><span class="gate-badge">GATE 4</span></td>
+            <td><div class="gantt-bar-wrap"><div class="gantt-bar" style="width: 42.8%; margin-left: 57.1%;"></div><span style="color:rgba(255,255,255,0.4);font-size:11px;">M48–84</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="gates-list">
+      <div class="gate-card">
+        <span class="gate-num">G1</span>
+        <div class="gate-desc">Aprovação municipal QC01 obtida + financiamento construtivo confirmado + 30% de unidades pré-vendidas</div>
+      </div>
+      <div class="gate-card">
+        <span class="gate-num">G2</span>
+        <div class="gate-desc">Preço testado e validado · Vendas Emp.1 em ritmo projetado · Aprovação Emp.2 em andamento · Térreo ativo</div>
+      </div>
+      <div class="gate-card">
+        <span class="gate-num">G3</span>
+        <div class="gate-desc">Revenda Emp.1/2 acima do projetado · VGV médio confirmado · Construção Emp.2 &gt; 50% de avanço</div>
+      </div>
+      <div class="gate-card">
+        <span class="gate-num">G4</span>
+        <div class="gate-desc">Bairro consolidado · Brand AL'DORA estabelecida · Compradores P5 pré-qualificados · Backlog Emp.3 &gt; 60%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARCERIA -->
+<section id="parceria">
+  <div class="container">
+    <span class="sec-tag">Estrutura de Negócio</span>
+    <h2 class="sec-titulo">Modelo de Parceria</h2>
+    <div class="divider"></div>
+
+    <div class="parceria-grid">
+      <div class="parceria-block">
+        <h3>Permuta do Proprietário do Terreno</h3>
+        <div class="permuta-row">
+          <span class="permuta-label">Permuta Física</span>
+          <span class="permuta-valor">15% – 25% das unidades</span>
+        </div>
+        <div class="permuta-row">
+          <span class="permuta-label">Permuta Financeira</span>
+          <span class="permuta-valor">12% – 20% do VGV</span>
+        </div>
+        <div class="permuta-row">
+          <span class="permuta-label">Estrutura Jurídica</span>
+          <span class="permuta-valor">SPE por Empreendimento</span>
+        </div>
+        <div class="permuta-row">
+          <span class="permuta-label">Entrada de Capital</span>
+          <span class="permuta-valor">Por Fase / Gate</span>
+        </div>
+        <div class="permuta-row">
+          <span class="permuta-label">Governança</span>
+          <span class="permuta-valor">Conselho de Sócios SPE</span>
+        </div>
+
+        <div class="spe-box">
+          <h4>Por que SPE por empreendimento?</h4>
+          <p>Cada torre/bloco tem sua própria sociedade de propósito específico, isolando riscos, simplificando due diligence de investidores e permitindo entrada/saída de parceiros por fase — sem contaminar o masterplan.</p>
+        </div>
+      </div>
+
+      <div class="parceria-block">
+        <h3>Data Room · Checklist do Investidor</h3>
+        <ul class="checklist">
+          <li>Matrícula do imóvel + certidões negativas</li>
+          <li>Levantamento planialtimétrico (LIDAR/Drone)</li>
+          <li>Laudo de viabilidade urbanística (ZR2/SVA)</li>
+          <li>Estudo de viabilidade econômica (EVE)</li>
+          <li>Pesquisa de mercado Brain Research 2025</li>
+          <li>Projeto arquitetônico conceitual (todos os blocos)</li>
+          <li>Cronograma físico-financeiro por fase</li>
+          <li>Parecer jurídico (propriedade + incorporação)</li>
+          <li>Contrato de permuta ou compromisso de compra</li>
+          <li>Apresentação de benchmarks (Grandverse, Pátio SP)</li>
+          <li>Modelo financeiro em planilha (cenários P50/P90)</li>
+          <li>Histórico da incorporadora / track record</li>
+        </ul>
+
+        <div style="margin-top: 24px; background: var(--creme); border: 1px solid #e0d8cc; padding: 20px 24px;">
+          <p style="font-size: 13px; color: #555; line-height: 1.8;">
+            <strong style="color: var(--verde);">Próximo passo:</strong> Reunião de alinhamento para apresentação do EVE completo,
+            modelo financeiro e condições de parceria. Sujeito a assinatura de NDA.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">CIDADE JARDIM URBANISMO</div>
+  <div class="footer-sub">AL'DORA City · Uberlândia · Jardim Versailles</div>
+  <div style="display: flex; justify-content: center; gap: 24px; margin-bottom: 24px; flex-wrap: wrap;">
+    <span style="color: rgba(201,168,76,0.6); font-size: 12px; font-family: Arial;">ZR2/SVA · CA 4,0</span>
+    <span style="color: rgba(255,255,255,0.2); font-size: 12px;">·</span>
+    <span style="color: rgba(201,168,76,0.6); font-size: 12px; font-family: Arial;">42.784 m² · 4 Empreendimentos · 14 Torres</span>
+    <span style="color: rgba(255,255,255,0.2); font-size: 12px;">·</span>
+    <span style="color: rgba(201,168,76,0.6); font-size: 12px; font-family: Arial;">Março 2026</span>
+  </div>
+  <div class="footer-disclaimer">
+    Documento confidencial destinado exclusivamente a investidores e parceiros qualificados.
+    Os dados de VGV, preços e absorção são referenciais baseados em pesquisas de mercado (Brain Research 2025, IBGE, CRECI-MG)
+    e não constituem garantia, promessa ou projeção vinculante.
+    Toda parceria está condicionada a due diligence completa e assinatura de instrumentos jurídicos apropriados.
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Nav active state
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.pageYOffset + 100;
+    sections.forEach(sec => {
+      if (scrollY >= sec.offsetTop && scrollY < sec.offsetTop + sec.offsetHeight) {
+        navLinks.forEach(a => {
+          a.style.color = a.getAttribute('href') === '#' + sec.id
+            ? 'var(--ouro)' : 'rgba(255,255,255,0.75)';
+        });
+      }
+    });
+  });
+</script>
+</body>
+</html>

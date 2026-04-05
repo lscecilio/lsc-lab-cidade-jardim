@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AL'DORA City — Vista Satelital Real · 14 Torres</title>
+  <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet"/>
+  <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html,body { width:100%; height:100%; background:#000; font-family:'Georgia',serif; overflow:hidden; }
+    #map { width:100%; height:100%; }
+
+    #brand {
+      position:fixed; top:20px; left:20px; z-index:10; pointer-events:none;
+    }
+    .bn { font-size:23px; font-weight:bold; letter-spacing:0.2em; color:#C8A84B;
+          text-shadow:0 0 30px rgba(200,168,75,0.4), 0 2px 8px rgba(0,0,0,0.95); }
+    .bs { font-size:10px; letter-spacing:0.28em; color:#ffffffaa; margin-top:3px; }
+
+    #badge {
+      position:fixed; top:20px; right:20px; z-index:10; pointer-events:none;
+      background:rgba(0,0,0,0.78); border:1px solid #C8A84B44;
+      padding:12px 18px; border-radius:6px; text-align:right;
+      backdrop-filter:blur(6px);
+    }
+    .bv { font-size:22px; color:#C8A84B; font-weight:bold; }
+    .bl { font-size:9px; color:#ffffff55; letter-spacing:0.2em; }
+    .bx { font-size:9px; color:#ffffff44; margin-top:5px; line-height:1.9; }
+
+    #phases {
+      position:fixed; bottom:28px; left:50%; transform:translateX(-50%);
+      display:flex; gap:6px; z-index:10; flex-wrap:wrap; justify-content:center;
+    }
+    .pb {
+      background:rgba(0,0,0,0.82); border:1px solid #C8A84B55;
+      color:#C8A84Bbb; padding:8px 13px; border-radius:4px;
+      cursor:pointer; font-size:10px; letter-spacing:0.08em;
+      transition:all 0.2s; font-family:inherit; white-space:nowrap;
+      backdrop-filter:blur(4px);
+    }
+    .pb:hover { border-color:#C8A84B; color:#C8A84B; }
+    .pb.on { background:linear-gradient(135deg,#C8A84B,#9a7010); color:#000; border-color:transparent; font-weight:bold; }
+
+    #legend {
+      position:fixed; bottom:80px; right:20px; z-index:10;
+      background:rgba(0,0,0,0.88); border:1px solid #C8A84B33;
+      padding:12px 16px; border-radius:6px; backdrop-filter:blur(4px); min-width:230px;
+      max-height:calc(100vh - 160px); overflow-y:auto;
+    }
+    .lt  { font-size:9px; color:#C8A84B88; letter-spacing:0.2em; margin-bottom:8px; }
+    .lg  { font-size:9px; color:#C8A84B77; letter-spacing:0.15em; margin:7px 0 4px; border-top:1px solid #C8A84B22; padding-top:6px; }
+    .li  { display:flex; align-items:center; gap:7px; font-size:10px; color:#bbb; margin-bottom:3px; }
+    .ld  { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
+
+    #infopanel {
+      position:fixed; top:80px; left:20px; z-index:10;
+      background:rgba(0,0,0,0.90); border:1px solid #C8A84B55;
+      padding:15px 18px; border-radius:6px; min-width:230px;
+      display:none; backdrop-filter:blur(8px);
+    }
+    .ipt { font-size:15px; color:#C8A84B; font-weight:bold; margin-bottom:2px; }
+    .ipe { font-size:9px; color:#ffffff55; margin-bottom:9px; border-bottom:1px solid #C8A84B22;
+           padding-bottom:7px; letter-spacing:0.12em; line-height:1.5; }
+    .ipr { display:flex; justify-content:space-between; gap:14px; font-size:10px; color:#999; margin-bottom:3px; }
+    .ipv { color:#e8d47a; }
+    .ipc { position:absolute; top:10px; right:12px; color:#C8A84B55; cursor:pointer; font-size:18px; line-height:1; }
+    .ipc:hover { color:#C8A84B; }
+
+    #heightctrl {
+      position:fixed; top:20px; left:50%; transform:translateX(-50%);
+      display:flex; gap:6px; z-index:10; align-items:center;
+    }
+    .hc {
+      background:rgba(0,0,0,0.82); border:1px solid #ffffff22;
+      color:#ffffffaa; padding:5px 12px; border-radius:20px;
+      cursor:pointer; font-size:10px; letter-spacing:0.08em;
+      transition:all 0.2s; font-family:inherit; backdrop-filter:blur(4px);
+    }
+    .hc:hover { border-color:#C8A84B88; color:#C8A84B; }
+    .hc.on { background:rgba(200,168,75,0.2); border-color:#C8A84B; color:#C8A84B; }
+    .hc-label { font-size:9px; color:#ffffff44; letter-spacing:0.1em; }
+
+    #loading {
+      position:fixed; top:0; left:0; right:0; bottom:0;
+      background:#020a04; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:16px; z-index:100;
+    }
+    .spinner { width:38px; height:38px; border:3px solid #C8A84B22;
+      border-top-color:#C8A84B; border-radius:50%; animation:spin 0.8s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .lt2 { color:#C8A84B; font-size:13px; letter-spacing:0.15em; }
+    .ls  { color:#ffffff33; font-size:10px; letter-spacing:0.1em; }
+
+    .maplibregl-ctrl-scale {
+      background:rgba(0,0,0,0.7) !important; border:1px solid #C8A84B55 !important;
+      color:#C8A84Baa !important; font-size:9px !important;
+    }
+    .maplibregl-ctrl-attrib { display:none !important; }
+  </style>
+</head>
+<body>
+
+<div id="loading">
+  <div class="spinner"></div>
+  <div class="lt2">CARREGANDO SATÉLITE</div>
+  <div class="ls">Uberlândia · Jardim Versailles · 14 Torres</div>
+</div>
+
+<div id="map"></div>
+
+<div id="brand">
+  <div class="bn">AL'DORA CITY</div>
+  <div class="bs">JARDINS · VERSAILLES · RESERVA · SIGNATURE</div>
+</div>
+
+<div id="badge">
+  <div class="bl">VGV REFERENCIAL QC01</div>
+  <div class="bv">R$ 299,7M</div>
+  <div class="bx">4 Empreendimentos · 14 Torres · 125.684 m²<br>3 Quadras · CA 4,0 · ZR2/SVA · Uberlândia MG</div>
+</div>
+
+<div id="heightctrl">
+  <span class="hc-label">ALTURA:</span>
+  <button class="hc on" onclick="setHeight('real',this)">REAL</button>
+  <button class="hc"    onclick="setHeight('2x',this)">2× DESTAQUE</button>
+  <button class="hc"    onclick="setHeight('flat',this)">PLANTA</button>
+</div>
+
+<div id="phases">
+  <button class="pb on" onclick="focusPhase(0)">🛰️ GERAL</button>
+  <button class="pb"    onclick="focusPhase(1)">EMP1 · JARDINS · A–C</button>
+  <button class="pb"    onclick="focusPhase(2)">EMP2 · VERSAILLES · D–F</button>
+  <button class="pb"    onclick="focusPhase(3)">EMP3 · RESERVA · G–J</button>
+  <button class="pb"    onclick="focusPhase(4)">EMP4 · SIGNATURE · K–N</button>
+</div>
+
+<div id="legend">
+  <div class="lt">14 TORRES · AL'DORA CITY</div>
+
+  <div class="lg">QC01 · LAYOUT EM U</div>
+  <div class="li"><div class="ld" style="background:#3a8a2a;border:1px solid #7adf5a"></div>15 Lotes · 360m² · frente Av. João Patrus</div>
+  <div class="li"><div class="ld" style="background:#5a3a8a88;border:1px solid #9a7adf55"></div>Rua das Craviúnas (interior do U)</div>
+
+  <div class="lg">QC01 · EMP1 · AL'DORA JARDINS</div>
+  <div class="li"><div class="ld" style="background:#C8A84B"></div>Torre A · braço norte W · 55m</div>
+  <div class="li"><div class="ld" style="background:#D4B455"></div>Torre B · braço norte E · 55m</div>
+  <div class="li"><div class="ld" style="background:#BFA045"></div>Torre C · costas leste N · 55m</div>
+
+  <div class="lg">QC01 · EMP2 · AL'DORA VERSAILLES</div>
+  <div class="li"><div class="ld" style="background:#B89535"></div>Torre D · costas leste S · 48m</div>
+  <div class="li"><div class="ld" style="background:#C0A040"></div>Torre E · braço sul W · 48m</div>
+  <div class="li"><div class="ld" style="background:#B09030"></div>Torre F · braço sul E · 48m</div>
+
+  <div class="lg">QC02 · EMP3 · AL'DORA RESERVA</div>
+  <div class="li"><div class="ld" style="background:#A07020"></div>Torre G · 50m · P3</div>
+  <div class="li"><div class="ld" style="background:#B07D25"></div>Torre H · 50m · P3</div>
+  <div class="li"><div class="ld" style="background:#98682A"></div>Torre I · 50m · P3</div>
+  <div class="li"><div class="ld" style="background:#A87528"></div>Torre J · 50m · P3</div>
+
+  <div class="lg">QC03 · EMP4 · AL'DORA SIGNATURE</div>
+  <div class="li"><div class="ld" style="background:#FFD060"></div>Torre K · 72m · P4/P5</div>
+  <div class="li"><div class="ld" style="background:#FFE070"></div>Torre L · 72m · P4/P5</div>
+  <div class="li"><div class="ld" style="background:#EFC050"></div>Torre M · 72m · P4/P5</div>
+  <div class="li"><div class="ld" style="background:#FFD870"></div>Torre N · 72m · P4/P5</div>
+</div>
+
+<div id="infopanel" style="position:relative">
+  <span class="ipc" onclick="document.getElementById('infopanel').style.display='none'">×</span>
+  <div class="ipt" id="ip-title">—</div>
+  <div class="ipe" id="ip-emp">—</div>
+  <div class="ipr"><span>Tipologia</span>     <span class="ipv" id="ip-tipo">—</span></div>
+  <div class="ipr"><span>Altura real</span>   <span class="ipv" id="ip-alt">—</span></div>
+  <div class="ipr"><span>Andares</span>        <span class="ipv" id="ip-andares">—</span></div>
+  <div class="ipr"><span>Área privativa</span><span class="ipv" id="ip-priv">—</span></div>
+  <div class="ipr"><span>Faixa ticket</span>  <span class="ipv" id="ip-ticket">—</span></div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────
+// COORDENADAS KMZ exatas [longitude, latitude]
+// ─────────────────────────────────────────────────────────
+var CENTER = [-48.30626437422274, -18.959254896425335];
+
+var QC01_COORDS = [
+  [-48.30661248476868,-18.95637548103209],
+  [-48.30661283296286,-18.95912750380069],
+  [-48.30659420143432,-18.95910812448526],
+  [-48.30658211769109,-18.9589564381425 ],
+  [-48.30660548837058,-18.95888119381422],
+  [-48.30662132436068,-18.95895747653577],
+  [-48.30661754614533,-18.95903312038229],
+  [-48.30663334695388,-18.95910916093079],
+  [-48.30662857304971,-18.95920345864959],
+  [-48.30662661013304,-18.95924123537784],
+  [-48.30586672241777,-18.95916477945059],
+  [-48.30599422069318,-18.95666063429275],
+  [-48.30661248476868,-18.95637548103209],
+];
+var QC02_COORDS = [
+  [-48.30649698590301,-18.96068399537968],
+  [-48.30570204425496,-18.96080819354113],
+  [-48.30580263702252,-18.9592948397472 ],
+  [-48.3064822051777, -18.95938839506466],
+  [-48.30649698590301,-18.96068399537968],
+];
+var QC03_COORDS = [
+  [-48.30653455159076,-18.9622476389247 ],
+  [-48.30564296247557,-18.96225907775669],
+  [-48.30568865204588,-18.96113452087073],
+  [-48.30648108701291,-18.9610109976692 ],
+  [-48.30653455159076,-18.9622476389247 ],
+];
+var MASTER_COORDS = [
+  [-48.30663152248352,-18.9563962855908 ],
+  [-48.30675359935989,-18.96830603602463],
+  [-48.30969133435216,-18.9792995868442 ],
+  [-48.30213820992651,-18.98238476278312],
+  [-48.29105253225089,-18.97512719755233],
+  [-48.29350239742982,-18.97094466996406],
+  [-48.29316698073505,-18.96704384149165],
+  [-48.29270352459724,-18.96453196849883],
+  [-48.29184122872005,-18.96324974106761],
+  [-48.29117868836932,-18.96259133217615],
+  [-48.2916916139812, -18.96101637217126],
+  [-48.29269931482375,-18.96116718518692],
+  [-48.29373496768546,-18.96545110721832],
+  [-48.29403130834654,-18.96768902613709],
+  [-48.30057601827118,-18.96765171465563],
+  [-48.30090063395427,-18.965967217515  ],
+  [-48.29906502897369,-18.96357639028897],
+  [-48.29832625002222,-18.9625607042466 ],
+  [-48.2981265299552, -18.9618217472342 ],
+  [-48.30135903586346,-18.96193180185874],
+  [-48.30565368852372,-18.96263857022372],
+  [-48.30663152248352,-18.9563962855908 ],
+];
+
+// ─────────────────────────────────────────────────────────
+// 14 TORRES — posições dentro dos polígonos KMZ
+//
+// QC01 (78m × 318m): 6 torres em 2 fileiras de 3
+//   EMP1 Jardins   (norte): A, B, C  lat~-18.9572  h=55m
+//   EMP2 Versailles(sul):   D, E, F  lat~-18.9585  h=48m
+//
+// QC02 (84m × 168m): 4 torres em grade 2×2
+//   EMP3 Reserva: G,H (norte) · I,J (sul)  h=50m
+//
+// QC03 (93m × 139m): 4 torres em grade 2×2
+//   EMP4 Signature: K,L (norte) · M,N (sul) h=72m
+//
+// dlng = metade-largura em graus (1m lng ≈ 9.5e-6 deg @ lat -19)
+// dlat = metade-profundidade em graus (1m lat ≈ 9.0e-6 deg)
+// ─────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────
+// QC01 — LAYOUT EM U (abre para OESTE / Av. Dr. João Patrus de Souza)
+//
+//  OESTE (AV.)            LESTE
+//  [LOTES 1-15]
+//  [A]        [B]    ← braço norte (fecha U por cima)
+//              [C]   ← costas leste, top (EMP1)
+//              [D]   ← costas leste, bot (EMP2)
+//  [E]        [F]   ← braço sul (fecha U por baixo)
+//
+//  Interior do U = pátio/rua interna (Rua das Craviúnas)
+// ─────────────────────────────────────────────────────────
+
+var TOWERS = [
+  // ── EMP1 AL'DORA JARDINS ── (braço norte + costas leste top)
+  { id:'tA', name:'Torre A', emp:"EMP1 · AL'DORA JARDINS",
+    tipo:'P1/P2 · Studio Urban + Compacto Smart',
+    ticket:'R$230–500K', andares:'~18 andares', priv:'~8.318 m²',
+    // Braço norte, lado oeste
+    cx:-48.30640, cy:-18.95685, dlng:0.000095, dlat:0.000090,
+    height:55, podH:7, color:'#C8A84B' },
+  { id:'tB', name:'Torre B', emp:"EMP1 · AL'DORA JARDINS",
+    tipo:'P1/P2 · Studio Urban + Compacto Smart',
+    ticket:'R$230–500K', andares:'~18 andares', priv:'~8.318 m²',
+    // Braço norte, lado leste
+    cx:-48.30608, cy:-18.95685, dlng:0.000095, dlat:0.000090,
+    height:55, podH:7, color:'#D4B455' },
+  { id:'tC', name:'Torre C', emp:"EMP1 · AL'DORA JARDINS",
+    tipo:'P1/P2 · Studio Urban + Compacto Smart',
+    ticket:'R$230–500K', andares:'~18 andares', priv:'~8.318 m²',
+    // Costas leste — topo (dentro do U, alinhada com B)
+    cx:-48.30602, cy:-18.95770, dlng:0.000080, dlat:0.000115,
+    height:55, podH:7, color:'#BFA045' },
+
+  // ── EMP2 AL'DORA VERSAILLES ── (costas leste bot + braço sul)
+  { id:'tD', name:'Torre D', emp:"EMP2 · AL'DORA VERSAILLES",
+    tipo:'P2/P3 · Compacto Smart + Garden Suite',
+    ticket:'R$380–820K', andares:'~16 andares', priv:'~8.318 m²',
+    // Costas leste — base (dentro do U, alinhada com F)
+    cx:-48.30602, cy:-18.95870, dlng:0.000080, dlat:0.000115,
+    height:48, podH:6, color:'#B89535' },
+  { id:'tE', name:'Torre E', emp:"EMP2 · AL'DORA VERSAILLES",
+    tipo:'P2/P3 · Compacto Smart + Garden Suite',
+    ticket:'R$380–820K', andares:'~16 andares', priv:'~8.318 m²',
+    // Braço sul, lado oeste
+    cx:-48.30640, cy:-18.95908, dlng:0.000095, dlat:0.000090,
+    height:48, podH:6, color:'#C0A040' },
+  { id:'tF', name:'Torre F', emp:"EMP2 · AL'DORA VERSAILLES",
+    tipo:'P2/P3 · Compacto Smart + Garden Suite',
+    ticket:'R$380–820K', andares:'~16 andares', priv:'~8.318 m²',
+    // Braço sul, lado leste
+    cx:-48.30608, cy:-18.95908, dlng:0.000095, dlat:0.000090,
+    height:48, podH:6, color:'#B09030' },
+
+  // ── EMP3 AL'DORA RESERVA ── (QC02, grade 2×2, 50m)
+  { id:'tG', name:'Torre G', emp:"EMP3 · AL'DORA RESERVA",
+    tipo:'P3 · Garden Suite · Família',
+    ticket:'R$650–820K', andares:'~16 andares', priv:'~10.758 m²',
+    cx:-48.30627, cy:-18.95965, dlng:0.000105, dlat:0.000125,
+    height:50, podH:6, color:'#A07020' },
+  { id:'tH', name:'Torre H', emp:"EMP3 · AL'DORA RESERVA",
+    tipo:'P3 · Garden Suite · Família',
+    ticket:'R$650–820K', andares:'~16 andares', priv:'~10.758 m²',
+    cx:-48.30593, cy:-18.95965, dlng:0.000105, dlat:0.000125,
+    height:50, podH:6, color:'#B07D25' },
+  { id:'tI', name:'Torre I', emp:"EMP3 · AL'DORA RESERVA",
+    tipo:'P3 · Garden Suite · Família',
+    ticket:'R$650–820K', andares:'~16 andares', priv:'~10.758 m²',
+    cx:-48.30627, cy:-18.96048, dlng:0.000105, dlat:0.000125,
+    height:50, podH:6, color:'#98682A' },
+  { id:'tJ', name:'Torre J', emp:"EMP3 · AL'DORA RESERVA",
+    tipo:'P3 · Garden Suite · Família',
+    ticket:'R$650–820K', andares:'~16 andares', priv:'~10.758 m²',
+    cx:-48.30593, cy:-18.96048, dlng:0.000105, dlat:0.000125,
+    height:50, podH:6, color:'#A87528' },
+
+  // ── EMP4 AL'DORA SIGNATURE ── (QC03, grade 2×2, 72m — mais altas)
+  { id:'tK', name:'Torre K', emp:"EMP4 · AL'DORA SIGNATURE",
+    tipo:'P4/P5 · Alto Padrão + Cobertura Signature',
+    ticket:'R$1,1M–4,2M', andares:'~24 andares', priv:'~8.186 m²',
+    cx:-48.30630, cy:-18.96135, dlng:0.000119, dlat:0.000140,
+    height:72, podH:9, color:'#FFD060' },
+  { id:'tL', name:'Torre L', emp:"EMP4 · AL'DORA SIGNATURE",
+    tipo:'P4/P5 · Alto Padrão + Cobertura Signature',
+    ticket:'R$1,1M–4,2M', andares:'~24 andares', priv:'~8.186 m²',
+    cx:-48.30590, cy:-18.96135, dlng:0.000119, dlat:0.000140,
+    height:72, podH:9, color:'#FFE070' },
+  { id:'tM', name:'Torre M', emp:"EMP4 · AL'DORA SIGNATURE",
+    tipo:'P4/P5 · Alto Padrão + Cobertura Signature',
+    ticket:'R$1,1M–4,2M', andares:'~24 andares', priv:'~8.186 m²',
+    cx:-48.30630, cy:-18.96200, dlng:0.000119, dlat:0.000140,
+    height:72, podH:9, color:'#EFC050' },
+  { id:'tN', name:'Torre N', emp:"EMP4 · AL'DORA SIGNATURE",
+    tipo:'P4/P5 · Alto Padrão + Cobertura Signature',
+    ticket:'R$1,1M–4,2M', andares:'~24 andares', priv:'~8.186 m²',
+    cx:-48.30590, cy:-18.96200, dlng:0.000119, dlat:0.000140,
+    height:72, podH:9, color:'#FFD870' },
+];
+
+// ─────────────────────────────────────────────────────────
+// 15 LOTES 360m² — QC01, frente para Av. Dr. João Patrus de Souza
+//
+// Cada lote: 15m (N-S, testada na avenida) × 24m (L-O, profundidade)
+// = 360m² · 15 lotes × 15m = 225m de testada total
+//
+// Posicionados no interior do U (entre a avenida a O e as costas da torre a L)
+// Rua das Craviúnas corre pelo interior do U dividindo os lotes das torres.
+// ─────────────────────────────────────────────────────────
+var QC01_LOTS = (function() {
+  var lots = [];
+  var startCy = -18.95701;    // lat do centro do 1º lote (10m abaixo do braço norte)
+  var stepCy  =  0.0001348;   // 15m entre centros → 15 lotes = 202m de testada
+  var cx      = -48.30650;    // centro: west_edge + 12m (testada voltada para O)
+  var dlng    =  0.0001139;   // 24m de profundidade
+  var dlat    =  0.0000620;   // 13.8m de testada (leve margem entre lotes)
+  for(var i = 0; i < 15; i++) {
+    lots.push({ id:'lot'+(i+1), n:(i+1), cx:cx, cy: startCy + i*stepCy, dlng:dlng, dlat:dlat });
+  }
+  return lots;
+})();
+
+// Fase → centros de zoom
+var PHASE_VIEWS = [
+  { center: CENTER,                    zoom:17.0, pitch:65, bearing:-20, duration:3000 },
+  { center:[-48.30625,-18.95800],      zoom:18.8, pitch:68, bearing: 60, duration:2800 }, // Jardins — vê o U
+  { center:[-48.30625,-18.95800],      zoom:18.8, pitch:68, bearing:-20, duration:2500 }, // Versailles
+  { center:[-48.30610,-18.96006],      zoom:19.2, pitch:68, bearing:-18, duration:2500 },
+  { center:[-48.30610,-18.96168],      zoom:19.5, pitch:68, bearing:-35, duration:2500 },
+];
+// 1ª torre de cada fase (para abrir infopanel)
+var PHASE_FIRST_TOWER = [null, 'tA', 'tD', 'tG', 'tK'];
+
+var currentFactor = 1;
+
+// ─────────────────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────────────────
+function makeRect(cx, cy, dlng, dlat) {
+  return [
+    [cx-dlng, cy-dlat],[cx+dlng, cy-dlat],
+    [cx+dlng, cy+dlat],[cx-dlng, cy+dlat],
+    [cx-dlng, cy-dlat],
+  ];
+}
+
+function geojsonPoly(coords, props) {
+  return { type:'Feature', properties:props||{}, geometry:{ type:'Polygon', coordinates:[coords] } };
+}
+
+// Constrói FeatureCollection dos corpos (com height/base em propriedades)
+function buildTowersFC(factor) {
+  return {
+    type:'FeatureCollection',
+    features: TOWERS.map(function(t) {
+      var isFlat = (factor === 0);
+      return {
+        type:'Feature',
+        properties:{
+          id:     t.id,
+          color:  t.color,
+          height: isFlat ? 1.5 : t.height * factor,
+          base:   isFlat ? 0   : t.podH * factor,
+        },
+        geometry:{ type:'Polygon', coordinates:[makeRect(t.cx, t.cy, t.dlng, t.dlat)] }
+      };
+    })
+  };
+}
+
+// FeatureCollection dos podiums (base mais larga)
+function buildPodsFC(factor) {
+  return {
+    type:'FeatureCollection',
+    features: TOWERS.map(function(t) {
+      var isFlat = (factor === 0);
+      return {
+        type:'Feature',
+        properties:{
+          id:   t.id,
+          color:t.color,
+          podH: isFlat ? 0 : t.podH * factor,
+        },
+        geometry:{ type:'Polygon', coordinates:[makeRect(t.cx, t.cy, t.dlng*1.28, t.dlat*1.28)] }
+      };
+    })
+  };
+}
+
+// FeatureCollection de labels das torres
+function buildTowerLabelsFC() {
+  return {
+    type:'FeatureCollection',
+    features: TOWERS.map(function(t) {
+      return { type:'Feature', properties:{ name:t.name },
+               geometry:{ type:'Point', coordinates:[t.cx, t.cy] } };
+    })
+  };
+}
+
+// FeatureCollection de labels dos empreendimentos
+function buildEmpLabelsFC() {
+  return {
+    type:'FeatureCollection',
+    features:[
+      { type:'Feature', properties:{name:'JARDINS'},    geometry:{type:'Point', coordinates:[-48.30626,-18.95720]} },
+      { type:'Feature', properties:{name:'VERSAILLES'},  geometry:{type:'Point', coordinates:[-48.30626,-18.95855]} },
+      { type:'Feature', properties:{name:'RESERVA'},    geometry:{type:'Point', coordinates:[-48.30610,-18.96006]} },
+      { type:'Feature', properties:{name:'SIGNATURE'},  geometry:{type:'Point', coordinates:[-48.30610,-18.96168]} },
+    ]
+  };
+}
+
+// Constrói FeatureCollection dos 15 lotes de QC01
+function buildLotsFC() {
+  return {
+    type:'FeatureCollection',
+    features: QC01_LOTS.map(function(l) {
+      return {
+        type:'Feature',
+        properties:{ id:l.id, n:l.n },
+        geometry:{ type:'Polygon', coordinates:[makeRect(l.cx, l.cy, l.dlng, l.dlat)] }
+      };
+    })
+  };
+}
+
+// ─────────────────────────────────────────────────────────
+// MAP INIT
+// ─────────────────────────────────────────────────────────
+var map = new maplibregl.Map({
+  container:'map',
+  style:{
+    version:8,
+    glyphs:'https://fonts.openmaptiles.org/{fontstack}/{range}.pbf',
+    sources:{
+      'esri-sat':{
+        type:'raster',
+        tiles:['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
+        tileSize:256, maxzoom:20, attribution:'ESRI World Imagery'
+      },
+      'esri-lbl':{
+        type:'raster',
+        tiles:['https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}'],
+        tileSize:256, maxzoom:20,
+      },
+    },
+    layers:[
+      { id:'satellite', type:'raster', source:'esri-sat',
+        paint:{'raster-saturation':0.12,'raster-contrast':0.08} },
+      { id:'labels',    type:'raster', source:'esri-lbl',
+        paint:{'raster-opacity':0.38} },
+    ]
+  },
+  center:CENTER, zoom:13.5, pitch:55, bearing:-20,
+  antialias:true, maxZoom:21, minZoom:12,
+});
+
+map.addControl(new maplibregl.NavigationControl({visualizePitch:true}), 'top-right');
+map.addControl(new maplibregl.ScaleControl({unit:'metric'}), 'bottom-left');
+
+// ─────────────────────────────────────────────────────────
+// ON LOAD
+// ─────────────────────────────────────────────────────────
+map.on('load', function() {
+
+  // ── Masterplan boundary ──
+  map.addSource('master', { type:'geojson', data: geojsonPoly(MASTER_COORDS) });
+  map.addLayer({ id:'master-fill', type:'fill', source:'master',
+    paint:{'fill-color':'#2a6a35','fill-opacity':0.07} });
+  map.addLayer({ id:'master-line', type:'line', source:'master',
+    paint:{'line-color':'#C8A84B','line-width':1.5,'line-dasharray':[5,3],'line-opacity':0.55} });
+
+  // ── Footprint das quadras (contorno pontilhado) ──
+  addQuadraFP('qc01-fp', QC01_COORDS, '#C8A84B');
+  addQuadraFP('qc02-fp', QC02_COORDS, '#A07020');
+  addQuadraFP('qc03-fp', QC03_COORDS, '#FFD060');
+
+  // ── 15 Lotes QC01 ──
+  map.addSource('qc01-lots', { type:'geojson', data: buildLotsFC() });
+
+  // Preenchimento dos lotes (verde terra)
+  map.addLayer({
+    id:'lots-fill', type:'fill', source:'qc01-lots',
+    paint:{
+      'fill-color':'#2a6a1a',
+      'fill-opacity':['interpolate',['linear'],['zoom'],14,0.0,15,0.55,18,0.70],
+    }
+  });
+  // Outline dos lotes (branco/verde claro)
+  map.addLayer({
+    id:'lots-outline', type:'line', source:'qc01-lots',
+    paint:{
+      'line-color':'#80e050',
+      'line-width':['interpolate',['linear'],['zoom'],14,0.5,18,1.8],
+      'line-opacity':0.85,
+    }
+  });
+
+  // ── Fontes das torres (FeatureCollections) ──
+  map.addSource('towers',     { type:'geojson', data: buildTowersFC(1) });
+  map.addSource('towers-pod', { type:'geojson', data: buildPodsFC(1) });
+  map.addSource('tower-lbl',  { type:'geojson', data: buildTowerLabelsFC() });
+  map.addSource('emp-lbl',    { type:'geojson', data: buildEmpLabelsFC() });
+
+  // ── Glow no chão ──
+  map.addLayer({
+    id:'towers-glow', type:'fill', source:'towers-pod',
+    paint:{
+      'fill-color': ['get','color'],
+      'fill-opacity':['interpolate',['linear'],['zoom'],13,0.0,15,0.15,18,0.22],
+    }
+  });
+
+  // ── Podium (base alargada) ──
+  map.addLayer({
+    id:'towers-podium', type:'fill-extrusion', source:'towers-pod',
+    paint:{
+      'fill-extrusion-color':  ['get','color'],
+      'fill-extrusion-height': ['get','podH'],
+      'fill-extrusion-base':   0,
+      'fill-extrusion-opacity':['interpolate',['linear'],['zoom'],13,0.0,14,0.85,18,0.96],
+      'fill-extrusion-vertical-gradient':false,
+    }
+  });
+
+  // ── Corpo da torre ──
+  map.addLayer({
+    id:'towers-body', type:'fill-extrusion', source:'towers',
+    paint:{
+      'fill-extrusion-color':  ['get','color'],
+      'fill-extrusion-height': ['get','height'],
+      'fill-extrusion-base':   ['get','base'],
+      'fill-extrusion-opacity':['interpolate',['linear'],['zoom'],13,0.0,14,0.78,16,0.90,18,0.96],
+      'fill-extrusion-vertical-gradient':true,
+    }
+  });
+
+  // ── Outline das torres ──
+  map.addLayer({
+    id:'towers-outline', type:'line', source:'towers',
+    paint:{
+      'line-color':'#e8d07a',
+      'line-width':['interpolate',['linear'],['zoom'],14,0.4,18,2.0],
+      'line-opacity':0.70,
+    }
+  });
+
+  // ── Labels das torres ──
+  map.addLayer({
+    id:'tower-lbl-txt', type:'symbol', source:'tower-lbl',
+    layout:{
+      'text-field':        ['get','name'],
+      'text-size':         ['interpolate',['linear'],['zoom'],16,0,17,8,19,12],
+      'text-font':         ['Open Sans Bold'],
+      'text-anchor':       'center',
+      'text-allow-overlap':true,
+    },
+    paint:{
+      'text-color':       '#ffffff',
+      'text-halo-color':  'rgba(0,0,0,0.96)',
+      'text-halo-width':  2.5,
+    }
+  });
+
+  // ── Labels dos empreendimentos ──
+  map.addLayer({
+    id:'emp-lbl-txt', type:'symbol', source:'emp-lbl',
+    layout:{
+      'text-field':        ['get','name'],
+      'text-size':         ['interpolate',['linear'],['zoom'],14,0,15,8,17,11],
+      'text-font':         ['Open Sans Bold'],
+      'text-anchor':       'center',
+      'text-offset':       [0,-2.8],
+      'text-allow-overlap':false,
+    },
+    paint:{
+      'text-color':      '#C8A84B',
+      'text-halo-color': 'rgba(0,0,0,0.96)',
+      'text-halo-width': 2,
+    }
+  });
+
+  // ── Click nas torres ──
+  ['towers-body','towers-podium'].forEach(function(lyr) {
+    map.on('click', lyr, function(e) {
+      var id = e.features[0].properties.id;
+      var t  = TOWERS.filter(function(tt){ return tt.id===id; })[0];
+      if(t) showTowerInfo(t);
+    });
+    map.on('mouseenter', lyr, function(){ map.getCanvas().style.cursor='pointer'; });
+    map.on('mouseleave', lyr, function(){ map.getCanvas().style.cursor=''; });
+  });
+
+  // Click nos lotes
+  map.on('click', 'lots-fill', function(e) {
+    var n = e.features[0].properties.n;
+    document.getElementById('ip-title').textContent   = 'Lote ' + n + ' · QC01';
+    document.getElementById('ip-emp').textContent     = "Av. Dr. João Patrus de Souza · Jardim Versailles";
+    document.getElementById('ip-tipo').textContent    = 'Residencial / Comercial térreo';
+    document.getElementById('ip-alt').textContent     = '—';
+    document.getElementById('ip-andares').textContent = 'Uso misto';
+    document.getElementById('ip-priv').textContent    = '360 m²';
+    document.getElementById('ip-ticket').textContent  = '(a definir)';
+    document.getElementById('infopanel').style.display='block';
+  });
+  map.on('mouseenter', 'lots-fill', function(){ map.getCanvas().style.cursor='pointer'; });
+  map.on('mouseleave', 'lots-fill', function(){ map.getCanvas().style.cursor=''; });
+
+  // Fechar ao clicar no mapa vazio
+  map.on('click', function(e) {
+    var hits = map.queryRenderedFeatures(e.point, { layers:['towers-body','towers-podium','lots-fill'] });
+    if(hits.length === 0) document.getElementById('infopanel').style.display='none';
+  });
+
+  document.getElementById('loading').style.display='none';
+
+  // Fly in suave
+  setTimeout(function() {
+    map.flyTo({ center:CENTER, zoom:17.2, pitch:68, bearing:-20, duration:4500, essential:true, curve:1.4 });
+  }, 350);
+});
+
+map.on('error', function(e){ console.warn('Tile error (non-fatal):', e.message||e); });
+
+// ─────────────────────────────────────────────────────────
+// FOOTPRINT QUADRA
+// ─────────────────────────────────────────────────────────
+function addQuadraFP(id, coords, color) {
+  map.addSource(id, { type:'geojson', data: geojsonPoly(coords) });
+  map.addLayer({
+    id: id+'-line', type:'line', source:id,
+    paint:{
+      'line-color': color,
+      'line-width': ['interpolate',['linear'],['zoom'],14,1,18,2],
+      'line-opacity':0.45,
+      'line-dasharray':[4,3],
+    }
+  });
+}
+
+// ─────────────────────────────────────────────────────────
+// INFO PANEL
+// ─────────────────────────────────────────────────────────
+function showTowerInfo(t) {
+  document.getElementById('ip-title').textContent   = t.name;
+  document.getElementById('ip-emp').textContent     = t.emp;
+  document.getElementById('ip-tipo').textContent    = t.tipo;
+  document.getElementById('ip-alt').textContent     = t.height + 'm';
+  document.getElementById('ip-andares').textContent = t.andares;
+  document.getElementById('ip-priv').textContent    = t.priv;
+  document.getElementById('ip-ticket').textContent  = t.ticket;
+  document.getElementById('infopanel').style.display='block';
+}
+
+// ─────────────────────────────────────────────────────────
+// HEIGHT MODES
+// ─────────────────────────────────────────────────────────
+function setHeight(mode, btn) {
+  document.querySelectorAll('.hc').forEach(function(b){ b.classList.remove('on'); });
+  if(btn) btn.classList.add('on');
+  var f = { real:1, '2x':2, flat:0 };
+  currentFactor = (f[mode] !== undefined) ? f[mode] : 1;
+  map.getSource('towers').setData(buildTowersFC(currentFactor));
+  map.getSource('towers-pod').setData(buildPodsFC(currentFactor));
+}
+
+// ─────────────────────────────────────────────────────────
+// FASES
+// ─────────────────────────────────────────────────────────
+function focusPhase(n) {
+  document.querySelectorAll('.pb').forEach(function(b,i){ b.classList.toggle('on', i===n); });
+  document.getElementById('infopanel').style.display='none';
+
+  var v = PHASE_VIEWS[n];
+  map.flyTo(Object.assign({}, v, {
+    essential:true, curve:1.2,
+    easing:function(t){ return t<0.5?2*t*t:-1+(4-2*t)*t; }
+  }));
+
+  var tid = PHASE_FIRST_TOWER[n];
+  if(tid) {
+    var t = TOWERS.filter(function(tt){ return tt.id===tid; })[0];
+    setTimeout(function(){ if(t) showTowerInfo(t); }, 900);
+  }
+}
+
+// Teclado: 0–4 para fases
+document.addEventListener('keydown', function(e) {
+  if(e.key>='0' && e.key<='4') focusPhase(parseInt(e.key));
+  if(e.key==='Escape') document.getElementById('infopanel').style.display='none';
+});
+</script>
+</body>
+</html>

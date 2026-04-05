@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AL'DORA City — Vista 3D Terreno</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#04100a; overflow:hidden; font-family:'Georgia',serif; }
+  #canvas-wrap { width:100vw; height:100vh; position:relative; }
+  canvas { display:block; }
+
+  #hud {
+    position:absolute; top:0; left:0; right:0;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    padding:22px 28px; pointer-events:none; z-index:10;
+  }
+  .hud-brand { color:#C8A84B; }
+  .hud-brand .nome { font-size:22px; letter-spacing:3px; font-weight:300; }
+  .hud-brand .sub  { font-size:11px; letter-spacing:5px; color:#a08040; margin-top:3px; }
+
+  .hud-phases { display:flex; gap:14px; }
+  .phase-pill {
+    padding:6px 14px; border-radius:20px; font-size:11px;
+    letter-spacing:1px; font-weight:700; cursor:pointer;
+    pointer-events:all; transition:all .25s;
+    border:1px solid #C8A84B; background:#C8A84B22; color:#C8A84B;
+  }
+  .phase-pill:hover { transform:scale(1.07); background:#C8A84B44; }
+
+  #legend {
+    position:absolute; top:90px; right:28px; z-index:10;
+    background:rgba(4,16,10,0.88); border:1px solid #C8A84B33;
+    border-radius:8px; padding:14px 18px; backdrop-filter:blur(6px);
+  }
+  .leg-row { display:flex; align-items:center; gap:10px; margin:6px 0; font-size:11px; color:#ccc; }
+  .leg-dot { width:12px; height:12px; border-radius:2px; flex-shrink:0; }
+
+  #info-panel {
+    position:absolute; bottom:28px; left:28px; z-index:10;
+    background:rgba(4,16,10,0.88); border:1px solid #C8A84B44;
+    border-radius:10px; padding:18px 22px; min-width:220px;
+    color:#F5F0E8; backdrop-filter:blur(8px);
+  }
+  #info-panel .label { color:#C8A84B; font-size:10px; letter-spacing:3px; margin-bottom:10px; }
+  #info-panel .row   { font-size:12px; margin:4px 0; color:#ccc; }
+  #info-panel .row b { color:#F5F0E8; }
+
+  #hint {
+    position:absolute; bottom:28px; right:28px; z-index:10;
+    color:#5a8a6a; font-size:10px; letter-spacing:1px;
+    text-align:right; line-height:1.9;
+  }
+</style>
+</head>
+<body>
+<div id="canvas-wrap">
+
+  <div id="hud">
+    <div class="hud-brand">
+      <div class="nome">AL'DORA CITY</div>
+      <div class="sub">MASTERPLAN VERTICAL · JARDIM VERSAILLES · UBERLÂNDIA/MG</div>
+    </div>
+    <div class="hud-phases">
+      <div class="phase-pill" onclick="focusQuadra(1)">FASE 1 · QC01</div>
+      <div class="phase-pill" onclick="focusQuadra(2)">FASE 2 · QC02</div>
+      <div class="phase-pill" onclick="focusQuadra(3)">FASE 3 · QC03</div>
+    </div>
+  </div>
+
+  <div id="legend">
+    <div class="leg-row"><div class="leg-dot" style="background:#C8A84B"></div>QC01 — Jardins + Versailles</div>
+    <div class="leg-row"><div class="leg-dot" style="background:#B07A10"></div>QC02 — Reserva</div>
+    <div class="leg-row"><div class="leg-dot" style="background:#7A5000"></div>QC03 — Signature</div>
+    <div class="leg-row"><div class="leg-dot" style="background:#1a3a2a;border:1px solid #C8A84B44"></div>Plano Master</div>
+  </div>
+
+  <div id="info-panel">
+    <div class="label">DADOS DO ATIVO</div>
+    <div class="row">Terreno total: <b>42.783 m²</b></div>
+    <div class="row">Área privativa: <b>125.684 m²</b></div>
+    <div class="row">Construída: <b>171.138 m²</b></div>
+    <div class="row">Torres: <b>8 (A–H)</b></div>
+    <div class="row">Zoneamento: <b>ZR2/SVA · CA 4,0</b></div>
+  </div>
+
+  <div id="hint">
+    Arraste para girar &nbsp;|&nbsp; Scroll para zoom<br>
+    Clique nas fases para focar
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ═══════════════════════════════════════════════════════
+// COORDENADAS KMZ → SCENE THREE.JS
+// ═══════════════════════════════════════════════════════
+// Centro: ponto fornecido pelo proprietário
+const CL = -18.959254896425335;
+const CC = -48.30626437422274;
+const M_LAT = 111320;
+const M_LNG = M_LAT * Math.cos(CL * Math.PI / 180); // ≈ 105247
+
+// Escala: 1 unit = 5m
+const S = 0.2;
+
+// geo(lat,lng) → {x, z} no plano Three.js
+// x = leste/oeste, z = positivo=sul, negativo=norte
+function geo(lat, lng) {
+  return {
+    x:  (lng - CC) * M_LNG * S,
+    z: -(lat - CL) * M_LAT * S   // -(lat_diff): norte=negativo, sul=positivo
+  };
+}
+
+// Centróide de polygon [lat,lng][]
+function centroid(raw) {
+  let sx=0, sz=0;
+  raw.forEach(([la,lo])=>{ const p=geo(la,lo); sx+=p.x; sz+=p.z; });
+  return { x:sx/raw.length, z:sz/raw.length };
+}
+
+// ── Polígonos KMZ ──
+const RAW_MASTER = [
+  [-18.9563962855908, -48.30663152248352],[-18.96830603602463,-48.30675359935989],
+  [-18.9792995868442, -48.30969133435216],[-18.98238476278312,-48.30213820992651],
+  [-18.97512719755233,-48.29105253225089],[-18.97094466996406,-48.29350239742982],
+  [-18.96704384149165,-48.29316698073505],[-18.96453196849883,-48.29270352459724],
+  [-18.96324974106761,-48.29184122872005],[-18.96259133217615,-48.29117868836932],
+  [-18.96101637217126,-48.2916916139812], [-18.96116718518692,-48.29269931482375],
+  [-18.96545110721832,-48.29373496768546],[-18.96768902613709,-48.29403130834654],
+  [-18.96765171465563,-48.30057601827118],[-18.965967217515,  -48.30090063395427],
+  [-18.96357639028897,-48.29906502897369],[-18.9625607042466, -48.29832625002222],
+  [-18.9618217472342, -48.2981265299552], [-18.96193180185874,-48.30135903586346],
+  [-18.96263857022372,-48.30565368852372],
+];
+const RAW_QC01 = [
+  [-18.95637548103209,-48.30661248476868],[-18.95912750380069,-48.30661283296286],
+  [-18.95910812448526,-48.30659420143432],[-18.9589564381425, -48.30658211769109],
+  [-18.95888119381422,-48.30660548837058],[-18.95895747653577,-48.30662132436068],
+  [-18.95903312038229,-48.30661754614533],[-18.95910916093079,-48.30663334695388],
+  [-18.95920345864959,-48.30662857304971],[-18.95924123537784,-48.30662661013304],
+  [-18.95916477945059,-48.30586672241777],[-18.95666063429275,-48.30599422069318],
+];
+const RAW_QC02 = [
+  [-18.96068399537968,-48.30649698590301],[-18.96080819354113,-48.30570204425496],
+  [-18.9592948397472, -48.30580263702252],[-18.95938839506466,-48.3064822051777],
+];
+const RAW_QC03 = [
+  [-18.9622476389247, -48.30653455159076],[-18.96225907775669,-48.30564296247557],
+  [-18.96113452087073,-48.30568865204588],[-18.9610109976692, -48.30648108701291],
+];
+
+// ── Criar polígono plano no chão (THREE.BufferGeometry direto, sem rotation) ──
+// Triangulação fan: ponto 0 → todos os triângulos
+function makeGroundPoly(raw, color, opacity, yOff=0.05) {
+  const pts = raw.map(([la,lo])=>geo(la,lo));
+  const n = pts.length;
+  // Fan triangulation: (0,i,i+1)
+  const verts = [];
+  for(let i=1; i<n-1; i++) {
+    verts.push(pts[0].x, yOff, pts[0].z);
+    verts.push(pts[i].x, yOff, pts[i].z);
+    verts.push(pts[i+1].x, yOff, pts[i+1].z);
+  }
+  const geo3 = new THREE.BufferGeometry();
+  geo3.setAttribute('position', new THREE.Float32BufferAttribute(verts,3));
+  geo3.computeVertexNormals();
+  const mat = new THREE.MeshStandardMaterial({
+    color, transparent:true, opacity, roughness:0.8, metalness:0.1,
+    side:THREE.DoubleSide
+  });
+  const mesh = new THREE.Mesh(geo3, mat);
+  mesh.receiveShadow = true;
+  scene.add(mesh);
+  return mesh;
+}
+
+// ── Outline de polígono ──
+function makeOutline(raw, color, yOff=0.12) {
+  const points = raw.map(([la,lo])=>{ const p=geo(la,lo); return new THREE.Vector3(p.x,yOff,p.z); });
+  points.push(points[0].clone()); // fechar
+  const g = new THREE.BufferGeometry().setFromPoints(points);
+  scene.add(new THREE.Line(g, new THREE.LineBasicMaterial({color, linewidth:2})));
+}
+
+// ═══════════════════════════════════════════════════════
+// CENA
+// ═══════════════════════════════════════════════════════
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.15;
+document.getElementById('canvas-wrap').prepend(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x04100a);
+scene.fog = new THREE.FogExp2(0x061608, 0.008);
+
+// FOV 65° para capturar todo o range QC01→QC03
+const camera = new THREE.PerspectiveCamera(65, window.innerWidth/window.innerHeight, 0.1, 1200);
+
+// ── Iluminação ──
+scene.add(new THREE.AmbientLight(0x112211, 1.4));
+
+const sun = new THREE.DirectionalLight(0xfff5dd, 3.0);
+sun.position.set(60, 150, 80);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048,2048);
+sun.shadow.camera.left = -100; sun.shadow.camera.right = 100;
+sun.shadow.camera.top  =  100; sun.shadow.camera.bottom= -100;
+sun.shadow.camera.far  = 500;
+scene.add(sun);
+scene.add(new THREE.DirectionalLight(0x224433, 0.9).position.set(-50,80,-60));
+
+// ── Chão ──
+const gnd = new THREE.Mesh(
+  new THREE.PlaneGeometry(600,600),
+  new THREE.MeshStandardMaterial({color:0x0c1e10, roughness:0.95})
+);
+gnd.rotation.x = -Math.PI/2;
+gnd.receiveShadow = true;
+scene.add(gnd);
+
+const grid = new THREE.GridHelper(600,120,0x162a18,0x0e2015);
+grid.position.y = 0.02;
+scene.add(grid);
+
+// ── Polígonos KMZ no chão ──
+makeGroundPoly(RAW_MASTER, 0x1a3a20, 0.7);
+makeOutline(RAW_MASTER, 0xC8A84B);
+makeGroundPoly(RAW_QC01, 0xC8A84B, 0.50, 0.18);
+makeOutline(RAW_QC01, 0xffd060, 0.22);
+makeGroundPoly(RAW_QC02, 0xB07A10, 0.52, 0.18);
+makeOutline(RAW_QC02, 0xe09030, 0.22);
+makeGroundPoly(RAW_QC03, 0x7A5000, 0.55, 0.18);
+makeOutline(RAW_QC03, 0xc07820, 0.22);
+
+// ── Torres ──
+const C1 = centroid(RAW_QC01);
+const C2 = centroid(RAW_QC02);
+const C3 = centroid(RAW_QC03);
+
+function makeTower(cx, cz, w, d, h, colTop, colBase) {
+  const g = new THREE.Group();
+  const baseH = h*0.10;
+  // Podium
+  const pod = new THREE.Mesh(
+    new THREE.BoxGeometry(w*1.1, baseH, d*1.1),
+    new THREE.MeshStandardMaterial({color:0x122010, roughness:0.7, metalness:0.3})
+  );
+  pod.position.y = baseH/2; pod.castShadow=true; g.add(pod);
+  // Corpo
+  const bodyH = h*0.77;
+  const body = new THREE.Mesh(
+    new THREE.BoxGeometry(w, bodyH, d),
+    new THREE.MeshStandardMaterial({color:0x0e1e14, roughness:0.45, metalness:0.5})
+  );
+  body.position.y = baseH+bodyH/2; body.castShadow=true; g.add(body);
+  // Coroamento dourado
+  const topH = h*0.13;
+  const top = new THREE.Mesh(
+    new THREE.BoxGeometry(w*0.85, topH, d*0.85),
+    new THREE.MeshStandardMaterial({color:colTop, roughness:0.25, metalness:0.8})
+  );
+  top.position.y = baseH+bodyH+topH/2; top.castShadow=true; g.add(top);
+  // Piscina rooftop
+  const poolY = baseH+bodyH+topH+0.12;
+  const pool = new THREE.Mesh(
+    new THREE.BoxGeometry(w*0.45, 0.28, d*0.35),
+    new THREE.MeshStandardMaterial({color:0x1a88cc, transparent:true, opacity:0.9})
+  );
+  pool.position.y = poolY; g.add(pool);
+  // Janelas emissivas (listras horizontais)
+  const floors = Math.floor(bodyH/1.6);
+  for(let i=0; i<floors; i++) {
+    const wy = baseH+0.5+i*1.55;
+    if(wy >= baseH+bodyH-0.5) break;
+    const wm = new THREE.MeshStandardMaterial({
+      color:0xfff8e0, emissive:0xffc040, emissiveIntensity: 0.35,
+      transparent:true, opacity:0.65
+    });
+    const wf = new THREE.Mesh(new THREE.PlaneGeometry(w*0.82,0.18), wm);
+    wf.position.set(0,wy, d*0.502); g.add(wf);
+    const wb = wf.clone(); wb.position.z=-d*0.502; wb.rotation.y=Math.PI; g.add(wb);
+  }
+  g.position.set(cx, 0, cz);
+  scene.add(g);
+  return g;
+}
+
+// QC01: 4 torres (A,B = EMP1 Jardins; C,D = EMP2 Versailles)
+const t1w=2.8, t1d=3.2, t1h=17.0;
+makeTower(C1.x-3.0, C1.z-12, t1w, t1d, t1h,   0xC8A84B, 0x1a3a2a); // A
+makeTower(C1.x+3.0, C1.z-12, t1w, t1d, t1h,   0xC8A84B, 0x1a3a2a); // B
+makeTower(C1.x-3.0, C1.z+6,  t1w*0.9, t1d*0.9, t1h*0.88, 0xB8921A, 0x163020); // C
+makeTower(C1.x+3.0, C1.z+6,  t1w*0.9, t1d*0.9, t1h*0.88, 0xB8921A, 0x163020); // D
+
+// QC02: Torres E, F (EMP3 Reserva)
+const t2w=3.0, t2d=3.5, t2h=15.0;
+makeTower(C2.x-2.8, C2.z, t2w, t2d, t2h, 0xA07020, 0x132a1a); // E
+makeTower(C2.x+2.8, C2.z, t2w, t2d, t2h, 0xA07020, 0x132a1a); // F
+
+// QC03: Torres G, H (EMP4 Signature — mais altas)
+const t3w=2.4, t3d=3.0, t3h=22.0;
+makeTower(C3.x-2.4, C3.z, t3w, t3d, t3h, 0xFFD060, 0x0e1e10); // G
+makeTower(C3.x+2.4, C3.z, t3w, t3d, t3h, 0xFFD060, 0x0e1e10); // H
+
+// ── Árvores ──
+function makeTree(x, z, h) {
+  const g=new THREE.Group();
+  const trunk=new THREE.Mesh(
+    new THREE.CylinderGeometry(0.07,0.11,h*0.42,5),
+    new THREE.MeshStandardMaterial({color:0x3a2008})
+  );
+  trunk.position.y=h*0.21; g.add(trunk);
+  const canopy=new THREE.Mesh(
+    new THREE.SphereGeometry(h*0.38,7,5),
+    new THREE.MeshStandardMaterial({color:0x185518, roughness:0.9})
+  );
+  canopy.position.y=h*0.58; canopy.scale.y=1.25; g.add(canopy);
+  g.position.set(x,0,z);
+  scene.add(g);
+}
+const treePts=[
+  [-6,-30],[6,-30],[-9,-20],[9,-20],[-11,-8],[11,-8],[-11,7],[11,7],
+  [-11,22],[11,22],[-9,32],[9,32],[-12,-42],[12,-42],[-12,44],[12,44],
+  [0,-48],[0,48],[-16,-2],[16,-2],[-16,15],[16,15],
+];
+treePts.forEach(([x,z])=>makeTree(x+(Math.random()-.5)*2,z+(Math.random()-.5)*2,2.5+Math.random()*2));
+
+// ── Estrelas ──
+const sG=new THREE.BufferGeometry();
+const sV=[];
+for(let i=0;i<1000;i++) sV.push((Math.random()-.5)*700, 80+Math.random()*250, (Math.random()-.5)*700);
+sG.setAttribute('position',new THREE.Float32BufferAttribute(sV,3));
+scene.add(new THREE.Points(sG,new THREE.PointsMaterial({color:0xffffff,size:0.5,transparent:true,opacity:0.55})));
+
+// ── Ruas ──
+function makeRoad(x1,z1,x2,z2,w) {
+  const dx=x2-x1, dz=z2-z1, len=Math.sqrt(dx*dx+dz*dz);
+  const m=new THREE.Mesh(
+    new THREE.PlaneGeometry(w,len),
+    new THREE.MeshStandardMaterial({color:0x0c1d10,roughness:1.0})
+  );
+  m.rotation.x=-Math.PI/2;
+  m.rotation.z=-Math.atan2(dx,dz);
+  m.position.set((x1+x2)/2,0.03,(z1+z2)/2);
+  scene.add(m);
+}
+makeRoad(-5.5,-42,-5.5,48,1.8);
+makeRoad( 5.5,-42, 5.5,48,1.8);
+makeRoad(-9, C1.z+12, 9, C1.z+12, 1.5);
+makeRoad(-9, C2.z+12, 9, C2.z+12, 1.5);
+
+// ── Postes ──
+function makeLamp(x,z) {
+  const g=new THREE.Group();
+  const pole=new THREE.Mesh(
+    new THREE.CylinderGeometry(0.05,0.07,6,5),
+    new THREE.MeshStandardMaterial({color:0x2a3a28})
+  );
+  pole.position.y=3; g.add(pole);
+  const bulb=new THREE.Mesh(
+    new THREE.SphereGeometry(0.2,6,4),
+    new THREE.MeshStandardMaterial({color:0xffd060,emissive:0xffa020,emissiveIntensity:2.5})
+  );
+  bulb.position.y=6.2; g.add(bulb);
+  g.position.set(x,0,z); scene.add(g);
+}
+[[-4.5,-30],[-4.5,-15],[-4.5,0],[-4.5,15],[-4.5,30],[4.5,-30],[4.5,-15],[4.5,0],[4.5,15],[4.5,30]]
+  .forEach(([x,z])=>makeLamp(x,z));
+
+// ═══════════════════════════════════════════════════════
+// ORBIT CONTROLS (manual)
+// ═══════════════════════════════════════════════════════
+let isDragging=false, prevM={x:0,y:0};
+// theta=0: câmera ao sul (z+), olhando norte (z-)
+// phi=0.85: ~50° da vertical (boa vista aérea)
+let theta=0, phi=0.85, radius=115;
+const target=new THREE.Vector3(0,0,10); // centro entre QC01-QC03
+
+function updateCam() {
+  camera.position.set(
+    target.x + radius*Math.sin(phi)*Math.sin(theta),
+    target.y + radius*Math.cos(phi),
+    target.z + radius*Math.sin(phi)*Math.cos(theta)
+  );
+  camera.lookAt(target);
+}
+updateCam();
+
+document.addEventListener('mousedown',e=>{isDragging=true;prevM={x:e.clientX,y:e.clientY};});
+document.addEventListener('mouseup',()=>isDragging=false);
+document.addEventListener('mousemove',e=>{
+  if(!isDragging)return;
+  theta -= (e.clientX-prevM.x)*0.005;
+  phi = Math.max(0.18,Math.min(1.45, phi+(e.clientY-prevM.y)*0.005));
+  prevM={x:e.clientX,y:e.clientY};
+  updateCam();
+});
+document.addEventListener('wheel',e=>{
+  radius=Math.max(25,Math.min(350,radius+e.deltaY*0.15));
+  updateCam();
+},{passive:true});
+
+// Touch
+let pT=null;
+document.addEventListener('touchstart',e=>pT=e.touches[0]);
+document.addEventListener('touchmove',e=>{
+  if(!pT)return;
+  const t=e.touches[0];
+  theta-=(t.clientX-pT.clientX)*0.006;
+  phi=Math.max(0.18,Math.min(1.45,phi+(t.clientY-pT.clientY)*0.006));
+  pT=t; updateCam(); e.preventDefault();
+},{passive:false});
+
+// Focus nas fases
+window.focusQuadra=function(n) {
+  const cfg=[
+    {t:[C1.x,0,C1.z], r:55, ph:0.7,  th:0.15},
+    {t:[C2.x,0,C2.z], r:45, ph:0.65, th:0.0},
+    {t:[C3.x,0,C3.z], r:45, ph:0.65, th:-0.1},
+  ][n-1];
+  target.set(...cfg.t); radius=cfg.r; phi=cfg.ph; theta=cfg.th;
+  updateCam();
+};
+
+// Rotação suave automática
+function animate() {
+  requestAnimationFrame(animate);
+  if(!isDragging) { theta+=0.0003; updateCam(); }
+  renderer.render(scene,camera);
+}
+animate();
+
+window.addEventListener('resize',()=>{
+  renderer.setSize(window.innerWidth,window.innerHeight);
+  camera.aspect=window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+});
+</script>
+</body>
+</html>

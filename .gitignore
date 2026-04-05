@@ -1,0 +1,16 @@
+# Arquivos grandes — excluidos do versionamento
+ALDORA_INSTITUCIONAL_1.mp4
+*.mp4
+*.zip
+*.rar
+
+# Renders e thumbs gerados
+aldora_new_thumbs/
+renders_*/
+
+# Scripts AppleScript compilados
+*.scpt
+
+# Temp
+.DS_Store
+
