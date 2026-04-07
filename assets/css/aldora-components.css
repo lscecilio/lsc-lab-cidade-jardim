@@ -1,0 +1,525 @@
+/* ══════════════════════════════════════════════════════════
+   AL'DORA CITY — Componentes
+   Requer: aldora-tokens.css
+   ══════════════════════════════════════════════════════════ */
+
+/* ── NAV ────────────────────────────────────────────────── */
+.aldora-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: var(--z-nav);
+  background: rgba(10, 36, 22, 0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: var(--border-ouro-sutil);
+  padding: 0 var(--padding-x);
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.aldora-nav__logo {
+  font-family: var(--font-display);
+  color: var(--aldora-ouro);
+  font-size: 16px;
+  letter-spacing: 4px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.aldora-nav__sub {
+  font-size: var(--fs-micro);
+  color: var(--aldora-branco-40);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.aldora-nav__links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+
+.aldora-nav__links a {
+  color: var(--aldora-branco-55);
+  text-decoration: none;
+  font-size: var(--fs-tag);
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  transition: color var(--transition-fast);
+}
+
+.aldora-nav__links a:hover,
+.aldora-nav__links a.active {
+  color: var(--aldora-ouro);
+}
+
+.aldora-nav__badge {
+  background: var(--aldora-ouro-15);
+  border: var(--border-ouro);
+  color: var(--aldora-ouro);
+  font-size: var(--fs-micro);
+  letter-spacing: 2px;
+  padding: 4px 12px;
+  text-transform: uppercase;
+}
+
+.aldora-nav__hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.aldora-nav__hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--aldora-ouro);
+  margin: 5px 0;
+  transition: var(--transition-normal);
+}
+
+/* ── HERO ───────────────────────────────────────────────── */
+.aldora-hero {
+  height: 100vh;
+  min-height: 680px;
+  background: radial-gradient(ellipse at 30% 60%, #0f3020 0%, var(--aldora-verde) 40%, #040e09 100%);
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.aldora-hero__lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.aldora-hero__lines::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, transparent 40%, rgba(200,168,75,0.03) 41%, transparent 42%),
+    linear-gradient(45deg, transparent 55%, rgba(200,168,75,0.02) 56%, transparent 57%);
+}
+
+.aldora-hero__content {
+  position: relative;
+  z-index: 2;
+  padding: 0 var(--space-xl);
+  max-width: 820px;
+}
+
+.aldora-hero__flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgba(200,168,75,0.4);
+  padding: 8px 20px;
+  margin-bottom: 36px;
+}
+
+.aldora-hero__flag-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--aldora-ouro);
+  animation: aldora-pulse 2s infinite;
+}
+
+@keyframes aldora-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.aldora-hero__flag span {
+  font-size: var(--fs-tag);
+  letter-spacing: 3px;
+  color: var(--aldora-ouro);
+  text-transform: uppercase;
+}
+
+.aldora-hero__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-hero);
+  color: var(--aldora-branco);
+  line-height: 0.95;
+  margin-bottom: 8px;
+  letter-spacing: -1px;
+}
+
+.aldora-hero__title em {
+  color: var(--aldora-ouro);
+  font-style: italic;
+}
+
+.aldora-hero__tagline {
+  font-size: var(--fs-body);
+  color: var(--aldora-branco-55);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  margin-bottom: 52px;
+}
+
+.aldora-hero__kpis {
+  display: flex;
+  gap: 0;
+  border-top: 1px solid rgba(200,168,75,0.2);
+}
+
+.aldora-kpi {
+  flex: 1;
+  padding: var(--space-md) 0 0 0;
+  border-right: var(--border-ouro-sutil);
+}
+
+.aldora-kpi:last-child {
+  border-right: none;
+}
+
+.aldora-kpi__value {
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--aldora-ouro);
+  line-height: 1;
+}
+
+.aldora-kpi__label {
+  font-size: var(--fs-tag);
+  color: var(--aldora-branco-40);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+.aldora-hero__scroll {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-micro);
+  letter-spacing: 3px;
+  color: rgba(200,168,75,0.5);
+  text-transform: uppercase;
+}
+
+.aldora-hero__scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(200,168,75,0.5), transparent);
+  animation: aldora-scrolldown 2s ease-in-out infinite;
+}
+
+@keyframes aldora-scrolldown {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ── HERO COMPACT (para páginas internas) ─────────────── */
+.aldora-hero--compact {
+  height: auto;
+  min-height: auto;
+  padding: calc(var(--nav-height) + 40px) 0 56px;
+  text-align: center;
+}
+
+.aldora-hero--compact .aldora-hero__content {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--padding-x);
+}
+
+.aldora-hero--compact .aldora-hero__title {
+  font-size: var(--fs-h1);
+}
+
+/* ── SECTIONS ───────────────────────────────────────────── */
+.aldora-section {
+  padding: var(--space-2xl) 0;
+}
+
+.aldora-section--dark {
+  background: var(--aldora-verde);
+}
+
+.aldora-section--dark .aldora-section__title {
+  color: var(--aldora-branco);
+}
+
+.aldora-section--dark .aldora-section__lead {
+  color: var(--aldora-branco-65);
+}
+
+.aldora-section--bege {
+  background: var(--aldora-bege);
+}
+
+.aldora-section__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  line-height: 1.08;
+  margin-bottom: 18px;
+}
+
+.aldora-section__lead {
+  font-size: var(--fs-body);
+  color: #555;
+  max-width: 640px;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+/* ── CARDS ──────────────────────────────────────────────── */
+.aldora-card {
+  background: var(--aldora-branco);
+  border: var(--border-bege);
+  padding: var(--space-lg) var(--space-md);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.aldora-card:hover {
+  border-color: var(--aldora-ouro-30);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+.aldora-card--dark {
+  background: rgba(255,255,255,0.03);
+  border: var(--border-ouro-sutil);
+}
+
+.aldora-card--dark:hover {
+  background: var(--aldora-ouro-06);
+  border-color: var(--aldora-ouro-30);
+}
+
+.aldora-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--divider-ouro);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.aldora-card:hover::before {
+  opacity: 1;
+}
+
+.aldora-card__number {
+  font-family: var(--font-display);
+  font-size: 72px;
+  color: rgba(200,168,75,0.1);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.aldora-card__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  color: var(--aldora-ouro);
+  margin-bottom: var(--space-sm);
+}
+
+.aldora-card__text {
+  font-size: var(--fs-body-sm);
+  color: #555;
+  line-height: 1.7;
+}
+
+.aldora-card--dark .aldora-card__text {
+  color: var(--aldora-branco-65);
+}
+
+/* ── GRIDS ──────────────────────────────────────────────── */
+.aldora-grid {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.aldora-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.aldora-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.aldora-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+/* ── TABELAS ────────────────────────────────────────────── */
+.aldora-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-caption);
+  font-family: var(--font-body);
+}
+
+.aldora-table thead th {
+  background: var(--aldora-verde);
+  color: var(--aldora-ouro);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  text-align: left;
+  font-weight: 500;
+}
+
+.aldora-table tbody tr {
+  border-bottom: var(--border-bege);
+  transition: background var(--transition-fast);
+}
+
+.aldora-table tbody tr:hover {
+  background: var(--aldora-bege);
+}
+
+.aldora-table tbody td {
+  padding: 14px 18px;
+  color: var(--aldora-texto);
+  vertical-align: top;
+}
+
+/* ── TAGS ───────────────────────────────────────────────── */
+.aldora-tag {
+  display: inline-block;
+  background: var(--aldora-ouro-15);
+  border: 1px solid var(--aldora-ouro-30);
+  color: var(--aldora-ouro);
+  font-size: var(--fs-tag);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+}
+
+/* ── FOOTER ─────────────────────────────────────────────── */
+.aldora-footer {
+  background: var(--aldora-verde);
+  padding: var(--space-lg) var(--padding-x);
+  text-align: center;
+  border-top: 1px solid rgba(200,168,75,0.15);
+}
+
+.aldora-footer__logo {
+  font-family: var(--font-display);
+  color: var(--aldora-ouro);
+  font-size: 14px;
+  letter-spacing: 4px;
+  margin-bottom: var(--space-xs);
+}
+
+.aldora-footer__text {
+  color: var(--aldora-branco-40);
+  font-size: 12px;
+}
+
+.aldora-footer__links {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+  list-style: none;
+}
+
+.aldora-footer__links a {
+  color: var(--aldora-branco-55);
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: 1px;
+  transition: color var(--transition-fast);
+}
+
+.aldora-footer__links a:hover {
+  color: var(--aldora-ouro);
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .aldora-nav__links {
+    display: none;
+  }
+
+  .aldora-nav__hamburger {
+    display: block;
+  }
+
+  .aldora-nav__links.open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: var(--nav-height);
+    left: 0; right: 0;
+    background: rgba(10, 36, 22, 0.98);
+    padding: var(--space-md);
+    gap: var(--space-sm);
+    border-bottom: var(--border-ouro);
+  }
+
+  .aldora-hero {
+    min-height: 100svh;
+  }
+
+  .aldora-hero__content {
+    padding: 0 var(--padding-x);
+  }
+
+  .aldora-hero__kpis {
+    flex-wrap: wrap;
+  }
+
+  .aldora-kpi {
+    flex: 1 1 45%;
+    padding: var(--space-sm) 0;
+  }
+
+  .aldora-kpi:nth-child(2) {
+    border-right: none;
+  }
+
+  .aldora-grid--2,
+  .aldora-grid--3,
+  .aldora-grid--4 {
+    grid-template-columns: 1fr;
+  }
+
+  .aldora-hero--compact {
+    padding: calc(var(--nav-height) + 24px) 0 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .aldora-kpi {
+    flex: 1 1 100%;
+    border-right: none;
+    border-bottom: var(--border-ouro-sutil);
+    padding: var(--space-sm) 0;
+  }
+
+  .aldora-kpi:last-child {
+    border-bottom: none;
+  }
+
+  .aldora-hero__title {
+    font-size: clamp(32px, 10vw, 48px);
+  }
+
+  .aldora-table {
+    font-size: 12px;
+  }
+
+  .aldora-table thead th,
+  .aldora-table tbody td {
+    padding: 10px 12px;
+  }
+}

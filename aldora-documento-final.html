@@ -2,95 +2,38 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a2416'/%3E%3Ctext x='16' y='22' font-size='18' fill='%23C8A84B' text-anchor='middle' font-family='serif'%3EA%3C/text%3E%3C/svg%3E">
+    <meta name="theme-color" content="#0a2416">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AL'DORA City — Documento Final · Masterplan Vertical Escalonado">
+<meta property="og:title" content="AL'DORA City — Documento Final · Cidade Jardim Urbanismo">
+<meta property="og:description" content="AL'DORA City — Masterplan Vertical Escalonado · Jardim Versailles · Uberlândia/MG · 42.783m² · CA 4,0 · 14 Torres · 4 Empreendimentos">
 <title>AL'DORA City — Documento Final · Cidade Jardim Urbanismo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/aldora-tokens.css">
+<link rel="stylesheet" href="assets/css/aldora-components.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
 <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet">
 <style>
+/* ── Legacy variable aliases → design system tokens ── */
 :root {
-  --verde:   #0a2416;
-  --verde-m: #1a4a2e;
-  --verde-l: #2d6b40;
-  --ouro:    #C8A84B;
-  --ouro-l:  #E8C876;
-  --bege:    #F5F0E8;
-  --branco:  #ffffff;
-  --cinza:   #8a8a8a;
+  --verde:   var(--aldora-verde);
+  --verde-m: var(--aldora-verde-medio);
+  --verde-l: var(--aldora-verde-claro);
+  --ouro:    var(--aldora-ouro);
+  --ouro-l:  var(--aldora-ouro-claro);
+  --bege:    var(--aldora-bege);
+  --branco:  var(--aldora-branco);
+  --cinza:   var(--aldora-cinza);
+  --creme:   var(--aldora-bege);
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{font-family:'Inter',sans-serif;background:#f8f5f0;color:#1a1a1a;line-height:1.6;}
 
-/* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:2000;
-  background:rgba(10,36,22,0.97);backdrop-filter:blur(16px);
-  border-bottom:1px solid rgba(200,168,75,0.3);
-  padding:0 48px;height:60px;display:flex;align-items:center;justify-content:space-between;
-}
-.nav-logo{font-family:'Playfair Display',serif;color:var(--ouro);font-size:16px;letter-spacing:4px;font-weight:700;}
-.nav-sub{font-size:9px;color:rgba(245,240,232,0.4);letter-spacing:3px;text-transform:uppercase;margin-top:2px;}
-.nav-links{display:flex;gap:28px;}
-.nav-links a{color:rgba(255,255,255,0.55);text-decoration:none;font-size:10px;letter-spacing:1.8px;text-transform:uppercase;transition:color .2s;}
-.nav-links a:hover{color:var(--ouro);}
-.nav-badge{background:rgba(200,168,75,0.15);border:1px solid rgba(200,168,75,0.3);color:var(--ouro);font-size:9px;letter-spacing:2px;padding:4px 12px;text-transform:uppercase;}
 
-/* ── HERO ── */
-#hero{
-  height:100vh;min-height:680px;
-  background:radial-gradient(ellipse at 30% 60%, #0f3020 0%, #0a2416 40%, #040e09 100%);
-  display:flex;align-items:center;position:relative;overflow:hidden;
-}
-.hero-lines{position:absolute;inset:0;pointer-events:none;z-index:0;}
-.hero-lines::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,transparent 40%,rgba(200,168,75,0.03) 41%,transparent 42%),
-             linear-gradient(45deg,transparent 55%,rgba(200,168,75,0.02) 56%,transparent 57%);
-}
-.hero-content{position:relative;z-index:2;padding:0 80px;max-width:820px;}
-.hero-flag{
-  display:inline-flex;align-items:center;gap:12px;
-  border:1px solid rgba(200,168,75,0.4);padding:8px 20px;margin-bottom:36px;
-}
-.hero-flag-dot{width:6px;height:6px;border-radius:50%;background:var(--ouro);animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
-.hero-flag span{font-size:10px;letter-spacing:3px;color:var(--ouro);text-transform:uppercase;}
-h1.hero-title{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(56px,7vw,104px);color:var(--branco);line-height:0.95;
-  margin-bottom:8px;letter-spacing:-1px;
-}
-h1.hero-title em{color:var(--ouro);font-style:italic;}
-.hero-tagline{font-size:17px;color:rgba(245,240,232,0.55);font-weight:300;letter-spacing:0.5px;margin-bottom:52px;}
-.hero-kpis{display:flex;gap:0;border-top:1px solid rgba(200,168,75,0.2);}
-.kpi{flex:1;padding:24px 0 0 0;border-right:1px solid rgba(200,168,75,0.12);}
-.kpi:last-child{border-right:none;}
-.kpi-n{font-family:'Playfair Display',serif;font-size:32px;color:var(--ouro);line-height:1;}
-.kpi-l{font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase;margin-top:6px;}
-.hero-scroll{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);z-index:2;
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  font-size:9px;letter-spacing:3px;color:rgba(200,168,75,0.5);text-transform:uppercase;}
-.hero-scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,rgba(200,168,75,0.5),transparent);
-  animation:scrolldown 2s ease-in-out infinite;}
-@keyframes scrolldown{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);}100%{transform:scaleY(0);transform-origin:bottom;}}
 
-/* ── SECTIONS COMUNS ── */
-section{padding:100px 0;}
-.container{max-width:1140px;margin:0 auto;padding:0 48px;}
-.section-tag{display:inline-block;font-size:10px;letter-spacing:3px;text-transform:uppercase;
-  color:var(--ouro);border-bottom:1px solid rgba(200,168,75,0.35);padding-bottom:6px;margin-bottom:24px;}
-.section-title{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,52px);line-height:1.08;margin-bottom:18px;}
-.section-lead{font-size:17px;color:#555;max-width:640px;font-weight:300;line-height:1.7;}
-.gold{color:var(--ouro);}
-.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(200,168,75,0.3),transparent);margin:0;}
 
 /* ── TESE ── */
-#tese{background:var(--verde);padding:100px 0;}
-#tese .section-title{color:var(--branco);}
-#tese .section-lead{color:rgba(245,240,232,0.6);}
 .tese-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px;}
 .tese-card{
   background:rgba(255,255,255,0.03);border:1px solid rgba(200,168,75,0.12);
@@ -103,7 +46,6 @@ section{padding:100px 0;}
 .tese-card p strong{color:rgba(232,200,118,0.9);}
 
 /* ── ATIVO ── */
-#ativo{background:var(--bege);}
 .ativo-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:64px;margin-top:56px;align-items:start;}
 table.atv{width:100%;border-collapse:collapse;}
 table.atv th{background:var(--verde);color:var(--ouro);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:14px 18px;text-align:left;font-weight:500;}
@@ -123,8 +65,8 @@ table.atv tr:hover td{background:rgba(200,168,75,0.06);}
 
 /* ── SATÉLITE / 3D ── */
 #satelite{background:#060e08;padding:80px 0 0;}
-#satelite .section-title{color:var(--branco);}
-#satelite .section-lead{color:rgba(245,240,232,0.55);}
+#satelite .aldora-section__title{color:var(--branco);}
+#satelite .aldora-section__lead{color:rgba(245,240,232,0.55);}
 #map-wrap{
   margin-top:48px;position:relative;height:600px;
   border-top:2px solid rgba(200,168,75,0.3);
@@ -187,9 +129,6 @@ table.atv tr:hover td{background:rgba(200,168,75,0.06);}
 .emp-vgv span{font-size:13px;color:rgba(245,240,232,0.4);font-family:'Inter',sans-serif;font-weight:300;display:block;margin-top:2px;}
 
 /* ── TIPOLOGIAS ── */
-#tipos{background:var(--verde);padding:100px 0;}
-#tipos .section-title{color:var(--branco);}
-#tipos .section-lead{color:rgba(245,240,232,0.55);}
 .tipos-ladder{display:flex;flex-direction:column;gap:2px;margin-top:56px;}
 .tipo-row{
   display:grid;grid-template-columns:100px 1fr 140px 160px 180px;align-items:center;gap:0;
@@ -211,7 +150,6 @@ table.atv tr:hover td{background:rgba(200,168,75,0.06);}
 .t-bar-fill{position:absolute;left:0;top:0;height:100%;background:linear-gradient(90deg,var(--ouro),var(--ouro-l));border-radius:2px;}
 
 /* ── VGV ── */
-#vgv{background:var(--bege);padding:100px 0;}
 .vgv-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:56px;}
 .vgv-table{width:100%;border-collapse:collapse;}
 .vgv-table th{background:var(--verde);color:var(--ouro);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:14px 18px;text-align:left;font-weight:500;}
@@ -227,8 +165,8 @@ table.atv tr:hover td{background:rgba(200,168,75,0.06);}
 
 /* ── GATES ── */
 #gates{background:#060e08;padding:100px 0;}
-#gates .section-title{color:var(--branco);}
-#gates .section-lead{color:rgba(245,240,232,0.55);}
+#gates .aldora-section__title{color:var(--branco);}
+#gates .aldora-section__lead{color:rgba(245,240,232,0.55);}
 .gates-line{
   position:relative;margin-top:64px;
   display:grid;grid-template-columns:repeat(4,1fr);gap:0;
@@ -253,7 +191,6 @@ table.atv tr:hover td{background:rgba(200,168,75,0.06);}
 .gate-conds li strong{color:rgba(245,240,232,0.8);}
 
 /* ── GOVERNANÇA ── */
-#gov{background:var(--bege);padding:100px 0;}
 .gov-grid{display:grid;grid-template-columns:1.2fr 0.8fr;gap:64px;margin-top:56px;}
 .gov-structure{display:flex;flex-direction:column;gap:2px;}
 .gov-node{
@@ -276,8 +213,8 @@ table.atv tr:hover td{background:rgba(200,168,75,0.06);}
   background:radial-gradient(ellipse at 40% 50%, #0f3020, #0a2416 60%, #040e09);
   padding:120px 0;text-align:center;
 }
-#cta .section-title{color:var(--branco);font-size:clamp(40px,5vw,64px);margin-bottom:16px;}
-#cta .section-lead{color:rgba(245,240,232,0.55);margin:0 auto 52px;text-align:center;}
+#cta .aldora-section__title{color:var(--branco);font-size:clamp(40px,5vw,64px);margin-bottom:16px;}
+#cta .aldora-section__lead{color:rgba(245,240,232,0.55);margin:0 auto 52px;text-align:center;}
 .cta-details{
   display:flex;justify-content:center;gap:64px;margin-bottom:56px;
 }
@@ -296,29 +233,18 @@ table.atv tr:hover td{background:rgba(200,168,75,0.06);}
 .cta-contact{font-size:13px;color:rgba(245,240,232,0.4);}
 .cta-contact strong{color:var(--ouro);display:block;font-size:14px;margin-bottom:6px;}
 
-/* ── FOOTER ── */
-footer{
-  background:#020c06;border-top:1px solid rgba(200,168,75,0.15);
-  padding:40px 48px;display:flex;align-items:center;justify-content:space-between;
-}
-.footer-logo{font-family:'Playfair Display',serif;color:var(--ouro);font-size:14px;letter-spacing:4px;}
-.footer-info{font-size:11px;color:rgba(245,240,232,0.3);text-align:center;}
+/* ── FOOTER EXTRAS ── */
 .footer-conf{font-size:10px;color:rgba(200,168,75,0.4);letter-spacing:1px;text-align:right;}
 
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
-  .hero-content{padding:0 28px;}
-  .container{padding:0 28px;}
-  .hero-kpis{flex-wrap:wrap;}
   .tese-grid,.emp-grid{grid-template-columns:1fr;}
   .ativo-grid,.vgv-grid,.gov-grid{grid-template-columns:1fr;}
   .gates-line{grid-template-columns:1fr 1fr;gap:32px;}
   .gates-line::before{display:none;}
   .tipos-ladder .tipo-row{grid-template-columns:80px 1fr 120px;gap:8px;}
   .tipo-row .t-bar,.tipo-row .t-ticket{display:none;}
-  nav{padding:0 20px;}
-  .nav-links{display:none;}
-  footer{flex-direction:column;gap:16px;text-align:center;}
+  .aldora-footer{flex-direction:column;gap:16px;text-align:center;}
 }
 
 /* ── MERCADO ── */
@@ -326,8 +252,8 @@ footer{
 .mercado-hero{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;padding-bottom:72px;}
 .mercado-hero-left{}
 .mercado-hero-left .section-tag{color:var(--ouro);opacity:1;}
-.mercado-hero-left .section-title{color:var(--creme);margin-bottom:24px;}
-.mercado-hero-left .section-intro{color:rgba(245,240,232,0.65);font-size:15px;line-height:1.8;}
+.mercado-hero-left .aldora-section__title{color:var(--creme);margin-bottom:24px;}
+.section-intro{color:rgba(245,240,232,0.65);font-size:15px;line-height:1.8;}
 .mercado-kpis{display:flex;flex-direction:column;gap:2px;}
 .mkpi{background:rgba(255,255,255,0.04);border:1px solid rgba(200,168,75,0.15);padding:28px 32px;
   display:flex;align-items:center;gap:24px;transition:background .2s;}
@@ -354,7 +280,6 @@ footer{
 .insight-kpi .lbl{font-size:10px;color:rgba(245,240,232,0.4);letter-spacing:1.5px;text-transform:uppercase;margin-top:6px;}
 
 /* ── TIPOLOGIAS CARDS ── */
-#tipologias-full{background:var(--bege);}
 .tipo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-top:56px;}
 .tipo-card{background:var(--branco);overflow:hidden;cursor:pointer;transition:transform .3s,box-shadow .3s;}
 .tipo-card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(0,0,0,0.12);}
@@ -373,9 +298,9 @@ footer{
 .tipo-ticket .tv{font-family:'Playfair Display',serif;font-size:18px;color:var(--ouro);}
 
 /* ── FINANCEIRO ── */
-#financeiro-sec{background:var(--verde);}
-#financeiro-sec .section-title{color:var(--branco);}
+#financeiro-sec .aldora-section__title{color:var(--branco);}
 #financeiro-sec .section-intro{color:rgba(245,240,232,0.6);}
+.aldora-section--dark .section-intro{color:var(--aldora-branco-65);}
 .fin-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:64px;margin-top:56px;align-items:start;}
 .fin-table{width:100%;border-collapse:collapse;}
 .fin-table thead tr{background:rgba(200,168,75,0.15);}
@@ -394,7 +319,6 @@ footer{
 .cenario .cl{font-size:12px;color:rgba(245,240,232,0.4);margin-top:6px;}
 
 /* ── AMENITIES ── */
-#amenities-sec{background:var(--bege);}
 .amenities-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:56px;}
 .amenity-card{background:var(--branco);padding:32px 24px;text-align:center;border-bottom:3px solid transparent;transition:border-color .3s;}
 .amenity-card:hover{border-color:var(--ouro);}
@@ -404,7 +328,7 @@ footer{
 
 /* ── RENDERS ── */
 #renders-sec{background:#060c09;padding:80px 0 0 0;}
-#renders-sec .section-title{color:var(--branco);}
+#renders-sec .aldora-section__title{color:var(--branco);}
 #renders-sec .section-intro{color:rgba(245,240,232,0.6);}
 .renders-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:48px;}
 .render-card{position:relative;height:480px;overflow:hidden;cursor:pointer;}
@@ -420,19 +344,50 @@ footer{
 .render-spec strong{display:block;font-family:'Playfair Display',serif;font-size:19px;color:var(--ouro);line-height:1.2;}
 @media(max-width:900px){.renders-grid{grid-template-columns:1fr;}.render-card{height:360px;}.amenities-grid{grid-template-columns:repeat(2,1fr);}.tipo-grid{grid-template-columns:repeat(2,1fr);}.fin-grid,.mercado-charts{grid-template-columns:1fr;}.mercado-insight{grid-template-columns:repeat(2,1fr);}.mercado-hero{grid-template-columns:1fr;gap:40px;}.mercado-kpis{margin-top:0;}}
 
-</style>
+@media(max-width:768px){
+  .params-grid,.market-grid,.mercado-charts{grid-template-columns:1fr;}
+  .cenarios{grid-template-columns:1fr;}
+  .emp-legend,.fluxo-grid{grid-template-columns:repeat(2,1fr);}
+  .render-specs{flex-wrap:wrap;gap:12px;}
+  table.atv,.vgv-table,.fin-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+}
+
+@media(max-width:480px){
+  .tipo-grid,.mercado-insight{grid-template-columns:1fr;}
+  .amenities-grid{grid-template-columns:1fr;}
+  .emp-legend,.fluxo-grid{grid-template-columns:1fr;}
+  .gates-line{grid-template-columns:1fr;gap:16px;}
+  .tese-grid,.emp-grid,.ativo-grid,.vgv-grid,.gov-grid,.fin-grid{gap:12px;}
+  .renders-grid{gap:2px;}
+  .render-card{height:280px;}
+  .render-info{padding:20px 24px;}
+  .render-emp-name{font-size:20px;}
+  section{padding:48px 0;}
+}
+
+
+    :focus-visible {
+      outline: 2px solid var(--aldora-ouro, #C8A84B);
+      outline-offset: 2px;
+    }
+    a:focus-visible {
+      outline: 2px solid var(--aldora-ouro, #C8A84B);
+      outline-offset: 2px;
+    }
+    </style>
 </head>
 <body>
+<a href="#hero" class="sr-only" style="position:absolute;top:-40px;left:0;background:var(--aldora-ouro,#C8A84B);color:#0a2416;padding:8px 16px;z-index:9999;font-size:14px;transition:top 0.2s;" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Pular para conteúdo</a>
 
 <!-- ╔══════════════════════════════════════════╗ -->
 <!-- ║  NAVEGAÇÃO FIXA                          ║ -->
 <!-- ╚══════════════════════════════════════════╝ -->
-<nav>
+<nav class="aldora-nav">
   <div>
-    <div class="nav-logo">AL'DORA CITY</div>
-    <div class="nav-sub">Cidade Jardim Urbanismo · Documento Final 2026</div>
+    <div class="aldora-nav__logo">AL'DORA CITY</div>
+    <div class="aldora-nav__sub">Cidade Jardim Urbanismo · Documento Final 2026</div>
   </div>
-  <div class="nav-links">
+  <div class="aldora-nav__links">
     <a href="#tese">Tese</a>
     <a href="#ativo">Ativo</a>
     <a href="#satelite">Implantação</a>
@@ -445,43 +400,43 @@ footer{
     <a href="#renders-sec">Renders</a>
     <a href="#cta">Contato</a>
   </div>
-  <div class="nav-badge">Confidencial · 2026</div>
+  <div class="aldora-nav__badge">Confidencial · 2026</div>
 </nav>
 
 
 <!-- ╔══════════════════════════════════════════╗ -->
 <!-- ║  HERO                                    ║ -->
 <!-- ╚══════════════════════════════════════════╝ -->
-<section id="hero">
-  <div class="hero-lines"></div>
-  <div class="hero-content">
-    <div class="hero-flag">
-      <span class="hero-flag-dot"></span>
+<section id="hero" class="aldora-hero" role="main">
+  <div class="aldora-hero__lines"></div>
+  <div class="aldora-hero__content">
+    <div class="aldora-hero__flag">
+      <span class="aldora-hero__flag-dot"></span>
       <span>Masterplan Vertical Escalonado · Jardim Versailles · Uberlândia/MG</span>
     </div>
-    <h1 class="hero-title">AL'DORA<br><em>City</em></h1>
-    <p class="hero-tagline">42.783 m² contíguos · CA 4,0 · ZR2/SVA · 3 Quadras · 14 Torres · 4 Empreendimentos</p>
-    <div class="hero-kpis">
-      <div class="kpi" style="padding-right:32px;">
-        <div class="kpi-n">42.783</div>
-        <div class="kpi-l">m² de terreno</div>
+    <h1 class="aldora-hero__title">AL'DORA<br><em>City</em></h1>
+    <p class="aldora-hero__tagline">42.783 m² contíguos · CA 4,0 · ZR2/SVA · 3 Quadras · 14 Torres · 4 Empreendimentos</p>
+    <div class="aldora-hero__kpis">
+      <div class="aldora-kpi" style="padding-right:32px;">
+        <div class="aldora-kpi__value">42.783</div>
+        <div class="aldora-kpi__label">m² de terreno</div>
       </div>
-      <div class="kpi" style="padding:24px 0 0 32px;padding-right:32px;">
-        <div class="kpi-n">171.138</div>
-        <div class="kpi-l">m² construídos</div>
+      <div class="aldora-kpi" style="padding:24px 0 0 32px;padding-right:32px;">
+        <div class="aldora-kpi__value">171.138</div>
+        <div class="aldora-kpi__label">m² construídos</div>
       </div>
-      <div class="kpi" style="padding:24px 0 0 32px;padding-right:32px;">
-        <div class="kpi-n">14</div>
-        <div class="kpi-l">Torres A–N</div>
+      <div class="aldora-kpi" style="padding:24px 0 0 32px;padding-right:32px;">
+        <div class="aldora-kpi__value">14</div>
+        <div class="aldora-kpi__label">Torres A–N</div>
       </div>
-      <div class="kpi" style="padding:24px 0 0 32px;">
-        <div class="kpi-n">R$300M+</div>
-        <div class="kpi-l">VGV Fase 1</div>
+      <div class="aldora-kpi" style="padding:24px 0 0 32px;">
+        <div class="aldora-kpi__value">R$300M+</div>
+        <div class="aldora-kpi__label">VGV Fase 1</div>
       </div>
     </div>
   </div>
-  <div class="hero-scroll">
-    <div class="hero-scroll-line"></div>
+  <div class="aldora-hero__scroll">
+    <div class="aldora-hero__scroll-line"></div>
     <span>Scroll</span>
   </div>
 </section>
@@ -491,11 +446,11 @@ footer{
 <!-- ╔══════════════════════════════════════════╗ -->
 <!-- ║  01 — TESE DO INVESTIMENTO               ║ -->
 <!-- ╚══════════════════════════════════════════╝ -->
-<section id="tese">
+<section id="tese" class="aldora-section aldora-section--dark">
   <div class="container">
     <div class="section-tag">01 — Por que agora</div>
-    <h2 class="section-title">A Tese do Investimento</h2>
-    <p class="section-lead">Três forças convergindo num único ativo — o maior potencial de verticalização premium do Centro-Oeste brasileiro.</p>
+    <h2 class="aldora-section__title">A Tese do Investimento</h2>
+    <p class="aldora-section__lead">Três forças convergindo num único ativo — o maior potencial de verticalização premium do Centro-Oeste brasileiro.</p>
     <div class="tese-grid">
       <div class="tese-card">
         <div class="tese-n">01</div>
@@ -521,11 +476,11 @@ footer{
 <!-- ╔══════════════════════════════════════════╗ -->
 <!-- ║  02 — O ATIVO                            ║ -->
 <!-- ╚══════════════════════════════════════════╝ -->
-<section id="ativo">
+<section id="ativo" class="aldora-section aldora-section--bege">
   <div class="container">
     <div class="section-tag">02 — O Ativo</div>
-    <h2 class="section-title">42.783m² · CA 4,0 · ZR2+SVA</h2>
-    <p class="section-lead">Três quadras contíguas em Jardim Versailles. Parâmetros urbanísticos confirmados em Restrições Urbanísticas oficiais da Prefeitura de Uberlândia.</p>
+    <h2 class="aldora-section__title">42.783m² · CA 4,0 · ZR2+SVA</h2>
+    <p class="aldora-section__lead">Três quadras contíguas em Jardim Versailles. Parâmetros urbanísticos confirmados em Restrições Urbanísticas oficiais da Prefeitura de Uberlândia.</p>
     <div class="ativo-grid">
       <div>
         <table class="atv">
@@ -570,11 +525,11 @@ footer{
 <!-- ╔══════════════════════════════════════════╗ -->
 <!-- ║  03 — IMPLANTAÇÃO REAL 3D (MapLibre)     ║ -->
 <!-- ╚══════════════════════════════════════════╝ -->
-<section id="satelite" style="padding-bottom:0;">
+<section id="satelite" class="aldora-section" style="padding-bottom:0;">
   <div class="container">
     <div class="section-tag">03 — Implantação Real</div>
-    <h2 class="section-title">14 Torres sobre Imagem de Satélite</h2>
-    <p class="section-lead">Posicionamento real das torres no terreno. QC01 em configuração U (Torres A–F) com 15 lotes comerciais voltados para Av. Dr. João Patrus de Souza. QC02 e QC03 em grid 2×2.</p>
+    <h2 class="aldora-section__title">14 Torres sobre Imagem de Satélite</h2>
+    <p class="aldora-section__lead">Posicionamento real das torres no terreno. QC01 em configuração U (Torres A–F) com 15 lotes comerciais voltados para Av. Dr. João Patrus de Souza. QC02 e QC03 em grid 2×2.</p>
   </div>
   <div id="map-wrap">
     <div id="sat-map"></div>
@@ -624,11 +579,11 @@ footer{
 <!-- ╔══════════════════════════════════════════╗ -->
 <!-- ║  04 — EMPREENDIMENTOS                    ║ -->
 <!-- ╚══════════════════════════════════════════╝ -->
-<section id="emps">
+<section id="emps" class="aldora-section">
   <div class="container">
     <div class="section-tag">04 — Empreendimentos</div>
-    <h2 class="section-title">4 Produtos · 14 Torres · Esteira Escalonada</h2>
-    <p class="section-lead">Cada empreendimento é uma SPE independente com produto, público e timing próprios. A valorização de cada fase alimenta a demanda da seguinte.</p>
+    <h2 class="aldora-section__title">4 Produtos · 14 Torres · Esteira Escalonada</h2>
+    <p class="aldora-section__lead">Cada empreendimento é uma SPE independente com produto, público e timing próprios. A valorização de cada fase alimenta a demanda da seguinte.</p>
   </div>
   <div class="container" style="padding-top:40px;">
     <div class="emp-grid">
@@ -716,11 +671,11 @@ footer{
 <!-- ╔══════════════════════════════════════════╗ -->
 <!-- ║  05 — ESCADA DE PRODUTOS                 ║ -->
 <!-- ╚══════════════════════════════════════════╝ -->
-<section id="tipos">
+<section id="tipos" class="aldora-section aldora-section--dark">
   <div class="container">
     <div class="section-tag">05 — Escada de Produtos</div>
-    <h2 class="section-title">5 Tipologias · Todos os Mercados</h2>
-    <p class="section-lead">Da entrada ao ultra-premium: cada produto endereça um segmento de comprador, amplia o alcance do masterplan e viabiliza o mix ideal por empreendimento.</p>
+    <h2 class="aldora-section__title">5 Tipologias · Todos os Mercados</h2>
+    <p class="aldora-section__lead">Da entrada ao ultra-premium: cada produto endereça um segmento de comprador, amplia o alcance do masterplan e viabiliza o mix ideal por empreendimento.</p>
 
     <div class="tipos-ladder">
       <div class="tipo-row header">
@@ -779,11 +734,11 @@ footer{
 <!-- ╔══════════════════════════════════════════╗ -->
 <!-- ║  06 — VGV & DADOS DE MERCADO             ║ -->
 <!-- ╚══════════════════════════════════════════╝ -->
-<section id="vgv">
+<section id="vgv" class="aldora-section aldora-section--bege">
   <div class="container">
     <div class="section-tag">06 — Projeção de VGV</div>
-    <h2 class="section-title">Potencial de R$565–720M em VGV Total</h2>
-    <p class="section-lead">Estimativas baseadas em ticket médio de R$8.341/m² (Brain Research 2T25) e mix de tipologias por empreendimento. VGV referencial QC01 de R$299,68M (Brain Research 2025).</p>
+    <h2 class="aldora-section__title">Potencial de R$565–720M em VGV Total</h2>
+    <p class="aldora-section__lead">Estimativas baseadas em ticket médio de R$8.341/m² (Brain Research 2T25) e mix de tipologias por empreendimento. VGV referencial QC01 de R$299,68M (Brain Research 2025).</p>
     <div class="vgv-grid">
       <div>
         <table class="vgv-table">
@@ -877,11 +832,11 @@ footer{
 <!-- ╔══════════════════════════════════════════╗ -->
 <!-- ║  07 — GATES DE EXECUÇÃO                  ║ -->
 <!-- ╚══════════════════════════════════════════╝ -->
-<section id="gates">
+<section id="gates" class="aldora-section">
   <div class="container">
     <div class="section-tag">07 — Estratégia de Execução</div>
-    <h2 class="section-title">Gates de Performance</h2>
-    <p class="section-lead">Os gates são condições de performance, não datas. Cada fase só avança quando os indicadores estão verdes — protegendo capital e maximizando valorização.</p>
+    <h2 class="aldora-section__title">Gates de Performance</h2>
+    <p class="aldora-section__lead">Os gates são condições de performance, não datas. Cada fase só avança quando os indicadores estão verdes — protegendo capital e maximizando valorização.</p>
 
     <div class="gates-line">
       <div class="gate-item">
@@ -949,11 +904,11 @@ footer{
 <!-- ╔══════════════════════════════════════════╗ -->
 <!-- ║  08 — GOVERNANÇA SPE                     ║ -->
 <!-- ╚══════════════════════════════════════════╝ -->
-<section id="gov">
+<section id="gov" class="aldora-section aldora-section--bege">
   <div class="container">
     <div class="section-tag">08 — Governança</div>
-    <h2 class="section-title">Estrutura SPE & Proteção de Marca</h2>
-    <p class="section-lead">Cada empreendimento opera como SPE independente sob licença da marca AL'DORA. A Cidade Jardim Urbanismo detém a marca master e garante coerência do masterplan.</p>
+    <h2 class="aldora-section__title">Estrutura SPE & Proteção de Marca</h2>
+    <p class="aldora-section__lead">Cada empreendimento opera como SPE independente sob licença da marca AL'DORA. A Cidade Jardim Urbanismo detém a marca master e garante coerência do masterplan.</p>
     <div class="gov-grid">
       <div>
         <div class="gov-structure">
@@ -1027,12 +982,12 @@ footer{
 <div class="divider"></div>
 
 <!-- MERCADO -->
-<section id="mercado">
+<section id="mercado" class="aldora-section aldora-section--dark">
   <div class="container">
     <div class="mercado-hero">
       <div class="mercado-hero-left">
         <div class="section-tag" style="color:#C8A84B;opacity:1;">Inteligência de Mercado</div>
-        <h2 class="section-title" style="color:#F5F0E8;">A Janela<br>Está Aberta</h2>
+        <h2 class="aldora-section__title" style="color:#F5F0E8;">A Janela<br>Está Aberta</h2>
         <p class="section-intro" style="color:rgba(245,240,232,0.75);">Uberlândia registra contração de −46% em lançamentos enquanto as vendas batem R$2,6B em 2024. Estoque no mínimo histórico, preço subindo sem parar. Quem lança agora captura a retomada com a concorrência de fora do mercado.</p>
         <p class="section-intro" style="margin-top:16px;color:rgba(245,240,232,0.6);">Dados: <strong style="color:#C8A84B;">Brain Research 2025</strong> · Vocacional de Terreno AL'DORA City.</p>
       </div>
@@ -1216,10 +1171,10 @@ footer{
 <div class="divider"></div>
 
 <!-- TIPOLOGIAS -->
-<section id="tipologias-full">
+<section id="tipologias-full" class="aldora-section aldora-section--bege">
   <div class="container">
     <div class="section-tag">Escada de Produtos</div>
-    <h2 class="section-title">Tipologias P1 — P5</h2>
+    <h2 class="aldora-section__title">Tipologias P1 — P5</h2>
     <p class="section-intro">Portfólio completo para capturar todos os estratos de renda do mercado de Uberlândia, da entrada premium ao ultra-luxo. Cada fase do masterplan otimiza o mix para maximizar VGV e velocidade.</p>
     <div class="tipo-grid">
 
@@ -1730,10 +1685,10 @@ footer{
 <div class="divider"></div>
 
 <!-- FINANCEIRO -->
-<section id="financeiro-sec">
+<section id="financeiro-sec" class="aldora-section aldora-section--dark">
   <div class="container">
     <div class="section-tag">Projeção Financeira</div>
-    <h2 class="section-title" style="color:var(--branco)">VGV · Margem · IRR</h2>
+    <h2 class="aldora-section__title" style="color:var(--branco)">VGV · Margem · IRR</h2>
     <p class="section-intro">Projeção baseada em Brain Research 2025, CUB-MG Jan/2026 e histórico de mercado UDI. Modelo escalonado: cada gate de performance desbloqueia a fase seguinte.</p>
     <div class="fin-grid">
       <div>
@@ -1801,10 +1756,10 @@ footer{
 <div class="divider"></div>
 
 <!-- AMENITIES -->
-<section id="amenities-sec">
+<section id="amenities-sec" class="aldora-section aldora-section--bege">
   <div class="container">
     <div class="section-tag">Diferenciais de Produto</div>
-    <h2 class="section-title">Amenities de Alto Padrão</h2>
+    <h2 class="aldora-section__title">Amenities de Alto Padrão</h2>
     <p class="section-intro">Curadoria baseada em benchmarks nacionais e internacionais: Parque Global (SP), Grandverse (UDI), Fasano, referências de Miami e Dubai. Cada fase amplia o portfólio de amenities.</p>
     <div class="amenities-grid">
       <!-- Rooftop Pool -->
@@ -1916,10 +1871,10 @@ footer{
 <div class="divider"></div>
 
 <!-- RENDERS CONCEITUAIS -->
-<section id="renders-sec">
+<section id="renders-sec" class="aldora-section">
   <div class="container">
     <div class="section-tag">Conceito Arquitetônico</div>
-    <h2 class="section-title">Os Quatro Empreendimentos</h2>
+    <h2 class="aldora-section__title">Os Quatro Empreendimentos</h2>
     <p class="section-intro">Quatro fases, quatro identidades. Da entrada acessível ao coroamento premium — uma escada de produtos construída para capturar todos os perfis do mercado vertical de Uberlândia.</p>
   </div>
   <div class="renders-grid">
@@ -3137,11 +3092,11 @@ footer{
 <!-- ╔══════════════════════════════════════════╗ -->
 <!-- ║  09 — CTA                                ║ -->
 <!-- ╚══════════════════════════════════════════╝ -->
-<section id="cta">
+<section id="cta" class="aldora-section">
   <div class="container" style="text-align:center;">
     <div class="section-tag" style="display:inline-block;">09 — Próximos Passos</div>
-    <h2 class="section-title">Uma Oportunidade de Geração</h2>
-    <p class="section-lead">42.783m² contíguos, CA 4,0, zoneamento confirmado, demanda comprovada. O maior masterplan vertical em andamento em Uberlândia.</p>
+    <h2 class="aldora-section__title">Uma Oportunidade de Geração</h2>
+    <p class="aldora-section__lead">42.783m² contíguos, CA 4,0, zoneamento confirmado, demanda comprovada. O maior masterplan vertical em andamento em Uberlândia.</p>
 
     <div class="cta-details">
       <div class="cta-detail"><div class="v">R$299,68M</div><div class="l">VGV Referencial QC01</div></div>
@@ -3164,12 +3119,12 @@ footer{
 <!-- ╔══════════════════════════════════════════╗ -->
 <!-- ║  FOOTER                                  ║ -->
 <!-- ╚══════════════════════════════════════════╝ -->
-<footer>
+<footer class="aldora-footer">
   <div>
-    <div class="footer-logo">AL'DORA CITY</div>
+    <div class="aldora-footer__logo">AL'DORA CITY</div>
     <div style="font-size:10px;color:rgba(245,240,232,0.3);margin-top:4px;letter-spacing:1px;">Cidade Jardim Urbanismo · Uberlândia/MG</div>
   </div>
-  <div class="footer-info">
+  <div class="aldora-footer__text">
     Documento elaborado em março de 2026<br>
     Dados: Brain Research 2025 · RUs Prefeitura Uberlândia · SINDUSCON-MG
   </div>
@@ -3442,7 +3397,7 @@ window.focusPhase = function(phase) {
 function navTo(id) {
   var el = document.getElementById(id);
   if (!el) return;
-  var navH = (document.querySelector('nav') || {offsetHeight:70}).offsetHeight || 70;
+  var navH = (document.querySelector('.aldora-nav') || {offsetHeight:70}).offsetHeight || 70;
   var y = el.getBoundingClientRect().top + window.pageYOffset - navH;
   try { window.scrollTo({top: y, behavior: 'smooth'}); }
   catch(e) { window.scrollTo(0, y); }

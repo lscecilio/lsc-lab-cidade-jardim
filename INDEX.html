@@ -2,695 +2,611 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a2416'/%3E%3Ctext x='16' y='22' font-size='18' fill='%23C8A84B' text-anchor='middle' font-family='serif'%3EA%3C/text%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AL'DORA City — Central de Materiais</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- SEO & OG -->
+<meta name="description" content="AL'DORA City — Hub de materiais do Masterplan Vertical Escalonado · Jardim Versailles · Uberlândia/MG · 42.783 m² · 8 Torres · R$299M VGV">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AL'DORA City — Central de Materiais">
+<meta property="og:description" content="Masterplan Vertical Escalonado · Jardim Versailles · Uberlândia/MG · 42.783 m² de terreno · 125.684 m² privativos · 8 torres · R$299M VGV">
+<meta property="og:site_name" content="AL'DORA City · Cidade Jardim Urbanismo">
+<meta name="theme-color" content="#0a2416">
+
+<!-- Design System -->
+<link rel="stylesheet" href="assets/css/aldora-tokens.css">
+<link rel="stylesheet" href="assets/css/aldora-components.css">
+
 <style>
-  :root {
-    --verde-escuro: #0a2416;
-    --verde-medio: #0f3320;
-    --verde-claro: #1a4d30;
-    --ouro: #C8A84B;
-    --ouro-claro: #e0c06a;
-    --branco: #F5F0E8;
-    --cinza: rgba(245,240,232,0.55);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
+  /* ── Page-level overrides ── */
   body {
-    background: var(--verde-escuro);
-    color: var(--branco);
-    font-family: 'Inter', sans-serif;
-    min-height: 100vh;
+    background: var(--aldora-verde);
+    color: var(--aldora-bege);
   }
 
-  /* ── HERO ── */
-  .hero {
-    background: linear-gradient(160deg, #061410 0%, #0a2416 45%, #0d2e1c 100%);
-    padding: 64px 48px 56px;
+  /* ── Hero Compact with KPIs ── */
+  .hub-hero {
+    background: radial-gradient(ellipse at 30% 60%, #0f3020 0%, var(--aldora-verde) 40%, #040e09 100%);
+    padding: calc(var(--nav-height) + 48px) 0 48px;
+    text-align: center;
     position: relative;
     overflow: hidden;
     border-bottom: 1px solid rgba(200,168,75,0.15);
   }
 
-  .hero::before {
+  .hub-hero::before {
     content: '';
     position: absolute;
-    top: -120px; right: -120px;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(200,168,75,0.06) 0%, transparent 70%);
+    inset: 0;
+    background:
+      linear-gradient(135deg, transparent 40%, rgba(200,168,75,0.03) 41%, transparent 42%),
+      linear-gradient(45deg, transparent 55%, rgba(200,168,75,0.02) 56%, transparent 57%);
     pointer-events: none;
   }
 
-  .hero-logo {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 40px;
+  .hub-hero__inner {
+    position: relative;
+    z-index: 1;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--padding-x);
   }
 
-  .logo-mark {
-    width: 48px; height: 48px;
-    border: 2px solid var(--ouro);
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .logo-mark svg { width: 28px; height: 28px; }
-
-  .logo-text {
-    display: flex; flex-direction: column;
-  }
-
-  .logo-brand {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    letter-spacing: 4px;
-    color: var(--ouro);
+  .hub-hero__title {
+    font-family: var(--font-display);
+    font-size: var(--fs-h1);
+    color: var(--aldora-branco);
     line-height: 1;
-  }
-
-  .logo-sub {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--cinza);
-    margin-top: 4px;
-  }
-
-  .hero-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(36px, 5vw, 58px);
-    font-weight: 400;
-    line-height: 1.15;
-    color: var(--branco);
     margin-bottom: 12px;
-    max-width: 700px;
   }
 
-  .hero-title em {
+  .hub-hero__title em {
+    color: var(--aldora-ouro);
     font-style: italic;
-    color: var(--ouro);
   }
 
-  .hero-desc {
-    font-size: 15px;
-    color: var(--cinza);
-    max-width: 520px;
-    line-height: 1.7;
-    margin-bottom: 48px;
+  .hub-hero__subtitle {
+    font-size: var(--fs-body);
+    color: var(--aldora-branco-55);
+    font-weight: 300;
+    letter-spacing: 0.3px;
+    margin-bottom: 36px;
   }
 
-  .hero-kpis {
+  .hub-hero__kpis {
     display: flex;
-    gap: 48px;
-    flex-wrap: wrap;
-  }
-
-  .kpi {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .kpi-value {
-    font-family: 'Playfair Display', serif;
-    font-size: 32px;
-    color: var(--ouro);
-    line-height: 1;
-  }
-
-  .kpi-label {
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--cinza);
-    margin-top: 6px;
-  }
-
-  .kpi-divider {
-    width: 1px;
-    background: rgba(200,168,75,0.2);
-    align-self: stretch;
-  }
-
-  /* ── SECTION ── */
-  .section {
-    padding: 64px 48px;
-    max-width: 1400px;
+    justify-content: center;
+    gap: 0;
+    border-top: 1px solid rgba(200,168,75,0.2);
+    max-width: 720px;
     margin: 0 auto;
   }
 
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 20px;
-    margin-bottom: 8px;
+  /* ── Search ── */
+  .hub-search {
+    max-width: 480px;
+    margin: 0 auto var(--space-lg);
+    position: relative;
   }
 
-  .section-label {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--ouro);
+  .hub-search__input {
+    width: 100%;
+    padding: 14px 20px 14px 44px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(200,168,75,0.2);
+    border-radius: var(--border-radius);
+    color: var(--aldora-bege);
+    font-family: var(--font-body);
+    font-size: var(--fs-body-sm);
+    outline: none;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
   }
 
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    font-weight: 400;
-    color: var(--branco);
-    margin-bottom: 6px;
+  .hub-search__input::placeholder {
+    color: var(--aldora-branco-40);
   }
 
-  .section-desc {
-    font-size: 13px;
-    color: var(--cinza);
-    margin-bottom: 40px;
-    line-height: 1.6;
+  .hub-search__input:focus {
+    border-color: var(--aldora-ouro);
+    background: rgba(255,255,255,0.06);
   }
 
-  /* ── CARDS ── */
-  .cards-grid {
+  .hub-search__icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  /* ── Categories Grid ── */
+  .hub-categories {
+    padding: var(--space-xl) 0 var(--space-2xl);
+  }
+
+  .hub-categories__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    gap: var(--space-lg);
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--padding-x);
   }
 
-  @media (max-width: 1100px) {
-    .cards-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 640px) {
-    .cards-grid { grid-template-columns: 1fr; }
-    .hero { padding: 40px 24px; }
-    .section { padding: 48px 24px; }
-    .hero-kpis { gap: 24px; }
-    .kpi-divider { display: none; }
+  /* ── Category Block ── */
+  .hub-category {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
   }
 
-  .card {
-    background: rgba(15,51,32,0.4);
-    border: 1px solid rgba(200,168,75,0.12);
-    padding: 36px 32px;
-    text-decoration: none;
+  .hub-category[data-hidden="true"] {
+    display: none;
+  }
+
+  .hub-category__header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  .hub-category__icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .hub-category__name {
+    font-family: var(--font-body);
+    font-size: var(--fs-tag);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--aldora-ouro);
+    font-weight: 600;
+  }
+
+  /* ── Hub Card (link item) ── */
+  .hub-card {
     display: block;
+    text-decoration: none;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(200,168,75,0.12);
+    padding: 20px 22px;
     position: relative;
     overflow: hidden;
-    transition: border-color 0.3s, transform 0.3s, background 0.3s;
-    cursor: pointer;
+    transition: all var(--transition-normal);
+    border-radius: var(--border-radius);
   }
 
-  .card::before {
+  .hub-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, var(--ouro), transparent);
+    background: linear-gradient(90deg, transparent, var(--aldora-ouro), transparent);
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity var(--transition-normal);
   }
 
-  .card:hover {
-    border-color: rgba(200,168,75,0.35);
-    background: rgba(15,51,32,0.65);
-    transform: translateY(-3px);
+  .hub-card:hover {
+    background: var(--aldora-ouro-06);
+    border-color: var(--aldora-ouro-30);
+    box-shadow: 0 0 24px rgba(200,168,75,0.08);
+    transform: translateY(-2px);
   }
 
-  .card:hover::before { opacity: 1; }
-
-  .card-icon {
-    width: 44px; height: 44px;
-    border: 1px solid rgba(200,168,75,0.25);
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 24px;
+  .hub-card:hover::before {
+    opacity: 1;
   }
 
-  .card-icon svg { width: 22px; height: 22px; }
-
-  .card-badge {
-    display: inline-block;
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--verde-escuro);
-    background: var(--ouro);
-    padding: 3px 10px;
-    margin-bottom: 14px;
+  .hub-card[data-hidden="true"] {
+    display: none;
   }
 
-  .card-badge.draft {
-    background: transparent;
-    border: 1px solid rgba(200,168,75,0.4);
-    color: var(--ouro);
+  .hub-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
   }
 
-  .card-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--branco);
-    margin-bottom: 8px;
+  .hub-card__title {
+    font-family: var(--font-display);
+    font-size: 17px;
+    color: var(--aldora-ouro);
     line-height: 1.3;
   }
 
-  .card-desc {
-    font-size: 13px;
-    color: var(--cinza);
-    line-height: 1.65;
-    margin-bottom: 28px;
+  .hub-card__arrow {
+    font-size: var(--fs-caption);
+    color: var(--aldora-ouro);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-left: 12px;
   }
 
-  .card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 20px;
-    border-top: 1px solid rgba(200,168,75,0.1);
+  .hub-card:hover .hub-card__arrow {
+    opacity: 1;
+    transform: translateX(0);
   }
 
-  .card-pages {
-    font-size: 10px;
+  .hub-card__desc {
+    font-size: var(--fs-caption);
+    color: var(--aldora-branco-55);
+    line-height: 1.5;
+  }
+
+  /* ── Data badge for non-HTML links ── */
+  .hub-card__badge {
+    display: inline-block;
+    background: var(--aldora-ouro-15);
+    border: 1px solid var(--aldora-ouro-30);
+    color: var(--aldora-ouro);
+    font-size: var(--fs-micro);
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: rgba(200,168,75,0.6);
+    padding: 2px 8px;
+    margin-left: 8px;
+    vertical-align: middle;
   }
 
-  .card-arrow {
-    width: 28px; height: 28px;
-    border: 1px solid rgba(200,168,75,0.3);
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.25s, border-color 0.25s;
+  /* ── No results ── */
+  .hub-no-results {
+    display: none;
+    text-align: center;
+    padding: var(--space-xl) var(--padding-x);
+    color: var(--aldora-branco-40);
+    font-size: var(--fs-body-sm);
+    grid-column: 1 / -1;
   }
 
-  .card:hover .card-arrow {
-    background: var(--ouro);
-    border-color: var(--ouro);
+  .hub-no-results.visible {
+    display: block;
   }
 
-  .card:hover .card-arrow svg path { stroke: var(--verde-escuro); }
-
-  /* ── STATUS BAR ── */
-  .status-bar {
-    background: rgba(200,168,75,0.05);
-    border-top: 1px solid rgba(200,168,75,0.1);
-    border-bottom: 1px solid rgba(200,168,75,0.1);
-    padding: 28px 48px;
-    display: flex;
-    gap: 48px;
-    flex-wrap: wrap;
-    align-items: center;
+  /* ── Responsive ── */
+  @media (max-width: 1024px) {
+    .hub-categories__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg) var(--space-md);
+    }
   }
 
-  .status-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  @media (max-width: 768px) {
+    .hub-hero {
+      padding: calc(var(--nav-height) + 32px) 0 36px;
+    }
+
+    .hub-hero__kpis {
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+
+    .hub-categories__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+    }
+
+    .hub-card {
+      padding: 16px 18px;
+    }
   }
 
-  .status-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--ouro);
-    flex-shrink: 0;
+  @media (max-width: 600px) {
+    .hub-categories__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hub-hero__kpis {
+      flex-direction: column;
+      border-top: none;
+    }
+
+    .hub-hero__kpis .aldora-kpi {
+      border-right: none;
+      border-bottom: 1px solid rgba(200,168,75,0.12);
+      padding: var(--space-sm) 0;
+      text-align: center;
+    }
+
+    .hub-hero__kpis .aldora-kpi:last-child {
+      border-bottom: none;
+    }
   }
 
-  .status-dot.active { background: #4ade80; box-shadow: 0 0 6px rgba(74,222,128,0.5); }
-  .status-dot.pending { background: rgba(200,168,75,0.5); }
-
-  .status-text {
-    font-size: 12px;
-    color: var(--cinza);
-  }
-
-  .status-text strong {
-    color: var(--branco);
-    font-weight: 500;
-  }
-
-  /* ── NOTA ── */
-  .nota {
-    margin: 0 48px 0;
-    background: rgba(200,168,75,0.04);
-    border: 1px solid rgba(200,168,75,0.15);
-    border-left: 3px solid var(--ouro);
-    padding: 20px 28px;
-  }
-
-  .nota p {
-    font-size: 13px;
-    color: var(--cinza);
-    line-height: 1.65;
-  }
-
-  .nota strong { color: var(--ouro); }
-
-  /* ── FOOTER ── */
-  footer {
-    padding: 40px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid rgba(200,168,75,0.08);
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .footer-brand {
-    font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    letter-spacing: 3px;
-    color: var(--ouro);
-  }
-
-  .footer-info {
-    font-size: 12px;
-    color: rgba(200,168,75,0.45);
-    letter-spacing: 0.5px;
-  }
-
-  .footer-contact {
-    font-size: 12px;
-    color: var(--cinza);
-  }
-
-  .footer-contact a {
-    color: var(--ouro);
-    text-decoration: none;
-  }
-</style>
+    :focus-visible {
+      outline: 2px solid var(--aldora-ouro, #C8A84B);
+      outline-offset: 2px;
+    }
+    a:focus-visible {
+      outline: 2px solid var(--aldora-ouro, #C8A84B);
+      outline-offset: 2px;
+    }
+    </style>
 </head>
 <body>
+<a href="#main-content" class="sr-only" style="position:absolute;top:-40px;left:0;background:var(--aldora-ouro,#C8A84B);color:#0a2416;padding:8px 16px;z-index:9999;font-size:14px;transition:top 0.2s;" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Pular para conteúdo</a>
 
-<!-- ── HERO ── -->
-<div class="hero">
-  <div class="hero-logo">
-    <div class="logo-mark">
-      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="14,2 26,24 2,24" stroke="#C8A84B" stroke-width="1.5" fill="none"/>
-        <line x1="14" y1="2" x2="14" y2="24" stroke="#C8A84B" stroke-width="0.75" opacity="0.4"/>
-        <line x1="2" y1="24" x2="26" y2="24" stroke="#C8A84B" stroke-width="0.75" opacity="0.4"/>
-      </svg>
+<!-- ════ NAV ════ -->
+<nav class="aldora-nav">
+  <div>
+    <a href="INDEX.html" class="aldora-nav__logo">AL'DORA CITY</a>
+    <div class="aldora-nav__sub">CENTRAL DE MATERIAIS</div>
+  </div>
+  <span class="aldora-nav__badge">HUB</span>
+</nav>
+
+<!-- ════ HERO (compact) ════ -->
+<section id="main-content" class="hub-hero">
+  <div class="hub-hero__inner">
+    <div class="aldora-hero__flag" style="display:inline-flex;margin-bottom:24px;">
+      <span class="aldora-hero__flag-dot"></span>
+      <span>Masterplan Vertical Escalonado</span>
     </div>
-    <div class="logo-text">
-      <div class="logo-brand">AL'DORA</div>
-      <div class="logo-sub">Cidade Jardim Urbanismo · Uberlândia MG</div>
-    </div>
-  </div>
 
-  <h1 class="hero-title">Masterplan Vertical<br><em>AL'DORA City</em></h1>
-  <p class="hero-desc">Central de materiais estratégicos do projeto. Dossiê de investidor, renders conceituais, implantação, plantas, amenities e governança — tudo em um único acervo.</p>
+    <h1 class="hub-hero__title">AL'DORA <em>City</em></h1>
+    <p class="hub-hero__subtitle">Masterplan Vertical Escalonado · Jardim Versailles · Uberlândia/MG</p>
 
-  <div class="hero-kpis">
-    <div class="kpi">
-      <div class="kpi-value">R$512M</div>
-      <div class="kpi-label">VGV Total Masterplan</div>
-    </div>
-    <div class="kpi-divider"></div>
-    <div class="kpi">
-      <div class="kpi-value">42.783 m²</div>
-      <div class="kpi-label">Área Total de Terreno</div>
-    </div>
-    <div class="kpi-divider"></div>
-    <div class="kpi">
-      <div class="kpi-value">CA 4,0</div>
-      <div class="kpi-label">Coeficiente ZR2+SVA</div>
-    </div>
-    <div class="kpi-divider"></div>
-    <div class="kpi">
-      <div class="kpi-value">23% a.a.</div>
-      <div class="kpi-label">IRR Projetado (10 anos)</div>
-    </div>
-  </div>
-</div>
-
-<!-- ── STATUS BAR ── -->
-<div class="status-bar">
-  <div class="status-item">
-    <div class="status-dot active"></div>
-    <div class="status-text"><strong>ZR2+SVA Confirmado</strong> — aprovação viável</div>
-  </div>
-  <div class="status-item">
-    <div class="status-dot active"></div>
-    <div class="status-text">Mercado <strong>R$8.341/m²</strong> · IVV 24,5%</div>
-  </div>
-  <div class="status-item">
-    <div class="status-dot active"></div>
-    <div class="status-text">CUB-MG <strong>R$2.839/m²</strong> · Jan/2026</div>
-  </div>
-  <div class="status-item">
-    <div class="status-dot pending"></div>
-    <div class="status-text">Próximo gate: <strong>G1</strong> — aprovação municipal QC01</div>
-  </div>
-</div>
-
-<!-- ── MATERIAIS ── -->
-<div class="section">
-  <div class="section-header">
-    <span class="section-label">Acervo</span>
-  </div>
-  <h2 class="section-title">Materiais do Projeto</h2>
-  <p class="section-desc">Todos os documentos estratégicos, visuais e técnicos do AL'DORA City. Clique em qualquer card para abrir.</p>
-
-  <div class="cards-grid">
-
-    <!-- Dossiê Investidor -->
-    <a href="aldora-dossie-investidor.html" class="card">
-      <div class="card-icon">
-        <svg viewBox="0 0 22 22" fill="none" stroke="#C8A84B" stroke-width="1.5">
-          <rect x="3" y="2" width="16" height="18" rx="1"/>
-          <line x1="7" y1="7" x2="15" y2="7"/>
-          <line x1="7" y1="11" x2="15" y2="11"/>
-          <line x1="7" y1="15" x2="11" y2="15"/>
-        </svg>
+    <div class="hub-hero__kpis">
+      <div class="aldora-kpi">
+        <div class="aldora-kpi__value">42.783</div>
+        <div class="aldora-kpi__label">m² terreno</div>
       </div>
-      <div class="card-badge">Principal</div>
-      <div class="card-title">Dossiê do Investidor</div>
-      <div class="card-desc">Apresentação completa ao investidor. Covers mercado, produto, financeiro, gates e renders conceituais de todos os 4 empreendimentos.</div>
-      <div class="card-footer">
-        <span class="card-pages">13 seções · 4 renders SVG</span>
-        <div class="card-arrow">
-          <svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="#C8A84B" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div class="aldora-kpi">
+        <div class="aldora-kpi__value">125.684</div>
+        <div class="aldora-kpi__label">m² privativa</div>
+      </div>
+      <div class="aldora-kpi">
+        <div class="aldora-kpi__value">8</div>
+        <div class="aldora-kpi__label">torres</div>
+      </div>
+      <div class="aldora-kpi">
+        <div class="aldora-kpi__value">R$299M</div>
+        <div class="aldora-kpi__label">VGV referencial</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════ CATEGORIES ════ -->
+<section class="hub-categories">
+
+  <!-- Search -->
+  <div class="hub-search" style="padding:0 var(--padding-x);">
+    <span class="hub-search__icon">🔍</span>
+    <input
+      type="text"
+      class="hub-search__input"
+      id="hubSearch"
+      placeholder="Filtrar materiais…"
+      autocomplete="off"
+    >
+  </div>
+
+  <div class="hub-categories__grid" id="hubGrid">
+
+    <!-- ── INVESTIDOR ── -->
+    <div class="hub-category" data-category="investidor">
+      <div class="hub-category__header">
+        <span class="hub-category__icon">💰</span>
+        <span class="hub-category__name">Investidor</span>
+      </div>
+
+      <a href="aldora-dossie-investidor.html" class="hub-card" data-title="Dossiê do Investidor">
+        <div class="hub-card__top">
+          <span class="hub-card__title">Dossiê do Investidor</span>
+          <span class="hub-card__arrow">Abrir →</span>
         </div>
-      </div>
-    </a>
+        <p class="hub-card__desc">Análise completa de viabilidade, retorno e estrutura para investidores</p>
+      </a>
 
-    <!-- Mapa 3D -->
-    <a href="aldora-mapa-3d.html" class="card">
-      <div class="card-icon">
-        <svg viewBox="0 0 22 22" fill="none" stroke="#C8A84B" stroke-width="1.5">
-          <polygon points="11,2 20,7 20,15 11,20 2,15 2,7"/>
-          <circle cx="11" cy="11" r="3"/>
-          <line x1="11" y1="2" x2="11" y2="8"/><line x1="11" y1="14" x2="11" y2="20"/>
-          <line x1="2" y1="7" x2="8" y2="9.5"/><line x1="14" y1="12.5" x2="20" y2="15"/>
-          <line x1="2" y1="15" x2="8" y2="12.5"/><line x1="14" y1="9.5" x2="20" y2="7"/>
-        </svg>
-      </div>
-      <div class="card-badge">Visualização</div>
-      <div class="card-title">Mapa 3D Uberlândia</div>
-      <div class="card-desc">Terrain 3D interativo com Mapbox GL JS. Localização do terreno, raio de 15 minutos, camadas de POIs e vizinhança do Jardim Versailles.</div>
-      <div class="card-footer">
-        <span class="card-pages">Mapbox GL · Terreno real</span>
-        <div class="card-arrow">
-          <svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="#C8A84B" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <a href="cidade-jardim-apresentacao.html" class="hub-card" data-title="Apresentação Principal">
+        <div class="hub-card__top">
+          <span class="hub-card__title">Apresentação Principal</span>
+          <span class="hub-card__arrow">Abrir →</span>
         </div>
-      </div>
-    </a>
+        <p class="hub-card__desc">Visão geral do masterplan, mercado e posicionamento estratégico</p>
+      </a>
 
-    <!-- Prompts Midjourney -->
-    <a href="aldora-midjourney-prompts.html" class="card">
-      <div class="card-icon">
-        <svg viewBox="0 0 22 22" fill="none" stroke="#C8A84B" stroke-width="1.5">
-          <rect x="2" y="4" width="18" height="14" rx="1"/>
-          <circle cx="7.5" cy="9.5" r="2"/>
-          <polyline points="2,18 8,12 12,15 16,10 20,14"/>
-        </svg>
-      </div>
-      <div class="card-badge draft">Produção</div>
-      <div class="card-title">Renders Midjourney</div>
-      <div class="card-desc">8 prompts otimizados para geração de renders fotorrealistas — externos e internos. Workflow de produção: Midjourney → Firefly → Runway Gen-3.</div>
-      <div class="card-footer">
-        <span class="card-pages">8 prompts · Click-to-copy</span>
-        <div class="card-arrow">
-          <svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="#C8A84B" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <a href="aldora-documento-final.html" class="hub-card" data-title="Documento Final (Master)">
+        <div class="hub-card__top">
+          <span class="hub-card__title">Documento Final (Master)</span>
+          <span class="hub-card__arrow">Abrir →</span>
         </div>
-      </div>
-    </a>
+        <p class="hub-card__desc">Consolidação de todos os módulos do masterplan em documento único</p>
+      </a>
+    </div>
 
-    <!-- Plantas Baixas -->
-    <a href="aldora-plantas-baixas.html" class="card">
-      <div class="card-icon">
-        <svg viewBox="0 0 22 22" fill="none" stroke="#C8A84B" stroke-width="1.5">
-          <rect x="3" y="3" width="16" height="16"/>
-          <polyline points="3,9 9,9 9,3"/>
-          <polyline points="9,9 9,16 16,16 16,9 9,9"/>
-          <line x1="9" y1="16" x2="3" y2="16"/>
-        </svg>
+    <!-- ── PRODUTO ── -->
+    <div class="hub-category" data-category="produto">
+      <div class="hub-category__header">
+        <span class="hub-category__icon">🏗️</span>
+        <span class="hub-category__name">Produto</span>
       </div>
-      <div class="card-badge">Produto</div>
-      <div class="card-title">Plantas Baixas P1–P5</div>
-      <div class="card-desc">Plantas sugeridas para todas as 5 tipologias. Studio Urban (28–35m²) ao Cobertura Signature (200–280m²). Layouts interativos com especificações.</div>
-      <div class="card-footer">
-        <span class="card-pages">5 tipologias · P1 ao P5</span>
-        <div class="card-arrow">
-          <svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="#C8A84B" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </div>
-      </div>
-    </a>
 
-    <!-- Amenities -->
-    <a href="aldora-amenities.html" class="card">
-      <div class="card-icon">
-        <svg viewBox="0 0 22 22" fill="none" stroke="#C8A84B" stroke-width="1.5">
-          <path d="M11 2C6 2 3 6 3 11s3 9 8 9 8-4 8-9-3-9-8-9z"/>
-          <path d="M7 11c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4z"/>
-          <line x1="11" y1="2" x2="11" y2="6"/>
-          <line x1="11" y1="16" x2="11" y2="20"/>
-        </svg>
-      </div>
-      <div class="card-badge">Projeto</div>
-      <div class="card-title">Áreas Comuns & Amenities</div>
-      <div class="card-desc">Memorial completo das áreas comuns. Rooftop 360°, clube aquático, hub de coworking, pet lounge, garden terrace. Comparativo com Parque Global SP.</div>
-      <div class="card-footer">
-        <span class="card-pages">18+ amenities · 4 empreendimentos</span>
-        <div class="card-arrow">
-          <svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="#C8A84B" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <a href="aldora-plantas-baixas.html" class="hub-card" data-title="Plantas Baixas P1–P5">
+        <div class="hub-card__top">
+          <span class="hub-card__title">Plantas Baixas P1–P5</span>
+          <span class="hub-card__arrow">Abrir →</span>
         </div>
-      </div>
-    </a>
+        <p class="hub-card__desc">Tipologias Studio Urban até Cobertura Signature com layouts detalhados</p>
+      </a>
 
-    <!-- Governança -->
-    <a href="aldora-governance.html" class="card">
-      <div class="card-icon">
-        <svg viewBox="0 0 22 22" fill="none" stroke="#C8A84B" stroke-width="1.5">
-          <circle cx="11" cy="6" r="3"/>
-          <circle cx="5" cy="17" r="2"/>
-          <circle cx="17" cy="17" r="2"/>
-          <line x1="11" y1="9" x2="11" y2="14"/>
-          <line x1="11" y1="14" x2="5" y2="15"/>
-          <line x1="11" y1="14" x2="17" y2="15"/>
-        </svg>
-      </div>
-      <div class="card-badge">Legal</div>
-      <div class="card-title">Governança AL'DORA</div>
-      <div class="card-desc">Modelo de governança da SPE. Estrutura societária, gestão de ativos, relacionamento com investidores, tomada de decisão e distribuição de resultados.</div>
-      <div class="card-footer">
-        <span class="card-pages">Modelo SPE · Estrutura legal</span>
-        <div class="card-arrow">
-          <svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="#C8A84B" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <a href="aldora-implantacao.html" class="hub-card" data-title="Implantação das Torres">
+        <div class="hub-card__top">
+          <span class="hub-card__title">Implantação das Torres</span>
+          <span class="hub-card__arrow">Abrir →</span>
         </div>
+        <p class="hub-card__desc">Diagrama de posicionamento das 8 torres nas quadras QC01–QC03</p>
+      </a>
+
+      <a href="aldora-amenities.html" class="hub-card" data-title="Memorial de Amenities">
+        <div class="hub-card__top">
+          <span class="hub-card__title">Memorial de Amenities</span>
+          <span class="hub-card__arrow">Abrir →</span>
+        </div>
+        <p class="hub-card__desc">Áreas comuns, lazer e tendências de mercado premium</p>
+      </a>
+    </div>
+
+    <!-- ── GOVERNANÇA ── -->
+    <div class="hub-category" data-category="governanca">
+      <div class="hub-category__header">
+        <span class="hub-category__icon">⚖️</span>
+        <span class="hub-category__name">Governança</span>
       </div>
-    </a>
+
+      <a href="aldora-governance.html" class="hub-card" data-title="Modelo de Governança">
+        <div class="hub-card__top">
+          <span class="hub-card__title">Modelo de Governança</span>
+          <span class="hub-card__arrow">Abrir →</span>
+        </div>
+        <p class="hub-card__desc">Estrutura de gates, decisão colegiada e proteção da marca AL'DORA</p>
+      </a>
+    </div>
+
+    <!-- ── VISUALIZAÇÃO 3D ── -->
+    <div class="hub-category" data-category="visualizacao-3d">
+      <div class="hub-category__header">
+        <span class="hub-category__icon">🌐</span>
+        <span class="hub-category__name">Visualização 3D</span>
+      </div>
+
+      <a href="aldora-3d-avancado.html" class="hub-card" data-title="Render 3D Cinematográfico">
+        <div class="hub-card__top">
+          <span class="hub-card__title">Render 3D Cinematográfico</span>
+          <span class="hub-card__arrow">Abrir →</span>
+        </div>
+        <p class="hub-card__desc">Visualização avançada com câmera orbital e iluminação realista</p>
+      </a>
+
+      <a href="aldora-3d-terreno.html" class="hub-card" data-title="Terreno 3D">
+        <div class="hub-card__top">
+          <span class="hub-card__title">Terreno 3D</span>
+          <span class="hub-card__arrow">Abrir →</span>
+        </div>
+        <p class="hub-card__desc">Modelagem tridimensional do terreno e topografia</p>
+      </a>
+
+      <a href="aldora-mapa-3d.html" class="hub-card" data-title="Mapa 3D">
+        <div class="hub-card__top">
+          <span class="hub-card__title">Mapa 3D</span>
+          <span class="hub-card__arrow">Abrir →</span>
+        </div>
+        <p class="hub-card__desc">Mapa interativo com camadas de dados georreferenciados</p>
+      </a>
+
+      <a href="aldora-mapbox-terreno.html" class="hub-card" data-title="Mapbox Terreno">
+        <div class="hub-card__top">
+          <span class="hub-card__title">Mapbox Terreno</span>
+          <span class="hub-card__arrow">Abrir →</span>
+        </div>
+        <p class="hub-card__desc">Terreno real via Mapbox com elevação e satélite</p>
+      </a>
+
+      <a href="aldora-satellite-real.html" class="hub-card" data-title="Satélite Real">
+        <div class="hub-card__top">
+          <span class="hub-card__title">Satélite Real</span>
+          <span class="hub-card__arrow">Abrir →</span>
+        </div>
+        <p class="hub-card__desc">Imagem satelital de alta resolução do Jardim Versailles</p>
+      </a>
+    </div>
+
+    <!-- ── MARKETING ── -->
+    <div class="hub-category" data-category="marketing">
+      <div class="hub-category__header">
+        <span class="hub-category__icon">��</span>
+        <span class="hub-category__name">Marketing</span>
+      </div>
+
+      <a href="aldora-midjourney-prompts.html" class="hub-card" data-title="Prompts Midjourney">
+        <div class="hub-card__top">
+          <span class="hub-card__title">Prompts Midjourney</span>
+          <span class="hub-card__arrow">Abrir →</span>
+        </div>
+        <p class="hub-card__desc">Biblioteca de prompts para geração de renders e arte conceitual</p>
+      </a>
+    </div>
+
+    <!-- ── PESQUISA ── -->
+    <div class="hub-category" data-category="pesquisa">
+      <div class="hub-category__header">
+        <span class="hub-category__icon">📊</span>
+        <span class="hub-category__name">Pesquisa</span>
+      </div>
+
+      <a href="pesquisa-cj-2026.html" class="hub-card" data-title="Pesquisa Mercado 2026">
+        <div class="hub-card__top">
+          <span class="hub-card__title">Pesquisa Mercado 2026</span>
+          <span class="hub-card__arrow">Abrir →</span>
+        </div>
+        <p class="hub-card__desc">Análise de mercado imobiliário e demanda vertical Uberlândia 2026</p>
+      </a>
+
+      <a href="pesquisa-cj-2026.json" class="hub-card" data-title="Dados JSON" target="_blank">
+        <div class="hub-card__top">
+          <span class="hub-card__title">Dados JSON <span class="hub-card__badge">DATA</span></span>
+          <span class="hub-card__arrow">Abrir →</span>
+        </div>
+        <p class="hub-card__desc">Dataset estruturado da pesquisa de mercado em formato JSON</p>
+      </a>
+    </div>
+
+    <!-- No results placeholder -->
+    <div class="hub-no-results" id="hubNoResults">
+      Nenhum material encontrado para esta busca.
+    </div>
 
   </div>
-</div>
+</section>
 
-<!-- ── NOTA MIDJOURNEY ── -->
-<div class="nota">
-  <p>
-    <strong>⚡ Renders Midjourney —</strong>
-    Os 8 prompts de render fotorrealista estão prontos em <strong>aldora-midjourney-prompts.html</strong>.
-    Para gerar as imagens, ative a assinatura Midjourney e execute cada prompt.
-    Os renders gerados substituirão os renders SVG conceituais no dossiê do investidor,
-    elevando significativamente o impacto visual da apresentação.
-  </p>
-</div>
-
-<!-- ── IMPLANTAÇÃO ── -->
-<div class="section" style="padding-top: 56px;">
-  <div class="section-header">
-    <span class="section-label">Estrutura</span>
-  </div>
-  <h2 class="section-title">Masterplan em Números</h2>
-  <p class="section-desc">4 empreendimentos · 8 torres (A–H) · 3 quadras (QC01/02/03) · Jardim Versailles, Uberlândia/MG</p>
-
-  <div style="display:grid; grid-template-columns: repeat(4,1fr); gap:2px; margin-bottom: 2px;">
-    <!-- EMP 1 -->
-    <div style="background:rgba(15,51,32,0.5); border:1px solid rgba(200,168,75,0.12); padding:28px 24px;">
-      <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--ouro);margin-bottom:12px;">EMP 1 · QC01</div>
-      <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--branco);margin-bottom:4px;">AL'DORA Jardins</div>
-      <div style="font-size:12px;color:var(--cinza);margin-bottom:20px;">Torres A + B · P1/P2</div>
-      <div style="font-size:11px;color:var(--cinza);line-height:2;">
-        <div>Privativa: <span style="color:var(--branco)">49.908 m²</span></div>
-        <div>Terreno: <span style="color:var(--branco)">20.598 m²</span></div>
-        <div>Fase: <span style="color:var(--ouro)">1 — Entrada</span></div>
-      </div>
-    </div>
-    <!-- EMP 2 -->
-    <div style="background:rgba(15,51,32,0.5); border:1px solid rgba(200,168,75,0.12); padding:28px 24px;">
-      <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--ouro);margin-bottom:12px;">EMP 2 · QC01</div>
-      <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--branco);margin-bottom:4px;">AL'DORA Versailles</div>
-      <div style="font-size:12px;color:var(--cinza);margin-bottom:20px;">Torres C + D · P2/P3</div>
-      <div style="font-size:11px;color:var(--cinza);line-height:2;">
-        <div>Privativa: <span style="color:var(--branco)">49.908 m²</span></div>
-        <div>Terreno: <span style="color:var(--branco)">20.598 m²</span></div>
-        <div>Fase: <span style="color:var(--ouro)">2 — Expansão</span></div>
-      </div>
-    </div>
-    <!-- EMP 3 -->
-    <div style="background:rgba(15,51,32,0.5); border:1px solid rgba(200,168,75,0.12); padding:28px 24px;">
-      <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--ouro);margin-bottom:12px;">EMP 3 · QC02</div>
-      <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--branco);margin-bottom:4px;">AL'DORA Reserva</div>
-      <div style="font-size:12px;color:var(--cinza);margin-bottom:20px;">Torres E + F · P3 Focus</div>
-      <div style="font-size:11px;color:var(--cinza);line-height:2;">
-        <div>Privativa: <span style="color:var(--branco)">43.033 m²</span></div>
-        <div>Terreno: <span style="color:var(--branco)">11.953 m²</span></div>
-        <div>Fase: <span style="color:var(--ouro)">3 — Família</span></div>
-      </div>
-    </div>
-    <!-- EMP 4 -->
-    <div style="background:rgba(15,51,32,0.5); border:1px solid rgba(200,168,75,0.12); padding:28px 24px;">
-      <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--ouro);margin-bottom:12px;">EMP 4 · QC03</div>
-      <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--branco);margin-bottom:4px;">AL'DORA Signature</div>
-      <div style="font-size:12px;color:var(--cinza);margin-bottom:20px;">Torres G + H · P4/P5</div>
-      <div style="font-size:11px;color:var(--cinza);line-height:2;">
-        <div>Privativa: <span style="color:var(--branco)">32.743 m²</span></div>
-        <div>Terreno: <span style="color:var(--branco)">10.232 m²</span></div>
-        <div>Fase: <span style="color:var(--ouro)">4 — Coroamento</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Gates -->
-  <div style="display:grid; grid-template-columns: repeat(4,1fr); gap:2px; margin-top:2px;">
-    <div style="background:rgba(74,222,128,0.04); border:1px solid rgba(74,222,128,0.15); padding:20px 24px; display:flex; align-items:center; gap:12px;">
-      <div style="width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 6px rgba(74,222,128,0.5);flex-shrink:0;"></div>
-      <div>
-        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#4ade80;margin-bottom:4px;">Gate G1</div>
-        <div style="font-size:11px;color:var(--cinza);">Aprovação QC01 + 30% pré-vendas</div>
-      </div>
-    </div>
-    <div style="background:rgba(200,168,75,0.03); border:1px solid rgba(200,168,75,0.1); padding:20px 24px; display:flex; align-items:center; gap:12px;">
-      <div style="width:8px;height:8px;border-radius:50%;background:rgba(200,168,75,0.3);flex-shrink:0;"></div>
-      <div>
-        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(200,168,75,0.6);margin-bottom:4px;">Gate G2</div>
-        <div style="font-size:11px;color:var(--cinza);">Preço testado + ritmo EMP1</div>
-      </div>
-    </div>
-    <div style="background:rgba(200,168,75,0.03); border:1px solid rgba(200,168,75,0.1); padding:20px 24px; display:flex; align-items:center; gap:12px;">
-      <div style="width:8px;height:8px;border-radius:50%;background:rgba(200,168,75,0.3);flex-shrink:0;"></div>
-      <div>
-        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(200,168,75,0.6);margin-bottom:4px;">Gate G3</div>
-        <div style="font-size:11px;color:var(--cinza);">Revenda EMP1/2 + obra EMP2 >50%</div>
-      </div>
-    </div>
-    <div style="background:rgba(200,168,75,0.03); border:1px solid rgba(200,168,75,0.1); padding:20px 24px; display:flex; align-items:center; gap:12px;">
-      <div style="width:8px;height:8px;border-radius:50%;background:rgba(200,168,75,0.3);flex-shrink:0;"></div>
-      <div>
-        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(200,168,75,0.6);margin-bottom:4px;">Gate G4</div>
-        <div style="font-size:11px;color:var(--cinza);">Brand consolidada + P5 qualificados</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ── FOOTER ── -->
-<footer>
-  <div class="footer-brand">AL'DORA</div>
-  <div class="footer-info">Cidade Jardim Urbanismo · Jardim Versailles · Uberlândia/MG · Confidencial</div>
-  <div class="footer-contact">
-    Leandro Cecílio — <a href="mailto:lscecilio@gmail.com">lscecilio@gmail.com</a>
-  </div>
+<!-- ════ FOOTER ════ -->
+<footer class="aldora-footer">
+  <div class="aldora-footer__logo">AL'DORA CITY</div>
+  <p class="aldora-footer__text">Cidade Jardim Urbanismo · Uberlândia/MG</p>
 </footer>
+
+<!-- ════ SEARCH SCRIPT ════ -->
+<script>
+(function() {
+  var input = document.getElementById('hubSearch');
+  var grid = document.getElementById('hubGrid');
+  var noResults = document.getElementById('hubNoResults');
+  var categories = grid.querySelectorAll('.hub-category');
+
+  input.addEventListener('input', function() {
+    var q = this.value.toLowerCase().trim();
+    var totalVisible = 0;
+
+    categories.forEach(function(cat) {
+      var cards = cat.querySelectorAll('.hub-card');
+      var catVisible = 0;
+
+      cards.forEach(function(card) {
+        var title = (card.getAttribute('data-title') || '').toLowerCase();
+        var desc = (card.querySelector('.hub-card__desc') || {}).textContent || '';
+        var match = !q || title.indexOf(q) !== -1 || desc.toLowerCase().indexOf(q) !== -1;
+        card.setAttribute('data-hidden', match ? 'false' : 'true');
+        if (match) catVisible++;
+      });
+
+      cat.setAttribute('data-hidden', catVisible === 0 ? 'true' : 'false');
+      totalVisible += catVisible;
+    });
+
+    noResults.classList.toggle('visible', totalVisible === 0 && q.length > 0);
+  });
+})();
+</script>
 
 </body>
 </html>

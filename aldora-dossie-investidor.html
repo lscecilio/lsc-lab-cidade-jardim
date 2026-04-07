@@ -2,41 +2,32 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a2416'/%3E%3Ctext x='16' y='22' font-size='18' fill='%23C8A84B' text-anchor='middle' font-family='serif'%3EA%3C/text%3E%3C/svg%3E">
+    <meta name="theme-color" content="#0a2416">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AL'DORA City — Dossiê do Investidor · Masterplan Vertical Escalonado · R$299,7M VGV referencial · Uberlândia/MG">
+<meta property="og:title" content="AL'DORA City — Dossiê do Investidor">
+<meta property="og:description" content="Masterplan Vertical Escalonado · 4 empreendimentos · 8 torres · 3 quadras · VGV referencial R$299,7M · Jardim Versailles, Uberlândia/MG">
 <title>AL'DORA City — Dossiê do Investidor · Cidade Jardim Urbanismo</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/aldora-tokens.css">
+<link rel="stylesheet" href="assets/css/aldora-components.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
+/* Legacy variable aliases → design system tokens */
 :root {
-  --verde:      #0a2416;
-  --verde-m:    #1a4a2e;
-  --verde-l:    #2d6b40;
-  --ouro:       #C8A84B;
-  --ouro-l:     #E8C876;
-  --bege:       #F5F0E8;
-  --branco:     #ffffff;
-  --cinza:      #8a8a8a;
-  --sombra:     rgba(0,0,0,0.35);
+  --verde:   var(--aldora-verde);
+  --verde-m: var(--aldora-verde-medio);
+  --verde-l: var(--aldora-verde-claro);
+  --ouro:    var(--aldora-ouro);
+  --ouro-l:  var(--aldora-ouro-claro);
+  --bege:    var(--aldora-bege);
+  --branco:  var(--aldora-branco);
+  --cinza:   var(--aldora-cinza);
+  --sombra:  rgba(0,0,0,0.35);
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{font-family:'Inter',sans-serif;background:#f8f5f0;color:#1a1a1a;line-height:1.6;}
-
-/* ── NAV ─────────────────────────────── */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;
-  background:rgba(10,36,22,0.96);backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(200,168,75,0.25);
-  padding:14px 48px;display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{font-family:'Playfair Display',serif;color:var(--ouro);
-  font-size:16px;letter-spacing:3px;font-weight:700;}
-.nav-links{display:flex;gap:28px;}
-.nav-links a{color:rgba(255,255,255,0.65);text-decoration:none;
-  font-size:11px;letter-spacing:1.5px;text-transform:uppercase;transition:color .2s;}
-.nav-links a:hover{color:var(--ouro);}
 
 /* ── HERO ────────────────────────────── */
 #hero{height:100vh;background:linear-gradient(155deg,#060f0b 0%,#0a2416 45%,#0f3020 100%);
@@ -61,18 +52,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;
   letter-spacing:1.5px;text-transform:uppercase;margin-top:2px;}
 .hero-divider{position:absolute;bottom:0;left:0;right:0;height:1px;
   background:linear-gradient(90deg,transparent,var(--ouro),transparent);}
-
-/* ── SECTION GERAL ────────────────────── */
-section{padding:100px 0;}
-.container{max-width:1140px;margin:0 auto;padding:0 48px;}
-.section-tag{display:inline-block;font-size:10px;letter-spacing:3px;
-  text-transform:uppercase;color:var(--ouro);
-  border-bottom:1px solid rgba(200,168,75,0.4);
-  padding-bottom:6px;margin-bottom:24px;}
-.section-title{font-family:'Playfair Display',serif;
-  font-size:clamp(32px,4vw,52px);line-height:1.1;margin-bottom:20px;}
-.section-intro{font-size:17px;color:#555;max-width:640px;font-weight:300;line-height:1.7;}
-.gold{color:var(--ouro);}
 
 /* ── TESE DO INVESTIMENTO ─────────────── */
 #tese{background:var(--verde);}
@@ -309,17 +288,8 @@ section{padding:100px 0;}
 .btn-outline:hover{border-color:var(--ouro);background:rgba(200,168,75,0.08);}
 .cta-disclaimer{font-size:12px;color:rgba(245,240,232,0.3);margin-top:48px;max-width:600px;margin-left:auto;margin-right:auto;}
 
-/* ── FOOTER ───────────────────────────── */
-footer{background:var(--verde);padding:40px 48px;
-  display:flex;align-items:center;justify-content:space-between;
-  border-top:1px solid rgba(200,168,75,0.15);}
-.footer-logo{font-family:'Playfair Display',serif;color:var(--ouro);
-  font-size:14px;letter-spacing:3px;}
-.footer-info{font-size:12px;color:rgba(245,240,232,0.35);text-align:right;}
-
 /* ── RESPONSIVE ───────────────────────── */
 @media(max-width:900px){
-  nav .nav-links{display:none;}
   .tese-grid,.ativo-grid,.mercado-charts,.fin-grid,.gov-grid{grid-template-columns:1fr;}
   .tipo-grid{grid-template-columns:repeat(2,1fr);}
   .gates-timeline::before{display:none;}
@@ -331,14 +301,46 @@ footer{background:var(--verde);padding:40px 48px;
   .hero-content{padding:0 32px;}
   .hero-kpis{gap:24px;flex-wrap:wrap;}
 }
-</style>
+
+@media(max-width:768px){
+  .map-stats{grid-template-columns:repeat(2,1fr);}
+  .cenarios{grid-template-columns:1fr;}
+  .gov-split{grid-template-columns:1fr;}
+  .render-specs{flex-wrap:wrap;gap:12px;}
+  .ativo-table,.fin-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+}
+
+@media(max-width:480px){
+  .tipo-grid,.mercado-insight{grid-template-columns:1fr;}
+  .amenities-grid{grid-template-columns:1fr;}
+  .map-stats,.emp-legend{grid-template-columns:1fr;}
+  .tese-grid,.ativo-grid,.fin-grid,.gov-grid{gap:12px;}
+  .renders-grid{gap:2px;}
+  .render-card{height:280px;}
+  .render-info{padding:20px 24px;}
+  .render-emp-name{font-size:20px;}
+  .cenarios{gap:12px;}
+  .hero-content{padding:0 20px;}
+  section{padding:48px 0;}
+}
+
+    :focus-visible {
+      outline: 2px solid var(--aldora-ouro, #C8A84B);
+      outline-offset: 2px;
+    }
+    a:focus-visible {
+      outline: 2px solid var(--aldora-ouro, #C8A84B);
+      outline-offset: 2px;
+    }
+    </style>
 </head>
 <body>
+<a href="#hero" class="sr-only" style="position:absolute;top:-40px;left:0;background:var(--aldora-ouro,#C8A84B);color:#0a2416;padding:8px 16px;z-index:9999;font-size:14px;transition:top 0.2s;" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Pular para conteúdo</a>
 
 <!-- NAV -->
-<nav>
-  <div class="nav-logo">AL'DORA CITY</div>
-  <div class="nav-links">
+<nav class="aldora-nav">
+  <div class="aldora-nav__logo">AL'DORA CITY</div>
+  <div class="aldora-nav__links">
     <a href="#tese" onclick="navTo('tese');return false;">Tese</a>
     <a href="#ativo" onclick="navTo('ativo');return false;">O Ativo</a>
     <a href="#mapa" onclick="navTo('mapa');return false;">Localização</a>
@@ -2659,9 +2661,9 @@ footer{background:var(--verde);padding:40px 48px;
 </section>
 
 <!-- FOOTER -->
-<footer>
-  <div class="footer-logo">AL'DORA CITY · CIDADE JARDIM URBANISMO</div>
-  <div class="footer-info">
+<footer class="aldora-footer">
+  <div class="aldora-footer__logo">AL'DORA CITY · CIDADE JARDIM URBANISMO</div>
+  <div class="aldora-footer__text">
     Jardim Versailles · Uberlândia/MG<br>
     lscecilio@gmail.com · Confidencial 2026
   </div>

@@ -2,13 +2,18 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a2416'/%3E%3Ctext x='16' y='22' font-size='18' fill='%23C8A84B' text-anchor='middle' font-family='serif'%3EA%3C/text%3E%3C/svg%3E">
+    <meta name="theme-color" content="#0a2416">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AL'DORA City — Mapa 3D Interativo · Jardim Versailles · Uberlândia/MG">
+<meta property="og:title" content="AL'DORA City — Mapa 3D Interativo">
+<meta property="og:description" content="Mapa 3D com Mapbox GL · Visualização das 3 quadras e 14 torres no Jardim Versailles">
 <title>AL'DORA City — Mapa 3D Interativo · Jardim Versailles · Uberlândia/MG</title>
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+<link rel="stylesheet" href="assets/css/aldora-tokens.css">
+<link rel="stylesheet" href="assets/css/aldora-components.css">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
   body {
     font-family: 'Segoe UI', system-ui, sans-serif;
     background: #0a2416;
@@ -101,11 +106,22 @@
   /* Mapbox nav override */
   .mapboxgl-ctrl-group { background: rgba(10,36,22,0.92) !important; border: 1px solid rgba(200,168,75,0.2) !important; }
   .mapboxgl-ctrl button { color: #C8A84B !important; }
-</style>
+
+    :focus-visible {
+      outline: 2px solid var(--aldora-ouro, #C8A84B);
+      outline-offset: 2px;
+    }
+    a:focus-visible {
+      outline: 2px solid var(--aldora-ouro, #C8A84B);
+      outline-offset: 2px;
+    }
+    </style>
 </head>
 <body>
+<a href="#main-content" class="sr-only" style="position:absolute;top:-40px;left:0;background:var(--aldora-ouro,#C8A84B);color:#0a2416;padding:8px 16px;z-index:9999;font-size:14px;transition:top 0.2s;" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Pular para conteúdo</a>
 
 <!-- LOADER -->
+<div id="main-content">
 <div id="loader">
   <div class="loader-logo">AL'DORA CITY</div>
   <div class="loader-sub">Carregando mapa 3D · Uberlândia/MG</div>

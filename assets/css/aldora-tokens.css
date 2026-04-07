@@ -1,0 +1,172 @@
+/* ══════════════════════════════════════════════════════════
+   AL'DORA CITY — Design Tokens
+   Cidade Jardim Urbanismo · Masterplan Vertical Escalonado
+   ══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* ── Cores Primárias ── */
+  --aldora-verde:       #0a2416;
+  --aldora-verde-medio: #1a4a2e;
+  --aldora-verde-claro: #2d6b40;
+  --aldora-ouro:        #C8A84B;
+  --aldora-ouro-claro:  #E8C876;
+  --aldora-bege:        #F5F0E8;
+  --aldora-branco:      #ffffff;
+  --aldora-cinza:       #8a8a8a;
+  --aldora-cinza-escuro:#2a2a2a;
+  --aldora-texto:       #1a1a1a;
+  --aldora-bg:          #f8f5f0;
+
+  /* ── Cores Funcionais ── */
+  --aldora-sucesso:     #2d6b40;
+  --aldora-alerta:      #C8A84B;
+  --aldora-erro:        #8a2a2a;
+
+  /* ── Transparências ── */
+  --aldora-ouro-15:     rgba(200, 168, 75, 0.15);
+  --aldora-ouro-30:     rgba(200, 168, 75, 0.30);
+  --aldora-ouro-06:     rgba(200, 168, 75, 0.06);
+  --aldora-branco-55:   rgba(245, 240, 232, 0.55);
+  --aldora-branco-40:   rgba(255, 255, 255, 0.40);
+  --aldora-branco-65:   rgba(245, 240, 232, 0.65);
+  --aldora-sombra:      rgba(0, 0, 0, 0.35);
+
+  /* ── Tipografia ── */
+  --font-display:       'Playfair Display', Georgia, serif;
+  --font-body:          'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:          'Courier New', Courier, monospace;
+
+  /* ── Tamanhos de Fonte ── */
+  --fs-hero:            clamp(48px, 6vw, 88px);
+  --fs-h1:              clamp(32px, 4vw, 52px);
+  --fs-h2:              clamp(24px, 3vw, 36px);
+  --fs-h3:              22px;
+  --fs-body:            17px;
+  --fs-body-sm:         15px;
+  --fs-caption:         13px;
+  --fs-tag:             10px;
+  --fs-micro:           9px;
+
+  /* ── Espaçamento ── */
+  --space-xs:           8px;
+  --space-sm:           16px;
+  --space-md:           24px;
+  --space-lg:           48px;
+  --space-xl:           80px;
+  --space-2xl:          100px;
+
+  /* ── Layout ── */
+  --max-width:          1140px;
+  --nav-height:         60px;
+  --padding-x:          48px;
+  --border-radius:      6px;
+
+  /* ── Transições ── */
+  --transition-fast:    0.2s ease;
+  --transition-normal:  0.3s ease;
+  --transition-slow:    0.5s ease;
+
+  /* ── Bordas ── */
+  --border-ouro:        1px solid var(--aldora-ouro-30);
+  --border-ouro-sutil:  1px solid rgba(200, 168, 75, 0.12);
+  --border-bege:        1px solid #e0d8cc;
+  --divider-ouro:       linear-gradient(90deg, transparent, var(--aldora-ouro), transparent);
+
+  /* ── Z-Index Scale ── */
+  --z-nav:              1000;
+  --z-modal:            2000;
+  --z-toast:            3000;
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--aldora-bg);
+  color: var(--aldora-texto);
+  line-height: 1.6;
+}
+
+/* ── Tipografia Base ── */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: 1.1;
+}
+
+/* ── Utilitários ── */
+.gold { color: var(--aldora-ouro); }
+.verde { color: var(--aldora-verde); }
+
+.section-tag {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--fs-tag);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--aldora-ouro);
+  border-bottom: 1px solid var(--aldora-ouro-30);
+  padding-bottom: 6px;
+  margin-bottom: var(--space-md);
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--padding-x);
+}
+
+.divider {
+  height: 1px;
+  background: var(--divider-ouro);
+  margin: 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* ── Breakpoints (Mobile First) ── */
+@media (max-width: 1200px) {
+  :root {
+    --padding-x: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --padding-x: 24px;
+    --space-lg: 32px;
+    --space-xl: 48px;
+    --space-2xl: 64px;
+    --nav-height: 52px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --padding-x: 16px;
+    --space-lg: 24px;
+    --space-xl: 40px;
+    --space-2xl: 48px;
+  }
+}

@@ -2,37 +2,28 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a2416'/%3E%3Ctext x='16' y='22' font-size='18' fill='%23C8A84B' text-anchor='middle' font-family='serif'%3EA%3C/text%3E%3C/svg%3E">
+    <meta name="theme-color" content="#0a2416">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AL'DORA City — Plantas baixas sugeridas P1 a P5 · Studios a Coberturas Duplex">
+<meta property="og:title" content="AL'DORA City — Plantas Baixas Sugeridas P1–P5">
+<meta property="og:description" content="AL'DORA City — Plantas baixas sugeridas P1 a P5 · Studios a Coberturas Duplex">
 <title>AL'DORA City — Plantas Baixas Sugeridas P1–P5</title>
+<link rel="stylesheet" href="assets/css/aldora-tokens.css">
+<link rel="stylesheet" href="assets/css/aldora-components.css">
 <style>
+  /* Legacy variable aliases → design system tokens */
   :root {
-    --verde: #1a3a2a; --verde-m: #2d5a3d; --verde-c: #3d7a52;
-    --ouro: #c9a84c; --ouro-c: #e8c97a; --creme: #f5f0e8;
-    --branco: #ffffff; --cinza: #8a8a8a; --texto: #1a1a1a;
+    --verde: var(--aldora-verde);
+    --verde-m: var(--aldora-verde-medio);
+    --verde-c: var(--aldora-verde-claro);
+    --ouro: var(--aldora-ouro);
+    --ouro-c: var(--aldora-ouro-claro);
+    --creme: var(--aldora-bege);
+    --branco: var(--aldora-branco);
+    --cinza: var(--aldora-cinza);
+    --texto: var(--aldora-texto);
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Georgia', serif; background: #f8f5f0; color: var(--texto); }
-
-  nav {
-    background: var(--verde); padding: 14px 40px;
-    display: flex; justify-content: space-between; align-items: center;
-    position: sticky; top: 0; z-index: 100;
-    border-bottom: 1px solid rgba(201,168,76,0.3);
-  }
-  .nav-logo { color: var(--ouro); font-size: 14px; letter-spacing: 2px; font-weight: bold; }
-  .nav-sub { color: rgba(255,255,255,0.5); font-size: 11px; font-family: Arial, sans-serif; letter-spacing: 1px; }
-
-  .hero {
-    background: linear-gradient(160deg, #0d2a1a, #1a3a2a);
-    padding: 60px 40px;
-    text-align: center;
-    border-bottom: 1px solid rgba(201,168,76,0.2);
-  }
-  .hero-tag { color: var(--ouro); font-size: 11px; letter-spacing: 3px; font-family: Arial, sans-serif; text-transform: uppercase; margin-bottom: 16px; display: block; }
-  .hero h1 { font-size: 40px; color: var(--branco); font-weight: normal; margin-bottom: 12px; }
-  .hero p { font-size: 15px; color: rgba(255,255,255,0.55); font-style: italic; }
-
-  .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
 
   .produto-section { padding: 64px 0; border-bottom: 1px solid #e0d8cc; }
   .produto-section:last-child { border-bottom: none; }
@@ -88,19 +79,41 @@
   .papel-box { background: #f0f8f2; border-left: 3px solid var(--verde-c); padding: 14px 16px; margin-top: 16px; font-size: 13px; color: #444; line-height: 1.7; }
   .papel-box strong { color: var(--verde); }
 
-  footer { background: var(--verde); padding: 32px 40px; text-align: center; }
-  footer p { color: rgba(255,255,255,0.4); font-size: 12px; font-family: Arial, sans-serif; }
-  footer .logo { color: var(--ouro); font-size: 16px; margin-bottom: 8px; }
-</style>
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .produto-grid { grid-template-columns: 1fr; gap: 24px; }
+    svg.planta { max-width: 100%; }
+    .ficha-row { flex-direction: column; gap: 8px; }
+  }
+
+  @media (max-width: 480px) {
+    .produto-grid { gap: 16px; }
+    .produto-card { padding: 20px; }
+    .dif-tags { gap: 6px; }
+    .dif-tag { font-size: 10px; padding: 4px 10px; }
+    .publico-lista li { font-size: 12px; }
+  }
+
+
+    :focus-visible {
+      outline: 2px solid var(--aldora-ouro, #C8A84B);
+      outline-offset: 2px;
+    }
+    a:focus-visible {
+      outline: 2px solid var(--aldora-ouro, #C8A84B);
+      outline-offset: 2px;
+    }
+    </style>
 </head>
 <body>
+<a href="#main-content" class="sr-only" style="position:absolute;top:-40px;left:0;background:var(--aldora-ouro,#C8A84B);color:#0a2416;padding:8px 16px;z-index:9999;font-size:14px;transition:top 0.2s;" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Pular para conteúdo</a>
 
-<nav>
-  <div class="nav-logo">AL'DORA CITY</div>
-  <div class="nav-sub">PLANTAS BAIXAS SUGERIDAS — P1 A P5</div>
+<nav class="aldora-nav">
+  <div class="aldora-nav__logo">AL'DORA CITY</div>
+  <div class="aldora-nav__sub">PLANTAS BAIXAS SUGERIDAS — P1 A P5</div>
 </nav>
 
-<div class="hero">
+<div id="main-content" class="aldora-hero aldora-hero--compact">
   <span class="hero-tag">Cidade Jardim Urbanismo · Jardim Versailles · Uberlândia/MG</span>
   <h1>Plantas Baixas Sugeridas</h1>
   <p>Escada de Produtos P1 → P5 · Configurações, áreas, público-alvo e papel na esteira</p>
@@ -1068,10 +1081,10 @@
 
 </div><!-- /container -->
 
-<footer>
-  <div class="logo">AL'DORA CITY · CIDADE JARDIM URBANISMO</div>
-  <p>Plantas baixas sugeridas — conceitual, sujeito a aprovação municipal e desenvolvimento de projeto arquitetônico.</p>
-  <p style="margin-top: 6px;">Uberlândia/MG · ZR2/SVA · CA 4,0 · Março 2026</p>
+<footer class="aldora-footer">
+  <div class="aldora-footer__logo">AL'DORA CITY · CIDADE JARDIM URBANISMO</div>
+  <p class="aldora-footer__text">Plantas baixas sugeridas — conceitual, sujeito a aprovação municipal e desenvolvimento de projeto arquitetônico.</p>
+  <p class="aldora-footer__text" style="margin-top: 6px;">Uberlândia/MG · ZR2/SVA · CA 4,0 · Março 2026</p>
 </footer>
 
 </body>

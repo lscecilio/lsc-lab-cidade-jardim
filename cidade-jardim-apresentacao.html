@@ -2,252 +2,121 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a2416'/%3E%3Ctext x='16' y='22' font-size='18' fill='%23C8A84B' text-anchor='middle' font-family='serif'%3EA%3C/text%3E%3C/svg%3E">
+    <meta name="theme-color" content="#0a2416">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cidade Jardim — Masterplan Vertical Escalonado · Uberlândia/MG</title>
+<meta name="description" content="AL'DORA City — Masterplan Vertical Escalonado · Cidade Jardim Urbanismo · Uberlândia/MG">
+<meta property="og:title" content="AL'DORA City — Masterplan Vertical Escalonado">
+<meta property="og:description" content="Masterplan Vertical Escalonado · 4 empreendimentos · 8 torres · 3 quadras · Jardim Versailles, Uberlândia/MG">
+<title>AL'DORA City — Masterplan Vertical Escalonado · Cidade Jardim Urbanismo</title>
+<link rel="stylesheet" href="assets/css/aldora-tokens.css">
+<link rel="stylesheet" href="assets/css/aldora-components.css">
 <style>
-  :root {
-    --verde: #1a3a2a;
-    --verde-medio: #2d5a3d;
-    --verde-claro: #3d7a52;
-    --ouro: #c9a84c;
-    --ouro-claro: #e8c97a;
-    --creme: #f5f0e8;
-    --branco: #ffffff;
-    --cinza: #8a8a8a;
-    --cinza-escuro: #2a2a2a;
-    --texto: #1a1a1a;
-  }
+  /* ═══════════════════════════════════════════════
+     PAGE-SPECIFIC STYLES
+     Base: aldora-tokens.css + aldora-components.css
+     ═══════════════════════════════════════════════ */
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Georgia', serif;
-    background: #f8f5f0;
-    color: var(--texto);
-    line-height: 1.6;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    background: rgba(26,58,42,0.97);
-    padding: 14px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 100;
-    border-bottom: 1px solid rgba(201,168,76,0.3);
-  }
-  .nav-logo { color: var(--ouro); font-size: 15px; font-weight: bold; letter-spacing: 2px; }
-  .nav-links { display: flex; gap: 24px; }
-  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 12px; font-family: 'Arial', sans-serif; letter-spacing: 1px; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--ouro); }
-
-  /* SECTIONS GERAL */
-  section { padding: 80px 0; }
-  .container { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
-
-  /* CAPA */
-  #capa {
-    background: linear-gradient(160deg, #0d2a1a 0%, #1a3a2a 50%, #0f2218 100%);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-  }
+  /* ── CAPA: Decorative overlays ── */
   #capa::before {
     content: '';
     position: absolute;
     top: -200px; right: -200px;
     width: 700px; height: 700px;
-    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(200,168,75,0.08) 0%, transparent 70%);
   }
   #capa::after {
     content: '';
     position: absolute;
     bottom: 0; left: 0; right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--ouro), transparent);
-  }
-  .capa-inner { position: relative; z-index: 2; }
-  .capa-tag {
-    display: inline-block;
-    background: rgba(201,168,76,0.15);
-    border: 1px solid rgba(201,168,76,0.4);
-    color: var(--ouro);
-    padding: 6px 16px;
-    font-size: 11px;
-    letter-spacing: 3px;
-    font-family: 'Arial', sans-serif;
-    margin-bottom: 32px;
-    text-transform: uppercase;
-  }
-  .capa-titulo {
-    font-size: 62px;
-    font-weight: normal;
-    color: var(--branco);
-    line-height: 1.15;
-    margin-bottom: 12px;
-  }
-  .capa-titulo span { color: var(--ouro); }
-  .capa-sub {
-    font-size: 20px;
-    color: rgba(255,255,255,0.55);
-    font-style: italic;
-    margin-bottom: 48px;
-  }
-  .kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: rgba(201,168,76,0.2);
-    border: 1px solid rgba(201,168,76,0.2);
-    margin-top: 48px;
-  }
-  .kpi-item {
-    background: rgba(26,58,42,0.8);
-    padding: 28px 24px;
-    text-align: center;
-  }
-  .kpi-valor {
-    font-size: 28px;
-    color: var(--ouro);
-    font-weight: bold;
-    display: block;
-    margin-bottom: 6px;
-  }
-  .kpi-label {
-    font-size: 11px;
-    color: rgba(255,255,255,0.5);
-    font-family: 'Arial', sans-serif;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    background: var(--divider-ouro);
   }
   .capa-nota {
-    margin-top: 32px;
+    margin-top: var(--space-md);
     font-size: 11px;
     color: rgba(255,255,255,0.3);
-    font-family: 'Arial', sans-serif;
+    font-family: var(--font-body);
   }
 
-  /* SEÇÃO GENÉRICA */
-  .sec-tag {
-    display: inline-block;
-    color: var(--verde-claro);
-    font-size: 11px;
-    letter-spacing: 3px;
-    font-family: 'Arial', sans-serif;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-  .sec-titulo {
-    font-size: 38px;
-    font-weight: normal;
-    color: var(--verde);
-    line-height: 1.2;
-    margin-bottom: 16px;
-  }
-  .sec-sub {
-    font-size: 16px;
-    color: var(--cinza);
-    max-width: 600px;
-    margin-bottom: 48px;
-  }
-  .divider {
-    height: 2px;
-    width: 60px;
-    background: var(--ouro);
-    margin: 16px 0 40px;
-  }
-
-  /* TESE EXECUTIVA */
-  #tese { background: var(--branco); }
+  /* ── TESE EXECUTIVA ── */
+  #tese { background: var(--aldora-branco); }
   .macro-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0;
-    border: 1px solid #e0d8cc;
-    margin-bottom: 48px;
+    border: var(--border-bege);
+    margin-bottom: var(--space-lg);
   }
   .macro-item {
     padding: 32px 28px;
-    border-right: 1px solid #e0d8cc;
+    border-right: var(--border-bege);
     text-align: center;
   }
   .macro-item:last-child { border-right: none; }
   .macro-valor {
     font-size: 36px;
-    color: var(--verde);
+    font-family: var(--font-display);
+    color: var(--aldora-verde);
     font-weight: bold;
     display: block;
     margin-bottom: 4px;
   }
   .macro-sub {
     font-size: 12px;
-    color: var(--cinza);
-    font-family: 'Arial', sans-serif;
+    color: var(--aldora-cinza);
+    font-family: var(--font-body);
     margin-bottom: 8px;
   }
   .macro-desc {
-    font-size: 13px;
-    color: var(--texto);
+    font-size: var(--fs-caption);
+    color: var(--aldora-texto);
     font-style: italic;
   }
-  .tese-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 40px;
-  }
   .tese-card {
-    background: var(--creme);
+    background: var(--aldora-bege);
     padding: 28px;
-    border-left: 3px solid var(--ouro);
+    border-left: 3px solid var(--aldora-ouro);
   }
   .tese-card h4 {
     font-size: 14px;
-    color: var(--verde);
+    color: var(--aldora-verde);
     margin-bottom: 10px;
-    font-family: 'Arial', sans-serif;
+    font-family: var(--font-body);
     letter-spacing: 1px;
     text-transform: uppercase;
   }
   .tese-card p { font-size: 14px; color: #555; line-height: 1.7; }
 
-  /* ATIVO */
-  #ativo { background: var(--verde); color: var(--branco); }
-  #ativo .sec-titulo { color: var(--ouro); }
-  #ativo .sec-sub { color: rgba(255,255,255,0.6); }
-  #ativo .sec-tag { color: rgba(201,168,76,0.7); }
+  /* ── ATIVO ── */
   .quadra-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2px;
-    background: rgba(201,168,76,0.2);
+    background: var(--aldora-ouro-30);
   }
   .quadra-card {
     background: rgba(255,255,255,0.05);
     padding: 32px 24px;
-    border-top: 3px solid var(--ouro);
-    transition: background 0.2s;
+    border-top: 3px solid var(--aldora-ouro);
+    transition: background var(--transition-fast);
   }
   .quadra-card:hover { background: rgba(255,255,255,0.1); }
   .quadra-badge {
     display: inline-block;
-    background: var(--ouro);
-    color: var(--verde);
+    background: var(--aldora-ouro);
+    color: var(--aldora-verde);
     padding: 4px 12px;
     font-size: 11px;
-    font-family: 'Arial', sans-serif;
+    font-family: var(--font-body);
     font-weight: bold;
     letter-spacing: 2px;
     margin-bottom: 20px;
   }
   .quadra-card h3 {
-    font-size: 22px;
-    color: var(--branco);
+    font-size: var(--fs-h3);
+    font-family: var(--font-display);
+    color: var(--aldora-branco);
     margin-bottom: 20px;
     font-weight: normal;
   }
@@ -257,14 +126,14 @@
     align-items: center;
     padding: 8px 0;
     border-bottom: 1px solid rgba(255,255,255,0.1);
-    font-size: 13px;
+    font-size: var(--fs-caption);
   }
   .area-linha:last-child { border-bottom: none; }
-  .area-label { color: rgba(255,255,255,0.6); font-family: 'Arial', sans-serif; }
-  .area-valor { color: var(--ouro-claro); font-weight: bold; }
+  .area-label { color: rgba(255,255,255,0.6); font-family: var(--font-body); }
+  .area-valor { color: var(--aldora-ouro-claro); font-weight: bold; }
   .quadra-totais {
-    background: rgba(201,168,76,0.1);
-    border: 1px solid rgba(201,168,76,0.3);
+    background: rgba(200,168,75,0.1);
+    border: var(--border-ouro);
     padding: 28px 32px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -272,28 +141,27 @@
     margin-top: 2px;
     text-align: center;
   }
-  .total-item { padding: 12px; border-right: 1px solid rgba(201,168,76,0.2); }
+  .total-item { padding: 12px; border-right: 1px solid rgba(200,168,75,0.2); }
   .total-item:last-child { border-right: none; }
-  .total-valor { font-size: 22px; color: var(--ouro); font-weight: bold; display: block; }
-  .total-label { font-size: 11px; color: rgba(255,255,255,0.5); font-family: 'Arial', sans-serif; margin-top: 4px; }
+  .total-valor { font-size: 22px; font-family: var(--font-display); color: var(--aldora-ouro); font-weight: bold; display: block; }
+  .total-label { font-size: 11px; color: rgba(255,255,255,0.5); font-family: var(--font-body); margin-top: 4px; }
 
-  /* MERCADO */
-  #mercado { background: #f8f5f0; }
+  /* ── MERCADO ── */
   .mercado-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 48px;
+    gap: var(--space-lg);
     align-items: start;
   }
   .brain-card {
-    background: var(--branco);
-    border: 1px solid #e0d8cc;
+    background: var(--aldora-branco);
+    border: var(--border-bege);
     padding: 32px;
   }
   .brain-tag {
-    font-size: 10px;
-    color: var(--cinza);
-    font-family: 'Arial', sans-serif;
+    font-size: var(--fs-tag);
+    color: var(--aldora-cinza);
+    font-family: var(--font-body);
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 20px;
@@ -304,159 +172,130 @@
   .intent-row {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 16px;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
   }
   .intent-label {
-    font-size: 13px;
-    color: var(--texto);
+    font-size: var(--fs-caption);
+    color: var(--aldora-texto);
     width: 100px;
     flex-shrink: 0;
   }
-  .intent-bar-wrap { flex: 1; background: #f0ece4; height: 8px; border-radius: 0; }
-  .intent-bar { height: 8px; background: var(--verde-claro); }
-  .intent-pct { font-size: 14px; font-weight: bold; color: var(--verde); width: 40px; text-align: right; }
+  .intent-bar-wrap { flex: 1; background: #f0ece4; height: 8px; }
+  .intent-bar { height: 8px; background: var(--aldora-verde-claro); }
+  .intent-pct { font-size: 14px; font-weight: bold; color: var(--aldora-verde); width: 40px; text-align: right; }
   .sinal-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 24px;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
   }
   .sinal-item {
-    background: var(--creme);
+    background: var(--aldora-bege);
     padding: 20px;
-    border-top: 2px solid var(--ouro);
+    border-top: 2px solid var(--aldora-ouro);
     text-align: center;
   }
-  .sinal-valor { font-size: 24px; color: var(--verde); font-weight: bold; display: block; }
-  .sinal-label { font-size: 11px; color: var(--cinza); font-family: 'Arial', sans-serif; margin-top: 4px; }
+  .sinal-valor { font-size: 24px; font-family: var(--font-display); color: var(--aldora-verde); font-weight: bold; display: block; }
+  .sinal-label { font-size: 11px; color: var(--aldora-cinza); font-family: var(--font-body); margin-top: 4px; }
 
-  /* ESCADA DE PRODUTOS */
-  #produtos { background: var(--branco); }
+  /* ── ESCADA DE PRODUTOS ── */
+  #produtos { background: var(--aldora-branco); }
   .escada-wrap { overflow-x: auto; }
-  .escada-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-    font-family: 'Arial', sans-serif;
-  }
-  .escada-table thead tr {
-    background: var(--verde);
-    color: var(--ouro);
-  }
-  .escada-table thead th {
-    padding: 16px 20px;
-    text-align: left;
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    font-weight: normal;
-  }
-  .escada-table tbody tr {
-    border-bottom: 1px solid #e8e0d4;
-    transition: background 0.15s;
-  }
-  .escada-table tbody tr:hover { background: var(--creme); }
-  .escada-table tbody td { padding: 18px 20px; color: var(--texto); vertical-align: middle; }
   .prod-badge {
     display: inline-block;
     padding: 4px 10px;
     font-size: 11px;
     font-weight: bold;
     letter-spacing: 1px;
-    border-radius: 0;
   }
   .p1 { background: #e8f0ea; color: #2a5a35; }
   .p2 { background: #e4ecf0; color: #1a4060; }
   .p3 { background: #f0e8ea; color: #5a2a30; }
   .p4 { background: #f0ede0; color: #5a4a10; }
-  .p5 { background: #1a3a2a; color: #c9a84c; }
-  .prod-ticket { font-weight: bold; color: var(--verde); font-size: 15px; }
+  .p5 { background: var(--aldora-verde); color: var(--aldora-ouro); }
+  .prod-ticket { font-weight: bold; color: var(--aldora-verde); font-size: 15px; }
   .planta-mini {
     display: inline-block;
-    background: #f8f5f0;
+    background: var(--aldora-bg);
     border: 1px solid #ddd;
     padding: 4px 8px;
     font-size: 11px;
     color: #666;
-    font-family: monospace;
+    font-family: var(--font-mono);
   }
   .role-tag {
     display: inline-block;
-    background: rgba(201,168,76,0.12);
+    background: var(--aldora-ouro-15);
     color: #7a6020;
     padding: 3px 10px;
     font-size: 11px;
-    border: 1px solid rgba(201,168,76,0.3);
+    border: 1px solid var(--aldora-ouro-30);
   }
   .prod-row-p5 { background: #f5f0e0 !important; }
 
-  /* ESTEIRA */
-  #esteira { background: var(--creme); }
+  /* ── ESTEIRA ── */
+  #esteira { background: var(--aldora-bege); }
   .emp-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
+    gap: var(--space-md);
     margin-bottom: 40px;
   }
   .emp-card {
-    background: var(--branco);
-    border: 1px solid #e0d8cc;
+    background: var(--aldora-branco);
+    border: var(--border-bege);
     overflow: hidden;
   }
   .emp-header {
-    background: var(--verde);
+    background: var(--aldora-verde);
     padding: 20px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  .emp-nome { color: var(--ouro); font-size: 16px; }
-  .emp-quadra { color: rgba(255,255,255,0.5); font-size: 12px; font-family: 'Arial', sans-serif; }
-  .emp-body { padding: 24px; }
+  .emp-nome { color: var(--aldora-ouro); font-size: 16px; font-family: var(--font-display); }
+  .emp-quadra { color: rgba(255,255,255,0.5); font-size: 12px; font-family: var(--font-body); }
+  .emp-body { padding: var(--space-md); }
   .torre-row {
     display: flex;
-    gap: 8px;
-    margin-bottom: 16px;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-sm);
     flex-wrap: wrap;
   }
   .torre-chip {
-    background: var(--creme);
+    background: var(--aldora-bege);
     border: 1px solid #d8d0c4;
     padding: 6px 14px;
     font-size: 12px;
-    font-family: 'Arial', sans-serif;
-    color: var(--verde);
+    font-family: var(--font-body);
+    color: var(--aldora-verde);
   }
-  .emp-mix { font-size: 13px; color: #555; margin-bottom: 16px; line-height: 1.7; }
+  .emp-mix { font-size: var(--fs-caption); color: #555; margin-bottom: var(--space-sm); line-height: 1.7; }
   .emp-gate {
-    background: var(--creme);
-    border-left: 3px solid var(--ouro);
+    background: var(--aldora-bege);
+    border-left: 3px solid var(--aldora-ouro);
     padding: 10px 14px;
     font-size: 12px;
     color: #666;
-    font-family: 'Arial', sans-serif;
+    font-family: var(--font-body);
     font-style: italic;
   }
-  .emp-gate strong { color: var(--verde); font-style: normal; }
+  .emp-gate strong { color: var(--aldora-verde); font-style: normal; }
 
-  /* TIMELINE / GANTT */
-  #timeline { background: var(--verde); color: var(--branco); }
-  #timeline .sec-titulo { color: var(--ouro); }
-  #timeline .sec-sub { color: rgba(255,255,255,0.6); }
-  #timeline .sec-tag { color: rgba(201,168,76,0.6); }
+  /* ── TIMELINE / GANTT ── */
   .gantt-wrap { overflow-x: auto; }
   .gantt-table {
     width: 100%;
     border-collapse: collapse;
-    font-family: 'Arial', sans-serif;
+    font-family: var(--font-body);
     font-size: 12px;
     min-width: 900px;
   }
-  .gantt-table thead tr { border-bottom: 1px solid rgba(201,168,76,0.4); }
+  .gantt-table thead tr { border-bottom: 1px solid rgba(200,168,75,0.4); }
   .gantt-table thead th {
     padding: 10px 16px;
-    color: rgba(201,168,76,0.7);
+    color: rgba(200,168,75,0.7);
     text-align: left;
     font-weight: normal;
     font-size: 11px;
@@ -465,19 +304,19 @@
   .gantt-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.07); }
   .gantt-table tbody tr:hover { background: rgba(255,255,255,0.05); }
   .gantt-table tbody td { padding: 14px 16px; color: rgba(255,255,255,0.85); }
-  .gantt-fase { color: var(--ouro-claro); font-weight: bold; }
+  .gantt-fase { color: var(--aldora-ouro-claro); font-weight: bold; }
   .gantt-bar-wrap { display: flex; align-items: center; gap: 8px; }
   .gantt-bar {
     height: 14px;
-    background: linear-gradient(90deg, var(--verde-claro), var(--ouro));
+    background: linear-gradient(90deg, var(--aldora-verde-claro), var(--aldora-ouro));
     opacity: 0.9;
   }
   .gate-badge {
     display: inline-block;
-    border: 1px solid rgba(201,168,76,0.5);
-    color: var(--ouro);
+    border: 1px solid rgba(200,168,75,0.5);
+    color: var(--aldora-ouro);
     padding: 3px 10px;
-    font-size: 10px;
+    font-size: var(--fs-tag);
     letter-spacing: 1px;
     white-space: nowrap;
   }
@@ -485,51 +324,65 @@
     margin-top: 40px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
+    gap: var(--space-sm);
   }
   .gate-card {
     background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(201,168,76,0.25);
+    border: 1px solid rgba(200,168,75,0.25);
     padding: 20px;
     text-align: center;
   }
-  .gate-num { font-size: 28px; color: var(--ouro); font-weight: bold; display: block; margin-bottom: 8px; }
+  .gate-num { font-size: 28px; font-family: var(--font-display); color: var(--aldora-ouro); font-weight: bold; display: block; margin-bottom: 8px; }
   .gate-desc { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.6; }
 
-  /* AREAS COMUNS */
-  #comuns { background: var(--branco); }
+  /* ── AREAS COMUNS ── */
+  #comuns { background: var(--aldora-branco); }
   .camadas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #e8e0d4; }
   .camada-card {
-    background: var(--branco);
+    background: var(--aldora-branco);
     padding: 36px 28px;
     border-top: 4px solid;
   }
-  .camada-1 { border-color: var(--verde-claro); }
-  .camada-2 { border-color: var(--ouro); }
-  .camada-3 { border-color: var(--verde); }
-  .camada-num { font-size: 48px; color: #eae8e0; font-weight: bold; margin-bottom: 16px; font-family: 'Arial', sans-serif; }
-  .camada-nome { font-size: 18px; color: var(--verde); margin-bottom: 8px; }
-  .camada-sub { font-size: 13px; color: var(--ouro); font-family: 'Arial', sans-serif; margin-bottom: 16px; }
+  .camada-1 { border-color: var(--aldora-verde-claro); }
+  .camada-2 { border-color: var(--aldora-ouro); }
+  .camada-3 { border-color: var(--aldora-verde); }
+  .camada-num { font-size: 48px; color: #eae8e0; font-weight: bold; margin-bottom: 16px; font-family: var(--font-body); }
+  .camada-nome { font-size: 18px; font-family: var(--font-display); color: var(--aldora-verde); margin-bottom: 8px; }
+  .camada-sub { font-size: var(--fs-caption); color: var(--aldora-ouro); font-family: var(--font-body); margin-bottom: 16px; }
   .camada-lista { list-style: none; }
-  .camada-lista li { font-size: 13px; color: #555; padding: 5px 0; border-bottom: 1px solid #f0ece4; }
-  .camada-lista li::before { content: '— '; color: var(--ouro); }
+  .camada-lista li { font-size: var(--fs-caption); color: #555; padding: 5px 0; border-bottom: 1px solid #f0ece4; }
+  .camada-lista li::before { content: '\2014  '; color: var(--aldora-ouro); }
 
-  /* PARCERIA */
-  #parceria { background: var(--creme); }
-  .parceria-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
-  .parceria-block h3 { font-size: 20px; color: var(--verde); margin-bottom: 20px; font-weight: normal; }
+  /* ── BENCHMARK ── */
+  .bench-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .bench-card {
+    background: var(--aldora-branco);
+    border: var(--border-bege);
+    padding: 28px;
+  }
+  .bench-nome { font-size: 18px; font-family: var(--font-display); color: var(--aldora-verde); margin-bottom: 4px; }
+  .bench-bairro { font-size: 12px; color: var(--aldora-cinza); font-family: var(--font-body); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #e8e0d4; }
+  .bench-dados { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .bench-dado { text-align: center; }
+  .bench-dado-val { font-size: 20px; font-family: var(--font-display); color: var(--aldora-verde); font-weight: bold; display: block; }
+  .bench-dado-label { font-size: 11px; color: var(--aldora-cinza); font-family: var(--font-body); }
+
+  /* ── PARCERIA ── */
+  #parceria { background: var(--aldora-bege); }
+  .parceria-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); }
+  .parceria-block h3 { font-size: 20px; font-family: var(--font-display); color: var(--aldora-verde); margin-bottom: 20px; font-weight: normal; }
   .permuta-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 14px 0;
-    border-bottom: 1px solid #e0d8cc;
+    border-bottom: var(--border-bege);
   }
-  .permuta-label { font-size: 14px; color: var(--texto); }
-  .permuta-valor { font-size: 16px; color: var(--verde); font-weight: bold; }
+  .permuta-label { font-size: 14px; color: var(--aldora-texto); }
+  .permuta-valor { font-size: 16px; color: var(--aldora-verde); font-weight: bold; }
   .checklist { list-style: none; margin-top: 16px; }
   .checklist li {
-    font-size: 13px;
+    font-size: var(--fs-caption);
     color: #444;
     padding: 8px 0;
     border-bottom: 1px solid #e8e0d4;
@@ -537,144 +390,141 @@
     position: relative;
   }
   .checklist li::before {
-    content: '○';
+    content: '\25CB';
     position: absolute;
     left: 0;
-    color: var(--ouro);
+    color: var(--aldora-ouro);
     font-size: 12px;
   }
   .spe-box {
-    background: var(--verde);
-    color: var(--branco);
+    background: var(--aldora-verde);
+    color: var(--aldora-branco);
     padding: 28px;
-    margin-top: 24px;
+    margin-top: var(--space-md);
   }
-  .spe-box h4 { color: var(--ouro); margin-bottom: 12px; font-family: 'Arial', sans-serif; letter-spacing: 1px; font-size: 12px; text-transform: uppercase; }
-  .spe-box p { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.8; }
+  .spe-box h4 { color: var(--aldora-ouro); margin-bottom: 12px; font-family: var(--font-body); letter-spacing: 1px; font-size: 12px; text-transform: uppercase; }
+  .spe-box p { font-size: var(--fs-caption); color: rgba(255,255,255,0.75); line-height: 1.8; }
 
-  /* FOOTER */
-  footer {
-    background: #0d2a1a;
-    padding: 48px 40px;
-    text-align: center;
-    border-top: 1px solid rgba(201,168,76,0.3);
-  }
-  .footer-logo { font-size: 24px; color: var(--ouro); margin-bottom: 8px; }
-  .footer-sub { font-size: 13px; color: rgba(255,255,255,0.4); font-family: 'Arial', sans-serif; margin-bottom: 24px; }
-  .footer-disclaimer { font-size: 11px; color: rgba(255,255,255,0.25); font-family: 'Arial', sans-serif; max-width: 600px; margin: 0 auto; line-height: 1.8; }
-
-  /* BENCHMARK */
-  #benchmark { background: #f8f5f0; }
-  .bench-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-  .bench-card {
-    background: var(--branco);
-    border: 1px solid #e0d8cc;
-    padding: 28px;
-  }
-  .bench-nome { font-size: 18px; color: var(--verde); margin-bottom: 4px; }
-  .bench-bairro { font-size: 12px; color: var(--cinza); font-family: 'Arial', sans-serif; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #e8e0d4; }
-  .bench-dados { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .bench-dado { text-align: center; }
-  .bench-dado-val { font-size: 20px; color: var(--verde); font-weight: bold; display: block; }
-  .bench-dado-label { font-size: 11px; color: var(--cinza); font-family: 'Arial', sans-serif; }
-
-  /* UTIL */
-  .gold { color: var(--ouro); }
-  .verde { color: var(--verde); }
+  /* ── UTILITIES ── */
   .tag-fonte {
     display: inline-block;
-    background: rgba(201,168,76,0.1);
-    border: 1px solid rgba(201,168,76,0.3);
+    background: var(--aldora-ouro-15);
+    border: 1px solid var(--aldora-ouro-30);
     color: #7a6020;
     padding: 4px 10px;
-    font-size: 10px;
-    font-family: 'Arial', sans-serif;
+    font-size: var(--fs-tag);
+    font-family: var(--font-body);
     letter-spacing: 1px;
     margin-top: 12px;
   }
 
+  /* ── RESPONSIVE (page-specific grids) ── */
   @media (max-width: 768px) {
-    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
     .macro-grid { grid-template-columns: 1fr; }
-    .tese-cards { grid-template-columns: 1fr; }
     .quadra-grid { grid-template-columns: 1fr; }
     .mercado-grid { grid-template-columns: 1fr; }
     .emp-grid { grid-template-columns: 1fr; }
     .camadas-grid { grid-template-columns: 1fr; }
     .parceria-grid { grid-template-columns: 1fr; }
     .gates-list { grid-template-columns: repeat(2, 1fr); }
-    .capa-titulo { font-size: 38px; }
-    nav { padding: 14px 20px; }
-    .nav-links { display: none; }
     .bench-grid { grid-template-columns: 1fr; }
+    .quadra-totais { grid-template-columns: repeat(2, 1fr); }
   }
-</style>
+
+  @media (max-width: 480px) {
+    .gates-list { grid-template-columns: 1fr; }
+    .quadra-totais { grid-template-columns: 1fr; }
+    .gantt-table { font-size: 11px; }
+    .escada-wrap, .gantt-wrap { -webkit-overflow-scrolling: touch; }
+    section { padding: 48px 0; }
+    .macro-grid, .quadra-grid, .mercado-grid,
+    .emp-grid, .camadas-grid, .parceria-grid,
+    .bench-grid { gap: 12px; }
+  }
+
+    :focus-visible {
+      outline: 2px solid var(--aldora-ouro, #C8A84B);
+      outline-offset: 2px;
+    }
+    a:focus-visible {
+      outline: 2px solid var(--aldora-ouro, #C8A84B);
+      outline-offset: 2px;
+    }
+    </style>
 </head>
 <body>
+<a href="#capa" class="sr-only" style="position:absolute;top:-40px;left:0;background:var(--aldora-ouro,#C8A84B);color:#0a2416;padding:8px 16px;z-index:9999;font-size:14px;transition:top 0.2s;" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Pular para conteúdo</a>
 
 <!-- NAV -->
-<nav>
-  <div class="nav-logo">CIDADE JARDIM</div>
-  <div class="nav-links">
-    <a href="#tese">TESE</a>
-    <a href="#ativo">O ATIVO</a>
-    <a href="#mercado">MERCADO</a>
-    <a href="#produtos">PRODUTOS</a>
-    <a href="#esteira">ESTEIRA</a>
-    <a href="#timeline">TIMELINE</a>
-    <a href="#parceria">PARCERIA</a>
-  </div>
+<nav class="aldora-nav">
+  <a href="#capa" class="aldora-nav__logo">AL'DORA CITY
+    <div class="aldora-nav__sub">Cidade Jardim Urbanismo</div>
+  </a>
+  <ul class="aldora-nav__links">
+    <li><a href="#tese">Tese</a></li>
+    <li><a href="#ativo">O Ativo</a></li>
+    <li><a href="#mercado">Mercado</a></li>
+    <li><a href="#produtos">Produtos</a></li>
+    <li><a href="#esteira">Esteira</a></li>
+    <li><a href="#timeline">Timeline</a></li>
+    <li><a href="#parceria">Parceria</a></li>
+  </ul>
+  <button class="aldora-nav__hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- CAPA -->
-<section id="capa">
-  <div class="container capa-inner">
-    <div class="capa-tag">Apresentação Confidencial ao Investidor · Março 2026</div>
-    <h1 class="capa-titulo">
+<section id="capa" class="aldora-hero">
+  <div class="aldora-hero__lines"></div>
+  <div class="aldora-hero__content">
+    <div class="aldora-hero__flag">
+      <span class="aldora-hero__flag-dot"></span>
+      <span>Apresentação Confidencial ao Investidor · Março 2026</span>
+    </div>
+    <h1 class="aldora-hero__title">
       Masterplan<br>
-      <span>Vertical Escalonado</span>
+      <em>Vertical Escalonado</em>
     </h1>
-    <p class="capa-sub">Uberlândia · Jardim Versailles · ZR2/SVA · CA 4,0</p>
+    <p class="aldora-hero__tagline">Uberlândia · Jardim Versailles · ZR2/SVA · CA 4,0</p>
 
-    <div style="display:flex; gap: 12px; flex-wrap: wrap;">
-      <div style="background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); padding: 10px 20px; font-size: 13px; color: rgba(255,255,255,0.8); font-family: Arial, sans-serif;">
-        Cidade Jardim Urbanismo
-      </div>
-      <div style="background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); padding: 10px 20px; font-size: 13px; color: rgba(255,255,255,0.8); font-family: Arial, sans-serif;">
-        AL'DORA City
-      </div>
-      <div style="background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); padding: 10px 20px; font-size: 13px; color: rgba(255,255,255,0.8); font-family: Arial, sans-serif;">
-        4 Empreendimentos · 14 Torres
-      </div>
+    <div style="display:flex; gap: 12px; flex-wrap: wrap; margin-bottom: var(--space-md);">
+      <span class="aldora-tag">Cidade Jardim Urbanismo</span>
+      <span class="aldora-tag">AL'DORA City</span>
+      <span class="aldora-tag">4 Empreendimentos · 14 Torres</span>
     </div>
 
-    <div class="kpi-grid">
-      <div class="kpi-item">
-        <span class="kpi-valor">42.784 m²</span>
-        <span class="kpi-label">Área Total do Ativo</span>
+    <div class="aldora-hero__kpis">
+      <div class="aldora-kpi">
+        <div class="aldora-kpi__value">42.784 m²</div>
+        <div class="aldora-kpi__label">Área Total do Ativo</div>
       </div>
-      <div class="kpi-item">
-        <span class="kpi-valor">171.138 m²</span>
-        <span class="kpi-label">Potencial Computável</span>
+      <div class="aldora-kpi">
+        <div class="aldora-kpi__value">171.138 m²</div>
+        <div class="aldora-kpi__label">Potencial Computável</div>
       </div>
-      <div class="kpi-item">
-        <span class="kpi-valor">R$299,68M</span>
-        <span class="kpi-label">VGV Ref. QC01 (Brain)</span>
+      <div class="aldora-kpi">
+        <div class="aldora-kpi__value">R$299,68M</div>
+        <div class="aldora-kpi__label">VGV Ref. QC01 (Brain)</div>
       </div>
-      <div class="kpi-item">
-        <span class="kpi-valor">CA 4,0</span>
-        <span class="kpi-label">ZR2/SVA — Alta Densidade</span>
+      <div class="aldora-kpi">
+        <div class="aldora-kpi__value">CA 4,0</div>
+        <div class="aldora-kpi__label">ZR2/SVA — Alta Densidade</div>
       </div>
     </div>
     <p class="capa-nota">* VGV referencial QC01 ciclo 1 — Brain Research 2025. Não constitui garantia ou promessa de resultado.</p>
   </div>
+  <div class="aldora-hero__scroll">
+    <span>Scroll</span>
+    <div class="aldora-hero__scroll-line"></div>
+  </div>
 </section>
 
 <!-- TESE EXECUTIVA -->
-<section id="tese">
+<section id="tese" class="aldora-section">
   <div class="container">
-    <span class="sec-tag">Contexto Macro</span>
-    <h2 class="sec-titulo">Tese Executiva</h2>
+    <span class="section-tag">Contexto Macro</span>
+    <h2 class="aldora-section__title">Tese Executiva</h2>
     <div class="divider"></div>
 
     <div class="macro-grid">
@@ -695,7 +545,7 @@
       </div>
     </div>
 
-    <div class="tese-cards">
+    <div class="aldora-grid aldora-grid--3" style="margin-top: 40px;">
       <div class="tese-card">
         <h4>✓ Mercado Validado</h4>
         <p>Brain Research aponta 44% de intenção de compra no Brasil e 61% no Sudeste. Uberlândia tem demanda anual superior a 1.000 unidades no raio de 15 min do ativo — mercado já testado, não especulativo.</p>
@@ -713,12 +563,12 @@
 </section>
 
 <!-- O ATIVO -->
-<section id="ativo">
+<section id="ativo" class="aldora-section aldora-section--dark">
   <div class="container">
-    <span class="sec-tag">Áreas e Potencial</span>
-    <h2 class="sec-titulo">O Ativo · 3 Quadras</h2>
+    <span class="section-tag">Áreas e Potencial</span>
+    <h2 class="aldora-section__title">O Ativo · 3 Quadras</h2>
     <div class="divider"></div>
-    <p class="sec-sub">Jardim Versailles, Uberlândia/MG — Zoneamento ZR2/SVA · Coeficiente de Aproveitamento 4,0</p>
+    <p class="aldora-section__lead" style="color: var(--aldora-branco-65);">Jardim Versailles, Uberlândia/MG — Zoneamento ZR2/SVA · Coeficiente de Aproveitamento 4,0</p>
 
     <div class="quadra-grid">
       <div class="quadra-card">
@@ -807,10 +657,10 @@
 </section>
 
 <!-- MERCADO -->
-<section id="mercado">
+<section id="mercado" class="aldora-section">
   <div class="container">
-    <span class="sec-tag">Inteligência de Mercado</span>
-    <h2 class="sec-titulo">Demanda Real · Sinais de Mercado</h2>
+    <span class="section-tag">Inteligência de Mercado</span>
+    <h2 class="aldora-section__title">Demanda Real · Sinais de Mercado</h2>
     <div class="divider"></div>
 
     <div class="mercado-grid">
@@ -836,13 +686,13 @@
           <div class="intent-row">
             <span class="intent-label">Alta Renda</span>
             <div class="intent-bar-wrap">
-              <div class="intent-bar" style="width: 24%; background: var(--ouro);"></div>
+              <div class="intent-bar" style="width: 24%; background: var(--aldora-ouro);"></div>
             </div>
             <span class="intent-pct">24%</span>
           </div>
 
-          <p style="margin-top: 20px; font-size: 12px; color: #888; font-family: Arial, sans-serif; border-top: 1px solid #e8e0d4; padding-top: 12px;">
-            Demanda anual estimada no raio de 15 min do ativo: <strong style="color: var(--verde);">1.000+ unidades/ano</strong>
+          <p style="margin-top: 20px; font-size: 12px; color: #888; font-family: var(--font-body); border-top: 1px solid #e8e0d4; padding-top: 12px;">
+            Demanda anual estimada no raio de 15 min do ativo: <strong style="color: var(--aldora-verde);">1.000+ unidades/ano</strong>
           </p>
         </div>
       </div>
@@ -869,9 +719,9 @@
             <span class="sinal-label">CUB-MG Jan/2026 (/m²)</span>
           </div>
         </div>
-        <div style="margin-top: 24px; background: var(--verde); padding: 20px 24px;">
+        <div style="margin-top: 24px; background: var(--aldora-verde); padding: 20px 24px;">
           <p style="font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.8;">
-            <strong style="color: var(--ouro);">Diagnóstico:</strong> Estoque baixo + IVV alto = janela de entrada favorável.
+            <strong style="color: var(--aldora-ouro);">Diagnóstico:</strong> Estoque baixo + IVV alto = janela de entrada favorável.
             Nosso produto entra abaixo do ticket médio de mercado (R$8.341/m²) e escala com aprovação do comprador.
           </p>
         </div>
@@ -881,15 +731,15 @@
 </section>
 
 <!-- ESCADA DE PRODUTOS -->
-<section id="produtos">
+<section id="produtos" class="aldora-section">
   <div class="container">
-    <span class="sec-tag">Portfólio</span>
-    <h2 class="sec-titulo">Escada de Produtos P1 → P5</h2>
+    <span class="section-tag">Portfólio</span>
+    <h2 class="aldora-section__title">Escada de Produtos P1 → P5</h2>
     <div class="divider"></div>
-    <p class="sec-sub">5 tipologias calibradas para absorção máxima em diferentes faixas de renda — da entrada ao coroamento premium.</p>
+    <p class="aldora-section__lead">5 tipologias calibradas para absorção máxima em diferentes faixas de renda — da entrada ao coroamento premium.</p>
 
     <div class="escada-wrap">
-      <table class="escada-table">
+      <table class="aldora-table">
         <thead>
           <tr>
             <th>Produto</th>
@@ -960,12 +810,12 @@
 </section>
 
 <!-- ESTEIRA DE EMPREENDIMENTOS -->
-<section id="esteira">
+<section id="esteira" class="aldora-section aldora-section--bege">
   <div class="container">
-    <span class="sec-tag">Faseamento</span>
-    <h2 class="sec-titulo">Esteira · 4 Empreendimentos · 14 Torres</h2>
+    <span class="section-tag">Faseamento</span>
+    <h2 class="aldora-section__title">Esteira · 4 Empreendimentos · 14 Torres</h2>
     <div class="divider"></div>
-    <p class="sec-sub">Cada empreendimento é uma SPE independente. Gates de execução condicionados a performance — não a datas fixas.</p>
+    <p class="aldora-section__lead">Cada empreendimento é uma SPE independente. Gates de execução condicionados a performance — não a datas fixas.</p>
 
     <div class="emp-grid">
       <!-- EMP 1 -->
@@ -976,7 +826,7 @@
             <div class="emp-quadra">QC01 · Fase 1 · Entrada no mercado</div>
           </div>
           <div style="text-align:right;">
-            <span style="font-size:22px; color: var(--ouro);">2 Torres</span>
+            <span style="font-size:22px; color: var(--aldora-ouro);">2 Torres</span>
           </div>
         </div>
         <div class="emp-body">
@@ -1002,7 +852,7 @@
             <div class="emp-quadra">QC01 · Fase 2 · Consolidação</div>
           </div>
           <div style="text-align:right;">
-            <span style="font-size:22px; color: var(--ouro);">2 Torres</span>
+            <span style="font-size:22px; color: var(--aldora-ouro);">2 Torres</span>
           </div>
         </div>
         <div class="emp-body">
@@ -1028,7 +878,7 @@
             <div class="emp-quadra">QC02 · Fase 3 · Expansão</div>
           </div>
           <div style="text-align:right;">
-            <span style="font-size:22px; color: var(--ouro);">2 Torres</span>
+            <span style="font-size:22px; color: var(--aldora-ouro);">2 Torres</span>
           </div>
         </div>
         <div class="emp-body">
@@ -1054,7 +904,7 @@
             <div class="emp-quadra">QC03 · Fase 4 · Coroamento</div>
           </div>
           <div style="text-align:right;">
-            <span style="font-size:22px; color: var(--ouro);">2 Torres</span>
+            <span style="font-size:22px; color: var(--aldora-ouro);">2 Torres</span>
           </div>
         </div>
         <div class="emp-body">
@@ -1073,30 +923,30 @@
       </div>
     </div>
 
-    <div style="background: var(--verde); padding: 24px 28px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+    <div style="background: var(--aldora-verde); padding: 24px 28px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
       <div style="flex: 1;">
-        <div style="font-size: 12px; color: rgba(201,168,76,0.7); font-family: Arial; letter-spacing: 1px; margin-bottom: 6px; text-transform: uppercase;">Lógica dos Gates</div>
+        <div style="font-size: 12px; color: rgba(201,168,76,0.7); font-family: var(--font-body); letter-spacing: 1px; margin-bottom: 6px; text-transform: uppercase;">Lógica dos Gates</div>
         <p style="font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.8;">
-          Os gates <strong style="color: var(--ouro);">não são datas</strong> — são condições de performance.
+          Os gates <strong style="color: var(--aldora-ouro);">não são datas</strong> — são condições de performance.
           Cada fase só abre quando a anterior valida preço, absorção e construção.
           Isso protege capital e maximiza o VGV total ao longo do ciclo.
         </p>
       </div>
       <div style="text-align: right;">
-        <div style="font-size: 36px; color: var(--ouro); font-weight: bold;">~84 meses</div>
-        <div style="font-size: 12px; color: rgba(255,255,255,0.5); font-family: Arial;">Horizonte total do masterplan</div>
+        <div style="font-size: 36px; color: var(--aldora-ouro); font-weight: bold;">~84 meses</div>
+        <div style="font-size: 12px; color: rgba(255,255,255,0.5); font-family: var(--font-body);">Horizonte total do masterplan</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ÁREAS COMUNS -->
-<section id="comuns">
+<section id="comuns" class="aldora-section">
   <div class="container">
-    <span class="sec-tag">Experiência do Morador</span>
-    <h2 class="sec-titulo">Áreas Comuns · 3 Camadas</h2>
+    <span class="section-tag">Experiência do Morador</span>
+    <h2 class="aldora-section__title">Áreas Comuns · 3 Camadas</h2>
     <div class="divider"></div>
-    <p class="sec-sub">Infraestrutura de uso compartilhado concebida para evolução progressiva — de funcional a aspiracional.</p>
+    <p class="aldora-section__lead">Infraestrutura de uso compartilhado concebida para evolução progressiva — de funcional a aspiracional.</p>
 
     <div class="camadas-grid">
       <div class="camada-card camada-1">
@@ -1149,12 +999,12 @@
 </section>
 
 <!-- BENCHMARK -->
-<section id="benchmark">
+<section id="benchmark" class="aldora-section">
   <div class="container">
-    <span class="sec-tag">Referências de Mercado</span>
-    <h2 class="sec-titulo">Benchmark · Comparáveis Locais</h2>
+    <span class="section-tag">Referências de Mercado</span>
+    <h2 class="aldora-section__title">Benchmark · Comparáveis Locais</h2>
     <div class="divider"></div>
-    <p class="sec-sub">Empreendimentos de referência em Uberlândia e região que validam tese de preço, produto e velocidade de vendas.</p>
+    <p class="aldora-section__lead">Empreendimentos de referência em Uberlândia e região que validam tese de preço, produto e velocidade de vendas.</p>
 
     <div class="bench-grid">
       <div class="bench-card">
@@ -1215,9 +1065,9 @@
       </div>
     </div>
 
-    <div style="background: var(--branco); border: 1px solid #e0d8cc; padding: 24px 28px; margin-top: 28px;">
+    <div style="background: var(--aldora-branco); border: 1px solid #e0d8cc; padding: 24px 28px; margin-top: 28px;">
       <p style="font-size: 14px; color: #555; line-height: 1.8;">
-        <strong style="color: var(--verde);">Conclusão do benchmark:</strong> Nosso produto P1 (R$8.000–8.500/m²) está
+        <strong style="color: var(--aldora-verde);">Conclusão do benchmark:</strong> Nosso produto P1 (R$8.000–8.500/m²) está
         <strong>alinhado ou ligeiramente abaixo do mercado</strong> nos comparáveis mais próximos,
         garantindo competitividade na entrada. À medida que o bairro se consolida e a brand equity AL'DORA se estabelece,
         P4/P5 pode superar os benchmarks atuais — tese já validada em masterplans similares.
@@ -1227,12 +1077,12 @@
 </section>
 
 <!-- TIMELINE -->
-<section id="timeline">
+<section id="timeline" class="aldora-section aldora-section--dark">
   <div class="container">
-    <span class="sec-tag">Cronograma Executivo</span>
-    <h2 class="sec-titulo">Timeline · 84 Meses</h2>
-    <div class="divider" style="background: var(--ouro);"></div>
-    <p class="sec-sub">Horizonte condicionado a gates de performance — fases se superpõem conforme aprovação e absorção.</p>
+    <span class="section-tag">Cronograma Executivo</span>
+    <h2 class="aldora-section__title">Timeline · 84 Meses</h2>
+    <div class="divider"></div>
+    <p class="aldora-section__lead" style="color: var(--aldora-branco-65);">Horizonte condicionado a gates de performance — fases se superpõem conforme aprovação e absorção.</p>
 
     <div class="gantt-wrap">
       <table class="gantt-table">
@@ -1307,10 +1157,10 @@
 </section>
 
 <!-- PARCERIA -->
-<section id="parceria">
+<section id="parceria" class="aldora-section aldora-section--bege">
   <div class="container">
-    <span class="sec-tag">Estrutura de Negócio</span>
-    <h2 class="sec-titulo">Modelo de Parceria</h2>
+    <span class="section-tag">Estrutura de Negócio</span>
+    <h2 class="aldora-section__title">Modelo de Parceria</h2>
     <div class="divider"></div>
 
     <div class="parceria-grid">
@@ -1360,9 +1210,9 @@
           <li>Histórico da incorporadora / track record</li>
         </ul>
 
-        <div style="margin-top: 24px; background: var(--creme); border: 1px solid #e0d8cc; padding: 20px 24px;">
+        <div style="margin-top: 24px; background: var(--aldora-bege); border: 1px solid #e0d8cc; padding: 20px 24px;">
           <p style="font-size: 13px; color: #555; line-height: 1.8;">
-            <strong style="color: var(--verde);">Próximo passo:</strong> Reunião de alinhamento para apresentação do EVE completo,
+            <strong style="color: var(--aldora-verde);">Próximo passo:</strong> Reunião de alinhamento para apresentação do EVE completo,
             modelo financeiro e condições de parceria. Sujeito a assinatura de NDA.
           </p>
         </div>
@@ -1372,17 +1222,17 @@
 </section>
 
 <!-- FOOTER -->
-<footer>
-  <div class="footer-logo">CIDADE JARDIM URBANISMO</div>
-  <div class="footer-sub">AL'DORA City · Uberlândia · Jardim Versailles</div>
+<footer class="aldora-footer">
+  <div class="aldora-footer__logo">CIDADE JARDIM URBANISMO</div>
+  <div class="aldora-footer__text">AL'DORA City · Uberlândia · Jardim Versailles</div>
   <div style="display: flex; justify-content: center; gap: 24px; margin-bottom: 24px; flex-wrap: wrap;">
-    <span style="color: rgba(201,168,76,0.6); font-size: 12px; font-family: Arial;">ZR2/SVA · CA 4,0</span>
+    <span style="color: rgba(200,168,75,0.6); font-size: 12px; font-family: var(--font-body);">ZR2/SVA · CA 4,0</span>
     <span style="color: rgba(255,255,255,0.2); font-size: 12px;">·</span>
-    <span style="color: rgba(201,168,76,0.6); font-size: 12px; font-family: Arial;">42.784 m² · 4 Empreendimentos · 14 Torres</span>
+    <span style="color: rgba(200,168,75,0.6); font-size: 12px; font-family: var(--font-body);">42.784 m² · 4 Empreendimentos · 14 Torres</span>
     <span style="color: rgba(255,255,255,0.2); font-size: 12px;">·</span>
-    <span style="color: rgba(201,168,76,0.6); font-size: 12px; font-family: Arial;">Março 2026</span>
+    <span style="color: rgba(200,168,75,0.6); font-size: 12px; font-family: var(--font-body);">Março 2026</span>
   </div>
-  <div class="footer-disclaimer">
+  <div class="aldora-footer__text" style="font-size: 11px; color: rgba(255,255,255,0.25); max-width: 600px; margin: 0 auto; line-height: 1.8;">
     Documento confidencial destinado exclusivamente a investidores e parceiros qualificados.
     Os dados de VGV, preços e absorção são referenciais baseados em pesquisas de mercado (Brain Research 2025, IBGE, CRECI-MG)
     e não constituem garantia, promessa ou projeção vinculante.
@@ -1404,18 +1254,26 @@
 
   // Nav active state
   const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
+  const navLinks = document.querySelectorAll('.aldora-nav__links a');
   window.addEventListener('scroll', () => {
     const scrollY = window.pageYOffset + 100;
     sections.forEach(sec => {
       if (scrollY >= sec.offsetTop && scrollY < sec.offsetTop + sec.offsetHeight) {
         navLinks.forEach(a => {
-          a.style.color = a.getAttribute('href') === '#' + sec.id
-            ? 'var(--ouro)' : 'rgba(255,255,255,0.75)';
+          a.classList.toggle('active', a.getAttribute('href') === '#' + sec.id);
         });
       }
     });
   });
+
+  // Hamburger menu toggle
+  const hamburger = document.querySelector('.aldora-nav__hamburger');
+  const navMenu = document.querySelector('.aldora-nav__links');
+  if (hamburger && navMenu) {
+    hamburger.addEventListener('click', () => {
+      navMenu.classList.toggle('open');
+    });
+  }
 </script>
 </body>
 </html>

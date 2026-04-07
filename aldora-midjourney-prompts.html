@@ -2,13 +2,19 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a2416'/%3E%3Ctext x='16' y='22' font-size='18' fill='%23C8A84B' text-anchor='middle' font-family='serif'%3EA%3C/text%3E%3C/svg%3E">
+    <meta name="theme-color" content="#0a2416">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AL'DORA City — 8 Prompts Midjourney profissionais para renders fotorrealistas">
+<meta property="og:title" content="AL'DORA City — Prompts Midjourney">
+<meta property="og:description" content="8 prompts prontos para gerar renders fotorrealistas do Masterplan Vertical Escalonado">
 <title>AL'DORA City — Prompts Midjourney</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/aldora-tokens.css">
+<link rel="stylesheet" href="assets/css/aldora-components.css">
 <style>
-:root{--verde:#0a2416;--verde-m:#1a4a2e;--ouro:#C8A84B;--ouro-l:#E8C876;--bege:#F5F0E8;--branco:#fff;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Inter',sans-serif;background:var(--verde);color:var(--branco);min-height:100vh;}
+:root{--verde:var(--aldora-verde);--verde-m:var(--aldora-verde-medio);--ouro:var(--aldora-ouro);--ouro-l:var(--aldora-ouro-claro);--bege:var(--aldora-bege);--branco:var(--aldora-branco);}
+body{background:var(--verde);color:var(--branco);min-height:100vh;}
 header{padding:48px 64px 40px;border-bottom:1px solid rgba(200,168,75,0.2);}
 .logo{font-family:'Playfair Display',serif;font-size:13px;letter-spacing:4px;color:var(--ouro);text-transform:uppercase;margin-bottom:12px;}
 header h1{font-family:'Playfair Display',serif;font-size:36px;color:var(--branco);margin-bottom:8px;}
@@ -53,9 +59,19 @@ main{padding:48px 64px 80px;max-width:1080px;}
 .bi strong{display:block;color:var(--ouro-l);margin-bottom:4px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;}
 .copied-msg{display:none;position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:var(--ouro);color:var(--verde);padding:12px 28px;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;z-index:9999;}
 @media(max-width:768px){main{padding:32px 24px 64px;}header{padding:32px 24px 28px;}.prompts-grid{grid-template-columns:1fr;}.workflow-steps{flex-direction:column;}.brand-items{grid-template-columns:1fr;}}
-</style>
+
+    :focus-visible {
+      outline: 2px solid var(--aldora-ouro, #C8A84B);
+      outline-offset: 2px;
+    }
+    a:focus-visible {
+      outline: 2px solid var(--aldora-ouro, #C8A84B);
+      outline-offset: 2px;
+    }
+    </style>
 </head>
 <body>
+<a href="#main-content" class="sr-only" style="position:absolute;top:-40px;left:0;background:var(--aldora-ouro,#C8A84B);color:#0a2416;padding:8px 16px;z-index:9999;font-size:14px;transition:top 0.2s;" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Pular para conteúdo</a>
 
 <header>
   <div class="logo">AL'DORA City · Cidade Jardim Urbanismo</div>
@@ -64,7 +80,7 @@ main{padding:48px 64px 80px;max-width:1080px;}
   <div class="badge">Midjourney v6.1 · --style raw · --ar 16:9</div>
 </header>
 
-<main>
+<main id="main-content">
   <div class="section-label">Renders Externos — Fachadas e Masterplan</div>
   <div class="prompts-grid">
 

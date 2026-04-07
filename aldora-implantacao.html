@@ -2,37 +2,28 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a2416'/%3E%3Ctext x='16' y='22' font-size='18' fill='%23C8A84B' text-anchor='middle' font-family='serif'%3EA%3C/text%3E%3C/svg%3E">
+    <meta name="theme-color" content="#0a2416">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AL'DORA City — Diagrama de Implantação das Torres · QC01/QC02/QC03">
+<meta property="og:title" content="AL'DORA City — Diagrama de Implantação das Torres">
+<meta property="og:description" content="AL'DORA City — Diagrama de Implantação das Torres · QC01/QC02/QC03">
 <title>AL'DORA City — Diagrama de Implantação das Torres</title>
+<link rel="stylesheet" href="assets/css/aldora-tokens.css">
+<link rel="stylesheet" href="assets/css/aldora-components.css">
 <style>
+  /* Legacy variable aliases → design system tokens */
   :root {
-    --verde: #1a3a2a; --verde-m: #2d5a3d; --verde-c: #3d7a52;
-    --ouro: #c9a84c; --ouro-c: #e8c97a; --creme: #f5f0e8;
-    --branco: #ffffff; --cinza: #8a8a8a; --texto: #1a1a1a;
+    --verde: var(--aldora-verde);
+    --verde-m: var(--aldora-verde-medio);
+    --verde-c: var(--aldora-verde-claro);
+    --ouro: var(--aldora-ouro);
+    --ouro-c: var(--aldora-ouro-claro);
+    --creme: var(--aldora-bege);
+    --branco: var(--aldora-branco);
+    --cinza: var(--aldora-cinza);
+    --texto: var(--aldora-texto);
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Georgia', serif; background: #f8f5f0; color: var(--texto); }
-
-  nav {
-    background: var(--verde); padding: 14px 40px;
-    display: flex; justify-content: space-between; align-items: center;
-    position: sticky; top: 0; z-index: 100;
-    border-bottom: 1px solid rgba(201,168,76,0.3);
-  }
-  .nav-logo { color: var(--ouro); font-size: 14px; letter-spacing: 2px; font-weight: bold; }
-  .nav-sub { color: rgba(255,255,255,0.5); font-size: 11px; font-family: Arial, sans-serif; letter-spacing: 1px; }
-
-  .hero {
-    background: linear-gradient(160deg, #0d2a1a, #1a3a2a);
-    padding: 60px 40px; text-align: center;
-    border-bottom: 1px solid rgba(201,168,76,0.2);
-  }
-  .hero-tag { color: var(--ouro); font-size: 11px; letter-spacing: 3px; font-family: Arial; text-transform: uppercase; margin-bottom: 16px; display: block; }
-  .hero h1 { font-size: 38px; color: var(--branco); font-weight: normal; margin-bottom: 12px; }
-  .hero p { font-size: 15px; color: rgba(255,255,255,0.55); font-style: italic; }
-
-  .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
-  section { padding: 60px 0; }
 
   .sec-tag { color: var(--verde-c); font-size: 11px; letter-spacing: 3px; font-family: Arial; text-transform: uppercase; display: block; margin-bottom: 10px; }
   .sec-titulo { font-size: 32px; color: var(--verde); font-weight: normal; margin-bottom: 8px; }
@@ -80,19 +71,43 @@
   .bench-insight { font-size: 13px; color: #444; line-height: 1.7; }
   .bench-tag { display: inline-block; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); color: #7a6020; padding: 3px 8px; font-size: 10px; font-family: Arial; margin-top: 10px; }
 
-  footer { background: var(--verde); padding: 32px 40px; text-align: center; }
-  footer p { color: rgba(255,255,255,0.4); font-size: 12px; font-family: Arial; }
-  footer .logo { color: var(--ouro); font-size: 16px; margin-bottom: 8px; }
-</style>
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .principios-grid { grid-template-columns: 1fr; }
+    .legenda-grid { grid-template-columns: repeat(2, 1fr); }
+    .fase-grid { grid-template-columns: 1fr; }
+    .orientacao-box { grid-template-columns: 1fr; }
+    .benchmark-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .legenda-grid { grid-template-columns: 1fr; gap: 8px; }
+    .principios-grid, .benchmark-grid { gap: 12px; }
+    .orientacao-box { padding: 20px; gap: 20px; }
+    .fase-grid { gap: 16px; }
+    .bench-card { padding: 16px; }
+  }
+
+
+    :focus-visible {
+      outline: 2px solid var(--aldora-ouro, #C8A84B);
+      outline-offset: 2px;
+    }
+    a:focus-visible {
+      outline: 2px solid var(--aldora-ouro, #C8A84B);
+      outline-offset: 2px;
+    }
+    </style>
 </head>
 <body>
+<a href="#main-content" class="sr-only" style="position:absolute;top:-40px;left:0;background:var(--aldora-ouro,#C8A84B);color:#0a2416;padding:8px 16px;z-index:9999;font-size:14px;transition:top 0.2s;" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Pular para conteúdo</a>
 
-<nav>
-  <div class="nav-logo">AL'DORA CITY</div>
-  <div class="nav-sub">IMPLANTAÇÃO DAS TORRES · QC01 / QC02 / QC03</div>
+<nav class="aldora-nav">
+  <div class="aldora-nav__logo">AL'DORA CITY</div>
+  <div class="aldora-nav__sub">IMPLANTAÇÃO DAS TORRES · QC01 / QC02 / QC03</div>
 </nav>
 
-<div class="hero">
+<div id="main-content" class="aldora-hero aldora-hero--compact">
   <span class="hero-tag">Cidade Jardim Urbanismo · Uberlândia/MG · ZR2/SVA</span>
   <h1>Diagrama de Implantação</h1>
   <p>Posicionamento das 14 torres nas 3 quadras · Orientação solar · Escalonamento de gabarito · Térreo ativo</p>
@@ -442,10 +457,10 @@
 
 </div>
 
-<footer>
-  <div class="logo">AL'DORA CITY · CIDADE JARDIM URBANISMO</div>
-  <p>Diagrama de implantação — esquemático conceitual, não substitui levantamento topográfico, estudo de ventilação CFD e projeto arquitetônico aprovado.</p>
-  <p style="margin-top: 6px;">Uberlândia/MG · ZR2/SVA · CA 4,0 · Março 2026</p>
+<footer class="aldora-footer">
+  <div class="aldora-footer__logo">AL'DORA CITY · CIDADE JARDIM URBANISMO</div>
+  <p class="aldora-footer__text">Diagrama de implantação — esquemático conceitual, não substitui levantamento topográfico, estudo de ventilação CFD e projeto arquitetônico aprovado.</p>
+  <p class="aldora-footer__text" style="margin-top: 6px;">Uberlândia/MG · ZR2/SVA · CA 4,0 · Março 2026</p>
 </footer>
 
 </body>

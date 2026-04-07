@@ -1,0 +1,192 @@
+{
+  "projeto": {
+    "nome": "AL'DORA City",
+    "empresa": "Cidade Jardim Urbanismo",
+    "proprietario": "Leandro Cecílio",
+    "email": "lscecilio@gmail.com",
+    "localizacao": "Jardim Versailles, Uberlândia/MG",
+    "zoneamento": "ZR2/SVA",
+    "ca": 4.0,
+    "sub_marcas": ["AL'DORA Jardins", "AL'DORA Versailles", "AL'DORA Reserva", "AL'DORA Signature"],
+    "estrutura": {
+      "empreendimentos": 4,
+      "torres": 8,
+      "quadras": 3
+    }
+  },
+  "ativo": {
+    "quadras": [
+      { "id": "QC01", "terreno_m2": 20598, "privativa_m2": 49908, "construida_m2": 81816, "fase": 1, "fase_nome": "Entrada" },
+      { "id": "QC02", "terreno_m2": 11953, "privativa_m2": 43033, "construida_m2": 70546, "fase": 2, "fase_nome": "Expansão" },
+      { "id": "QC03", "terreno_m2": 10232, "privativa_m2": 32743, "construida_m2": 53678, "fase": 3, "fase_nome": "Coroamento" }
+    ],
+    "totais": {
+      "terreno_m2": 42783,
+      "privativa_m2": 125684,
+      "construida_m2": 171138
+    }
+  },
+  "empreendimentos": [
+    { "id": "EMP1", "nome": "AL'DORA Jardins", "quadra": "QC01", "torres": ["A", "B"], "mix": "P1/P2 (volume)" },
+    { "id": "EMP2", "nome": "AL'DORA Versailles", "quadra": "QC01", "torres": ["C", "D"], "mix": "P2/P3 (equilíbrio)" },
+    { "id": "EMP3", "nome": "AL'DORA Reserva", "quadra": "QC02", "torres": ["E", "F"], "mix": "P3 (família)" },
+    { "id": "EMP4", "nome": "AL'DORA Signature", "quadra": "QC03", "torres": ["G", "H"], "mix": "P4/P5 (premium)" }
+  ],
+  "tipologias": [
+    { "codigo": "P1", "nome": "Studio Urban", "config": "Studio · 1 vaga", "area_min": 28, "area_max": 35, "ticket_min": 230000, "ticket_max": 290000 },
+    { "codigo": "P2", "nome": "Compacto Smart", "config": "2 dorms · 1 vaga", "area_min": 42, "area_max": 55, "ticket_min": 380000, "ticket_max": 500000 },
+    { "codigo": "P3", "nome": "Garden Suite", "config": "3 dorms · 2 vagas", "area_min": 68, "area_max": 85, "ticket_min": 650000, "ticket_max": 820000 },
+    { "codigo": "P4", "nome": "Alto Padrão", "config": "3–4 dorms · 3 vagas", "area_min": 105, "area_max": 135, "ticket_min": 1100000, "ticket_max": 1500000 },
+    { "codigo": "P5", "nome": "Cobertura Signature", "config": "4 dorms · duplex · 4 vagas", "area_min": 200, "area_max": 280, "ticket_min": 2800000, "ticket_max": 4200000 }
+  ],
+  "gates": [
+    { "id": "G1", "condicoes": "Aprovação municipal QC01 + financiamento + 30% pré-vendas" },
+    { "id": "G2", "condicoes": "Preço testado + vendas EMP1 em ritmo + aprovação EMP2 em andamento" },
+    { "id": "G3", "condicoes": "Revenda EMP1/2 acima projetado + construção EMP2 > 50%" },
+    { "id": "G4", "condicoes": "Bairro consolidado + brand AL'DORA estabelecida + compradores P5 pré-qualificados" }
+  ],
+  "mercado": {
+    "fonte": "Pesquisa Cowork — WebSearch + DataZAP + Sinduscon-MG + CBIC",
+    "data_pesquisa": "2026-03-20",
+    "vgv_referencial_qc01": 299680000,
+    "ticket_medio_m2": 8341,
+    "ivv_uberlandia": 0.245,
+    "cub_mg": 2839,
+    "demanda_anual_raio_15min": 1000,
+    "preco_medio_m2_venda": {
+      "geral": "R$6.000–7.500/m²",
+      "bairro_santa_monica": "R$6.477/m² (DataZAP 2026)",
+      "alto_padrao": "R$8.000–12.000/m²",
+      "economico_mcmv": "R$3.500–4.500/m²"
+    },
+    "lancamentos_2024": {
+      "empreendimentos_verticais_h1": 24,
+      "unidades_verticais_h1": 2372,
+      "unidades_vendidas_verticais": 2741,
+      "unidades_vendidas_horizontais": 1209,
+      "participacao_vertical": "69% das vendas totais"
+    },
+    "perspectiva_2026": "Crescimento moderado. Menor volume de lançamentos, maior qualidade e aderência à demanda real. Crédito imobiliário ainda caro (Selic elevada) é principal fator de atenção.",
+    "dinamismo": "Uberlândia consolidada como um dos mercados mais dinâmicos do interior brasileiro. Terceira maior cidade de MG.",
+    "custo_construcao": {
+      "cub_mg_jan2026": "R$2.838,67/m² (padrão R1-N normal — Sinduscon-MG)",
+      "custo_total_estimado": {
+        "economico": "R$3.200–3.800/m²",
+        "medio_padrao": "R$3.800–4.800/m²",
+        "alto_padrao": "R$5.000–7.000/m²"
+      }
+    },
+    "tipologias_mais_vendidas": [
+      {
+        "tipologia": "Studio / 1 quarto",
+        "metragem": "22–45 m²",
+        "participacao_mercado": "29% dos lançamentos nacionais",
+        "demanda": "Alta — jovens, investidores, locação por temporada",
+        "ticket_estimado_udi": "R$280.000–420.000",
+        "publico": "Millennials, estudantes, investidores"
+      },
+      {
+        "tipologia": "2 quartos (compacto)",
+        "metragem": "46–70 m²",
+        "participacao_mercado": "38,6% dos lançamentos — mais vendido do Brasil",
+        "demanda": "Muito alta — casal jovem, família pequena",
+        "ticket_estimado_udi": "R$380.000–600.000",
+        "publico": "Casais, família com 1 filho, home office"
+      },
+      {
+        "tipologia": "2 quartos (médio)",
+        "metragem": "70–90 m²",
+        "participacao_mercado": "18% dos lançamentos",
+        "demanda": "Alta — família padrão médio",
+        "ticket_estimado_udi": "R$550.000–750.000",
+        "publico": "Família 2-3 pessoas, upgrade residencial"
+      },
+      {
+        "tipologia": "3 quartos (suíte master)",
+        "metragem": "90–120 m²",
+        "participacao_mercado": "11% dos lançamentos",
+        "demanda": "Média — família maior ou padrão elevado",
+        "ticket_estimado_udi": "R$750.000–1.100.000",
+        "publico": "Família 3-4 pessoas, classe média-alta"
+      },
+      {
+        "tipologia": "Cobertura / duplex",
+        "metragem": "150–280 m²",
+        "participacao_mercado": "2-4% dos lançamentos",
+        "demanda": "Baixa volume, alto valor — diferencial do empreendimento",
+        "ticket_estimado_udi": "R$1.500.000–3.500.000",
+        "publico": "Alto padrão, investidor premium"
+      }
+    ],
+    "construtoras_uberlandia": [
+      { "nome": "Perplan", "perfil": "Maior incorporadora de Uberlândia, 2 lançamentos verticais previstos 2025" },
+      { "nome": "Construtora Pacheco", "perfil": "Referência local desde 1980, dita tendências do mercado" },
+      { "nome": "R. Freitas Construtora", "perfil": "38 anos de atuação em Uberlândia" },
+      { "nome": "ZP Empreendimentos", "perfil": "Médio e alto padrão desde 2002" },
+      { "nome": "Manzan Construtora", "perfil": "Edifícios residenciais padrão elevado" },
+      { "nome": "DRF Incorporação", "perfil": "Médio e alto padrão desde 2010" },
+      { "nome": "Senza Construtora", "perfil": "Design moderno, lazer completo" },
+      { "nome": "Inconew", "perfil": "Obras residenciais e comerciais, loteamentos" }
+    ],
+    "modelos_parceria_terreno": {
+      "permuta_fisica": {
+        "descricao": "Proprietário recebe X% das unidades prontas do empreendimento",
+        "split_tipico": "15–25% das unidades ao proprietário do terreno",
+        "vantagem": "Sem desembolso de caixa imediato pelo terrenista"
+      },
+      "permuta_financeira": {
+        "descricao": "Proprietário recebe X% do VGV em dinheiro, conforme vendas realizadas",
+        "split_tipico": "12–20% do VGV ao terrenista",
+        "vantagem": "Liquidez, sem risco de inventário"
+      },
+      "spe": {
+        "descricao": "Proprietário e construtora constituem SPE (Soc. Propósito Específico)",
+        "split_tipico": "Participação proporcional ao capital aportado (terreno = capital)",
+        "vantagem": "Participação nos lucros, proteção patrimonial"
+      },
+      "venda_pura": {
+        "descricao": "Venda do terreno à vista ou parcelada",
+        "vantagem": "Simplicidade, liquidez imediata para o terrenista"
+      }
+    },
+    "viabilidade_financeira": {
+      "margem_bruta_tipica": "25–38% sobre VGV",
+      "margem_liquida_tipica": "15–22% sobre VGV",
+      "tir_estimada": "18–28% a.a. (projetos vertical médio padrão interior MG)",
+      "prazo_construcao": "24–36 meses",
+      "prazo_aprovacao_prefeitura": "6–18 meses",
+      "prazo_total_projeto": "36–60 meses do lançamento ao habite-se",
+      "vgv_exemplo": {
+        "empreendimento": "120 unidades mix 2q/3q — 80 unidades × R$500k + 40 unidades × R$800k",
+        "vgv_total": "R$72 milhões",
+        "custo_construcao_estimado": "R$28–35 milhões",
+        "lucro_bruto_estimado": "R$25–35 milhões"
+      }
+    },
+    "tendencias_produto": {
+      "features_obrigatorias": [
+        "Varanda/sacada gourmet (feature #1 mais buscada)",
+        "Piscina no condomínio",
+        "Espaço pet-friendly",
+        "Coworking/home office compartilhado",
+        "Academia equipada",
+        "Segurança: portaria 24h, câmeras, acesso biométrico",
+        "Área de lazer completa"
+      ],
+      "features_diferenciais_2026": [
+        "Carregador elétrico para veículos (EV charging)",
+        "App do condomínio (reservas, comunicados)",
+        "Painéis solares / sustentabilidade",
+        "Planta reversível (quarto vira escritório)",
+        "Depósito individual por unidade",
+        "Lavanderia coletiva equipada (studios)"
+      ],
+      "arquitetura_tendencia": "Fachadas com elementos naturais (madeira, jardim vertical), linhas retas, janelas amplas, integração interior-exterior"
+    },
+    "esteira_produtos_recomendada": [
+      { "fase": 1, "nome": "Lançamento Âncora", "prazo": "2026-2027", "tipologia": "Studios 30-45m² + 2q 60-75m²", "unidades": 120, "vgv_estimado": "R$55–65M", "publico_alvo": "Jovens + investidores" },
+      { "fase": 2, "nome": "Consolidação", "prazo": "2027-2028", "tipologia": "2q 70-85m² + 3q 95-120m²", "unidades": 80, "vgv_estimado": "R$65–80M", "publico_alvo": "Família padrão médio" },
+      { "fase": 3, "nome": "Premium", "prazo": "2028-2030", "tipologia": "3q 110-140m² + coberturas", "unidades": 40, "vgv_estimado": "R$70–100M", "publico_alvo": "Alto padrão" }
+    ]
+  }
+}
