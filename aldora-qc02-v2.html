@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AL'DORA Reserva — QC02 · Jardim Versailles, Uberlândia</title>
+<meta name="description" content="AL'DORA Reserva — 4 torres com parque frontal e rua privada. O coração do masterplan AL'DORA City, Jardim Versailles, Uberlândia/MG.">
+<meta name="theme-color" content="#F2EFEB">
+<meta property="og:title" content="AL'DORA Reserva · QC02">
+<meta property="og:description" content="4 torres, parque linear, rua privada — o epicentro premium de Uberlândia.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23242424'/%3E%3Ctext x='16' y='22' font-size='16' fill='%23897443' text-anchor='middle' font-family='serif'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/aldora-v2.css">
+
+<style>
+/* ── Page-specific overrides ── */
+
+/* Hero placeholder for AI render */
+.hero {
+  background: var(--al-charcoal);
+  background-image:
+    linear-gradient(135deg, rgba(137,116,67,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 30% 80%, rgba(74,124,92,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 20%, rgba(137,116,67,0.1) 0%, transparent 50%);
+  min-height: 100vh;
+}
+
+.hero__render-note {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+  border: 1px dashed rgba(255,255,255,0.1);
+  padding: var(--sp-sm) var(--sp-md);
+  pointer-events: none;
+}
+
+/* KPI bar below hero */
+.kpi-bar {
+  background: var(--al-white);
+  border-bottom: 1px solid var(--al-line-light);
+  padding: var(--sp-lg) 0;
+}
+
+.kpi-bar .kpi-strip {
+  justify-content: space-between;
+}
+
+.kpi-bar .kpi + .kpi {
+  padding-left: var(--sp-xl);
+  border-left: 1px solid var(--al-line-light);
+}
+
+/* Conceito split */
+.conceito {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3xl);
+  align-items: center;
+}
+
+.conceito__visual {
+  aspect-ratio: 4/3;
+  background: var(--al-cream-warm);
+  border: 1px solid var(--al-line-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Implantação SVG diagram */
+.implantacao-svg {
+  width: 100%;
+  max-width: 900px;
+  margin: var(--sp-xl) auto 0;
+}
+
+/* Torre cards */
+.torre-card {
+  background: var(--al-white);
+  border: 1px solid var(--al-line-light);
+  padding: var(--sp-xl);
+  transition: all var(--duration) var(--ease-out);
+  position: relative;
+}
+
+.torre-card:hover {
+  border-color: var(--al-gold);
+  box-shadow: var(--shadow-card);
+}
+
+.torre-card__letter {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  color: var(--al-line);
+  line-height: 1;
+  position: absolute;
+  top: var(--sp-md);
+  right: var(--sp-lg);
+}
+
+.torre-card__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  color: var(--al-charcoal);
+  margin-bottom: var(--sp-xs);
+}
+
+.torre-card__tipo {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--al-gold);
+  margin-bottom: var(--sp-md);
+}
+
+.torre-card__specs {
+  list-style: none;
+}
+
+.torre-card__specs li {
+  font-size: var(--fs-small);
+  color: var(--al-slate);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--al-line-light);
+  display: flex;
+  justify-content: space-between;
+}
+
+.torre-card__specs li:last-child {
+  border-bottom: none;
+}
+
+.torre-card__specs strong {
+  color: var(--al-charcoal);
+  font-weight: 500;
+}
+
+/* Parque section — dark bg */
+.parque-section {
+  background: var(--al-charcoal);
+  color: var(--al-cream);
+  padding: var(--sp-3xl) 0;
+}
+
+.parque-section .section__tag { color: var(--al-gold-pale); }
+.parque-section .section__title { color: var(--al-white); }
+.parque-section .section__lead { color: rgba(242,239,235,0.6); }
+
+.parque-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-md);
+  margin-top: var(--sp-xl);
+}
+
+.parque-feature {
+  padding: var(--sp-lg);
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+}
+
+.parque-feature__icon {
+  font-size: 1.5rem;
+  margin-bottom: var(--sp-sm);
+}
+
+.parque-feature__title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--al-white);
+  margin-bottom: var(--sp-xs);
+}
+
+.parque-feature__text {
+  font-size: var(--fs-small);
+  color: rgba(242,239,235,0.5);
+  line-height: var(--lh-body);
+}
+
+/* Amenities — minimal list */
+.amenities-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  margin-top: var(--sp-xl);
+}
+
+.amenity-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+  padding: var(--sp-md) 0;
+  border-bottom: 1px solid var(--al-line-light);
+}
+
+.amenity-item__num {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  color: var(--al-line);
+  min-width: 48px;
+}
+
+.amenity-item__name {
+  font-size: var(--fs-body);
+  color: var(--al-charcoal);
+  font-weight: 500;
+}
+
+.amenity-item__detail {
+  font-size: var(--fs-small);
+  color: var(--al-slate);
+}
+
+/* Localização */
+.loc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3xl);
+  align-items: start;
+  margin-top: var(--sp-xl);
+}
+
+.loc-info dt {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--al-gold);
+  margin-top: var(--sp-md);
+}
+
+.loc-info dt:first-child {
+  margin-top: 0;
+}
+
+.loc-info dd {
+  font-size: var(--fs-body);
+  color: var(--al-graphite);
+  margin-top: 4px;
+  line-height: var(--lh-body);
+}
+
+/* Números / VGV */
+.numeros-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-md);
+  margin-top: var(--sp-xl);
+}
+
+.numero-card {
+  background: var(--al-white);
+  border: 1px solid var(--al-line-light);
+  padding: var(--sp-lg);
+}
+
+.numero-card__value {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  color: var(--al-charcoal);
+  line-height: 1;
+}
+
+.numero-card__label {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--al-ash);
+  margin-top: 8px;
+}
+
+.numero-card__detail {
+  font-size: var(--fs-caption);
+  color: var(--al-slate);
+  margin-top: 4px;
+}
+
+/* CTA section */
+.cta-section {
+  background: var(--al-charcoal);
+  padding: var(--sp-3xl) 0;
+  text-align: center;
+}
+
+.cta-section .section__title {
+  color: var(--al-white);
+  margin-bottom: var(--sp-sm);
+}
+
+.cta-section p {
+  color: rgba(242,239,235,0.5);
+  margin-bottom: var(--sp-lg);
+  max-width: var(--max-w-text);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .conceito { grid-template-columns: 1fr; gap: var(--sp-xl); }
+  .parque-features { grid-template-columns: 1fr; }
+  .amenities-list { grid-template-columns: 1fr; }
+  .loc-grid { grid-template-columns: 1fr; }
+  .numeros-grid { grid-template-columns: repeat(2, 1fr); }
+  .kpi-bar .kpi + .kpi { border-left: none; padding-left: 0; }
+  .kpi-bar .kpi-strip { flex-direction: column; gap: var(--sp-md); }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav nav--transparent" id="mainNav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="index.html">AL'DORA</a>
+    <ul class="nav__links">
+      <li><a href="#conceito">Conceito</a></li>
+      <li><a href="#torres">Torres</a></li>
+      <li><a href="#parque">Parque</a></li>
+      <li><a href="#amenities">Amenities</a></li>
+      <li><a href="#localizacao">Localização</a></li>
+      <li><a href="#numeros">Números</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero__render-note">Espaço para render AI · Midjourney v7 ou Gemini Imagen 3</div>
+  <div class="hero__content fade-up">
+    <div class="hero__tag">AL'DORA Reserva · Quadra QC02</div>
+    <h1 class="hero__title">
+      Onde o parque<br>encontra a <em>sua casa</em>
+    </h1>
+    <p class="hero__subtitle">
+      4 torres com vista permanente para o parque linear.
+      Rua privada, amenities master e o endereço mais desejado
+      do Jardim Versailles.
+    </p>
+    <div style="margin-top: var(--sp-lg);">
+      <a href="#conceito" class="btn btn--white">Conheça o projeto</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ KPI BAR ═══ -->
+<div class="kpi-bar">
+  <div class="container">
+    <div class="kpi-strip">
+      <div class="kpi">
+        <div class="kpi__value">4</div>
+        <div class="kpi__label">Torres</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi__value">~320</div>
+        <div class="kpi__label">Unidades</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi__value">43.033 m²</div>
+        <div class="kpi__label">Área Privativa</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi__value">11.953 m²</div>
+        <div class="kpi__label">Terreno</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi__value">P3 / P4</div>
+        <div class="kpi__label">Tipologias</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CONCEITO ═══ -->
+<section class="section bg-white" id="conceito">
+  <div class="container">
+    <div class="conceito">
+      <div>
+        <div class="section__tag fade-up">O Conceito</div>
+        <h2 class="section__title fade-up fade-up-d1">O coração do<br>masterplan AL'DORA</h2>
+        <div class="divider fade-up fade-up-d2"></div>
+        <p class="section__lead fade-up fade-up-d3">
+          A Quadra QC02 é o epicentro estratégico das 14 torres do AL'DORA City.
+          Posicionada entre as quadras QC01 e QC03, ela concentra o parque linear
+          público frontal, a rua privada exclusiva e o hub completo de amenities.
+        </p>
+        <p style="margin-top: var(--sp-md); color: var(--al-slate); line-height: var(--lh-relaxed);" class="fade-up fade-up-d4">
+          Quem mora no QC02 não olha para a cidade — olha para o parque.
+          As fachadas das 4 torres foram projetadas para maximizar a vista verde,
+          com varandas generosas voltadas para o paisagismo. A entrada se dá pela
+          rua privada arborizada, criando uma transição gradual entre o urbano e o residencial.
+        </p>
+        <div style="margin-top: var(--sp-lg);" class="fade-up fade-up-d4">
+          <a href="#torres" class="btn btn--gold">Ver as torres →</a>
+        </div>
+      </div>
+      <div class="conceito__visual">
+        <!-- Implantação esquemática SVG -->
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" style="width: 90%; height: auto;">
+          <!-- Fundo terreno -->
+          <rect x="0" y="0" width="400" height="300" fill="#EDE8E0"/>
+
+          <!-- Parque linear (frente) -->
+          <rect x="20" y="200" width="360" height="80" rx="4" fill="#C5D8C0" stroke="#A8C4A0" stroke-width="0.5"/>
+          <text x="200" y="245" text-anchor="middle" font-family="Catamaran, sans-serif" font-size="9" fill="#4A7C5C" font-weight="600" letter-spacing="2">PARQUE LINEAR PÚBLICO</text>
+
+          <!-- Rua privada -->
+          <rect x="40" y="185" width="320" height="12" rx="2" fill="#D2D2D2"/>
+          <text x="200" y="193" text-anchor="middle" font-family="Catamaran, sans-serif" font-size="6" fill="#897443" letter-spacing="1.5">RUA PRIVADA</text>
+
+          <!-- Torres QC02 -->
+          <g>
+            <rect x="50" y="100" width="65" height="80" rx="3" fill="#242424" stroke="#897443" stroke-width="1"/>
+            <text x="82" y="135" text-anchor="middle" font-family="Playfair Display, serif" font-size="18" fill="#897443">G</text>
+            <text x="82" y="152" text-anchor="middle" font-family="Catamaran, sans-serif" font-size="6" fill="#D2D2D2">Girassol</text>
+
+            <rect x="125" y="100" width="65" height="80" rx="3" fill="#242424" stroke="#897443" stroke-width="1"/>
+            <text x="157" y="135" text-anchor="middle" font-family="Playfair Display, serif" font-size="18" fill="#897443">H</text>
+            <text x="157" y="152" text-anchor="middle" font-family="Catamaran, sans-serif" font-size="6" fill="#D2D2D2">Hortênsia</text>
+
+            <rect x="210" y="100" width="65" height="80" rx="3" fill="#242424" stroke="#897443" stroke-width="1"/>
+            <text x="242" y="135" text-anchor="middle" font-family="Playfair Display, serif" font-size="18" fill="#897443">I</text>
+            <text x="242" y="152" text-anchor="middle" font-family="Catamaran, sans-serif" font-size="6" fill="#D2D2D2">Imperial</text>
+
+            <rect x="285" y="100" width="65" height="80" rx="3" fill="#242424" stroke="#897443" stroke-width="1"/>
+            <text x="317" y="135" text-anchor="middle" font-family="Playfair Display, serif" font-size="18" fill="#897443">J</text>
+            <text x="317" y="152" text-anchor="middle" font-family="Catamaran, sans-serif" font-size="6" fill="#D2D2D2">Jasmim</text>
+          </g>
+
+          <!-- Hub amenities (centro) -->
+          <rect x="145" y="58" width="110" height="32" rx="3" fill="none" stroke="#897443" stroke-width="0.8" stroke-dasharray="3,2"/>
+          <text x="200" y="78" text-anchor="middle" font-family="Catamaran, sans-serif" font-size="6" fill="#897443" letter-spacing="1">HUB AMENITIES</text>
+
+          <!-- QC01 e QC03 indicadores -->
+          <text x="20" y="20" font-family="Catamaran, sans-serif" font-size="7" fill="#B5B0A8" letter-spacing="1">← QC01</text>
+          <text x="360" y="20" font-family="Catamaran, sans-serif" font-size="7" fill="#B5B0A8" letter-spacing="1">QC03 →</text>
+
+          <!-- Av. Versailles -->
+          <text x="200" y="295" text-anchor="middle" font-family="Catamaran, sans-serif" font-size="7" fill="#8A8A8A" letter-spacing="1.5">SENTIDO AV. VERSAILLES</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TORRES ═══ -->
+<section class="section" id="torres">
+  <div class="container">
+    <div class="section__tag">As Torres</div>
+    <h2 class="section__title">4 torres, 4 personalidades</h2>
+    <p class="section__lead">
+      Cada torre do QC02 foi pensada para um perfil. Das Garden Suites
+      com vista parque até o alto padrão com planta livre — há um AL'DORA para você.
+    </p>
+
+    <div class="grid grid--4" style="margin-top: var(--sp-xl);">
+      <!-- Torre G -->
+      <div class="torre-card">
+        <div class="torre-card__letter">G</div>
+        <div class="torre-card__name">Girassol</div>
+        <div class="torre-card__tipo">Garden Suite · P3</div>
+        <ul class="torre-card__specs">
+          <li><span>Tipologia</span> <strong>3 dorms · 2 vagas</strong></li>
+          <li><span>Área</span> <strong>68–85 m²</strong></li>
+          <li><span>Andares</span> <strong>20 pavimentos</strong></li>
+          <li><span>Unidades</span> <strong>~80</strong></li>
+          <li><span>Vista</span> <strong>Parque frontal</strong></li>
+          <li><span>Ticket</span> <strong>R$ 650–820K</strong></li>
+        </ul>
+      </div>
+
+      <!-- Torre H -->
+      <div class="torre-card">
+        <div class="torre-card__letter">H</div>
+        <div class="torre-card__name">Hortênsia</div>
+        <div class="torre-card__tipo">Garden Suite · P3</div>
+        <ul class="torre-card__specs">
+          <li><span>Tipologia</span> <strong>3 dorms · 2 vagas</strong></li>
+          <li><span>Área</span> <strong>68–85 m²</strong></li>
+          <li><span>Andares</span> <strong>22 pavimentos</strong></li>
+          <li><span>Unidades</span> <strong>~88</strong></li>
+          <li><span>Vista</span> <strong>Parque + amenities</strong></li>
+          <li><span>Ticket</span> <strong>R$ 680–850K</strong></li>
+        </ul>
+      </div>
+
+      <!-- Torre I -->
+      <div class="torre-card">
+        <div class="torre-card__letter">I</div>
+        <div class="torre-card__name">Imperial</div>
+        <div class="torre-card__tipo">Mix · P3 / P4</div>
+        <ul class="torre-card__specs">
+          <li><span>Tipologia</span> <strong>3–4 dorms · 2–3 vagas</strong></li>
+          <li><span>Área</span> <strong>85–135 m²</strong></li>
+          <li><span>Andares</span> <strong>24 pavimentos</strong></li>
+          <li><span>Unidades</span> <strong>~72</strong></li>
+          <li><span>Vista</span> <strong>Panorâmica dupla</strong></li>
+          <li><span>Ticket</span> <strong>R$ 820K–1,5M</strong></li>
+        </ul>
+      </div>
+
+      <!-- Torre J -->
+      <div class="torre-card">
+        <div class="torre-card__letter">J</div>
+        <div class="torre-card__name">Jasmim</div>
+        <div class="torre-card__tipo">Alto Padrão · P4</div>
+        <ul class="torre-card__specs">
+          <li><span>Tipologia</span> <strong>3–4 dorms · 3 vagas</strong></li>
+          <li><span>Área</span> <strong>105–135 m²</strong></li>
+          <li><span>Andares</span> <strong>24 pavimentos</strong></li>
+          <li><span>Unidades</span> <strong>~80</strong></li>
+          <li><span>Vista</span> <strong>Parque + horizonte</strong></li>
+          <li><span>Ticket</span> <strong>R$ 1,1–1,5M</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="margin-top: var(--sp-lg); font-size: var(--fs-caption); color: var(--al-ash);">
+      * Coberturas duplex P5 (200–280 m²) disponíveis nas torres I e J · Ticket: R$ 2,8–4,2M
+    </p>
+  </div>
+</section>
+
+<!-- ═══ PARQUE ═══ -->
+<section class="parque-section" id="parque">
+  <div class="container">
+    <div class="section__tag">O Parque</div>
+    <h2 class="section__title">Um parque linear público<br>na porta de casa</h2>
+    <p class="section__lead">
+      O diferencial definitivo do QC02. A fachada frontal das 4 torres se abre
+      para um parque linear público com paisagismo nativo, criando um buffer verde
+      permanente entre o complexo e a avenida. Não é promessa — é cláusula do plano urbanístico.
+    </p>
+
+    <div class="parque-features">
+      <div class="parque-feature">
+        <div class="parque-feature__icon">🌳</div>
+        <div class="parque-feature__title">Paisagismo nativo</div>
+        <div class="parque-feature__text">
+          Espécies do cerrado em harmonia com paisagismo contemporâneo.
+          Ipês, jatobás e gramíneas nativas criando microclima e biodiversidade.
+        </div>
+      </div>
+      <div class="parque-feature">
+        <div class="parque-feature__icon">🛤️</div>
+        <div class="parque-feature__title">Rua privada arborizada</div>
+        <div class="parque-feature__text">
+          Acesso exclusivo para moradores. Boulevard com arborização lateral,
+          calçada larga e iluminação paisagística. A transição entre o urbano e o lar.
+        </div>
+      </div>
+      <div class="parque-feature">
+        <div class="parque-feature__icon">📈</div>
+        <div class="parque-feature__title">+15–20% valorização</div>
+        <div class="parque-feature__text">
+          Benchmarks nacionais (Parque Global SP, Bosque do Futuro BH) demonstram
+          premium de 15–22% para unidades com vista permanente de parque.
+        </div>
+      </div>
+      <div class="parque-feature">
+        <div class="parque-feature__icon">🏃</div>
+        <div class="parque-feature__title">Pista de caminhada</div>
+        <div class="parque-feature__text">
+          Circuito de caminhada e corrida integrado ao parque,
+          com estações de exercício e áreas de descanso sombreadas.
+        </div>
+      </div>
+      <div class="parque-feature">
+        <div class="parque-feature__icon">👶</div>
+        <div class="parque-feature__title">Playground natural</div>
+        <div class="parque-feature__text">
+          Área infantil com brinquedos em madeira certificada,
+          integrada à natureza. Visível das varandas das torres G e H.
+        </div>
+      </div>
+      <div class="parque-feature">
+        <div class="parque-feature__icon">🐕</div>
+        <div class="parque-feature__title">Dog park</div>
+        <div class="parque-feature__text">
+          Espaço cercado para pets com bebedouro, bancos e
+          sombreamento. Parte do compromisso com lifestyle ativo.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ AMENITIES ═══ -->
+<section class="section bg-white" id="amenities">
+  <div class="container">
+    <div class="section__tag">Amenities</div>
+    <h2 class="section__title">Hub master de lazer</h2>
+    <p class="section__lead">
+      O QC02 concentra o maior hub de amenities do complexo AL'DORA.
+      Todas as áreas de lazer foram dimensionadas para atender as 14 torres do masterplan.
+    </p>
+
+    <div class="amenities-list">
+      <div class="amenity-item">
+        <div class="amenity-item__num">01</div>
+        <div>
+          <div class="amenity-item__name">Piscina adulto + infantil</div>
+          <div class="amenity-item__detail">Deck molhado, raia 25m, hidro</div>
+        </div>
+      </div>
+      <div class="amenity-item">
+        <div class="amenity-item__num">02</div>
+        <div>
+          <div class="amenity-item__name">Academia completa</div>
+          <div class="amenity-item__detail">Equipamentos premium · funcionamento 24h</div>
+        </div>
+      </div>
+      <div class="amenity-item">
+        <div class="amenity-item__num">03</div>
+        <div>
+          <div class="amenity-item__name">Salão de festas + gourmet</div>
+          <div class="amenity-item__detail">Espaço para 120 pessoas · cozinha industrial</div>
+        </div>
+      </div>
+      <div class="amenity-item">
+        <div class="amenity-item__num">04</div>
+        <div>
+          <div class="amenity-item__name">Coworking</div>
+          <div class="amenity-item__detail">Salas de reunião · phone booths · wi-fi dedicado</div>
+        </div>
+      </div>
+      <div class="amenity-item">
+        <div class="amenity-item__num">05</div>
+        <div>
+          <div class="amenity-item__name">Quadra poliesportiva</div>
+          <div class="amenity-item__detail">Tênis · beach tennis · society</div>
+        </div>
+      </div>
+      <div class="amenity-item">
+        <div class="amenity-item__num">06</div>
+        <div>
+          <div class="amenity-item__name">Brinquedoteca + teen space</div>
+          <div class="amenity-item__detail">Área kids e adolescentes · game room</div>
+        </div>
+      </div>
+      <div class="amenity-item">
+        <div class="amenity-item__num">07</div>
+        <div>
+          <div class="amenity-item__name">Rooftop garden</div>
+          <div class="amenity-item__detail">Horta comunitária · lounge · churrasqueira</div>
+        </div>
+      </div>
+      <div class="amenity-item">
+        <div class="amenity-item__num">08</div>
+        <div>
+          <div class="amenity-item__name">Spa & sauna</div>
+          <div class="amenity-item__detail">Sauna seca e úmida · sala de massagem</div>
+        </div>
+      </div>
+      <div class="amenity-item">
+        <div class="amenity-item__num">09</div>
+        <div>
+          <div class="amenity-item__name">Pet place</div>
+          <div class="amenity-item__detail">Pet care · banho & tosa · área coberta</div>
+        </div>
+      </div>
+      <div class="amenity-item">
+        <div class="amenity-item__num">10</div>
+        <div>
+          <div class="amenity-item__name">Lobby premium</div>
+          <div class="amenity-item__detail">Recepção 24h · concierge · portaria blindada</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LOCALIZAÇÃO ═══ -->
+<section class="section" id="localizacao">
+  <div class="container">
+    <div class="section__tag">Localização</div>
+    <h2 class="section__title">Jardim Versailles, Uberlândia/MG</h2>
+    <p class="section__lead">
+      O bairro que mais cresce na zona sul de Uberlândia.
+      Infraestrutura completa, acesso rápido e valorização constante.
+    </p>
+
+    <div class="loc-grid">
+      <div>
+        <dl class="loc-info">
+          <dt>Endereço</dt>
+          <dd>Quadra QC02 · Jardim Versailles<br>Uberlândia, Minas Gerais</dd>
+
+          <dt>Zoneamento</dt>
+          <dd>ZR2 / SVA · Coeficiente de Aproveitamento 4,0</dd>
+
+          <dt>Acesso</dt>
+          <dd>Rua das Craviúnas · Av. Olímpio de Freitas</dd>
+
+          <dt>Distâncias</dt>
+          <dd>
+            Center Shopping — 8 min<br>
+            Aeroporto UDI — 20 min<br>
+            Hospital Santa Genoveva — 10 min<br>
+            UFU Campus Santa Mônica — 15 min
+          </dd>
+        </dl>
+      </div>
+      <div>
+        <dl class="loc-info">
+          <dt>Bairro</dt>
+          <dd>
+            Jardim Versailles é um dos vetores de verticalização premium de Uberlândia,
+            com forte presença de empreendimentos médio e alto padrão. O bairro oferece
+            infraestrutura completa de comércio, serviços e educação.
+          </dd>
+
+          <dt>Masterplan</dt>
+          <dd>
+            QC02 faz parte do AL'DORA City, masterplan vertical escalonado com 14 torres
+            em 3 quadras (QC01, QC02, QC03). A execução segue gates de performance,
+            não cronograma fixo — cada fase só inicia quando a anterior atinge seus indicadores.
+          </dd>
+
+          <dt>Raio de influência</dt>
+          <dd>Demanda anual: 1.000+ unidades no raio de 15 min (Brain Research 2025)</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NÚMEROS ═══ -->
+<section class="section bg-white" id="numeros">
+  <div class="container">
+    <div class="section__tag">Números</div>
+    <h2 class="section__title">Viabilidade QC02</h2>
+    <p class="section__lead">
+      Projeções baseadas em dados Brain Research 2025, CUB-MG Jan/2026
+      e benchmarks de mercado vertical Uberlândia.
+    </p>
+
+    <div class="numeros-grid">
+      <div class="numero-card">
+        <div class="numero-card__value">R$ 115–145M</div>
+        <div class="numero-card__label">VGV Projetado</div>
+        <div class="numero-card__detail">320 unidades · mix P3/P4</div>
+      </div>
+      <div class="numero-card">
+        <div class="numero-card__value">R$ 9.500/m²</div>
+        <div class="numero-card__label">Ticket Médio/m²</div>
+        <div class="numero-card__detail">Premium parque: +15–20% sobre mercado</div>
+      </div>
+      <div class="numero-card">
+        <div class="numero-card__value">28–38%</div>
+        <div class="numero-card__label">Margem Bruta</div>
+        <div class="numero-card__detail">R$ 57–87M estimado</div>
+      </div>
+      <div class="numero-card">
+        <div class="numero-card__value">18–25%</div>
+        <div class="numero-card__label">TIR Estimada</div>
+        <div class="numero-card__detail">Vertical médio-alto padrão interior MG</div>
+      </div>
+      <div class="numero-card">
+        <div class="numero-card__value">24,5%</div>
+        <div class="numero-card__label">IVV Uberlândia</div>
+        <div class="numero-card__detail">Índice de Velocidade de Vendas · 2T25</div>
+      </div>
+      <div class="numero-card">
+        <div class="numero-card__value">R$ 8.341/m²</div>
+        <div class="numero-card__label">Ticket Mercado UDI</div>
+        <div class="numero-card__detail">Referência Brain Research 2T25</div>
+      </div>
+      <div class="numero-card">
+        <div class="numero-card__value">R$ 2.839/m²</div>
+        <div class="numero-card__label">CUB-MG</div>
+        <div class="numero-card__detail">Custo Unitário Básico · Jan/2026</div>
+      </div>
+      <div class="numero-card">
+        <div class="numero-card__value">36–42 meses</div>
+        <div class="numero-card__label">Prazo Total</div>
+        <div class="numero-card__detail">Aprovação + construção + entrega</div>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div style="margin-top: var(--sp-xl); padding: var(--sp-lg); border-left: 2px solid var(--al-gold); background: var(--al-offwhite);">
+      <p style="font-size: var(--fs-small); color: var(--al-slate); line-height: var(--lh-relaxed);">
+        <strong style="color: var(--al-charcoal);">Base de cálculo:</strong>
+        Ticket médio de mercado UDI (R$ 8.341/m² · Brain Research 2T25) com premium de
+        10–20% para unidades com vista parque. VGV referencial QC01 R$299,68M rateia
+        ~R$125–145M para QC02 proporcionalmente pela área privativa (43.033 m² = 34% do total).
+        Valores estimados, sujeitos a validação por viabilidade específica.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section">
+  <div class="container">
+    <div class="label" style="color: var(--al-gold-pale); margin-bottom: var(--sp-md);">Próximo Passo</div>
+    <h2 class="section__title">Conheça o AL'DORA Reserva</h2>
+    <p>
+      Agende uma apresentação executiva com a equipe da Cidade Jardim Urbanismo.
+      Material confidencial disponível para construtoras e investidores qualificados.
+    </p>
+    <a href="mailto:lscecilio@gmail.com" class="btn btn--white">Falar com Leandro Cecílio</a>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__brand">AL'DORA City</div>
+    <p class="footer__text">
+      Cidade Jardim Urbanismo · Leandro Cecílio · lscecilio@gmail.com<br>
+      Material confidencial · Não distribuir sem autorização · © 2026
+    </p>
+    <div class="footer__links">
+      <a href="index.html">Hub Central</a>
+      <a href="aldora-qc02-3d-v2.html">Tour 3D</a>
+      <a href="aldora-qc02-launch.html">Plano de Lançamento</a>
+      <a href="aldora-governance.html">Governança</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll behavior
+const nav = document.getElementById('mainNav');
+const observer = new IntersectionObserver(
+  ([entry]) => {
+    nav.classList.toggle('nav--transparent', entry.isIntersecting);
+    nav.classList.toggle('nav--solid', !entry.isIntersecting);
+  },
+  { threshold: 0.1 }
+);
+observer.observe(document.querySelector('.hero'));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) {
+      t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// Fade-up on scroll
+const fadeEls = document.querySelectorAll('.fade-up');
+const fadeObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.15 }
+);
+fadeEls.forEach(el => {
+  el.style.animationPlayState = 'paused';
+  fadeObserver.observe(el);
+});
+</script>
+</body>
+</html>
