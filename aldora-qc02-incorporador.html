@@ -3,1096 +3,1618 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AL'DORA Reserva · QC02 · Incorporador</title>
+<title>AL'DORA Reserva · QC02 · Cidade Jardim Urbanismo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  /* ── AL'DORA RESERVA · Paleta Azul/Branco · 2026 ── */
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+/* ═══════════════════════════════════════════════════
+   AL'DORA RESERVA QC02 — INVESTOR PRESENTATION
+   Cidade Jardim Urbanismo · 2026
+   ═══════════════════════════════════════════════════ */
 
-  :root {
-    --navy:         #0B1F3A;
-    --navy-medio:   #1A3F6B;
-    --azul:         #2563EB;
-    --azul-claro:   #3B82F6;
-    --azul-sky:     #60A5FA;
-    --azul-pale:    #DBEAFE;
-    --branco:       #FFFFFF;
-    --off-white:    #F8FAFF;
-    --cinza-claro:  #E2E8F0;
-    --cinza:        #64748B;
-    --texto:        #0F172A;
-    --ouro:         #C8A84B;
-    --sombra:       rgba(11,31,58,0.15);
+:root {
+  --navy: #0B1F3A;
+  --navy-deep: #061428;
+  --navy-light: #12304F;
+  --gold: #C8A84B;
+  --gold-light: #E8D48B;
+  --gold-dim: #9A7F35;
+  --white: #FFFFFF;
+  --white-soft: #F0F2F5;
+  --blue: #2563EB;
+  --blue-light: #3B82F6;
+  --blue-glow: rgba(59,130,246,0.3);
+  --text-muted: #94A3B8;
+  --glass: rgba(11,31,58,0.85);
+}
 
-    --font-display: 'Playfair Display', Georgia, serif;
-    --font-body:    'Inter', -apple-system, sans-serif;
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    --max-width: 1140px;
-    --pad-x: 48px;
-  }
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
 
-  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--navy-deep);
+  color: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
 
-  html { scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
+h1, h2, h3, h4, h5 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 600;
+}
 
-  body {
-    font-family: var(--font-body);
-    background: var(--branco);
-    color: var(--texto);
-    line-height: 1.6;
-  }
+/* ─── NAVIGATION ─── */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 1.2rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+}
 
-  /* ── NAV ── */
-  nav {
-    position: fixed; top:0; left:0; right:0; z-index:1000;
-    background: rgba(11,31,58,0.96);
-    backdrop-filter: blur(12px);
-    padding: 0 var(--pad-x);
-    height: 64px;
-    display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid rgba(96,165,250,0.15);
-  }
-  .nav-brand {
-    font-family: var(--font-display);
-    font-size: 18px;
-    color: var(--branco);
-    letter-spacing: 1px;
-  }
-  .nav-brand span { color: var(--azul-sky); }
-  .nav-tag {
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-  }
-  .nav-badge {
-    background: var(--azul);
-    color: var(--branco);
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 4px 12px;
-    border-radius: 100px;
-  }
+.nav.scrolled {
+  background: rgba(11,31,58,0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 0.8rem 3rem;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+}
 
-  /* ── CONTAINER ── */
-  .container { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--pad-x); }
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-decoration: none;
+  letter-spacing: 3px;
+}
 
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    background: linear-gradient(135deg, var(--navy) 0%, #0D2847 40%, #1A3F6B 100%);
-    position: relative;
-    display: flex; align-items: center;
-    overflow: hidden;
-    padding-top: 64px;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: url('assets/img/renders/renders_preview.png') center/cover;
-    opacity: 0.12;
-  }
-  .hero::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 60% 50%, rgba(37,99,235,0.25) 0%, transparent 60%);
-  }
-  .hero-grid {
-    position: relative; z-index: 2;
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 60px; align-items: center;
-    padding: 80px 0;
-  }
-  .hero-eyebrow {
-    display: inline-block;
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--azul-sky);
-    border-bottom: 1px solid rgba(96,165,250,0.4);
-    padding-bottom: 8px;
-    margin-bottom: 24px;
-  }
-  .hero h1 {
-    font-family: var(--font-display);
-    font-size: clamp(40px, 5vw, 68px);
-    color: var(--branco);
-    line-height: 1.05;
-    margin-bottom: 12px;
-  }
-  .hero h1 em {
-    font-style: italic;
-    color: var(--azul-sky);
-  }
-  .hero-sub {
-    font-size: 17px;
-    color: rgba(255,255,255,0.65);
-    line-height: 1.7;
-    margin: 24px 0 40px;
-    max-width: 480px;
-  }
-  .hero-cta-row { display: flex; gap: 16px; flex-wrap: wrap; }
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--azul);
-    color: var(--branco);
-    padding: 14px 28px;
-    border-radius: 6px;
-    font-size: 14px; font-weight: 600;
-    text-decoration: none;
-    transition: background 0.2s, transform 0.2s;
-  }
-  .btn-primary:hover { background: var(--azul-claro); transform: translateY(-1px); }
-  .btn-outline {
-    display: inline-flex; align-items: center; gap: 8px;
-    border: 1px solid rgba(96,165,250,0.4);
-    color: rgba(255,255,255,0.75);
-    padding: 14px 28px;
-    border-radius: 6px;
-    font-size: 14px;
-    text-decoration: none;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .btn-outline:hover { border-color: var(--azul-sky); color: var(--branco); }
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
 
-  /* Hero stats */
-  .hero-stats {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  .stat-card {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(96,165,250,0.15);
-    border-radius: 10px;
-    padding: 24px;
-    backdrop-filter: blur(8px);
-  }
-  .stat-card.accent { border-color: rgba(37,99,235,0.5); background: rgba(37,99,235,0.12); }
-  .stat-val {
-    font-family: var(--font-display);
-    font-size: 32px;
-    color: var(--branco);
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-  .stat-val span { font-size: 18px; color: var(--azul-sky); }
-  .stat-lbl { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.45); }
-  .stat-desc { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 4px; }
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.8;
+  transition: all 0.3s;
+  position: relative;
+}
 
-  /* ── SECTION BASE ── */
-  section { padding: 96px 0; }
-  .section-tag {
-    display: inline-block;
-    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--azul);
-    border-bottom: 2px solid var(--azul-pale);
-    padding-bottom: 8px; margin-bottom: 24px;
-  }
-  .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(28px, 3.5vw, 44px);
-    color: var(--navy);
-    line-height: 1.1;
-    margin-bottom: 16px;
-  }
-  .section-sub { font-size: 17px; color: var(--cinza); line-height: 1.7; max-width: 560px; }
-  .divider-azul {
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--azul), transparent);
-    margin: 0;
-  }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.3s;
+}
 
-  /* ── RENDER GALLERY ── */
-  .gallery-section { background: var(--off-white); }
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-rows: 340px 260px;
-    gap: 12px;
-    margin-top: 48px;
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  .gallery-item {
-    overflow: hidden;
-    position: relative;
-    background: var(--cinza-claro);
-  }
-  .gallery-item:first-child { grid-row: 1 / 3; }
-  .gallery-item img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s ease;
-  }
-  .gallery-item:hover img { transform: scale(1.04); }
-  .gallery-badge {
-    position: absolute; bottom: 16px; left: 16px;
-    background: rgba(11,31,58,0.85);
-    backdrop-filter: blur(8px);
-    color: var(--branco);
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-    padding: 6px 14px; border-radius: 4px;
-    border: 1px solid rgba(96,165,250,0.3);
-  }
+.nav-links a:hover { opacity: 1; }
+.nav-links a:hover::after { width: 100%; }
 
-  /* ── MASTERPLAN ── */
-  .masterplan-section { background: var(--navy); }
-  .masterplan-section .section-tag { color: var(--azul-sky); border-color: rgba(96,165,250,0.3); }
-  .masterplan-section .section-title { color: var(--branco); }
-  .masterplan-section .section-sub { color: rgba(255,255,255,0.55); }
-  .phases-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 24px; margin-top: 48px;
-  }
-  .phase-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 10px; padding: 28px;
-    position: relative;
-    transition: border-color 0.3s;
-  }
-  .phase-card.active {
-    border-color: var(--azul);
-    background: rgba(37,99,235,0.08);
-  }
-  .phase-card.future { opacity: 0.55; }
-  .phase-num {
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--azul-sky); margin-bottom: 12px;
-  }
-  .phase-name {
-    font-family: var(--font-display); font-size: 20px;
-    color: var(--branco); margin-bottom: 8px;
-  }
-  .phase-quad {
-    font-size: 12px; color: rgba(255,255,255,0.4);
-    text-transform: uppercase; letter-spacing: 2px;
-    margin-bottom: 16px;
-  }
-  .phase-torres { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-  .torre-badge {
-    background: rgba(37,99,235,0.2);
-    border: 1px solid rgba(37,99,235,0.4);
-    color: var(--azul-sky);
-    font-size: 11px; font-weight: 600;
-    padding: 4px 10px; border-radius: 4px;
-  }
-  .torre-badge.inactive {
-    background: rgba(255,255,255,0.05);
-    border-color: rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.3);
-  }
-  .phase-metrics { font-size: 13px; color: rgba(255,255,255,0.5); }
-  .phase-metrics strong { color: var(--branco); font-size: 15px; }
-  .active-badge {
-    position: absolute; top: 16px; right: 16px;
-    background: var(--azul);
-    color: var(--branco);
-    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
-    padding: 3px 10px; border-radius: 100px;
-  }
+/* ─── SECTIONS COMMON ─── */
+.section {
+  padding: 120px 5%;
+  max-width: 1400px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1);
+}
 
-  /* ── PRODUTO ── */
-  .produto-section { background: var(--branco); }
-  .prod-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 48px; }
-  .prod-render {
-    border-radius: 12px; overflow: hidden;
-    position: relative;
-    height: 420px;
-  }
-  .prod-render img { width:100%; height:100%; object-fit:cover; }
-  .prod-render::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(0deg, rgba(11,31,58,0.7) 0%, transparent 50%);
-  }
-  .prod-render-label {
-    position: absolute; bottom: 20px; left: 20px; z-index: 2;
-    font-family: var(--font-display); font-size: 22px;
-    color: var(--branco);
-  }
-  .tipo-list { display: flex; flex-direction: column; gap: 16px; }
-  .tipo-card {
-    border: 1px solid var(--cinza-claro);
-    border-radius: 8px; padding: 20px 24px;
-    display: grid; grid-template-columns: 48px 1fr auto;
-    align-items: center; gap: 16px;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .tipo-card:hover { border-color: var(--azul-claro); box-shadow: 0 4px 16px rgba(37,99,235,0.08); }
-  .tipo-card.featured { border-color: var(--azul); background: var(--azul-pale); }
-  .tipo-icon {
-    width: 48px; height: 48px; border-radius: 8px;
-    background: var(--azul-pale); display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-  }
-  .tipo-card.featured .tipo-icon { background: var(--azul); }
-  .tipo-name { font-weight: 700; color: var(--navy); font-size: 15px; }
-  .tipo-config { font-size: 12px; color: var(--cinza); }
-  .tipo-ticket { text-align: right; }
-  .tipo-ticket-val { font-family: var(--font-display); font-size: 18px; color: var(--navy); font-weight: 600; }
-  .tipo-ticket-area { font-size: 12px; color: var(--cinza); }
-  .tipo-badge {
-    grid-column: 2 / 4;
-    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--azul); margin-top: -8px;
-  }
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-  /* ── DIFERENCIAIS ── */
-  .dif-section { background: var(--off-white); }
-  .dif-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
-  .dif-card {
-    background: var(--branco);
-    border: 1px solid var(--cinza-claro);
-    border-radius: 12px; padding: 36px 28px;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .dif-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px var(--sombra); }
-  .dif-icon {
-    width: 56px; height: 56px; border-radius: 12px;
-    background: var(--azul-pale); display: flex; align-items: center; justify-content: center;
-    font-size: 26px; margin-bottom: 20px;
-  }
-  .dif-title { font-family: var(--font-display); font-size: 20px; color: var(--navy); margin-bottom: 10px; }
-  .dif-text { font-size: 14px; color: var(--cinza); line-height: 1.7; }
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-  /* ── FINANCEIRO ── */
-  .fin-section { background: var(--navy); }
-  .fin-section .section-tag { color: var(--azul-sky); border-color: rgba(96,165,250,0.3); }
-  .fin-section .section-title { color: var(--branco); }
-  .fin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 48px; }
-  .fin-vgv {
-    background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(37,99,235,0.05));
-    border: 1px solid rgba(37,99,235,0.3);
-    border-radius: 12px; padding: 40px;
-  }
-  .fin-vgv-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--azul-sky); margin-bottom: 12px; }
-  .fin-vgv-val {
-    font-family: var(--font-display); font-size: 52px;
-    color: var(--branco); line-height: 1;
-    margin-bottom: 4px;
-  }
-  .fin-vgv-range { font-size: 14px; color: rgba(255,255,255,0.45); margin-bottom: 28px; }
-  .fin-breakdown { display: flex; flex-direction: column; gap: 12px; }
-  .fin-row {
-    display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    padding-bottom: 10px;
-  }
-  .fin-row:last-child { border-bottom: none; }
-  .fin-row-lbl { font-size: 13px; color: rgba(255,255,255,0.5); }
-  .fin-row-val { font-size: 15px; font-weight: 600; color: var(--branco); }
-  .fin-kpis { display: flex; flex-direction: column; gap: 16px; }
-  .kpi-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 8px; padding: 20px 24px;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .kpi-lbl { font-size: 12px; color: rgba(255,255,255,0.45); }
-  .kpi-val { font-family: var(--font-display); font-size: 22px; color: var(--branco); }
-  .kpi-sub { font-size: 11px; color: var(--azul-sky); }
+.section-label::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+}
 
-  /* ── GATES ── */
-  .gates-section { background: var(--branco); }
-  .gates-timeline {
-    position: relative; margin-top: 48px;
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
-  }
-  .gates-timeline::before {
-    content: '';
-    position: absolute; top: 28px; left: 60px; right: 60px; height: 2px;
-    background: linear-gradient(90deg, var(--azul), rgba(37,99,235,0.3), rgba(37,99,235,0.1));
-    z-index: 0;
-  }
-  .gate {
-    position: relative; z-index: 1;
-    display: flex; flex-direction: column; align-items: center;
-    padding: 0 12px;
-  }
-  .gate-dot {
-    width: 56px; height: 56px; border-radius: 50%;
-    background: var(--azul-pale); border: 2px solid var(--azul-claro);
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-display); font-size: 18px; font-weight: 700;
-    color: var(--azul); margin-bottom: 20px;
-  }
-  .gate-dot.active {
-    background: var(--azul); color: var(--branco);
-    border-color: var(--azul-claro);
-    box-shadow: 0 0 0 8px rgba(37,99,235,0.15);
-  }
-  .gate-dot.future {
-    background: var(--cinza-claro); color: rgba(0,0,0,0.3);
-    border-color: var(--cinza-claro);
-  }
-  .gate-name { font-weight: 700; color: var(--navy); font-size: 15px; text-align: center; margin-bottom: 8px; }
-  .gate-desc { font-size: 12px; color: var(--cinza); text-align: center; line-height: 1.5; }
-  .gate-label {
-    margin-top: 10px;
-    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--azul); font-weight: 600;
-  }
+.section-title {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  color: var(--white);
+}
 
-  /* ── PARCEIRO ── */
-  .parceiro-section {
-    background: linear-gradient(135deg, #0B1F3A 0%, #1A3F6B 100%);
-    position: relative; overflow: hidden;
-  }
-  .parceiro-section::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 80% 50%, rgba(37,99,235,0.2) 0%, transparent 60%);
-  }
-  .parceiro-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-  .parceiro-section .section-tag { color: var(--azul-sky); border-color: rgba(96,165,250,0.3); }
-  .parceiro-section .section-title { color: var(--branco); }
-  .parceiro-section .section-sub { color: rgba(255,255,255,0.55); max-width: 100%; }
-  .modelo-cards { display: flex; flex-direction: column; gap: 16px; }
-  .modelo-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(96,165,250,0.15);
-    border-radius: 10px; padding: 22px 24px;
-    display: flex; gap: 16px; align-items: flex-start;
-  }
-  .modelo-card:hover { border-color: rgba(96,165,250,0.4); }
-  .modelo-icon { font-size: 24px; min-width: 32px; }
-  .modelo-title { font-weight: 600; color: var(--branco); margin-bottom: 4px; }
-  .modelo-text { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.5; }
-  .contact-block {
-    background: rgba(37,99,235,0.12);
-    border: 1px solid rgba(37,99,235,0.3);
-    border-radius: 12px; padding: 32px;
-    margin-top: 32px;
-  }
-  .contact-block h3 { font-family: var(--font-display); font-size: 22px; color: var(--branco); margin-bottom: 8px; }
-  .contact-block p { font-size: 14px; color: rgba(255,255,255,0.55); margin-bottom: 20px; }
-  .contact-email {
-    display: block;
-    font-size: 16px; font-weight: 600;
-    color: var(--azul-sky); text-decoration: none;
-    margin-bottom: 16px;
-  }
-  .contact-email:hover { color: var(--branco); }
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  max-width: 700px;
+}
 
-  /* ── MERCADO ── */
-  .mercado-section { background: var(--off-white); }
-  .mercado-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 48px; }
-  .mercado-card {
-    background: var(--branco); border-radius: 10px;
-    border: 1px solid var(--cinza-claro);
-    padding: 24px; text-align: center;
-  }
-  .mercado-val {
-    font-family: var(--font-display); font-size: 28px;
-    color: var(--navy); margin-bottom: 6px;
-  }
-  .mercado-lbl { font-size: 12px; color: var(--cinza); line-height: 1.4; }
-  .mercado-fonte { font-size: 10px; color: rgba(0,0,0,0.3); margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; }
+.gold-line {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-dim));
+  margin: 2rem 0;
+}
 
-  /* ── 3D TOWER VIZ ── */
-  .viz-section { background: var(--navy); padding: 80px 0; }
-  .viz-section .section-tag { color: var(--azul-sky); border-color: rgba(96,165,250,0.3); }
-  .viz-section .section-title { color: var(--branco); }
-  .tower-3d-container {
-    margin-top: 48px; height: 500px;
-    border-radius: 12px; overflow: hidden;
-    position: relative;
-    background: radial-gradient(ellipse at center bottom, #1a3f6b 0%, #0b1f3a 60%);
-    display: flex; align-items: flex-end; justify-content: center;
-    gap: 0;
-    padding-bottom: 0;
-  }
-  .ground-plane {
-    position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
-    background: linear-gradient(0deg, rgba(37,99,235,0.15) 0%, transparent 100%);
-  }
-  .park-zone {
-    position: absolute; bottom: 80px; left: 40px; right: 40px; height: 60px;
-    background: linear-gradient(0deg, rgba(34,197,94,0.12), transparent);
-    border-top: 1px solid rgba(34,197,94,0.2);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .park-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(34,197,94,0.5); }
-  .private-road {
-    position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%);
-    width: 60px; height: 80px;
-    background: rgba(255,255,255,0.04);
-    border-left: 1px solid rgba(255,255,255,0.08);
-    border-right: 1px solid rgba(255,255,255,0.08);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .road-line {
-    width: 2px; height: 60%; background: repeating-linear-gradient(
-      0deg, transparent, transparent 8px, rgba(255,255,255,0.2) 8px, rgba(255,255,255,0.2) 14px
-    );
-  }
+/* ─── HERO ─── */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
 
-  .tower-group { display: flex; gap: 8px; align-items: flex-end; position: relative; z-index: 2; }
-  .tower {
-    width: 64px;
-    border-radius: 4px 4px 0 0;
-    position: relative;
-    background: linear-gradient(180deg, #2563EB 0%, #1A3F6B 50%, rgba(26,63,107,0.6) 100%);
-    box-shadow: 0 0 40px rgba(37,99,235,0.3), inset 0 0 20px rgba(255,255,255,0.03);
-    animation: tower-appear 1.2s ease-out both;
-  }
-  .tower::after {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 40%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%);
-    border-radius: 4px 4px 0 0;
-  }
-  .tower-e { height: 320px; animation-delay: 0.1s; }
-  .tower-f { height: 360px; animation-delay: 0.3s; }
-  .tower-label {
-    position: absolute; bottom: -32px; left: 50%; transform: translateX(-50%);
-    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-    color: rgba(255,255,255,0.4); white-space: nowrap;
-  }
-  .tower-floors {
-    position: absolute; left: 0; right: 0; top: 0; bottom: 0;
-    background: repeating-linear-gradient(
-      0deg, transparent, transparent calc(100%/22 - 1px), rgba(255,255,255,0.06) calc(100%/22 - 1px), rgba(255,255,255,0.06) calc(100%/22)
-    );
-    border-radius: 4px 4px 0 0;
-  }
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: url('assets/img/ai-renders/hero_aerial.png') center/cover no-repeat;
+  transform: scale(1.1);
+  transition: transform 0.1s linear;
+}
 
-  @keyframes tower-appear {
-    from { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
-    to { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
-  }
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(6,20,40,0.6) 0%,
+    rgba(6,20,40,0.4) 40%,
+    rgba(6,20,40,0.7) 70%,
+    rgba(6,20,40,0.95) 100%
+  );
+}
 
-  .sky-ele { position: absolute; top: 20px; right: 40px; opacity: 0.15; }
-  .sky-ele span { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--branco); }
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 2rem;
+}
 
-  /* ── FOOTER ── */
-  footer {
-    background: #060F1D;
-    padding: 48px var(--pad-x);
-    text-align: center;
-  }
-  .footer-brand { font-family: var(--font-display); font-size: 24px; color: var(--branco); margin-bottom: 8px; }
-  .footer-sub { font-size: 12px; color: rgba(255,255,255,0.3); letter-spacing: 3px; text-transform: uppercase; }
-  .footer-meta { margin-top: 32px; font-size: 11px; color: rgba(255,255,255,0.15); }
-  .ai-stamp {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.2);
-    border-radius: 4px; padding: 6px 14px; margin-top: 16px;
-    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-    color: rgba(255,255,255,0.25);
-  }
-  .ai-stamp::before { content: '⚡'; }
+.hero-badge {
+  display: inline-block;
+  border: 1px solid var(--gold-dim);
+  padding: 8px 24px;
+  border-radius: 30px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
+  background: rgba(200,168,75,0.08);
+}
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    .hero-grid { grid-template-columns: 1fr; }
-    .hero-stats { grid-template-columns: 1fr 1fr; margin-top: 40px; }
-    .gallery-grid { grid-template-columns: 1fr; grid-template-rows: auto; height: auto; }
-    .gallery-item:first-child { grid-row: auto; height: 260px; }
-    .gallery-item { height: 200px; }
-    .phases-grid, .dif-grid { grid-template-columns: 1fr; }
-    .prod-grid, .fin-grid, .parceiro-grid { grid-template-columns: 1fr; }
-    .mercado-grid { grid-template-columns: 1fr 1fr; }
-    .gates-timeline { grid-template-columns: 1fr 1fr; }
-    :root { --pad-x: 24px; }
-  }
-  @media (max-width: 600px) {
-    .mercado-grid { grid-template-columns: 1fr; }
-    .gates-timeline { grid-template-columns: 1fr; }
-    .gates-timeline::before { display: none; }
-  }
+.hero h1 {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  letter-spacing: 8px;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--white) 0%, var(--gold-light) 50%, var(--white) 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.hero h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  font-weight: 400;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  margin-bottom: 0.8rem;
+}
+
+.hero-tagline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-style: italic;
+  color: var(--gold);
+  opacity: 0.9;
+  margin-top: 0.5rem;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: bounce 2s infinite;
+}
+
+.scroll-indicator span {
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.scroll-indicator .arrow {
+  width: 20px;
+  height: 20px;
+  border-right: 1.5px solid var(--gold);
+  border-bottom: 1.5px solid var(--gold);
+  transform: rotate(45deg);
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+  40% { transform: translateX(-50%) translateY(-10px); }
+  60% { transform: translateX(-50%) translateY(-5px); }
+}
+
+/* ─── VISÃO ─── */
+.visao-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.visao-image {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+}
+
+.visao-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s;
+}
+
+.visao-image:hover img { transform: scale(1.03); }
+
+.visao-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(200,168,75,0.15);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.stat-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 3rem;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, var(--navy-light), var(--navy));
+  border: 1px solid rgba(200,168,75,0.12);
+  border-radius: 12px;
+  padding: 28px 20px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.stat-card:hover {
+  border-color: rgba(200,168,75,0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+
+.stat-card .value {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.stat-card .label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ─── GALERIA ─── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 3rem;
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 16/10;
+  cursor: pointer;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+.gallery-item:hover img { transform: scale(1.08); }
+
+.gallery-item .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(6,20,40,0.85) 100%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+}
+
+.gallery-item:hover .overlay { opacity: 1; }
+
+.gallery-item .overlay span {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: var(--white);
+}
+
+/* ─── 3D SECTION ─── */
+.section-3d {
+  padding: 80px 0;
+  background: var(--navy-deep);
+  position: relative;
+}
+
+.section-3d .section-header {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 5% 40px;
+}
+
+.canvas-container {
+  width: 100%;
+  height: 600px;
+  position: relative;
+  background: radial-gradient(ellipse at center bottom, #0d2847 0%, #061428 70%);
+  border-top: 1px solid rgba(200,168,75,0.1);
+  border-bottom: 1px solid rgba(200,168,75,0.1);
+}
+
+#canvas3d {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.tower-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.tower-label {
+  position: absolute;
+  background: rgba(200,168,75,0.15);
+  border: 1px solid var(--gold-dim);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--gold);
+  backdrop-filter: blur(8px);
+  white-space: nowrap;
+}
+
+/* ─── NÚMEROS ─── */
+.numeros-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 3rem;
+}
+
+.numero-card {
+  background: linear-gradient(135deg, rgba(18,48,79,0.6), rgba(11,31,58,0.6));
+  border: 1px solid rgba(200,168,75,0.08);
+  border-radius: 16px;
+  padding: 40px 30px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s;
+}
+
+.numero-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 0 0 3px 3px;
+}
+
+.numero-card:hover {
+  border-color: rgba(200,168,75,0.25);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.numero-card .number {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.numero-card .number-label {
+  font-size: 0.9rem;
+  color: var(--white);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.numero-card .number-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ─── MASTERPLAN ─── */
+.masterplan-wrapper {
+  position: relative;
+  margin-top: 3rem;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+}
+
+.masterplan-wrapper img {
+  width: 100%;
+  display: block;
+  filter: brightness(0.9);
+}
+
+.masterplan-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 30%, rgba(6,20,40,0.6) 100%);
+}
+
+.qc-markers {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding: 0 10%;
+}
+
+.qc-marker {
+  background: rgba(11,31,58,0.85);
+  border: 1px solid rgba(200,168,75,0.2);
+  border-radius: 12px;
+  padding: 20px 24px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s;
+  min-width: 140px;
+}
+
+.qc-marker.active {
+  border-color: var(--gold);
+  background: rgba(200,168,75,0.12);
+  box-shadow: 0 0 30px rgba(200,168,75,0.15);
+  transform: scale(1.08);
+}
+
+.qc-marker .qc-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.qc-marker .qc-phase {
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.timeline-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  margin-top: 3rem;
+  padding: 0 5%;
+}
+
+.timeline-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 160px;
+}
+
+.timeline-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--navy-light);
+  border: 2px solid var(--gold-dim);
+  margin-bottom: 12px;
+  transition: all 0.3s;
+}
+
+.timeline-node.active .timeline-dot {
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 20px rgba(200,168,75,0.4);
+}
+
+.timeline-connector {
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold-dim), rgba(200,168,75,0.2));
+  margin-bottom: 28px;
+}
+
+.timeline-node .t-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.timeline-node .t-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ─── ESCADA DE PRODUTOS ─── */
+.escada-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 4rem;
+  padding-bottom: 2rem;
+}
+
+.escada-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 180px;
+  transition: all 0.4s;
+}
+
+.escada-bar {
+  width: 100%;
+  background: linear-gradient(180deg, var(--navy-light), rgba(18,48,79,0.4));
+  border: 1px solid rgba(200,168,75,0.1);
+  border-radius: 12px 12px 4px 4px;
+  padding: 24px 16px;
+  text-align: center;
+  transition: all 0.4s;
+  position: relative;
+}
+
+.escada-step:nth-child(1) .escada-bar { min-height: 160px; }
+.escada-step:nth-child(2) .escada-bar { min-height: 210px; }
+.escada-step:nth-child(3) .escada-bar { min-height: 270px; }
+.escada-step:nth-child(4) .escada-bar { min-height: 330px; }
+.escada-step:nth-child(5) .escada-bar { min-height: 400px; }
+
+.escada-step.highlight .escada-bar {
+  border-color: var(--gold);
+  background: linear-gradient(180deg, rgba(200,168,75,0.15), rgba(200,168,75,0.03));
+  box-shadow: 0 0 40px rgba(200,168,75,0.12), inset 0 1px 0 rgba(200,168,75,0.3);
+}
+
+.escada-step.highlight .escada-bar::before {
+  content: '★ QC02';
+  position: absolute;
+  top: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.escada-code {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.escada-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.escada-detail {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.escada-detail strong {
+  color: var(--white);
+  font-weight: 500;
+}
+
+/* ─── GATES ─── */
+.gates-timeline {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 4rem;
+  position: relative;
+  padding: 0 20px;
+}
+
+.gates-timeline::before {
+  content: '';
+  position: absolute;
+  top: 24px;
+  left: 60px;
+  right: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-dim));
+  opacity: 0.3;
+}
+
+.gate-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 220px;
+  position: relative;
+  z-index: 2;
+}
+
+.gate-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--navy);
+  border: 2px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--gold);
+  margin-bottom: 20px;
+  box-shadow: 0 0 20px rgba(200,168,75,0.15);
+}
+
+.gate-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.gate-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ─── PARCERIA ─── */
+.parceria {
+  position: relative;
+  padding: 160px 5%;
+  text-align: center;
+  overflow: hidden;
+}
+
+.parceria-bg {
+  position: absolute;
+  inset: 0;
+  background: url('assets/img/ai-renders/towers_night.png') center/cover no-repeat;
+}
+
+.parceria-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    rgba(6,20,40,0.92) 0%,
+    rgba(6,20,40,0.8) 50%,
+    rgba(6,20,40,0.95) 100%
+  );
+}
+
+.parceria-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.parceria-gold-line {
+  width: 80px;
+  height: 2px;
+  background: var(--gold);
+  margin: 0 auto 2rem;
+}
+
+.parceria h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  line-height: 1.3;
+  margin-bottom: 1.5rem;
+}
+
+.parceria p {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+}
+
+.cta-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+  color: var(--navy);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 16px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s;
+  box-shadow: 0 8px 30px rgba(200,168,75,0.25);
+}
+
+.cta-email:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(200,168,75,0.35);
+}
+
+.parceria-brand {
+  margin-top: 3rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 0.85rem;
+  letter-spacing: 3px;
+  color: var(--gold-dim);
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  padding: 40px 5%;
+  text-align: center;
+  border-top: 1px solid rgba(200,168,75,0.08);
+}
+
+.footer p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 2;
+  letter-spacing: 0.5px;
+}
+
+.footer .brand {
+  color: var(--gold-dim);
+  font-weight: 500;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .visao-grid { grid-template-columns: 1fr; gap: 40px; }
+  .numeros-grid { grid-template-columns: repeat(2, 1fr); }
+  .escada-container { flex-wrap: wrap; gap: 12px; }
+  .escada-step { width: 140px; }
+  .gates-timeline { flex-wrap: wrap; gap: 30px; justify-content: center; }
+  .gates-timeline::before { display: none; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .qc-markers { flex-direction: column; gap: 16px; }
+}
+
+@media (max-width: 768px) {
+  .nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .section { padding: 80px 5%; }
+  .stat-cards { grid-template-columns: 1fr; }
+  .numeros-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: 1fr; }
+  .canvas-container { height: 400px; }
+  .escada-container { flex-direction: column; align-items: center; }
+  .escada-step { width: 90%; max-width: 280px; }
+  .escada-step .escada-bar { min-height: auto !important; padding: 20px; }
+  .timeline-bar { flex-direction: column; }
+  .timeline-connector { width: 2px; height: 40px; }
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-brand">AL'DORA <span>Reserva</span></div>
-  <span class="nav-tag">QC02 · Jardim Versailles · Uberlândia</span>
-  <span class="nav-badge">Incorporador</span>
+<!-- ═══════════════ NAVIGATION ═══════════════ -->
+<nav class="nav" id="mainNav">
+  <a href="#hero" class="nav-brand">AL'DORA</a>
+  <ul class="nav-links">
+    <li><a href="#visao">Visão</a></li>
+    <li><a href="#galeria">Galeria</a></li>
+    <li><a href="#scene3d">3D</a></li>
+    <li><a href="#numeros">Números</a></li>
+    <li><a href="#masterplan">Masterplan</a></li>
+    <li><a href="#escada">Produtos</a></li>
+    <li><a href="#gates">Gates</a></li>
+    <li><a href="#parceria">Parceria</a></li>
+  </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-grid">
-      <div class="hero-content">
-        <span class="hero-eyebrow">Fase 2 · Masterplan AL'DORA City</span>
-        <h1>A <em>Reserva</em><br>do Bairro<br>Premium</h1>
-        <p class="hero-sub">
-          Dois volumes verticais em terreno de 11.953 m² — parque frontal preservado,
-          rua privativa interna e 70.546 m² de área construída no endereço mais
-          valorizado de Uberlândia.
-        </p>
-        <div class="hero-cta-row">
-          <a href="#parceiro" class="btn-primary">→ Modelo de Parceria</a>
-          <a href="#financeiro" class="btn-outline">📊 VGV &amp; Financeiro</a>
-        </div>
-      </div>
-      <div class="hero-stats">
-        <div class="stat-card accent">
-          <div class="stat-val">R$<span>140–</span>180M</div>
-          <div class="stat-lbl">VGV Estimado</div>
-          <div class="stat-desc">2 torres · QC02 completo</div>
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Fase 2 · Masterplan Vertical</div>
+    <h1>AL'DORA RESERVA</h1>
+    <h2>Quadra C02 · Jardim Versailles · Uberlândia</h2>
+    <p class="hero-tagline">Masterplan Vertical Escalonado</p>
+  </div>
+  <div class="scroll-indicator">
+    <span>Explore</span>
+    <div class="arrow"></div>
+  </div>
+</section>
+
+<!-- ═══════════════ VISÃO ═══════════════ -->
+<section class="section" id="visao">
+  <div class="section-label">A Visão</div>
+  <div class="visao-grid">
+    <div>
+      <h2 class="section-title">O próximo capítulo do maior masterplan vertical de Uberlândia</h2>
+      <div class="gold-line"></div>
+      <p class="section-subtitle">
+        AL'DORA Reserva é a <strong style="color:var(--gold)">Fase 2 — Expansão</strong> do Masterplan Vertical Escalonado. 
+        Com duas torres (E + F) na Quadra C02, consolida a marca AL'DORA com foco no produto 
+        <strong style="color:var(--white)">P3 — Garden Suite</strong>: apartamentos de 3 dormitórios projetados para 
+        famílias que buscam espaço, conforto e a vivência completa do ecossistema AL'DORA City.
+      </p>
+      <p class="section-subtitle" style="margin-top: 1rem;">
+        Posicionada entre a entrada do bairro (QC01) e o coroamento premium (QC03), 
+        a Reserva captura o momento de máxima confiança do mercado — quando a marca já é conhecida 
+        e o bairro já é desejado.
+      </p>
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="value">11.953</div>
+          <div class="label">m² terreno</div>
         </div>
         <div class="stat-card">
-          <div class="stat-val">70<span>K</span></div>
-          <div class="stat-lbl">m² Construídos</div>
-          <div class="stat-desc">CA 4,0 · ZR2/SVA</div>
+          <div class="value">43.033</div>
+          <div class="label">m² privativos</div>
         </div>
         <div class="stat-card">
-          <div class="stat-val">2<span>T</span></div>
-          <div class="stat-lbl">Torres E + F</div>
-          <div class="stat-desc">Tipologia P3 focus</div>
+          <div class="value">70.546</div>
+          <div class="label">m² construídos</div>
         </div>
-        <div class="stat-card">
-          <div class="stat-val">11<span>.</span>953</div>
-          <div class="stat-lbl">m² de Terreno</div>
-          <div class="stat-desc">Jardim Versailles</div>
+      </div>
+    </div>
+    <div class="visao-image">
+      <img src="assets/img/ai-renders/park_frontal.png" alt="AL'DORA Reserva — Vista frontal com parque paisagístico" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ GALERIA ═══════════════ -->
+<section class="section" id="galeria">
+  <div class="section-label">Galeria</div>
+  <h2 class="section-title">Perspectivas do Empreendimento</h2>
+  <p class="section-subtitle">Renders conceituais e estudos de implantação do AL'DORA Reserva QC02.</p>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="assets/img/ai-renders/hero_aerial.png" alt="Vista aérea" loading="lazy">
+      <div class="overlay"><span>Vista Aérea — Torres E + F</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="assets/img/ai-renders/park_frontal.png" alt="Vista frontal com parque" loading="lazy">
+      <div class="overlay"><span>Parque Paisagístico Central</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="assets/img/ai-renders/towers_night.png" alt="Iluminação noturna" loading="lazy">
+      <div class="overlay"><span>Iluminação Noturna</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="assets/img/ai-renders/amenities_pool.png" alt="Rooftop e lazer" loading="lazy">
+      <div class="overlay"><span>Rooftop Pool & Amenities</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="assets/img/thumbs/cf45ab60.jpg" alt="Estudo 3D do complexo" loading="lazy">
+      <div class="overlay"><span>Estudo 3D — Complexo</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="assets/img/thumbs/vista-24.png" alt="Parque e lago" loading="lazy">
+      <div class="overlay"><span>Parque & Espelho d'Água</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 3D INTERATIVO ═══════════════ -->
+<section class="section-3d" id="scene3d">
+  <div class="section-header section visible" style="padding-top:0; padding-bottom: 0;">
+    <div class="section-label">Modelo 3D Interativo</div>
+    <h2 class="section-title">Torres E + F em Perspectiva</h2>
+    <p class="section-subtitle">Arraste para rotacionar · Scroll para zoom · Modelo conceitual das duas torres da Quadra C02</p>
+  </div>
+  <div class="canvas-container">
+    <canvas id="canvas3d"></canvas>
+    <div class="tower-labels">
+      <div class="tower-label" id="labelE" style="top: 30%; left: 38%;">TORRE E</div>
+      <div class="tower-label" id="labelF" style="top: 30%; right: 38%;">TORRE F</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ NÚMEROS ═══════════════ -->
+<section class="section" id="numeros">
+  <div class="section-label">Números</div>
+  <h2 class="section-title">Dados do Empreendimento</h2>
+  <p class="section-subtitle">Projeções financeiras e dados construtivos da Quadra C02 — AL'DORA Reserva.</p>
+  <div class="numeros-grid">
+    <div class="numero-card">
+      <div class="number" data-target="180" data-prefix="R$ " data-suffix="M">R$ 0</div>
+      <div class="number-label">VGV Projetado</div>
+      <div class="number-desc">Valor geral de vendas estimado para as duas torres</div>
+    </div>
+    <div class="numero-card">
+      <div class="number" data-target="43033" data-suffix=" m²">0</div>
+      <div class="number-label">Área Privativa</div>
+      <div class="number-desc">Total de área privativa comercializável</div>
+    </div>
+    <div class="numero-card">
+      <div class="number" data-target="2" data-suffix=" Torres">0</div>
+      <div class="number-label">Torres E + F</div>
+      <div class="number-desc">Duas torres residenciais de alto padrão</div>
+    </div>
+    <div class="numero-card">
+      <div class="number" data-target="25" data-suffix=" Pav.">0</div>
+      <div class="number-label">Pavimentos por Torre</div>
+      <div class="number-desc">Verticalização otimizada para CA 4.0</div>
+    </div>
+    <div class="numero-card">
+      <div class="number" data-target="750" data-prefix="R$ " data-suffix="K">R$ 0</div>
+      <div class="number-label">Ticket Médio</div>
+      <div class="number-desc">Faixa R$ 650K–820K · P3 Garden Suite</div>
+    </div>
+    <div class="numero-card">
+      <div class="number" data-target="85" data-suffix=" m²">0</div>
+      <div class="number-label">P3 — Garden Suite</div>
+      <div class="number-desc">3 dorms · 2 vagas · 68–85 m² · foco família</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ MASTERPLAN ═══════════════ -->
+<section class="section" id="masterplan">
+  <div class="section-label">Masterplan</div>
+  <h2 class="section-title">Posição Estratégica no Masterplan</h2>
+  <p class="section-subtitle">A Quadra C02 ocupa a posição central do ecossistema AL'DORA City — entre a entrada de mercado e o coroamento premium.</p>
+  
+  <div class="masterplan-wrapper">
+    <img src="assets/img/thumbs/verdelle-28.png" alt="Masterplan AL'DORA City" loading="lazy">
+    <div class="masterplan-overlay"></div>
+    <div class="qc-markers">
+      <div class="qc-marker">
+        <div class="qc-name">QC01</div>
+        <div class="qc-phase">Fase 1 · Entrada</div>
+      </div>
+      <div class="qc-marker active">
+        <div class="qc-name">QC02</div>
+        <div class="qc-phase">Fase 2 · Expansão</div>
+      </div>
+      <div class="qc-marker">
+        <div class="qc-name">QC03</div>
+        <div class="qc-phase">Fase 3 · Coroamento</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline-bar">
+    <div class="timeline-node">
+      <div class="timeline-dot"></div>
+      <div class="t-label">QC01</div>
+      <div class="t-sub">AL'DORA Jardins & Versailles</div>
+    </div>
+    <div class="timeline-connector"></div>
+    <div class="timeline-node active">
+      <div class="timeline-dot"></div>
+      <div class="t-label">QC02</div>
+      <div class="t-sub">AL'DORA Reserva</div>
+    </div>
+    <div class="timeline-connector"></div>
+    <div class="timeline-node">
+      <div class="timeline-dot"></div>
+      <div class="t-label">QC03</div>
+      <div class="t-sub">AL'DORA Signature</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ESCADA DE PRODUTOS ═══════════════ -->
+<section class="section" id="escada">
+  <div class="section-label">Escada de Produtos</div>
+  <h2 class="section-title">Portfólio Vertical Escalonado</h2>
+  <p class="section-subtitle">Cinco tipologias calibradas para capturar cada faixa de demanda — do investidor ao ultra-premium.</p>
+
+  <div class="escada-container">
+    <div class="escada-step">
+      <div class="escada-bar">
+        <div class="escada-code">P1</div>
+        <div class="escada-name">Studio Urban</div>
+        <div class="escada-detail">
+          Studio · 1 vaga<br>
+          <strong>28–35 m²</strong><br>
+          R$ 230–290K
+        </div>
+      </div>
+    </div>
+    <div class="escada-step">
+      <div class="escada-bar">
+        <div class="escada-code">P2</div>
+        <div class="escada-name">Compacto Smart</div>
+        <div class="escada-detail">
+          2 dorms · 1 vaga<br>
+          <strong>42–55 m²</strong><br>
+          R$ 380–500K
+        </div>
+      </div>
+    </div>
+    <div class="escada-step highlight">
+      <div class="escada-bar">
+        <div class="escada-code">P3</div>
+        <div class="escada-name">Garden Suite</div>
+        <div class="escada-detail">
+          3 dorms · 2 vagas<br>
+          <strong>68–85 m²</strong><br>
+          R$ 650–820K
+        </div>
+      </div>
+    </div>
+    <div class="escada-step">
+      <div class="escada-bar">
+        <div class="escada-code">P4</div>
+        <div class="escada-name">Alto Padrão</div>
+        <div class="escada-detail">
+          3–4 dorms · 3 vagas<br>
+          <strong>105–135 m²</strong><br>
+          R$ 1,1–1,5M
+        </div>
+      </div>
+    </div>
+    <div class="escada-step">
+      <div class="escada-bar">
+        <div class="escada-code">P5</div>
+        <div class="escada-name">Cobertura Signature</div>
+        <div class="escada-detail">
+          4 dorms · duplex · 4 vagas<br>
+          <strong>200–280 m²</strong><br>
+          R$ 2,8–4,2M
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="divider-azul"></div>
+<!-- ═══════════════ GATES ═══════════════ -->
+<section class="section" id="gates">
+  <div class="section-label">Gates de Performance</div>
+  <h2 class="section-title">Condições de Avanço</h2>
+  <p class="section-subtitle">O masterplan avança por gates de performance, não por datas — garantindo que cada fase só inicia quando a anterior atinge seus indicadores.</p>
 
-<!-- RENDERS -->
-<section class="gallery-section">
-  <div class="container">
-    <div class="section-tag">Perspectivas</div>
-    <h2 class="section-title">O Projeto em Imagem</h2>
-    <p class="section-sub">Perspectivas do masterplan AL'DORA City — parque frontal, rua privativa e paisagismo assinado integrados ao complexo QC01+QC02.</p>
-    <div class="gallery-grid">
-      <div class="gallery-item">
-        <img src="assets/img/renders/renders_preview.png" alt="Render principal AL'DORA" loading="lazy">
-        <span class="gallery-badge">Perspectiva Geral</span>
-      </div>
-      <div class="gallery-item">
-        <img src="assets/img/renders/renders_view.png" alt="Vista aérea" loading="lazy">
-        <span class="gallery-badge">Vista Aérea</span>
-      </div>
-      <div class="gallery-item">
-        <img src="assets/img/renders/renders_preview2.png" alt="Vista frontal" loading="lazy">
-        <span class="gallery-badge">Frontal</span>
-      </div>
-      <div class="gallery-item">
-        <img src="assets/img/renders/renders_bottom.png" alt="Perspectiva baixa" loading="lazy">
-        <span class="gallery-badge">Nível Rua</span>
-      </div>
+  <div class="gates-timeline">
+    <div class="gate-node">
+      <div class="gate-circle">G1</div>
+      <div class="gate-title">Entrada</div>
+      <div class="gate-desc">Aprovação municipal QC01 + financiamento estruturado + 30% de pré-vendas atingido</div>
+    </div>
+    <div class="gate-node">
+      <div class="gate-circle">G2</div>
+      <div class="gate-title">Validação</div>
+      <div class="gate-desc">Preço testado pelo mercado + vendas EMP1 em ritmo saudável + aprovação EMP2 em andamento</div>
+    </div>
+    <div class="gate-node">
+      <div class="gate-circle">G3</div>
+      <div class="gate-title">Aceleração</div>
+      <div class="gate-desc">Revenda EMP1/2 acima do projetado + construção EMP2 &gt; 50% concluída</div>
+    </div>
+    <div class="gate-node">
+      <div class="gate-circle">G4</div>
+      <div class="gate-title">Coroamento</div>
+      <div class="gate-desc">Bairro consolidado + brand AL'DORA estabelecida + compradores P5 pré-qualificados</div>
     </div>
   </div>
 </section>
 
-<div class="divider-azul"></div>
-
-<!-- MASTERPLAN / FASES -->
-<section class="masterplan-section">
-  <div class="container">
-    <div class="section-tag">Masterplan · 3 Quadras · 4 Empreendimentos</div>
-    <h2 class="section-title">Posição do QC02 no Masterplan</h2>
-    <p class="section-sub">Fase 2 do AL'DORA City, ativada após gates de performance do QC01. A Reserva amplia o bairro para o padrão P3 premium.</p>
-    <div class="phases-grid">
-      <div class="phase-card">
-        <div class="phase-num">Fase 1 · Entrada</div>
-        <div class="phase-name">AL'DORA Jardins<br>+ Versailles</div>
-        <div class="phase-quad">Quadra QC01 · 20.598 m²</div>
-        <div class="phase-torres">
-          <span class="torre-badge">Torre A</span>
-          <span class="torre-badge">Torre B</span>
-          <span class="torre-badge">Torre C</span>
-          <span class="torre-badge">Torre D</span>
-        </div>
-        <div class="phase-metrics">
-          <strong>81.816 m²</strong> construídos<br>
-          VGV referencial <strong>R$299M</strong>
-        </div>
-      </div>
-      <div class="phase-card active">
-        <span class="active-badge">▶ QC02</span>
-        <div class="phase-num">Fase 2 · Expansão</div>
-        <div class="phase-name">AL'DORA<br>Reserva</div>
-        <div class="phase-quad">Quadra QC02 · 11.953 m²</div>
-        <div class="phase-torres">
-          <span class="torre-badge">Torre E</span>
-          <span class="torre-badge">Torre F</span>
-        </div>
-        <div class="phase-metrics">
-          <strong>70.546 m²</strong> construídos<br>
-          VGV estimado <strong>R$140–180M</strong>
-        </div>
-      </div>
-      <div class="phase-card future">
-        <div class="phase-num">Fase 3 · Coroamento</div>
-        <div class="phase-name">AL'DORA<br>Signature</div>
-        <div class="phase-quad">Quadra QC03 · 10.232 m²</div>
-        <div class="phase-torres">
-          <span class="torre-badge inactive">Torre G</span>
-          <span class="torre-badge inactive">Torre H</span>
-        </div>
-        <div class="phase-metrics">
-          <strong>53.678 m²</strong> construídos<br>
-          Premium P4/P5
-        </div>
-      </div>
-    </div>
+<!-- ═══════════════ PARCERIA ═══════════════ -->
+<section class="parceria" id="parceria">
+  <div class="parceria-bg"></div>
+  <div class="parceria-overlay"></div>
+  <div class="parceria-content">
+    <div class="parceria-gold-line"></div>
+    <h2>Participe do maior masterplan vertical de Uberlândia</h2>
+    <p>
+      AL'DORA City representa uma oportunidade única de incorporação em um ecossistema planejado 
+      com 125.684 m² de área privativa, 8 torres e governança profissional. 
+      A Quadra C02 — AL'DORA Reserva — é a fase de expansão que captura 
+      o máximo valor de marca.
+    </p>
+    <a href="mailto:lscecilio@gmail.com" class="cta-email">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      lscecilio@gmail.com
+    </a>
+    <div class="parceria-brand">CIDADE JARDIM URBANISMO</div>
   </div>
 </section>
 
-<div class="divider-azul"></div>
-
-<!-- 3D VISUALIZAÇÃO -->
-<section class="viz-section">
-  <div class="container">
-    <div class="section-tag">Implantação · Torres E + F</div>
-    <h2 class="section-title">Visão Volumétrica QC02</h2>
-    <div class="tower-3d-container">
-      <div class="ground-plane"></div>
-      <div class="park-zone">
-        <span class="park-label">🌳 Parque Frontal Preservado</span>
-      </div>
-      <div class="sky-ele"><span>Jardim Versailles · UDI</span></div>
-      <div class="tower-group" style="margin-bottom:80px">
-        <div class="tower tower-e">
-          <div class="tower-floors"></div>
-          <span class="tower-label">Torre E · P3</span>
-        </div>
-        <div class="private-road"><div class="road-line"></div></div>
-        <div class="tower tower-f">
-          <div class="tower-floors"></div>
-          <span class="tower-label">Torre F · P3</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider-azul"></div>
-
-<!-- PRODUTO -->
-<section class="produto-section">
-  <div class="container">
-    <div class="section-tag">Mix de Produto · Tipologias</div>
-    <h2 class="section-title">P3 Focus — Para Quem<br>Não Abre Mão do Espaço</h2>
-    <div class="prod-grid">
-      <div class="prod-render">
-        <img src="assets/img/renders/renders_view.png" alt="Perspectiva Reserva" loading="lazy">
-        <div class="prod-render-label">AL'DORA Reserva · QC02</div>
-      </div>
-      <div class="tipo-list">
-        <div class="tipo-card">
-          <div class="tipo-icon">🏢</div>
-          <div>
-            <div class="tipo-name">P1 · Studio Urban</div>
-            <div class="tipo-config">Studio · 1 vaga · 28–35 m²</div>
-          </div>
-          <div class="tipo-ticket">
-            <div class="tipo-ticket-val">R$270K</div>
-            <div class="tipo-ticket-area">médio</div>
-          </div>
-        </div>
-        <div class="tipo-card">
-          <div class="tipo-icon">🏠</div>
-          <div>
-            <div class="tipo-name">P2 · Compacto Smart</div>
-            <div class="tipo-config">2 dorms · 1 vaga · 42–55 m²</div>
-          </div>
-          <div class="tipo-ticket">
-            <div class="tipo-ticket-val">R$440K</div>
-            <div class="tipo-ticket-area">médio</div>
-          </div>
-        </div>
-        <div class="tipo-card featured">
-          <div class="tipo-icon">🌿</div>
-          <div>
-            <div class="tipo-name">P3 · Garden Suite</div>
-            <div class="tipo-config">3 dorms · 2 vagas · 68–85 m²</div>
-          </div>
-          <div class="tipo-ticket">
-            <div class="tipo-ticket-val">R$735K</div>
-            <div class="tipo-ticket-area">médio</div>
-          </div>
-          <div class="tipo-badge">★ Tipologia principal QC02</div>
-        </div>
-        <div class="tipo-card">
-          <div class="tipo-icon">✨</div>
-          <div>
-            <div class="tipo-name">P4 · Alto Padrão</div>
-            <div class="tipo-config">3–4 dorms · 3 vagas · 105–135 m²</div>
-          </div>
-          <div class="tipo-ticket">
-            <div class="tipo-ticket-val">R$1,3M</div>
-            <div class="tipo-ticket-area">médio</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider-azul"></div>
-
-<!-- DIFERENCIAIS -->
-<section class="dif-section">
-  <div class="container">
-    <div class="section-tag">Diferenciais Estratégicos</div>
-    <h2 class="section-title">O Que Torna o QC02<br>Único em Uberlândia</h2>
-    <div class="dif-grid">
-      <div class="dif-card">
-        <div class="dif-icon">🌳</div>
-        <h3 class="dif-title">Parque Frontal Preservado</h3>
-        <p class="dif-text">Área verde pública adjacente ao complexo que nunca será edificada — garante vista livre permanente e valorização diferenciada. Raridade absoluta em verticalização urbana.</p>
-      </div>
-      <div class="dif-card">
-        <div class="dif-icon">🛣️</div>
-        <h3 class="dif-title">Rua Privativa Interna</h3>
-        <p class="dif-text">Acesso exclusivo em condomínio fechado conectando QC01 e QC02. Segurança máxima, portaria única e controle de acesso perimetral. Modelo único no mercado UDI.</p>
-      </div>
-      <div class="dif-card">
-        <div class="dif-icon">🏛️</div>
-        <h3 class="dif-title">Masterplan Escalonado</h3>
-        <p class="dif-text">Cada fase consolida o valor da anterior. Quando QC02 lança, QC01 já está construído — o cliente compra em um bairro real, não em promessa. Reduz risco de percepção.</p>
-      </div>
-      <div class="dif-card">
-        <div class="dif-icon">📍</div>
-        <h3 class="dif-title">Jardim Versailles Maduro</h3>
-        <p class="dif-text">Bairro consolidado com infraestrutura completa, escolas de referência, hospitais e shoppings. Demanda comprovada: 1.000+ unidades/ano no raio de 15 minutos (Brain Research 2025).</p>
-      </div>
-      <div class="dif-card">
-        <div class="dif-icon">📈</div>
-        <h3 class="dif-title">Marca Estabelecida</h3>
-        <p class="dif-text">AL'DORA entra no QC02 com reputação construída no QC01. Compradores repetem, indicam e ampliam ticket. Custo de aquisição de cliente reduz a cada fase.</p>
-      </div>
-      <div class="dif-card">
-        <div class="dif-icon">⚡</div>
-        <h3 class="dif-title">Gates de Performance</h3>
-        <p class="dif-text">Execução ativada por resultados, não por calendário. QC02 só avança quando QC01 valida premissas — disciplina financeira que protege todos os parceiros do projeto.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider-azul"></div>
-
-<!-- FINANCEIRO -->
-<section class="fin-section" id="financeiro">
-  <div class="container">
-    <div class="section-tag">Projeções Financeiras · QC02</div>
-    <h2 class="section-title">O Número que<br>Importa para Você</h2>
-    <div class="fin-grid">
-      <div class="fin-vgv">
-        <div class="fin-vgv-label">VGV Estimado</div>
-        <div class="fin-vgv-val">R$160M</div>
-        <div class="fin-vgv-range">Range R$140M — R$180M</div>
-        <div class="fin-breakdown">
-          <div class="fin-row">
-            <span class="fin-row-lbl">Área privativa total</span>
-            <span class="fin-row-val">43.033 m²</span>
-          </div>
-          <div class="fin-row">
-            <span class="fin-row-lbl">Ticket médio P3 por m²</span>
-            <span class="fin-row-val">R$8.700/m²</span>
-          </div>
-          <div class="fin-row">
-            <span class="fin-row-lbl">Área construída</span>
-            <span class="fin-row-val">70.546 m²</span>
-          </div>
-          <div class="fin-row">
-            <span class="fin-row-lbl">Terreno</span>
-            <span class="fin-row-val">11.953 m²</span>
-          </div>
-          <div class="fin-row">
-            <span class="fin-row-lbl">Coeficiente de aproveitamento</span>
-            <span class="fin-row-val">CA 4,0</span>
-          </div>
-          <div class="fin-row">
-            <span class="fin-row-lbl">Zoneamento</span>
-            <span class="fin-row-val">ZR2 / SVA</span>
-          </div>
-        </div>
-      </div>
-      <div class="fin-kpis">
-        <div class="kpi-card">
-          <div>
-            <div class="kpi-lbl">IVV Uberlândia 2T25</div>
-            <div class="kpi-sub">Índice de Velocidade de Vendas</div>
-          </div>
-          <div class="kpi-val">24,5%</div>
-        </div>
-        <div class="kpi-card">
-          <div>
-            <div class="kpi-lbl">Ticket médio mercado UDI</div>
-            <div class="kpi-sub">Vertical premium 2T25</div>
-          </div>
-          <div class="kpi-val">R$8.341</div>
-        </div>
-        <div class="kpi-card">
-          <div>
-            <div class="kpi-lbl">CUB-MG Jan/2026</div>
-            <div class="kpi-sub">Custo unitário básico</div>
-          </div>
-          <div class="kpi-val">R$2.839</div>
-        </div>
-        <div class="kpi-card">
-          <div>
-            <div class="kpi-lbl">Demanda anual raio 15 min</div>
-            <div class="kpi-sub">Brain Research 2025</div>
-          </div>
-          <div class="kpi-val">1.000+</div>
-        </div>
-        <div class="kpi-card">
-          <div>
-            <div class="kpi-lbl">Margem líquida estimada</div>
-            <div class="kpi-sub">após custos e permuta</div>
-          </div>
-          <div class="kpi-val">22–28%</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider-azul"></div>
-
-<!-- MERCADO -->
-<section class="mercado-section">
-  <div class="container">
-    <div class="section-tag">Contexto de Mercado · Uberlândia 2025–2026</div>
-    <h2 class="section-title">O Mercado Valida<br>a Tese AL'DORA</h2>
-    <div class="mercado-grid">
-      <div class="mercado-card">
-        <div class="mercado-val">+12%</div>
-        <div class="mercado-lbl">Valorização anual<br>imóveis verticais UDI</div>
-        <div class="mercado-fonte">Brain 2025</div>
-      </div>
-      <div class="mercado-card">
-        <div class="mercado-val">3ª</div>
-        <div class="mercado-lbl">Maior cidade MG<br>em lançamentos</div>
-        <div class="mercado-fonte">CBIC 2024</div>
-      </div>
-      <div class="mercado-card">
-        <div class="mercado-val">8%</div>
-        <div class="mercado-lbl">Déficit habitacional<br>classe A UDI</div>
-        <div class="mercado-fonte">FGV 2025</div>
-      </div>
-      <div class="mercado-card">
-        <div class="mercado-val">R$0</div>
-        <div class="mercado-lbl">Concorrência direta<br>no Jardim Versailles</div>
-        <div class="mercado-fonte">Pesquisa 2026</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider-azul"></div>
-
-<!-- GATES -->
-<section class="gates-section">
-  <div class="container">
-    <div class="section-tag">Cronograma por Performance</div>
-    <h2 class="section-title">Gates de Execução</h2>
-    <p class="section-sub">QC02 só avança quando QC01 entrega. Cada gate é uma condição de mercado, não uma data arbitrária.</p>
-    <div class="gates-timeline">
-      <div class="gate">
-        <div class="gate-dot active">G1</div>
-        <div class="gate-name">Aprovação + Financiamento</div>
-        <div class="gate-desc">Municipal QC01 aprovado + crédito bancário + 30% pré-vendas EMP1</div>
-        <div class="gate-label">Em andamento</div>
-      </div>
-      <div class="gate">
-        <div class="gate-dot">G2</div>
-        <div class="gate-name">Validação de Preço</div>
-        <div class="gate-desc">Ticket testado em mercado + vendas EMP1 em ritmo + aprovação EMP2</div>
-        <div class="gate-label">Fase 1 → 2</div>
-      </div>
-      <div class="gate">
-        <div class="gate-dot future">G3</div>
-        <div class="gate-name">Revenda EMP1/2</div>
-        <div class="gate-desc">Revenda acima do projetado + obra EMP2 > 50% + QC02 pré-aprovado</div>
-        <div class="gate-label">QC02 launch</div>
-      </div>
-      <div class="gate">
-        <div class="gate-dot future">G4</div>
-        <div class="gate-name">Brand Consolidada</div>
-        <div class="gate-desc">AL'DORA como referência regional + compradores P5 pré-qualificados</div>
-        <div class="gate-label">QC03 Signature</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider-azul"></div>
-
-<!-- PARCEIRO -->
-<section class="parceiro-section" id="parceiro">
-  <div class="container">
-    <div class="parceiro-grid">
-      <div>
-        <div class="section-tag">Modelo de Parceria</div>
-        <h2 class="section-title">Vamos Construir<br>Isso Juntos</h2>
-        <p class="section-sub">
-          O QC02 AL'DORA Reserva é uma oportunidade de co-incorporação em um masterplan
-          já em execução. Você entra no projeto com terreno validado, arquitetura
-          aprovada e demanda comprovada pelo QC01.
-        </p>
-        <div class="modelo-cards" style="margin-top:32px">
-          <div class="modelo-card">
-            <span class="modelo-icon">🤝</span>
-            <div>
-              <div class="modelo-title">Co-Incorporação</div>
-              <div class="modelo-text">Participação no empreendimento com equity proporcional ao aporte. Decisões compartilhadas em SPE dedicada.</div>
-            </div>
-          </div>
-          <div class="modelo-card">
-            <span class="modelo-icon">🏗️</span>
-            <div>
-              <div class="modelo-title">Permuta Física</div>
-              <div class="modelo-text">Entrada via unidades ou terreno. Estrutura clássica de incorporação com avaliação justa e garantias registradas.</div>
-            </div>
-          </div>
-          <div class="modelo-card">
-            <span class="modelo-icon">💰</span>
-            <div>
-              <div class="modelo-title">Aporte Financeiro</div>
-              <div class="modelo-text">Investimento com retorno preferencial e participação nos resultados. Estrutura em CRI ou debênture conversível.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="contact-block">
-          <h3>Fale com o Nosso Time</h3>
-          <p>Compartilhe seus dados e receba em 48h o dossiê completo com projeções financeiras detalhadas, planta de implantação e modelo de SPE para QC02.</p>
-          <a href="mailto:lscecilio@gmail.com" class="contact-email">lscecilio@gmail.com</a>
-          <a href="mailto:lscecilio@gmail.com" class="btn-primary" style="width:100%;justify-content:center">
-            → Solicitar Dossiê Completo
-          </a>
-        </div>
-        <div style="margin-top:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:20px 24px;">
-          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px;">Cidade Jardim Urbanismo</div>
-          <div style="font-family:'Playfair Display',serif;font-size:18px;color:white;margin-bottom:4px;">Leandro Cecílio</div>
-          <div style="font-size:13px;color:rgba(255,255,255,0.45);">Fundador · Masterplan AL'DORA City</div>
-          <div style="font-size:13px;color:rgba(255,255,255,0.45);margin-top:4px;">Jardim Versailles · Uberlândia · MG</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-brand">AL'DORA City</div>
-  <div class="footer-sub">Masterplan Vertical Escalonado · Jardim Versailles · Uberlândia · MG</div>
-  <div class="footer-meta">
-    Cidade Jardim Urbanismo · CNPJ a registrar · Material confidencial para parceiros incorporadores<br>
-    Dados de mercado: Brain Research 2025 · CBIC · FGV · CUB-MG SINDUSCON
-  </div>
-  <div>
-    <span class="ai-stamp">Estratégia: AI Router Hock:3080 · Copilot CLI · Cidade Jardim Workspace · 2026-04-08</span>
-  </div>
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="footer">
+  <p><span class="brand">© 2026 Cidade Jardim Urbanismo · AL'DORA City</span></p>
+  <p>Documento confidencial para uso exclusivo de parceiros qualificados</p>
 </footer>
+
+<!-- ═══════════════ THREE.JS ═══════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   MAIN APPLICATION SCRIPT
+   ═══════════════════════════════════════════════════ */
+
+(function() {
+  'use strict';
+
+  // ─── NAV SCROLL ───
+  const nav = document.getElementById('mainNav');
+  const heroBg = document.getElementById('heroBg');
+
+  window.addEventListener('scroll', function() {
+    const scrollY = window.scrollY;
+    // Nav state
+    if (scrollY > 80) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+    // Parallax hero
+    if (heroBg && scrollY < window.innerHeight) {
+      heroBg.style.transform = 'scale(1.1) translateY(' + (scrollY * 0.3) + 'px)';
+    }
+  }, { passive: true });
+
+  // ─── SCROLL REVEAL ───
+  const sections = document.querySelectorAll('.section');
+  const revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+  sections.forEach(function(s) { revealObserver.observe(s); });
+
+  // ─── ANIMATED COUNTERS ───
+  const numberElements = document.querySelectorAll('.numero-card .number');
+  let countersAnimated = false;
+
+  const counterObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !countersAnimated) {
+        countersAnimated = true;
+        animateCounters();
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const numerosSection = document.getElementById('numeros');
+  if (numerosSection) counterObserver.observe(numerosSection);
+
+  function animateCounters() {
+    numberElements.forEach(function(el) {
+      var target = parseInt(el.getAttribute('data-target'));
+      var prefix = el.getAttribute('data-prefix') || '';
+      var suffix = el.getAttribute('data-suffix') || '';
+      var duration = 2000;
+      var startTime = null;
+      var startVal = 0;
+
+      function easeOutQuart(t) {
+        return 1 - Math.pow(1 - t, 4);
+      }
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / duration, 1);
+        var eased = easeOutQuart(progress);
+        var current = Math.floor(startVal + (target - startVal) * eased);
+
+        if (target >= 10000) {
+          el.textContent = prefix + current.toLocaleString('pt-BR') + suffix;
+        } else {
+          el.textContent = prefix + current + suffix;
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      }
+
+      requestAnimationFrame(step);
+    });
+  }
+
+  // ─── THREE.JS 3D SCENE ───
+  var canvas = document.getElementById('canvas3d');
+  if (canvas && typeof THREE !== 'undefined') {
+    initScene();
+  }
+
+  function initScene() {
+    var container = canvas.parentElement;
+    var width = container.clientWidth;
+    var height = container.clientHeight;
+
+    // Scene
+    var scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x061428);
+    scene.fog = new THREE.FogExp2(0x061428, 0.008);
+
+    // Camera
+    var camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+    camera.position.set(60, 45, 60);
+    camera.lookAt(0, 15, 0);
+
+    // Renderer
+    var renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      antialias: true,
+      alpha: false
+    });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.2;
+
+    // Ground
+    var groundGeo = new THREE.PlaneGeometry(200, 200);
+    var groundMat = new THREE.MeshStandardMaterial({
+      color: 0x0a1a30,
+      roughness: 0.9,
+      metalness: 0.1
+    });
+    var ground = new THREE.Mesh(groundGeo, groundMat);
+    ground.rotation.x = -Math.PI / 2;
+    ground.receiveShadow = true;
+    scene.add(ground);
+
+    // Grid
+    var gridHelper = new THREE.GridHelper(200, 40, 0x152a4a, 0x0f2040);
+    gridHelper.position.y = 0.05;
+    scene.add(gridHelper);
+
+    // Tower material
+    var towerMat = new THREE.MeshPhysicalMaterial({
+      color: 0x1a3a6a,
+      metalness: 0.7,
+      roughness: 0.15,
+      clearcoat: 0.8,
+      clearcoatRoughness: 0.2,
+      transparent: true,
+      opacity: 0.88,
+      envMapIntensity: 1.0
+    });
+
+    var towerAccentMat = new THREE.MeshPhysicalMaterial({
+      color: 0xc8a84b,
+      metalness: 0.9,
+      roughness: 0.2,
+      clearcoat: 1.0
+    });
+
+    // Tower E
+    var towerEGeo = new THREE.BoxGeometry(12, 50, 10);
+    var towerE = new THREE.Mesh(towerEGeo, towerMat);
+    towerE.position.set(-12, 25, 0);
+    towerE.castShadow = true;
+    towerE.receiveShadow = true;
+    scene.add(towerE);
+
+    // Tower E accent band
+    var bandEGeo = new THREE.BoxGeometry(12.3, 1.5, 10.3);
+    var bandE = new THREE.Mesh(bandEGeo, towerAccentMat);
+    bandE.position.set(-12, 49, 0);
+    scene.add(bandE);
+
+    // Tower E base
+    var baseEGeo = new THREE.BoxGeometry(15, 4, 13);
+    var baseEMat = new THREE.MeshStandardMaterial({ color: 0x0d2040, roughness: 0.7, metalness: 0.3 });
+    var baseE = new THREE.Mesh(baseEGeo, baseEMat);
+    baseE.position.set(-12, 2, 0);
+    baseE.castShadow = true;
+    scene.add(baseE);
+
+    // Tower F
+    var towerFGeo = new THREE.BoxGeometry(12, 55, 10);
+    var towerF = new THREE.Mesh(towerFGeo, towerMat.clone());
+    towerF.position.set(12, 27.5, 0);
+    towerF.castShadow = true;
+    towerF.receiveShadow = true;
+    scene.add(towerF);
+
+    // Tower F accent band
+    var bandFGeo = new THREE.BoxGeometry(12.3, 1.5, 10.3);
+    var bandF = new THREE.Mesh(bandFGeo, towerAccentMat);
+    bandF.position.set(12, 54, 0);
+    scene.add(bandF);
+
+    // Tower F base
+    var baseFGeo = new THREE.BoxGeometry(15, 4, 13);
+    var baseF = new THREE.Mesh(baseFGeo, baseEMat.clone());
+    baseF.position.set(12, 2, 0);
+    baseF.castShadow = true;
+    scene.add(baseF);
+
+    // Podium connecting the two towers
+    var podiumGeo = new THREE.BoxGeometry(42, 6, 18);
+    var podiumMat = new THREE.MeshStandardMaterial({ color: 0x0f2848, roughness: 0.6, metalness: 0.4 });
+    var podium = new THREE.Mesh(podiumGeo, podiumMat);
+    podium.position.set(0, 3, 0);
+    podium.castShadow = true;
+    podium.receiveShadow = true;
+    scene.add(podium);
+
+    // Small landscape elements (green accents around the base)
+    var treeMat = new THREE.MeshStandardMaterial({ color: 0x1a5c2a, roughness: 0.8 });
+    for (var i = 0; i < 12; i++) {
+      var treeGeo = new THREE.SphereGeometry(1.5 + Math.random(), 8, 6);
+      var tree = new THREE.Mesh(treeGeo, treeMat);
+      var angle = (i / 12) * Math.PI * 2;
+      var radius = 28 + Math.random() * 8;
+      tree.position.set(Math.cos(angle) * radius, 1.5, Math.sin(angle) * radius);
+      scene.add(tree);
+    }
+
+    // Lighting
+    var ambientLight = new THREE.AmbientLight(0x1a2a4a, 0.6);
+    scene.add(ambientLight);
+
+    var hemisphereLight = new THREE.HemisphereLight(0x2a4a8a, 0x0a1428, 0.5);
+    scene.add(hemisphereLight);
+
+    var dirLight = new THREE.DirectionalLight(0xffeedd, 1.2);
+    dirLight.position.set(30, 60, 40);
+    dirLight.castShadow = true;
+    dirLight.shadow.mapSize.width = 2048;
+    dirLight.shadow.mapSize.height = 2048;
+    dirLight.shadow.camera.near = 1;
+    dirLight.shadow.camera.far = 200;
+    dirLight.shadow.camera.left = -60;
+    dirLight.shadow.camera.right = 60;
+    dirLight.shadow.camera.top = 60;
+    dirLight.shadow.camera.bottom = -60;
+    scene.add(dirLight);
+
+    // Point lights on tower tops
+    var pointE = new THREE.PointLight(0xc8a84b, 1.2, 40);
+    pointE.position.set(-12, 52, 0);
+    scene.add(pointE);
+
+    var pointF = new THREE.PointLight(0xc8a84b, 1.2, 40);
+    pointF.position.set(12, 57, 0);
+    scene.add(pointF);
+
+    // Subtle blue rim light
+    var rimLight = new THREE.PointLight(0x3b82f6, 0.6, 80);
+    rimLight.position.set(-40, 30, -30);
+    scene.add(rimLight);
+
+    // Orbit controls — manual implementation
+    var isDragging = false;
+    var previousMouse = { x: 0, y: 0 };
+    var spherical = { theta: Math.atan2(camera.position.z, camera.position.x), phi: Math.acos(camera.position.y / camera.position.length()), radius: camera.position.length() };
+    var target = new THREE.Vector3(0, 15, 0);
+    var autoRotateSpeed = 0.003;
+    var autoRotate = true;
+    var damping = { theta: 0, phi: 0 };
+
+    canvas.addEventListener('pointerdown', function(e) {
+      isDragging = true;
+      autoRotate = false;
+      previousMouse.x = e.clientX;
+      previousMouse.y = e.clientY;
+      canvas.style.cursor = 'grabbing';
+    });
+
+    window.addEventListener('pointerup', function() {
+      isDragging = false;
+      canvas.style.cursor = 'grab';
+      setTimeout(function() { autoRotate = true; }, 3000);
+    });
+
+    window.addEventListener('pointermove', function(e) {
+      if (!isDragging) return;
+      var dx = e.clientX - previousMouse.x;
+      var dy = e.clientY - previousMouse.y;
+      damping.theta = -dx * 0.005;
+      damping.phi = -dy * 0.005;
+      previousMouse.x = e.clientX;
+      previousMouse.y = e.clientY;
+    });
+
+    canvas.addEventListener('wheel', function(e) {
+      e.preventDefault();
+      spherical.radius += e.deltaY * 0.05;
+      spherical.radius = Math.max(30, Math.min(120, spherical.radius));
+    }, { passive: false });
+
+    canvas.style.cursor = 'grab';
+
+    // Update label positions
+    var labelE = document.getElementById('labelE');
+    var labelF = document.getElementById('labelF');
+
+    function updateLabels() {
+      var vecE = new THREE.Vector3(-12, 52, 0);
+      var vecF = new THREE.Vector3(12, 57, 0);
+      vecE.project(camera);
+      vecF.project(camera);
+
+      var rect = container.getBoundingClientRect();
+      var hw = rect.width / 2;
+      var hh = rect.height / 2;
+
+      if (labelE) {
+        labelE.style.left = ((vecE.x * hw) + hw) + 'px';
+        labelE.style.top = ((-vecE.y * hh) + hh - 30) + 'px';
+      }
+      if (labelF) {
+        labelF.style.left = ((vecF.x * hw) + hw) + 'px';
+        labelF.style.top = ((-vecF.y * hh) + hh - 30) + 'px';
+      }
+    }
+
+    // Render loop
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Auto-rotate
+      if (autoRotate) {
+        spherical.theta += autoRotateSpeed;
+      }
+
+      // Apply damping
+      spherical.theta += damping.theta;
+      spherical.phi += damping.phi;
+      damping.theta *= 0.92;
+      damping.phi *= 0.92;
+
+      // Clamp phi
+      spherical.phi = Math.max(0.3, Math.min(Math.PI / 2 - 0.05, spherical.phi));
+
+      // Update camera position
+      camera.position.x = target.x + spherical.radius * Math.sin(spherical.phi) * Math.cos(spherical.theta);
+      camera.position.y = target.y + spherical.radius * Math.cos(spherical.phi);
+      camera.position.z = target.z + spherical.radius * Math.sin(spherical.phi) * Math.sin(spherical.theta);
+      camera.lookAt(target);
+
+      updateLabels();
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Resize handler
+    window.addEventListener('resize', function() {
+      var w = container.clientWidth;
+      var h = container.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    });
+  }
+
+  // ─── SMOOTH SCROLL FOR NAV LINKS ───
+  document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+})();
+</script>
 
 </body>
 </html>
