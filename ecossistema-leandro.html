@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ecossistema Leandro Cecílio — Mapa Completo</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0a0f; color: #e2e8f0; min-height: 100vh; }
+
+    /* Header */
+    .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); padding: 60px 40px; text-align: center; border-bottom: 1px solid #1e3a5f; }
+    .hero h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.5px; }
+    .hero h1 span.lsc { color: #3b82f6; }
+    .hero h1 span.cj { color: #f59e0b; }
+    .hero p { margin-top: 12px; font-size: 1.05rem; color: #94a3b8; max-width: 680px; margin-left: auto; margin-right: auto; }
+    .badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.5px; margin-top: 16px; }
+    .badge.live { background: #052e16; color: #4ade80; border: 1px solid #166534; }
+    .badge.dev  { background: #1c1917; color: #fbbf24; border: 1px solid #92400e; }
+
+    /* Layout */
+    .container { max-width: 1300px; margin: 0 auto; padding: 40px 24px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 32px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+
+    /* Cards */
+    .card { background: #111827; border: 1px solid #1f2937; border-radius: 14px; padding: 24px; }
+    .card.blue  { border-color: #1d4ed8; }
+    .card.amber { border-color: #d97706; }
+    .card.green { border-color: #059669; }
+    .card.purple{ border-color: #7c3aed; }
+    .card.red   { border-color: #dc2626; }
+    .card h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .card h3 { font-size: 0.9rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+
+    /* Empresa cards */
+    .empresa-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+    .empresa-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+    .empresa-icon.lsc { background: #1e3a5f; }
+    .empresa-icon.cj  { background: #3d2009; }
+    .empresa-title { font-size: 1.2rem; font-weight: 800; }
+    .empresa-sub { font-size: 0.8rem; color: #6b7280; }
+
+    /* Stats */
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+    .stat { background: #0d1117; border-radius: 8px; padding: 10px 14px; }
+    .stat .val { font-size: 1.3rem; font-weight: 800; color: #60a5fa; }
+    .stat .label { font-size: 0.72rem; color: #6b7280; margin-top: 2px; }
+
+    /* App list */
+    .app-list { display: flex; flex-direction: column; gap: 6px; }
+    .app-item { display: flex; justify-content: space-between; align-items: center; background: #0d1117; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; }
+    .app-item .name { font-weight: 600; }
+    .app-item .port { color: #6b7280; font-family: monospace; font-size: 0.75rem; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; flex-shrink: 0; }
+    .dot.yellow { background: #f59e0b; }
+
+    /* Server card */
+    .server { background: #0d1117; border-radius: 10px; padding: 14px; margin-bottom: 10px; }
+    .server-name { font-weight: 700; font-size: 0.9rem; color: #60a5fa; margin-bottom: 4px; }
+    .server-desc { font-size: 0.78rem; color: #6b7280; }
+    .server-specs { font-size: 0.75rem; color: #4ade80; margin-top: 4px; font-family: monospace; }
+
+    /* Quadra cards */
+    .quadra { border-radius: 12px; padding: 20px; text-align: center; }
+    .quadra.q1 { background: linear-gradient(135deg, #1e3a5f, #1e40af22); border: 1px solid #1d4ed8; }
+    .quadra.q2 { background: linear-gradient(135deg, #3d1a00, #d9770622); border: 1px solid #d97706; }
+    .quadra.q3 { background: linear-gradient(135deg, #1a1a2e, #7c3aed22); border: 1px solid #7c3aed; }
+    .quadra-name { font-size: 1.4rem; font-weight: 800; }
+    .quadra-sub { font-size: 0.8rem; color: #94a3b8; margin-top: 4px; }
+    .quadra-vgv { font-size: 1.1rem; font-weight: 700; color: #fbbf24; margin-top: 10px; }
+    .quadra-area { font-size: 0.78rem; color: #6b7280; margin-top: 4px; }
+
+    /* Tipologia */
+    .tipo-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 14px; border-radius: 8px; margin-bottom: 6px; background: #0d1117; font-size: 0.83rem; }
+    .tipo-code { font-weight: 800; color: #fbbf24; width: 28px; }
+    .tipo-name { flex: 1; padding: 0 8px; }
+    .tipo-area { color: #6b7280; font-family: monospace; }
+    .tipo-ticket { color: #4ade80; font-weight: 600; text-align: right; min-width: 120px; }
+
+    /* Gates */
+    .gate { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid #1f2937; }
+    .gate:last-child { border-bottom: none; }
+    .gate-num { width: 32px; height: 32px; border-radius: 50%; background: #1e3a5f; color: #60a5fa; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.85rem; }
+    .gate-info .title { font-weight: 700; font-size: 0.9rem; margin-bottom: 3px; }
+    .gate-info .desc { font-size: 0.78rem; color: #6b7280; }
+
+    /* AI Router tiers */
+    .tier { background: #0d1117; border-radius: 8px; padding: 10px 14px; margin-bottom: 6px; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+    .tier .tier-name { font-weight: 700; color: #60a5fa; }
+    .tier .tier-model { color: #94a3b8; }
+    .tier .tier-cost { color: #4ade80; font-family: monospace; }
+
+    /* Section title */
+    .section-title { font-size: 1.5rem; font-weight: 800; margin: 40px 0 20px; padding-bottom: 10px; border-bottom: 1px solid #1f2937; display: flex; align-items: center; gap: 10px; }
+    .section-title span.accent { color: #3b82f6; }
+
+    /* Infra topology */
+    .topo { display: flex; justify-content: center; gap: 0; flex-wrap: wrap; padding: 30px 0; }
+    .topo-node { text-align: center; padding: 20px 16px; position: relative; }
+    .topo-node::after { content: '→'; position: absolute; right: -12px; top: 50%; transform: translateY(-50%); color: #374151; font-size: 1.4rem; }
+    .topo-node:last-child::after { display: none; }
+    .topo-box { background: #111827; border: 1px solid #374151; border-radius: 12px; padding: 16px 20px; }
+    .topo-box.cf { border-color: #f97316; }
+    .topo-box.hk { border-color: #3b82f6; }
+    .topo-box.cw { border-color: #8b5cf6; }
+    .topo-box.rk { border-color: #10b981; }
+    .topo-box.or { border-color: #6b7280; }
+    .topo-icon { font-size: 1.8rem; }
+    .topo-name { font-weight: 700; font-size: 0.85rem; margin-top: 6px; }
+    .topo-role { font-size: 0.7rem; color: #6b7280; }
+
+    /* Plans */
+    .plan { border-radius: 10px; padding: 18px; text-align: center; background: #0d1117; border: 1px solid #1f2937; }
+    .plan .plan-name { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+    .plan .plan-price { font-size: 1.6rem; font-weight: 800; color: #4ade80; }
+    .plan .plan-price small { font-size: 0.75rem; color: #6b7280; font-weight: 400; }
+    .plan .plan-credits { font-size: 0.78rem; color: #94a3b8; margin-top: 4px; }
+
+    /* Footer */
+    footer { text-align: center; padding: 40px; color: #374151; font-size: 0.8rem; border-top: 1px solid #1f2937; margin-top: 40px; }
+
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr 1fr; }
+      .grid-4 { grid-template-columns: 1fr 1fr; }
+      .topo { flex-direction: column; align-items: center; }
+      .topo-node::after { content: '↓'; right: auto; top: auto; bottom: -18px; left: 50%; transform: translateX(-50%); }
+    }
+    @media (max-width: 600px) {
+      .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>🗺️ Ecossistema <span class="lsc">LSC-Lab</span> + <span class="cj">AL'DORA City</span></h1>
+  <p>Mapa completo do ecossistema de Leandro Cecílio — plataforma SaaS + masterplan imobiliário vertical</p>
+  <span class="badge live">✅ BETA LIVE — Abril 2026</span>
+  &nbsp;
+  <span class="badge dev">🏗️ AL'DORA — Fase de Viabilização</span>
+</div>
+
+<div class="container">
+
+  <!-- SEÇÃO 1: AS DUAS EMPRESAS -->
+  <div class="section-title">🏢 As Duas Entidades — <span class="accent">Juridicamente Separadas</span></div>
+  <div class="grid-2">
+
+    <!-- LSC-Lab -->
+    <div class="card blue">
+      <div class="empresa-header">
+        <div class="empresa-icon lsc">🧠</div>
+        <div>
+          <div class="empresa-title" style="color:#60a5fa">LSC-Lab</div>
+          <div class="empresa-sub">Plataforma SaaS B2B com IA</div>
+        </div>
+      </div>
+      <p style="font-size:0.85rem;color:#94a3b8;margin-bottom:16px">
+        Empresa de tecnologia que desenvolveu o <strong style="color:#fff">Atlas OS</strong> — 15 apps profissionais com IA, sistema de créditos, billing via Stripe e 4 bots autônomos gerenciando toda a operação.
+      </p>
+      <div class="stat-grid">
+        <div class="stat"><div class="val">15</div><div class="label">Apps no Atlas OS</div></div>
+        <div class="stat"><div class="val">4</div><div class="label">Bots Autônomos</div></div>
+        <div class="stat"><div class="val">100%</div><div class="label">Score de lançamento</div></div>
+        <div class="stat"><div class="val">75%</div><div class="label">Redução de custos AI</div></div>
+        <div class="stat"><div class="val">25+</div><div class="label">Tiers no AI Router</div></div>
+        <div class="stat"><div class="val">13</div><div class="label">Providers de LLM</div></div>
+      </div>
+    </div>
+
+    <!-- Cidade Jardim -->
+    <div class="card amber">
+      <div class="empresa-header">
+        <div class="empresa-icon cj">🏙️</div>
+        <div>
+          <div class="empresa-title" style="color:#f59e0b">Cidade Jardim Urbanismo</div>
+          <div class="empresa-sub">Masterplan Vertical — Uberlândia/MG</div>
+        </div>
+      </div>
+      <p style="font-size:0.85rem;color:#94a3b8;margin-bottom:16px">
+        Empresa imobiliária desenvolvendo o <strong style="color:#fff">AL'DORA City</strong> — masterplan vertical escalonado com 14 torres, 3 quadras e 4 empreendimentos no Jardim Versailles, Uberlândia/MG. Zoneamento ZR2/SVA, CA 4,0.
+      </p>
+      <div class="stat-grid">
+        <div class="stat"><div class="val">42.783</div><div class="label">m² de terreno total</div></div>
+        <div class="stat"><div class="val">125.684</div><div class="label">m² privativa total</div></div>
+        <div class="stat"><div class="val">R$299M</div><div class="label">VGV ref. QC01</div></div>
+        <div class="stat"><div class="val">14</div><div class="label">Torres previstas</div></div>
+        <div class="stat"><div class="val">3</div><div class="label">Quadras (QC01/02/03)</div></div>
+        <div class="stat"><div class="val">4</div><div class="label">Empreendimentos</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 2: ATLAS OS APPS -->
+  <div class="section-title">⚡ Atlas OS — <span class="accent">15 Apps Profissionais</span></div>
+  <div class="grid-2">
+    <div class="card">
+      <h2>🛠️ Apps (Grupo 1)</h2>
+      <div class="app-list">
+        <div class="app-item"><span class="dot"></span><span class="name">Atlas Coach</span><span class="port">:3010 · Finanças Pessoais</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">Atlas Jurídico</span><span class="port">:3020 · Assistente Legal</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">Atlas Vendas</span><span class="port">:3030 · CRM + Sales Intel</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">Atlas Conformidade</span><span class="port">:3035 · Compliance Urbano</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">Atlas Contábil</span><span class="port">:3040 · Contabilidade + IR</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">Atlas Documentos</span><span class="port">:3044 · Gestão de Docs</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">Atlas Reuniões</span><span class="port">:3046 · Meeting Manager</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">Atlas Custos</span><span class="port">:3050 · Cost Analytics</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🛠️ Apps (Grupo 2)</h2>
+      <div class="app-list">
+        <div class="app-item"><span class="dot"></span><span class="name">Atlas Campanhas</span><span class="port">:3055 · Marketing Automation</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">Atlas IR</span><span class="port">:3060 · IRPF AI</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">Atlas Ortho</span><span class="port">:3070 · Ortodontia AI</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">Atlas Scout</span><span class="port">:3116 · Web Intelligence</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">Atlas Drops</span><span class="port">:3120 · Dropshipping AI</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">Atlas Capital</span><span class="port">:3680 · Finance + Investing</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">Atlas CAC</span><span class="port">:3770 · Ambiental/IBAMA</span></div>
+        <div class="app-item"><span class="dot yellow"></span><span class="name">Atlas OS Portal</span><span class="port">:3125 · Hub Principal</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 Bots -->
+  <div class="grid-4">
+    <div class="card green">
+      <h2>🤖 infra-bot</h2>
+      <p style="font-size:0.8rem;color:#94a3b8">Saúde do sistema, alertas de deploy e monitoramento 24/7</p>
+      <div style="margin-top:10px;font-family:monospace;font-size:0.75rem;color:#4ade80">:3085</div>
+    </div>
+    <div class="card green">
+      <h2>💳 saas-bot</h2>
+      <p style="font-size:0.8rem;color:#94a3b8">Billing, trial expiry, marketing automation e onboarding</p>
+      <div style="margin-top:10px;font-family:monospace;font-size:0.75rem;color:#4ade80">:3088</div>
+    </div>
+    <div class="card green">
+      <h2>🩺 healer</h2>
+      <p style="font-size:0.8rem;color:#94a3b8">Auto-restart, auto-backup e self-healing de serviços</p>
+      <div style="margin-top:10px;font-family:monospace;font-size:0.75rem;color:#4ade80">:3087</div>
+    </div>
+    <div class="card green">
+      <h2>🎧 support</h2>
+      <p style="font-size:0.8rem;color:#94a3b8">Agente de suporte com RAG (pgvector) para usuários</p>
+      <div style="margin-top:10px;font-family:monospace;font-size:0.75rem;color:#4ade80">:3086</div>
+    </div>
+  </div>
+
+  <!-- Stripe Plans -->
+  <div class="section-title">💳 Billing — <span class="accent">Stripe LIVE</span></div>
+  <div class="grid-4">
+    <div class="plan">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price">R$97<small>/mês</small></div>
+      <div class="plan-credits">500 créditos</div>
+    </div>
+    <div class="plan" style="border-color:#3b82f6">
+      <div class="plan-name">Pro</div>
+      <div class="plan-price">R$197<small>/mês</small></div>
+      <div class="plan-credits">2.000 créditos</div>
+    </div>
+    <div class="plan" style="border-color:#8b5cf6">
+      <div class="plan-name">Business</div>
+      <div class="plan-price">R$397<small>/mês</small></div>
+      <div class="plan-credits">5.000 créditos</div>
+    </div>
+    <div class="plan" style="border-color:#f59e0b">
+      <div class="plan-name">Enterprise</div>
+      <div class="plan-price">R$697<small>/mês</small></div>
+      <div class="plan-credits">20.000 créditos</div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 3: INFRAESTRUTURA -->
+  <div class="section-title">🖥️ Infraestrutura — <span class="accent">4 Servidores</span></div>
+  <div class="topo">
+    <div class="topo-node">
+      <div class="topo-box cf">
+        <div class="topo-icon">☁️</div>
+        <div class="topo-name">Cloudflare</div>
+        <div class="topo-role">DNS + Tunnel + CDN</div>
+      </div>
+    </div>
+    <div class="topo-node">
+      <div class="topo-box hk">
+        <div class="topo-icon">🔵</div>
+        <div class="topo-name">Hock (Hostinger)</div>
+        <div class="topo-role">PRIMARY · 22 serviços</div>
+        <div style="font-size:0.7rem;color:#4ade80;margin-top:4px">8 CPUs · 31GB RAM</div>
+      </div>
+    </div>
+    <div class="topo-node">
+      <div class="topo-box cw">
+        <div class="topo-icon">🟣</div>
+        <div class="topo-name">Claw</div>
+        <div class="topo-role">Bridge · MCP · Bots</div>
+      </div>
+    </div>
+    <div class="topo-node">
+      <div class="topo-box rk">
+        <div class="topo-icon">🟢</div>
+        <div class="topo-name">Rack</div>
+        <div class="topo-role">Grafana · Prometheus · Uptime</div>
+      </div>
+    </div>
+    <div class="topo-node">
+      <div class="topo-box or">
+        <div class="topo-icon">⚪</div>
+        <div class="topo-name">Oracle (OCI)</div>
+        <div class="topo-role">Backup · Cloud</div>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center;color:#4b5563;font-size:0.78rem;margin-bottom:32px">Todos conectados via <strong style="color:#6b7280">Tailscale VPN</strong> mesh</div>
+
+  <!-- SEÇÃO 4: AI ROUTER -->
+  <div class="section-title">🧠 AI Router v4 — <span class="accent">13 Providers · 25+ Tiers</span></div>
+  <div class="grid-2">
+    <div class="card purple">
+      <h2>⚡ Roteamento Inteligente por Tarefa</h2>
+      <div class="tier"><span class="tier-name">INFRA</span><span class="tier-model">codex-mini</span><span class="tier-cost">$0.002/call</span></div>
+      <div class="tier"><span class="tier-name">CODE</span><span class="tier-model">GPT-5.4 / Sonnet</span><span class="tier-cost">$0.015/call</span></div>
+      <div class="tier"><span class="tier-name">RESEARCH</span><span class="tier-model">Gemini Search</span><span class="tier-cost">$0.007/call</span></div>
+      <div class="tier"><span class="tier-name">BATCH</span><span class="tier-model">DeepSeek / Qwen</span><span class="tier-cost">$0.001/call</span></div>
+      <div class="tier"><span class="tier-name">PREMIUM</span><span class="tier-model">Opus / GPT-5</span><span class="tier-cost">$0.075/call</span></div>
+    </div>
+    <div class="card purple">
+      <h2>📊 Resultado: 75% de Economia</h2>
+      <p style="font-size:0.85rem;color:#94a3b8;margin-bottom:16px">O AI Router v4 roteia automaticamente cada tarefa para o modelo mais barato capaz de executar com qualidade.</p>
+      <div class="stat-grid">
+        <div class="stat"><div class="val" style="color:#a78bfa">13</div><div class="label">LLM Providers</div></div>
+        <div class="stat"><div class="val" style="color:#a78bfa">25+</div><div class="label">Tiers de custo</div></div>
+        <div class="stat"><div class="val" style="color:#4ade80">R$40</div><div class="label">Custo mensal atual</div></div>
+        <div class="stat"><div class="val" style="color:#f87171">R$150</div><div class="label">Custo anterior</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 5: AL'DORA CITY -->
+  <div class="section-title">🏙️ AL'DORA City — <span class="accent">3 Quadras · 14 Torres</span></div>
+  <div class="grid-3">
+    <div class="quadra q1">
+      <div class="quadra-name">QC01</div>
+      <div class="quadra-sub">AL'DORA Jardins + Versailles · FASE 1</div>
+      <div style="margin-top:12px;font-size:0.8rem;color:#94a3b8">Torres A · B · C · D · E · F</div>
+      <div style="font-size:0.78rem;color:#6b7280;margin-top:4px">20.598 m² · CA 4,0</div>
+      <div class="quadra-vgv">VGV Ref: R$299,68M</div>
+      <div class="quadra-area">49.908 m² privativa · 81.816 m² construída</div>
+      <div style="margin-top:12px"><span style="background:#1e3a5f;color:#60a5fa;padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:700">FASE 1 — ENTRADA</span></div>
+    </div>
+    <div class="quadra q2">
+      <div class="quadra-name">QC02</div>
+      <div class="quadra-sub">AL'DORA Reserva · FASE 2 · "O CORAÇÃO"</div>
+      <div style="margin-top:12px;font-size:0.8rem;color:#94a3b8">Torres G · H · I · J</div>
+      <div style="font-size:0.78rem;color:#6b7280;margin-top:4px">11.953 m² · CA 4,0</div>
+      <div class="quadra-vgv">VGV Alvo: R$160–200M</div>
+      <div class="quadra-area">43.033 m² privativa · 70.546 m² construída</div>
+      <div style="margin-top:12px"><span style="background:#3d1a00;color:#fbbf24;padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:700">FASE 2 — EXPANSÃO</span></div>
+    </div>
+    <div class="quadra q3">
+      <div class="quadra-name">QC03</div>
+      <div class="quadra-sub">AL'DORA Signature · FASE 3 · COROAMENTO</div>
+      <div style="margin-top:12px;font-size:0.8rem;color:#94a3b8">Torres K · L · M · N</div>
+      <div style="font-size:0.78rem;color:#6b7280;margin-top:4px">10.232 m² · CA 4,0</div>
+      <div class="quadra-vgv">VGV Alvo: R$200M+</div>
+      <div class="quadra-area">32.743 m² privativa · 53.678 m² construída</div>
+      <div style="margin-top:12px"><span style="background:#1a1a2e;color:#a78bfa;padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:700">FASE 3 — COROAMENTO</span></div>
+    </div>
+  </div>
+
+  <!-- TIPOLOGIAS -->
+  <div class="section-title">🏠 Escada de Produtos — <span class="accent">5 Tipologias</span></div>
+  <div class="card">
+    <div class="tipo-row" style="background:#1a1a2e">
+      <span class="tipo-code">P1</span>
+      <span class="tipo-name">Studio Urban</span>
+      <span class="tipo-area">28–35 m² · Studio · 1 vaga</span>
+      <span class="tipo-ticket">R$230–290K</span>
+    </div>
+    <div class="tipo-row">
+      <span class="tipo-code">P2</span>
+      <span class="tipo-name">Compacto Smart</span>
+      <span class="tipo-area">42–55 m² · 2 dorms · 1 vaga</span>
+      <span class="tipo-ticket">R$380–500K</span>
+    </div>
+    <div class="tipo-row" style="background:#1a1a2e">
+      <span class="tipo-code">P3</span>
+      <span class="tipo-name">Garden Suite</span>
+      <span class="tipo-area">68–85 m² · 3 dorms · 2 vagas</span>
+      <span class="tipo-ticket">R$650–820K</span>
+    </div>
+    <div class="tipo-row">
+      <span class="tipo-code">P4</span>
+      <span class="tipo-name">Alto Padrão</span>
+      <span class="tipo-area">105–135 m² · 3–4 dorms · 3 vagas</span>
+      <span class="tipo-ticket">R$1,1–1,5M</span>
+    </div>
+    <div class="tipo-row" style="background:#1a1a2e">
+      <span class="tipo-code">P5</span>
+      <span class="tipo-name">Cobertura Signature</span>
+      <span class="tipo-area">200–280 m² · 4 dorms · Duplex · 4 vagas</span>
+      <span class="tipo-ticket">R$2,8–4,2M</span>
+    </div>
+  </div>
+
+  <!-- GATES -->
+  <div class="section-title">🚦 Gates de Execução — <span class="accent">Condições de Performance</span></div>
+  <div class="card">
+    <div class="gate">
+      <div class="gate-num">G1</div>
+      <div class="gate-info">
+        <div class="title">Aprovação + Financiamento + 30% Pré-vendas QC01</div>
+        <div class="desc">Licença municipal aprovada + linha de crédito garantida + 30% das unidades QC01 com contrato assinado → dispara construção</div>
+      </div>
+    </div>
+    <div class="gate">
+      <div class="gate-num">G2</div>
+      <div class="gate-info">
+        <div class="title">Preço Testado + EMP1 em Ritmo + EMP2 em Aprovação</div>
+        <div class="desc">Velocidade de vendas validada no mercado + início da tramitação municipal para QC02</div>
+      </div>
+    </div>
+    <div class="gate">
+      <div class="gate-num">G3</div>
+      <div class="gate-info">
+        <div class="title">Revenda EMP1/2 Acima do Projetado + EMP2 >50% Construído</div>
+        <div class="desc">Valorização comprovada no mercado secundário + obra EMP2 em fase avançada → unlock EMP3/4</div>
+      </div>
+    </div>
+    <div class="gate">
+      <div class="gate-num">G4</div>
+      <div class="gate-info">
+        <div class="title">Bairro Consolidado + Brand AL'DORA Estabelecida + P5 Qualificados</div>
+        <div class="desc">Percepção de bairro premium estabelecida + pipeline de compradores P5 (R$2,8–4,2M) pré-qualificados</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ESTADO DO ECOSSISTEMA -->
+  <div class="section-title">📊 Estado Atual — <span class="accent">Abril 2026</span></div>
+  <div class="grid-2">
+    <div class="card green">
+      <h2>✅ LSC-Lab — Missões Concluídas</h2>
+      <div class="app-list">
+        <div class="app-item"><span class="dot"></span><span class="name">BETA LAUNCH (S1–S10)</span><span style="color:#4ade80;font-size:0.75rem">Score 100/100</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">AUTONOMIA-TELEGRAM</span><span style="color:#4ade80;font-size:0.75rem">4 bots live</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">MAX-ECOSSISTEMA</span><span style="color:#4ade80;font-size:0.75rem">AI Router v4</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">MIGRA-ATLAS-OS</span><span style="color:#4ade80;font-size:0.75rem">15/15 apps</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">Stripe LIVE</span><span style="color:#4ade80;font-size:0.75rem">4 planos pk_live_</span></div>
+        <div class="app-item"><span class="dot"></span><span class="name">Clerk Production</span><span style="color:#4ade80;font-size:0.75rem">Auth RLS</span></div>
+      </div>
+    </div>
+    <div class="card amber">
+      <h2>⏳ Próximos Passos</h2>
+      <div class="app-list">
+        <div class="app-item"><span class="dot yellow"></span><span class="name">10+ beta users</span><span style="color:#fbbf24;font-size:0.75rem">Hoje: 5 users</span></div>
+        <div class="app-item"><span class="dot yellow"></span><span class="name">Conversão trial→pago</span><span style="color:#fbbf24;font-size:0.75rem">Meta: 15%+</span></div>
+        <div class="app-item"><span class="dot yellow"></span><span class="name">R$5K+ MRR</span><span style="color:#fbbf24;font-size:0.75rem">Fase Growth</span></div>
+        <div class="app-item"><span class="dot yellow"></span><span class="name">QC01 — Aprovação Municipal</span><span style="color:#fbbf24;font-size:0.75rem">Em andamento</span></div>
+        <div class="app-item"><span class="dot yellow"></span><span class="name">AL'DORA — Parcerias</span><span style="color:#fbbf24;font-size:0.75rem">Esteira vertical</span></div>
+        <div class="app-item"><span class="dot yellow"></span><span class="name">LinkedIn OAuth</span><span style="color:#fbbf24;font-size:0.75rem">Token renovação</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DADOS DE MERCADO -->
+  <div class="section-title">📈 Mercado Imobiliário — <span class="accent">Uberlândia 2026</span></div>
+  <div class="grid-4">
+    <div class="card">
+      <h3>CUB-MG Jan/2026</h3>
+      <div style="font-size:1.6rem;font-weight:800;color:#4ade80;margin-top:8px">R$2.839</div>
+      <div style="font-size:0.75rem;color:#6b7280">por m² construído</div>
+    </div>
+    <div class="card">
+      <h3>Ticket Médio Mercado</h3>
+      <div style="font-size:1.6rem;font-weight:800;color:#60a5fa;margin-top:8px">R$8.341</div>
+      <div style="font-size:0.75rem;color:#6b7280">por m² (2T25 UDI)</div>
+    </div>
+    <div class="card">
+      <h3>IVV Uberlândia</h3>
+      <div style="font-size:1.6rem;font-weight:800;color:#fbbf24;margin-top:8px">24,5%</div>
+      <div style="font-size:0.75rem;color:#6b7280">Índice velocidade vendas 2T25</div>
+    </div>
+    <div class="card">
+      <h3>Demanda Anual</h3>
+      <div style="font-size:1.6rem;font-weight:800;color:#a78bfa;margin-top:8px">1.000+</div>
+      <div style="font-size:0.75rem;color:#6b7280">unidades/ano raio 15min</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Documento gerado pelo Copilot CLI · Ecossistema Leandro Cecílio — Abril 2026<br>
+  <span style="color:#1f2937">LSC-Lab · Cidade Jardim Urbanismo · AL'DORA City</span>
+</footer>
+</body>
+</html>

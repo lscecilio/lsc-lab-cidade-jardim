@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AL'DORA QC02 — O Coração do Masterplan</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #f0d080;
+      --dark: #0c0c0f;
+      --dark2: #111118;
+      --dark3: #1a1a24;
+      --border: #2a2a3a;
+      --text: #e2e0d8;
+      --muted: #888;
+    }
+    body { font-family: 'Georgia', serif; background: var(--dark); color: var(--text); min-height: 100vh; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(160deg, #0c0c0f 0%, #1a1410 40%, #0f0f14 100%);
+      padding: 80px 40px 60px;
+      text-align: center;
+      border-bottom: 1px solid #2a2418;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: 'QC02';
+      position: absolute;
+      font-size: 20rem;
+      font-weight: 900;
+      color: rgba(201,168,76,0.04);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      letter-spacing: -10px;
+      pointer-events: none;
+    }
+    .hero-tag { font-family: 'Courier New', monospace; font-size: 0.72rem; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; margin-bottom: 20px; }
+    .hero h1 { font-size: 3.2rem; font-weight: 400; letter-spacing: -1px; line-height: 1.1; }
+    .hero h1 em { font-style: italic; color: var(--gold-light); }
+    .hero p { margin-top: 20px; font-size: 1.1rem; color: #aaa; max-width: 600px; margin-left: auto; margin-right: auto; font-family: 'Segoe UI', sans-serif; line-height: 1.7; }
+    .hero-stats { display: flex; justify-content: center; gap: 60px; margin-top: 50px; flex-wrap: wrap; }
+    .hstat .val { font-size: 2rem; font-weight: 300; color: var(--gold-light); font-family: 'Segoe UI', sans-serif; }
+    .hstat .lbl { font-size: 0.72rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-top: 4px; font-family: 'Segoe UI', sans-serif; }
+
+    /* Layout */
+    .container { max-width: 1100px; margin: 0 auto; padding: 60px 24px; }
+    .section { margin-bottom: 70px; }
+    .section-label { font-family: 'Courier New', monospace; font-size: 0.68rem; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; }
+    .section h2 { font-size: 2rem; font-weight: 400; margin-bottom: 24px; line-height: 1.2; }
+    .section h2 span { color: var(--gold-light); font-style: italic; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 50px 0; }
+
+    /* Grid */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+    /* Cards */
+    .card { background: var(--dark3); border: 1px solid var(--border); border-radius: 2px; padding: 28px; }
+    .card.gold-border { border-color: #3a2e14; border-left: 3px solid var(--gold); }
+    .card h3 { font-size: 1rem; font-weight: 400; color: var(--gold-light); margin-bottom: 12px; font-family: 'Segoe UI', sans-serif; letter-spacing: 1px; text-transform: uppercase; font-size: 0.82rem; }
+    .card p { font-size: 0.88rem; color: #aaa; line-height: 1.7; font-family: 'Segoe UI', sans-serif; }
+
+    /* Towers */
+    .tower-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 24px 0; }
+    .tower { background: var(--dark3); border: 1px solid #2a2418; border-radius: 2px; padding: 20px 16px; text-align: center; position: relative; }
+    .tower::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 2px; height: 20px; background: var(--gold); opacity: 0.4; }
+    .tower-name { font-size: 2rem; font-weight: 300; color: var(--gold-light); }
+    .tower-label { font-size: 0.7rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-top: 4px; font-family: 'Segoe UI', sans-serif; }
+    .tower-floors { font-size: 0.78rem; color: #666; margin-top: 8px; font-family: 'Courier New', monospace; }
+
+    /* Data table */
+    .data-table { width: 100%; border-collapse: collapse; font-family: 'Segoe UI', sans-serif; font-size: 0.85rem; }
+    .data-table th { text-align: left; padding: 10px 16px; background: #1a1410; color: var(--gold); font-weight: 600; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; border-bottom: 1px solid #2a2418; }
+    .data-table td { padding: 12px 16px; border-bottom: 1px solid #1f1f28; color: var(--text); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: rgba(201,168,76,0.04); }
+    .td-highlight { color: var(--gold-light) !important; font-weight: 600; }
+
+    /* Amenities */
+    .amenity-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .amenity { background: var(--dark3); border: 1px solid var(--border); padding: 16px; text-align: center; border-radius: 2px; }
+    .amenity .icon { font-size: 1.8rem; }
+    .amenity .name { font-size: 0.78rem; font-family: 'Segoe UI', sans-serif; color: #aaa; margin-top: 8px; }
+
+    /* Timeline / Gates */
+    .gate-list { display: flex; flex-direction: column; gap: 0; }
+    .gate { display: flex; gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--border); }
+    .gate:last-child { border-bottom: none; }
+    .gate-num { width: 40px; height: 40px; border: 1px solid var(--gold); color: var(--gold); display: flex; align-items: center; justify-content: center; font-family: 'Courier New', monospace; font-size: 0.8rem; flex-shrink: 0; margin-top: 2px; }
+    .gate-body .title { font-size: 1rem; margin-bottom: 6px; color: var(--gold-light); }
+    .gate-body .desc { font-size: 0.83rem; color: #888; line-height: 1.6; font-family: 'Segoe UI', sans-serif; }
+
+    /* VGV Matrix */
+    .vgv-bar { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; font-family: 'Segoe UI', sans-serif; font-size: 0.83rem; }
+    .vgv-label { width: 80px; color: var(--muted); text-align: right; }
+    .vgv-track { flex: 1; background: #1a1a24; height: 8px; border-radius: 1px; }
+    .vgv-fill { height: 100%; background: linear-gradient(90deg, #3a2a10, var(--gold)); border-radius: 1px; }
+    .vgv-val { width: 80px; color: var(--gold-light); font-weight: 600; }
+
+    /* Positioning */
+    .pos-item { display: flex; gap: 16px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid #1a1a24; font-family: 'Segoe UI', sans-serif; }
+    .pos-item:last-child { border-bottom: none; }
+    .pos-icon { font-size: 1.3rem; flex-shrink: 0; width: 32px; text-align: center; margin-top: 2px; }
+    .pos-body .title { font-size: 0.9rem; font-weight: 600; color: var(--gold-light); margin-bottom: 4px; }
+    .pos-body .desc { font-size: 0.82rem; color: #888; line-height: 1.6; }
+
+    /* Market data */
+    .mkt-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .mkt-card { background: var(--dark3); border: 1px solid var(--border); padding: 20px; text-align: center; }
+    .mkt-val { font-size: 1.5rem; font-weight: 300; color: var(--gold-light); font-family: 'Segoe UI', sans-serif; }
+    .mkt-lbl { font-size: 0.7rem; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; margin-top: 6px; font-family: 'Segoe UI', sans-serif; }
+
+    /* AI Router stamp */
+    .ai-stamp { display: flex; align-items: center; gap: 10px; background: #0d1117; border: 1px solid #1f2937; border-radius: 4px; padding: 10px 16px; font-family: 'Courier New', monospace; font-size: 0.72rem; color: #4ade80; margin-bottom: 24px; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 40px; text-align: center; color: #333; font-family: 'Segoe UI', sans-serif; font-size: 0.78rem; }
+    footer strong { color: var(--gold); }
+
+    @media (max-width: 900px) {
+      .grid-2, .grid-3, .grid-4, .tower-grid, .amenity-grid, .mkt-grid { grid-template-columns: 1fr 1fr; }
+      .hero h1 { font-size: 2rem; }
+      .hero-stats { gap: 30px; }
+    }
+    @media (max-width: 600px) {
+      .grid-2, .grid-3, .grid-4, .tower-grid, .amenity-grid, .mkt-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">AL'DORA City · Jardim Versailles · Uberlândia/MG</div>
+  <h1>Quadra 2<br><em>O Coração do Masterplan</em></h1>
+  <p>AL'DORA Reserva — Fase 2 do desenvolvimento vertical escalonado. Rua privada, parque frontal exclusivo e hub completo de amenities consolidados.</p>
+
+  <div class="hero-stats">
+    <div class="hstat"><div class="val">11.953</div><div class="lbl">m² de Terreno</div></div>
+    <div class="hstat"><div class="val">4</div><div class="lbl">Torres G·H·I·J</div></div>
+    <div class="hstat"><div class="val">R$160–200M</div><div class="lbl">VGV Alvo</div></div>
+    <div class="hstat"><div class="val">CA 4,0</div><div class="lbl">ZR2/SVA</div></div>
+    <div class="hstat"><div class="val">43.033</div><div class="lbl">m² Privativa</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- AI ROUTER STAMP -->
+  <div class="ai-stamp">
+    <span>⚡ LSC-Lab AI Router v2.7 · Tier: sonnet · Skill: cidade-jardim · Bridge: Hock:3080</span>
+    <span style="margin-left:auto;color:#6b7280">Documento gerado com inteligência do ecossistema LSC-Lab</span>
+  </div>
+
+  <!-- POSICIONAMENTO ESTRATÉGICO -->
+  <div class="section">
+    <div class="section-label">01 · Posicionamento</div>
+    <h2>Por que QC02 é o <span>coração</span> do projeto</h2>
+
+    <div class="grid-2" style="margin-bottom:24px">
+      <div class="card gold-border">
+        <h3>A Lógica do Masterplan Escalonado</h3>
+        <p>QC01 constrói a marca e valida o mercado. QC02 colhe a valorização e estabelece o bairro premium. QC03 coroa com Signature. O QC02 é a fase de maior equilíbrio risco/retorno — já existe validação de mercado, mas o terreno ainda permite posicionamento elevado.</p>
+      </div>
+      <div class="card gold-border">
+        <h3>Diferencial: Rua Privada + Parque Frontal</h3>
+        <p>A combinação de rua privada com parque frontal exclusivo cria um enclave residencial — tipologia rara em Uberlândia. Moradores de QC02 têm acesso a verde, silêncio e segurança que o restante da cidade não oferece ao mesmo custo por m².</p>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:0;background:var(--dark3);border:1px solid var(--border);padding:24px;">
+      <div class="pos-item">
+        <div class="pos-icon">🛣️</div>
+        <div class="pos-body">
+          <div class="title">Rua Privada como Ativo Diferencial</div>
+          <div class="desc">A rua privada conecta suavemente as 4 torres, cria identidade de condomínio fechado e elimina o tráfego externo. Para o comprador P3, isso significa segurança para crianças, controle de acesso e sensação de pertencimento a um enclave.</div>
+        </div>
+      </div>
+      <div class="pos-item">
+        <div class="pos-icon">🌳</div>
+        <div class="pos-body">
+          <div class="title">Parque Frontal Exclusivo — Cartão de Visita</div>
+          <div class="desc">Área verde contemplativa de uso exclusivo dos moradores do QC02. Paisagismo premium com área de estar, playground e integração visual com as torres. Valoriza todas as unidades de frente e eleva o VGV unitário em 8-12%.</div>
+        </div>
+      </div>
+      <div class="pos-item">
+        <div class="pos-icon">🏊</div>
+        <div class="pos-body">
+          <div class="title">Hub de Amenities Consolidado</div>
+          <div class="desc">QC02 concentra o hub completo de amenities — piscinas, academia, espaço gourmet, coworking e área kids. Estrutura compartilhada entre as 4 torres com taxa de condomínio diluída. Diferencial competitivo frente ao mercado de Uberlândia.</div>
+        </div>
+      </div>
+      <div class="pos-item">
+        <div class="pos-icon">💰</div>
+        <div class="pos-body">
+          <div class="title">Valorização via Efeito QC01</div>
+          <div class="desc">Ao iniciar QC02, as revendas de QC01 já demonstraram apreciação. Isso é combustível para ticket médio 15-25% superior no lançamento de QC02, comprimindo o CAC e melhorando o VGV sem aumentar custos de construção proporcionalmente.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- TORRES -->
+  <div class="section">
+    <div class="section-label">02 · As Torres</div>
+    <h2>4 Torres — <span>AL'DORA Reserva</span></h2>
+
+    <div class="tower-grid">
+      <div class="tower">
+        <div class="tower-name">G</div>
+        <div class="tower-label">Torre Gaia</div>
+        <div class="tower-floors">~18 andares · P3 focus</div>
+      </div>
+      <div class="tower">
+        <div class="tower-name">H</div>
+        <div class="tower-label">Torre Haven</div>
+        <div class="tower-floors">~18 andares · P3 focus</div>
+      </div>
+      <div class="tower">
+        <div class="tower-name">I</div>
+        <div class="tower-label">Torre Iris</div>
+        <div class="tower-floors">~20 andares · P3/P4 mix</div>
+      </div>
+      <div class="tower">
+        <div class="tower-name">J</div>
+        <div class="tower-label">Torre Jardim</div>
+        <div class="tower-floors">~20 andares · P3/P4 mix</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3>Mix de Produto QC02</h3>
+      <table class="data-table" style="margin-top:12px">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Config</th>
+            <th>Área</th>
+            <th>Ticket Unit.</th>
+            <th>% Mix</th>
+            <th>VGV Parcial</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>P2 — Compacto Smart</td>
+            <td>2 dorms · 1 vaga</td>
+            <td>42–55 m²</td>
+            <td>R$380–500K</td>
+            <td>20%</td>
+            <td class="td-highlight">~R$30M</td>
+          </tr>
+          <tr>
+            <td>P3 — Garden Suite</td>
+            <td>3 dorms · 2 vagas</td>
+            <td>68–85 m²</td>
+            <td class="td-highlight">R$650–820K</td>
+            <td>60%</td>
+            <td class="td-highlight">~R$110M</td>
+          </tr>
+          <tr>
+            <td>P4 — Alto Padrão</td>
+            <td>3–4 dorms · 3 vagas</td>
+            <td>105–135 m²</td>
+            <td>R$1,1–1,5M</td>
+            <td>20%</td>
+            <td class="td-highlight">~R$50M</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- VGV BREAKDOWN -->
+  <div class="section">
+    <div class="section-label">03 · VGV</div>
+    <h2>Matriz de <span>Receita</span></h2>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>Construção de VGV por Tipologia</h3>
+        <div style="margin-top:16px">
+          <div class="vgv-bar"><span class="vgv-label">P3 (60%)</span><div class="vgv-track"><div class="vgv-fill" style="width:60%"></div></div><span class="vgv-val">~R$110M</span></div>
+          <div class="vgv-bar"><span class="vgv-label">P4 (20%)</span><div class="vgv-track"><div class="vgv-fill" style="width:20%"></div></div><span class="vgv-val">~R$50M</span></div>
+          <div class="vgv-bar"><span class="vgv-label">P2 (20%)</span><div class="vgv-track"><div class="vgv-fill" style="width:13%"></div></div><span class="vgv-val">~R$30M</span></div>
+          <div style="border-top:1px solid var(--border);margin-top:16px;padding-top:16px;font-family:'Segoe UI',sans-serif">
+            <div style="display:flex;justify-content:space-between">
+              <span style="color:var(--muted);font-size:0.83rem">TOTAL QC02</span>
+              <span style="color:var(--gold-light);font-size:1.1rem;font-weight:600">R$160–200M</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Premissas de Cálculo</h3>
+        <table class="data-table" style="margin-top:8px">
+          <tbody>
+            <tr><td>Área privativa total</td><td class="td-highlight">43.033 m²</td></tr>
+            <tr><td>Ticket médio UDI (2T25)</td><td class="td-highlight">R$8.341/m²</td></tr>
+            <tr><td>CUB-MG Jan/2026</td><td>R$2.839/m²</td></tr>
+            <tr><td>Margem bruta estimada</td><td class="td-highlight">28–35%</td></tr>
+            <tr><td>IVV Uberlândia 2T25</td><td>24,5%</td></tr>
+            <tr><td>Demanda ativa raio 15min</td><td class="td-highlight">1.000+ unid/ano</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- AMENITIES -->
+  <div class="section">
+    <div class="section-label">04 · Amenities</div>
+    <h2>Hub Completo de <span>Convivência</span></h2>
+    <p style="font-family:'Segoe UI',sans-serif;font-size:0.88rem;color:#888;margin-bottom:24px;line-height:1.7">
+      QC02 concentra o hub de amenities mais completo do masterplan, dimensionado para 4 torres com custo de condomínio diluído entre os condôminos.
+    </p>
+    <div class="amenity-grid">
+      <div class="amenity"><div class="icon">🏊</div><div class="name">Piscina Adulto + Infantil</div></div>
+      <div class="amenity"><div class="icon">🏋️</div><div class="name">Academia Equipada</div></div>
+      <div class="amenity"><div class="icon">🍽️</div><div class="name">Espaço Gourmet Premium</div></div>
+      <div class="amenity"><div class="icon">💻</div><div class="name">Coworking Climatizado</div></div>
+      <div class="amenity"><div class="icon">🧒</div><div class="name">Área Kids + Playground</div></div>
+      <div class="amenity"><div class="icon">🌳</div><div class="name">Parque Frontal Exclusivo</div></div>
+      <div class="amenity"><div class="icon">🚘</div><div class="name">Vagas Cobertas + EV</div></div>
+      <div class="amenity"><div class="icon">🔒</div><div class="name">Portaria 24h + Câmeras</div></div>
+      <div class="amenity"><div class="icon">🛣️</div><div class="name">Rua Privada Interna</div></div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- GATES -->
+  <div class="section">
+    <div class="section-label">05 · Execução</div>
+    <h2>Gates para <span>Destravar QC02</span></h2>
+    <div class="gate-list">
+      <div class="gate">
+        <div class="gate-num">G1</div>
+        <div class="gate-body">
+          <div class="title">Conclusão do Gate QC01</div>
+          <div class="desc">Aprovação municipal QC01 + financiamento + 30% pré-vendas confirmadas. QC01 precisa estar em velocidade de vendas validada antes de lançar QC02. Estimativa: 18–24 meses após início de vendas QC01.</div>
+        </div>
+      </div>
+      <div class="gate">
+        <div class="gate-num">G2</div>
+        <div class="gate-body">
+          <div class="title">Tramitação Municipal QC02</div>
+          <div class="desc">Entrada do processo de aprovação de QC02 durante o Gate 1. Aprovação estimada: 12–18 meses. Processo paralelo ao andamento de QC01, reduzindo o tempo total de espera entre fases.</div>
+        </div>
+      </div>
+      <div class="gate">
+        <div class="gate-num">G3</div>
+        <div class="gate-body">
+          <div class="title">Lançamento Comercial QC02</div>
+          <div class="desc">Com brand AL'DORA estabelecida, aprovação em mãos e compradores já aquecidos pela valorização de QC01. Pré-venda de QC02 com ticket médio 15-25% superior. Meta: 30% de pré-vendas em 90 dias de lançamento.</div>
+        </div>
+      </div>
+      <div class="gate">
+        <div class="gate-num">G4</div>
+        <div class="gate-body">
+          <div class="title">Construção e Entrega</div>
+          <div class="desc">Mobilização da obra QC02 após Gate 3. Prazo de construção estimado: 36 meses. Entrega dos primeiros apartamentos com QC01 já consolidado e valorizando — criando efeito demonstração natural para QC03.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- MERCADO -->
+  <div class="section">
+    <div class="section-label">06 · Mercado</div>
+    <h2>Fundamentos de <span>Uberlândia 2026</span></h2>
+    <div class="mkt-grid">
+      <div class="mkt-card">
+        <div class="mkt-val">R$8.341</div>
+        <div class="mkt-lbl">Ticket médio/m² (2T25)</div>
+      </div>
+      <div class="mkt-card">
+        <div class="mkt-val">24,5%</div>
+        <div class="mkt-lbl">IVV Uberlândia 2T25</div>
+      </div>
+      <div class="mkt-card">
+        <div class="mkt-val">1.000+</div>
+        <div class="mkt-lbl">Unidades/ano demandadas</div>
+      </div>
+      <div class="mkt-card">
+        <div class="mkt-val">69%</div>
+        <div class="mkt-lbl">Share de vendas vertical</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <h3>Referências de Mercado Premium</h3>
+      <p>QC02 se posiciona ao lado de referências como <strong style="color:var(--gold-light)">Parque Global SP</strong> (integração verde + enclave), <strong style="color:var(--gold-light)">Grandverse UDI</strong> (vertical consolidado local) e standards internacionais de <strong style="color:var(--gold-light)">Miami/Dubai</strong> para coberturas Signature (QC03). A escada de produtos P1→P5 cria demanda interna entre fases.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <strong>AL'DORA City — Cidade Jardim Urbanismo</strong><br>
+  Documento estratégico QC02 · Gerado com AI Router v2.7 via Hock:3080 · Skill: cidade-jardim · Copilot CLI LSC-Lab<br>
+  <span style="color:#1f1f28;margin-top:4px;display:block">Confidencial — Uso exclusivo da Cidade Jardim Urbanismo</span>
+</footer>
+</body>
+</html>
