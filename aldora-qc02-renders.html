@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AL'DORA Reserva QC02 — Prompts AI para Renders & Mood Board</title>
+<meta name="description" content="Prompts detalhados para Midjourney, DALL-E e Gemini Imagen — Renders do AL'DORA Reserva QC02, Jardim Versailles, Uberlândia/MG">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a2416'/%3E%3Ctext x='16' y='22' font-size='18' fill='%23C8A84B' text-anchor='middle' font-family='serif'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/aldora-tokens.css">
+<link rel="stylesheet" href="assets/css/aldora-components.css">
+
+<style>
+body { background: var(--aldora-verde); color: var(--aldora-bege); }
+
+/* ── Compact hero ── */
+.renders-hero {
+  padding: 120px var(--space-lg) var(--space-2xl);
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 0%, rgba(200,168,75,0.1) 0%, transparent 60%);
+}
+
+/* ── Tool selector ── */
+.tool-tabs {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin: var(--space-xl) 0;
+}
+
+.tool-tab {
+  padding: 10px 24px;
+  border-radius: 100px;
+  border: 1px solid rgba(200,168,75,0.25);
+  background: transparent;
+  color: rgba(200,168,75,0.6);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.tool-tab:hover, .tool-tab.active {
+  background: rgba(200,168,75,0.15);
+  border-color: var(--aldora-ouro);
+  color: var(--aldora-ouro);
+}
+
+/* ── Prompt Cards ── */
+.prompt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+}
+
+.prompt-card {
+  background: rgba(200,168,75,0.04);
+  border: 1px solid rgba(200,168,75,0.15);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.prompt-card:hover {
+  border-color: rgba(200,168,75,0.35);
+  transform: translateY(-2px);
+}
+
+.prompt-card__preview {
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.prompt-card__preview::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(4,14,9,0.9) 100%);
+}
+
+.prompt-card__preview--aerea {
+  background: linear-gradient(135deg, #0a3320 0%, #1a6b40 40%, #0f4a2e 70%, #061a10 100%);
+}
+.prompt-card__preview--entrada {
+  background: linear-gradient(135deg, #1a1a0a 0%, #2d2d1a 40%, #0a0a05 100%);
+}
+.prompt-card__preview--fachada {
+  background: linear-gradient(135deg, #1a0a0a 0%, #3d2010 40%, #0a0405 100%);
+}
+.prompt-card__preview--parque {
+  background: linear-gradient(135deg, #051a08 0%, #0a3010 40%, #051208 100%);
+}
+.prompt-card__preview--rooftop {
+  background: linear-gradient(135deg, #05080a 0%, #0a1520 40%, #020508 100%);
+}
+.prompt-card__preview--lobby {
+  background: linear-gradient(135deg, #0d0808 0%, #1f1208 40%, #050302 100%);
+}
+.prompt-card__preview--piscina {
+  background: linear-gradient(135deg, #030d1a 0%, #061a2d 40%, #020a10 100%);
+}
+.prompt-card__preview--night {
+  background: linear-gradient(135deg, #020305 0%, #040a14 40%, #010205 100%);
+}
+
+.prompt-card__body {
+  padding: var(--space-lg);
+}
+
+.prompt-card__num {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(200,168,75,0.5);
+  margin-bottom: 8px;
+}
+
+.prompt-card__title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--aldora-bege);
+  margin-bottom: var(--space-sm);
+}
+
+.prompt-card__context {
+  font-size: 0.8rem;
+  color: rgba(230,215,175,0.55);
+  margin-bottom: var(--space-md);
+  font-style: italic;
+}
+
+/* The actual prompt text box */
+.prompt-box {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(200,168,75,0.2);
+  border-radius: 10px;
+  padding: var(--space-md);
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  color: rgba(230,215,175,0.85);
+  line-height: 1.6;
+  position: relative;
+  cursor: text;
+  user-select: all;
+}
+
+.prompt-box--mj { border-left: 3px solid #5865F2; }
+.prompt-box--dalle { border-left: 3px solid #10a37f; }
+.prompt-box--gemini { border-left: 3px solid #4285F4; }
+
+.prompt-tool-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.prompt-tool-label.mj { color: #7984f2; }
+.prompt-tool-label.dalle { color: #10a37f; }
+.prompt-tool-label.gemini { color: #4285F4; }
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--space-sm);
+  padding: 6px 14px;
+  background: rgba(200,168,75,0.12);
+  border: 1px solid rgba(200,168,75,0.25);
+  border-radius: 8px;
+  color: var(--aldora-ouro);
+  font-size: 0.75rem;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.copy-btn:hover { background: rgba(200,168,75,0.22); }
+.copy-btn.copied { background: rgba(34,139,34,0.2); border-color: rgba(34,139,34,0.4); color: #4caf50; }
+
+/* ── Params section ── */
+.params-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin: var(--space-xl) 0;
+}
+
+.param-card {
+  background: rgba(200,168,75,0.04);
+  border: 1px solid rgba(200,168,75,0.12);
+  border-radius: 12px;
+  padding: var(--space-md);
+}
+
+.param-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(200,168,75,0.5);
+  margin-bottom: 6px;
+}
+
+.param-value {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--aldora-ouro);
+}
+
+.param-desc {
+  font-size: 0.75rem;
+  color: rgba(230,215,175,0.5);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* ── Mood Board ── */
+.mood-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+}
+
+.mood-tile {
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 4/3;
+  cursor: pointer;
+}
+
+.mood-tile:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+.mood-tile:nth-child(6) { grid-column: span 2; }
+
+.mood-tile__bg {
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  transition: transform 0.4s ease;
+}
+
+.mood-tile:hover .mood-tile__bg {
+  transform: scale(1.05);
+}
+
+/* Paleta de cores verde escuro + ouro */
+.mood-tile:nth-child(1) .mood-tile__bg {
+  background: linear-gradient(135deg, #0d2b1a 0%, #1a5030 50%, #0a2010 100%);
+  font-size: 4rem;
+}
+.mood-tile:nth-child(2) .mood-tile__bg { background: linear-gradient(135deg, #1a1508 0%, #3d2d10 100%); }
+.mood-tile:nth-child(3) .mood-tile__bg { background: linear-gradient(160deg, #050d15 0%, #0a1a28 100%); }
+.mood-tile:nth-child(4) .mood-tile__bg { background: linear-gradient(135deg, #0a1a0a 0%, #1a3020 100%); }
+.mood-tile:nth-child(5) .mood-tile__bg { background: linear-gradient(135deg, #15100a 0%, #2d200a 100%); }
+.mood-tile:nth-child(6) .mood-tile__bg { background: linear-gradient(135deg, #08080d 0%, #12121f 50%, #080810 100%); font-size: 3rem; }
+.mood-tile:nth-child(7) .mood-tile__bg { background: linear-gradient(135deg, #0d0a05 0%, #201508 100%); }
+.mood-tile:nth-child(8) .mood-tile__bg { background: linear-gradient(135deg, #050a10 0%, #0a1520 100%); }
+
+.mood-tile__label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 12px;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  font-size: 0.75rem;
+  color: rgba(230,215,175,0.8);
+  font-family: var(--font-body);
+}
+
+/* ── Paleta ── */
+.palette {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-top: var(--space-xl);
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.swatch__color {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.swatch__name {
+  font-size: 9px;
+  color: rgba(230,215,175,0.5);
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.swatch__hex {
+  font-family: monospace;
+  font-size: 9px;
+  color: rgba(230,215,175,0.4);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .prompt-grid { grid-template-columns: 1fr; }
+  .params-grid { grid-template-columns: 1fr; }
+  .mood-grid { grid-template-columns: repeat(2, 1fr); }
+  .mood-tile:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+  .mood-tile:nth-child(6) { grid-column: span 2; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="aldora-nav" id="main-nav">
+  <a class="aldora-nav__brand" href="INDEX.html">AL'DORA City</a>
+  <ul class="aldora-nav__links">
+    <li><a href="#prompts">Prompts</a></li>
+    <li><a href="#params">Parâmetros</a></li>
+    <li><a href="#moodboard">Mood Board</a></li>
+    <li><a href="#paleta">Paleta</a></li>
+    <li><a href="#workflow">Workflow</a></li>
+  </ul>
+  <span class="aldora-nav__tag">QC02 · Renders AI</span>
+</nav>
+
+<!-- HERO -->
+<section class="renders-hero">
+  <div class="aldora-section__tag">QC02 · AL'DORA Reserva</div>
+  <h1 class="aldora-section__title" style="font-size: clamp(2.2rem, 5vw, 4rem);">
+    Prompts AI para Renders<br>
+    <span style="color: var(--aldora-ouro); font-style: italic;">Midjourney · DALL-E · Gemini Imagen</span>
+  </h1>
+  <p class="aldora-section__lead">
+    8 cenas chave do AL'DORA Reserva. Prompts prontos para usar.
+    Ajuste os parâmetros conforme a ferramenta.
+  </p>
+
+  <div class="tool-tabs">
+    <button class="tool-tab active" onclick="selectTool('mj')">Midjourney v7</button>
+    <button class="tool-tab" onclick="selectTool('dalle')">DALL-E 3</button>
+    <button class="tool-tab" onclick="selectTool('gemini')">Gemini Imagen 3</button>
+  </div>
+</section>
+
+<!-- ===== PROMPTS ===== -->
+<section class="aldora-section aldora-section--dark" id="prompts">
+  <div class="container">
+    <div class="aldora-section__tag">01 — Renders</div>
+    <h2 class="aldora-section__title">8 Cenas · QC02 AL'DORA Reserva</h2>
+
+    <div class="prompt-grid">
+
+      <!-- 01: Vista Aérea -->
+      <div class="prompt-card">
+        <div class="prompt-card__preview prompt-card__preview--aerea">🌿</div>
+        <div class="prompt-card__body">
+          <div class="prompt-card__num">01 — Vista Aérea</div>
+          <div class="prompt-card__title">Drone View · Complexo + Parque</div>
+          <div class="prompt-card__context">
+            Vista aérea 45° mostrando as 4 torres em configuração grid 2×2, parque verde em frente, rua privada de acesso e conexão com o bairro Jardim Versailles.
+          </div>
+
+          <span class="prompt-tool-label mj">Midjourney v7</span>
+          <div class="prompt-box prompt-box--mj" id="prompt-01-mj">
+aerial drone view 45 degrees, luxury residential complex with 4 modern towers in 2x2 grid formation, surrounded by lush tropical green park in front, private gated road entrance, golden hour warm light, architectural photography style, ultra-detailed building facades with floor-to-ceiling windows, sustainable landscaping, pool and amenity areas visible on ground level, Uberlândia Brazil city backdrop, photorealistic, cinematic composition, 8k --ar 16:9 --style raw --v 7 --q 2</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-01-mj', this)">📋 Copiar</button>
+
+          <br><br>
+          <span class="prompt-tool-label dalle">DALL-E 3</span>
+          <div class="prompt-box prompt-box--dalle" id="prompt-01-dalle">
+Aerial drone photograph taken at 45 degrees showing a luxury residential complex in Brazil. Four modern glass and concrete towers arranged in a 2x2 grid. A beautiful tropical green park occupies the space directly in front of the complex. A private gated road provides exclusive access. Golden hour lighting, warm amber tones. The towers have floor-to-ceiling windows reflecting the sky. Ground level shows pools, gardens, and amenity spaces. Photorealistic architectural photography style. Ultra-high detail.</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-01-dalle', this)">📋 Copiar</button>
+
+          <br><br>
+          <span class="prompt-tool-label gemini">Gemini Imagen 3</span>
+          <div class="prompt-box prompt-box--gemini" id="prompt-01-gemini">
+Aerial 45-degree drone photo of a premium Brazilian residential complex: 4 modern luxury towers in square formation, lush green public park directly in front with mature trees and walking paths, exclusive gated private road entrance, golden hour warm light casting long shadows, photorealistic, 8K resolution, architectural visualization quality, tropical landscaping, pool visible, glass facades reflecting sky</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-01-gemini', this)">📋 Copiar</button>
+        </div>
+      </div>
+
+      <!-- 02: Entrada / Rua Privada -->
+      <div class="prompt-card">
+        <div class="prompt-card__preview prompt-card__preview--entrada">🛣️</div>
+        <div class="prompt-card__body">
+          <div class="prompt-card__num">02 — Entrada Exclusiva</div>
+          <div class="prompt-card__title">Rua Privada · Chegada ao Complexo</div>
+          <div class="prompt-card__context">
+            Perspectiva humana na rua privada, olhando em direção à entrada do complexo. Torres ao fundo, vegetação nas laterais, portaria discreta, pavimentação premium.
+          </div>
+
+          <span class="prompt-tool-label mj">Midjourney v7</span>
+          <div class="prompt-box prompt-box--mj" id="prompt-02-mj">
+street level perspective looking toward luxury residential complex entrance, private tree-lined road with premium paving, discreet modern guardhouse on the side, 4 luxury towers visible in the background, tropical trees framing the driveway, warm late afternoon golden hour light, Brazilian luxury real estate photography, photorealistic architectural visualization, subtle ambient lights, high-end residential feel, cinematic depth of field --ar 16:9 --style raw --v 7 --q 2</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-02-mj', this)">📋 Copiar</button>
+
+          <br><br>
+          <span class="prompt-tool-label dalle">DALL-E 3</span>
+          <div class="prompt-box prompt-box--dalle" id="prompt-02-dalle">
+Street-level perspective on a private, tree-lined road leading to a luxury residential complex entrance in Brazil. Premium stone paving, a modern minimalist guardhouse on the side, four tall luxury towers visible ahead surrounded by tropical trees. Late afternoon golden light creates a warm, welcoming atmosphere. Photorealistic architectural photography, depth of field blurring the foreground slightly.</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-02-dalle', this)">📋 Copiar</button>
+        </div>
+      </div>
+
+      <!-- 03: Fachada -->
+      <div class="prompt-card">
+        <div class="prompt-card__preview prompt-card__preview--fachada">🏢</div>
+        <div class="prompt-card__body">
+          <div class="prompt-card__num">03 — Fachada ao Entardecer</div>
+          <div class="prompt-card__title">Torres G + H · Sunset</div>
+          <div class="prompt-card__context">
+            Vista frontal das torres G e H do QC02 ao entardecer. Fachadas modernas com varanda gourmet, jardins verticais, céu alaranjado, reflexos dourados nos vidros.
+          </div>
+
+          <span class="prompt-tool-label mj">Midjourney v7</span>
+          <div class="prompt-box prompt-box--mj" id="prompt-03-mj">
+luxury residential tower facades at sunset, two tall modern glass and concrete towers side by side, gourmet balconies with glass railings on every floor, vertical garden elements on facade, dramatic orange and purple sunset sky reflecting on glass, Brazilian upscale residential architecture, warm golden light illuminating the building, people visible on some balconies, ground level landscaping with palm trees and ornamental plants, photorealistic architectural photography --ar 9:16 --style raw --v 7 --q 2</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-03-mj', this)">📋 Copiar</button>
+
+          <br><br>
+          <span class="prompt-tool-label gemini">Gemini Imagen 3</span>
+          <div class="prompt-box prompt-box--gemini" id="prompt-03-gemini">
+Two luxury residential tower facades photographed at golden hour sunset, modern glass and concrete architecture, gourmet balconies with glass railings, vertical garden elements integrated into facade, dramatic orange-purple sky reflecting in floor-to-ceiling windows, Brazilian premium real estate, palm trees in foreground, photorealistic architectural visualization, 8K quality</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-03-gemini', this)">📋 Copiar</button>
+        </div>
+      </div>
+
+      <!-- 04: Vista do Parque -->
+      <div class="prompt-card">
+        <div class="prompt-card__preview prompt-card__preview--parque">🌳</div>
+        <div class="prompt-card__body">
+          <div class="prompt-card__num">04 — Vista do Parque</div>
+          <div class="prompt-card__title">Towers from the Park · Lifestyle</div>
+          <div class="prompt-card__context">
+            Perspectiva de dentro do parque, olhando de baixo para cima em direção às 4 torres. Árvores tropicais no primeiro plano, pessoas caminhando, tarde ensolarada.
+          </div>
+
+          <span class="prompt-tool-label mj">Midjourney v7</span>
+          <div class="prompt-box prompt-box--mj" id="prompt-04-mj">
+view from inside a tropical urban park looking up at 4 luxury residential towers in the background, mature tropical trees in foreground with dappled sunlight, people walking and jogging on park paths, families with children, lush green grass, lifestyle scene, towers reflected in a small fountain, blue sky with light clouds, daytime, Brazilian urban park premium neighborhood, photorealistic lifestyle photography, Canon 24-70mm lens perspective --ar 16:9 --style raw --v 7</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-04-mj', this)">📋 Copiar</button>
+
+          <br><br>
+          <span class="prompt-tool-label dalle">DALL-E 3</span>
+          <div class="prompt-box prompt-box--dalle" id="prompt-04-dalle">
+A lifestyle photograph taken from inside a lush tropical urban park, looking toward four luxury residential towers in the background. Mature tropical trees frame the composition in the foreground with sunlight filtering through leaves. People are walking, jogging, and relaxing in the park. Families visible. The towers are modern glass and concrete, standing tall against a blue sky. Photorealistic, natural lighting, professional real estate lifestyle photography.</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-04-dalle', this)">📋 Copiar</button>
+        </div>
+      </div>
+
+      <!-- 05: Rooftop -->
+      <div class="prompt-card">
+        <div class="prompt-card__preview prompt-card__preview--rooftop">🌅</div>
+        <div class="prompt-card__body">
+          <div class="prompt-card__num">05 — Rooftop Garden</div>
+          <div class="prompt-card__title">Terraço Premium · Vista Uberlândia</div>
+          <div class="prompt-card__context">
+            Terraço jardim no topo de uma das torres, com piscina infinity, espreguiçadeiras, vegetação, vista panorâmica da cidade ao entardecer.
+          </div>
+
+          <span class="prompt-tool-label mj">Midjourney v7</span>
+          <div class="prompt-box prompt-box--mj" id="prompt-05-mj">
+luxury rooftop garden terrace with infinity pool, Brazilian residential high-rise, lush tropical plants and ornamental trees, elegant sun loungers and outdoor furniture, panoramic city view of Uberlândia at dusk, gradient sky orange to purple, illuminated towers in the distance, people relaxing, pool water reflecting the sky, subtle ambient lighting beginning to activate, architectural photography style, dreamy cinematic atmosphere --ar 16:9 --style raw --v 7 --q 2</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-05-mj', this)">📋 Copiar</button>
+
+          <br><br>
+          <span class="prompt-tool-label gemini">Gemini Imagen 3</span>
+          <div class="prompt-box prompt-box--gemini" id="prompt-05-gemini">
+Luxury rooftop terrace with infinity pool and tropical garden, top floor of a Brazilian premium residential tower, panoramic city view at golden hour, elegant outdoor furniture, sun loungers, lush ornamental plants, pool water perfectly still reflecting orange sky, people relaxing in distance, photorealistic architectural photography, ultra-detailed, 8K</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-05-gemini', this)">📋 Copiar</button>
+        </div>
+      </div>
+
+      <!-- 06: Lobby -->
+      <div class="prompt-card">
+        <div class="prompt-card__preview prompt-card__preview--lobby">🏛️</div>
+        <div class="prompt-card__body">
+          <div class="prompt-card__num">06 — Lobby de Entrada</div>
+          <div class="prompt-card__title">Recepção Premium · Interior</div>
+          <div class="prompt-card__context">
+            Hall de entrada de uma das torres do QC02. Pé-direito duplo, mármore, iluminação indireta dourada, arte na parede, concierge ao fundo, jardim interno.
+          </div>
+
+          <span class="prompt-tool-label mj">Midjourney v7</span>
+          <div class="prompt-box prompt-box--mj" id="prompt-06-mj">
+interior architecture luxury residential lobby double height ceiling, white and beige Calacatta marble floors and walls, warm indirect golden lighting, contemporary art installation on feature wall, elegant reception desk with concierge, live indoor tropical plants, natural light from floor-to-ceiling glass facade, Brazilian luxury condominium aesthetic, photorealistic interior photography, ultra-detailed, 8k, golden accents, minimalist luxury --ar 9:16 --style raw --v 7 --q 2</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-06-mj', this)">📋 Copiar</button>
+
+          <br><br>
+          <span class="prompt-tool-label dalle">DALL-E 3</span>
+          <div class="prompt-box prompt-box--dalle" id="prompt-06-dalle">
+Interior architectural photography of a luxury residential lobby with double-height ceilings. White and beige Calacatta marble floors, walls with warm indirect golden lighting. A contemporary art piece on the feature wall, elegant concierge desk in the background. Large tropical indoor plants. Natural light flooding through floor-to-ceiling glass facade. Brazilian premium condominium, minimalist luxury aesthetic, photorealistic, ultra-detailed.</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-06-dalle', this)">📋 Copiar</button>
+        </div>
+      </div>
+
+      <!-- 07: Piscina + Amenities -->
+      <div class="prompt-card">
+        <div class="prompt-card__preview prompt-card__preview--piscina">🏊</div>
+        <div class="prompt-card__body">
+          <div class="prompt-card__num">07 — Piscina & Amenities</div>
+          <div class="prompt-card__title">Área de Lazer Master · Lifestyle</div>
+          <div class="prompt-card__context">
+            Área de lazer ground level do QC02. Piscina adulto + kids, deck de madeira, espreguiçadeiras, bar molhado, vegetação exuberante, famílias e casais.
+          </div>
+
+          <span class="prompt-tool-label mj">Midjourney v7</span>
+          <div class="prompt-box prompt-box--mj" id="prompt-07-mj">
+luxury condominium pool area ground level amenities, large swimming pool with crystal clear blue water, wooden deck, elegant pool chairs and umbrellas, wet bar area, lush tropical landscaping surrounding the pool, families enjoying the pool, children in the kids pool nearby, Brazilian residential complex, towers visible in background, golden afternoon light, photorealistic lifestyle photography, professional real estate photography --ar 16:9 --style raw --v 7</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-07-mj', this)">📋 Copiar</button>
+
+          <br><br>
+          <span class="prompt-tool-label gemini">Gemini Imagen 3</span>
+          <div class="prompt-box prompt-box--gemini" id="prompt-07-gemini">
+Luxury residential complex pool and amenity area, ground level, large infinity-edge swimming pool with crystal blue water, wooden deck with elegant loungers, tropical garden surrounding, wet bar, children's pool nearby, families enjoying the space, four residential towers visible in background, golden afternoon light, photorealistic lifestyle photography, 8K quality</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-07-gemini', this)">📋 Copiar</button>
+        </div>
+      </div>
+
+      <!-- 08: Vista Noturna -->
+      <div class="prompt-card">
+        <div class="prompt-card__preview prompt-card__preview--night">🌙</div>
+        <div class="prompt-card__body">
+          <div class="prompt-card__num">08 — Vista Noturna</div>
+          <div class="prompt-card__title">Night View · Complexo Iluminado</div>
+          <div class="prompt-card__context">
+            Vista noturna do complexo QC02 com todas as torres iluminadas, parque ao fundo com iluminação baixa, piscina com reflexos, céu estrelado ou com poucas nuvens.
+          </div>
+
+          <span class="prompt-tool-label mj">Midjourney v7</span>
+          <div class="prompt-box prompt-box--mj" id="prompt-08-mj">
+night photography luxury residential complex 4 towers illuminated, warm amber lights on balconies, modern architecture glowing against dark blue night sky, pool area illuminated with underwater lights reflecting on water surface, tropical park in background with soft path lighting, stars visible in sky, Brazilian premium real estate, long exposure photography effect, dramatic contrast between lit towers and dark sky, architectural night photography --ar 16:9 --style raw --v 7 --q 2</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-08-mj', this)">📋 Copiar</button>
+
+          <br><br>
+          <span class="prompt-tool-label dalle">DALL-E 3</span>
+          <div class="prompt-box prompt-box--dalle" id="prompt-08-dalle">
+Night photography of a luxury Brazilian residential complex: 4 towers illuminated with warm amber lighting on each balcony, modern glass facades glowing against a dark blue starry sky, pool area with underwater lights creating beautiful reflections, tropical park in the background with subtle pathway lighting, dramatic contrast between illuminated buildings and night sky, long exposure architectural photography effect, professional real estate photography.</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-08-dalle', this)">📋 Copiar</button>
+        </div>
+      </div>
+
+    </div><!-- /prompt-grid -->
+  </div>
+</section>
+
+<!-- ===== PARÂMETROS ===== -->
+<section class="aldora-section" id="params">
+  <div class="container">
+    <div class="aldora-section__tag">02 — Parâmetros</div>
+    <h2 class="aldora-section__title">Configurações Recomendadas por Ferramenta</h2>
+
+    <h3 style="font-family:var(--font-display); color: #7984f2; font-size:1.1rem; margin: var(--space-xl) 0 var(--space-md);">Midjourney v7</h3>
+    <div class="params-grid">
+      <div class="param-card">
+        <div class="param-label">Aspect Ratio</div>
+        <div class="param-value">--ar 16:9</div>
+        <div class="param-desc">Para vistas externas e áreas. Use --ar 9:16 para lobby/fachadas.</div>
+      </div>
+      <div class="param-card">
+        <div class="param-label">Style</div>
+        <div class="param-value">--style raw</div>
+        <div class="param-desc">Mais fotorrealista. Evita o estilo "artístico" padrão do MJ.</div>
+      </div>
+      <div class="param-card">
+        <div class="param-label">Quality</div>
+        <div class="param-value">--q 2</div>
+        <div class="param-desc">Máxima qualidade. Usa mais créditos mas entrega o melhor resultado.</div>
+      </div>
+      <div class="param-card">
+        <div class="param-label">Stylize</div>
+        <div class="param-value">--s 200–400</div>
+        <div class="param-desc">Menor = mais fiel ao prompt. Para arquitetura, use 200–300.</div>
+      </div>
+      <div class="param-card">
+        <div class="param-label">Version</div>
+        <div class="param-value">--v 7</div>
+        <div class="param-desc">Versão mais recente. Melhor em realismo arquitetônico.</div>
+      </div>
+      <div class="param-card">
+        <div class="param-label">Negative</div>
+        <div class="param-value">--no cartoon</div>
+        <div class="param-desc">Adicione: --no cartoon, illustration, render, 3D</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-display); color: #10a37f; font-size:1.1rem; margin: var(--space-xl) 0 var(--space-md);">DALL-E 3 (via ChatGPT ou API)</h3>
+    <div class="params-grid">
+      <div class="param-card">
+        <div class="param-label">Size</div>
+        <div class="param-value">1792×1024</div>
+        <div class="param-desc">Landscape para vistas externas. 1024×1792 para fachadas.</div>
+      </div>
+      <div class="param-card">
+        <div class="param-label">Quality</div>
+        <div class="param-value">hd</div>
+        <div class="param-desc">Sempre use quality=hd via API para máximo detalhe.</div>
+      </div>
+      <div class="param-card">
+        <div class="param-label">Style</div>
+        <div class="param-value">natural</div>
+        <div class="param-desc">Evite "vivid" — produz saturação excessiva. Natural = fotorrealista.</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-display); color: #4285F4; font-size:1.1rem; margin: var(--space-xl) 0 var(--space-md);">Gemini Imagen 3 (via Google AI Studio)</h3>
+    <div class="params-grid">
+      <div class="param-card">
+        <div class="param-label">Model</div>
+        <div class="param-value">imagen-3.0</div>
+        <div class="param-desc">Melhor qualidade. Disponível via Google AI Studio e Vertex AI.</div>
+      </div>
+      <div class="param-card">
+        <div class="param-label">Aspect Ratio</div>
+        <div class="param-value">16:9 / 4:3</div>
+        <div class="param-desc">Landscape para vistas externas. 3:4 para fachadas e interiores.</div>
+      </div>
+      <div class="param-card">
+        <div class="param-label">Negative Prompt</div>
+        <div class="param-value">cartoon, CGI</div>
+        <div class="param-desc">Adicione: cartoon, CGI render, illustration, unrealistic lighting</div>
+      </div>
+    </div>
+
+    <!-- Dicas de refinamento -->
+    <div style="margin-top: var(--space-xl); background: rgba(200,168,75,0.05); border: 1px solid rgba(200,168,75,0.15); border-radius: 16px; padding: var(--space-xl);">
+      <h3 style="font-family: var(--font-display); color: var(--aldora-ouro); font-size: 1.2rem; margin-bottom: var(--space-md);">
+        💡 Dicas de Refinamento
+      </h3>
+      <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-md);">
+        <li style="padding: var(--space-sm); background: rgba(200,168,75,0.04); border-radius: 10px; font-size: 0.85rem; color: rgba(230,215,175,0.75);">
+          <strong style="color: var(--aldora-ouro);">Primeiro plano:</strong> Adicione "foreground blur" ou "shallow depth of field" para profundidade cinematográfica.
+        </li>
+        <li style="padding: var(--space-sm); background: rgba(200,168,75,0.04); border-radius: 10px; font-size: 0.85rem; color: rgba(230,215,175,0.75);">
+          <strong style="color: var(--aldora-ouro);">Pessoas:</strong> Use "people silhouettes" ou "blurred people" para escala sem perder foco no edifício.
+        </li>
+        <li style="padding: var(--space-sm); background: rgba(200,168,75,0.04); border-radius: 10px; font-size: 0.85rem; color: rgba(230,215,175,0.75);">
+          <strong style="color: var(--aldora-ouro);">Clima:</strong> "golden hour" = +30% de qualidade percebida. Evite luz do meio-dia (dura demais).
+        </li>
+        <li style="padding: var(--space-sm); background: rgba(200,168,75,0.04); border-radius: 10px; font-size: 0.85rem; color: rgba(230,215,175,0.75);">
+          <strong style="color: var(--aldora-ouro);">Upscale:</strong> No MJ, sempre use "Upscale (Subtle)" na imagem escolhida antes de exportar.
+        </li>
+        <li style="padding: var(--space-sm); background: rgba(200,168,75,0.04); border-radius: 10px; font-size: 0.85rem; color: rgba(230,215,175,0.75);">
+          <strong style="color: var(--aldora-ouro);">Referência:</strong> Cole uma foto do terreno real como referência visual no MJ (Image Prompt) para mais coerência.
+        </li>
+        <li style="padding: var(--space-sm); background: rgba(200,168,75,0.04); border-radius: 10px; font-size: 0.85rem; color: rgba(230,215,175,0.75);">
+          <strong style="color: var(--aldora-ouro);">Variações:</strong> Gere 4 variações de cada cena e escolha a melhor antes de upscale. Economiza créditos.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MOOD BOARD ===== -->
+<section class="aldora-section aldora-section--dark" id="moodboard">
+  <div class="container">
+    <div class="aldora-section__tag">03 — Mood Board</div>
+    <h2 class="aldora-section__title">Referências Visuais · AL'DORA Reserva</h2>
+    <p class="aldora-section__lead">
+      Estilo arquitetônico e ambiental de referência. Use estas imagens como
+      "Image Prompt" no Midjourney para guiar o estilo visual.
+    </p>
+
+    <div class="mood-grid">
+      <div class="mood-tile">
+        <div class="mood-tile__bg">🌿🏢</div>
+        <div class="mood-tile__label">Vista Parque + Torres · Estilo SP/Pinheiros</div>
+      </div>
+      <div class="mood-tile">
+        <div class="mood-tile__bg">🌅</div>
+        <div class="mood-tile__label">Golden Hour · Fachadas</div>
+      </div>
+      <div class="mood-tile">
+        <div class="mood-tile__bg">🏊</div>
+        <div class="mood-tile__label">Pool Deck · Lifestyle</div>
+      </div>
+      <div class="mood-tile">
+        <div class="mood-tile__bg">🌳</div>
+        <div class="mood-tile__label">Parque Urbano · Verde Denso</div>
+      </div>
+      <div class="mood-tile">
+        <div class="mood-tile__bg">🛣️</div>
+        <div class="mood-tile__label">Entrada Privativa · Chegada Premium</div>
+      </div>
+      <div class="mood-tile">
+        <div class="mood-tile__bg">🌙✨</div>
+        <div class="mood-tile__label">Vista Noturna · Complexo Iluminado</div>
+      </div>
+      <div class="mood-tile">
+        <div class="mood-tile__bg">🏛️</div>
+        <div class="mood-tile__label">Lobby · Mármore + Pé-direito Duplo</div>
+      </div>
+      <div class="mood-tile">
+        <div class="mood-tile__bg">🔭</div>
+        <div class="mood-tile__label">Rooftop · Vista Cidade</div>
+      </div>
+    </div>
+
+    <!-- Referências textuais para busca -->
+    <div style="margin-top: var(--space-xl);">
+      <h3 style="font-family:var(--font-display); color: var(--aldora-ouro); font-size:1.1rem; margin-bottom: var(--space-md);">
+        Termos de Busca para Referências (Pinterest / Archdaily)
+      </h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <span style="background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.2); padding: 6px 14px; border-radius: 100px; font-size: 0.8rem; color: rgba(200,168,75,0.8);">luxury residential park view</span>
+        <span style="background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.2); padding: 6px 14px; border-radius: 100px; font-size: 0.8rem; color: rgba(200,168,75,0.8);">torre residencial parque frente</span>
+        <span style="background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.2); padding: 6px 14px; border-radius: 100px; font-size: 0.8rem; color: rgba(200,168,75,0.8);">Dubai Creek Harbour residential</span>
+        <span style="background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.2); padding: 6px 14px; border-radius: 100px; font-size: 0.8rem; color: rgba(200,168,75,0.8);">Parque Global São Paulo</span>
+        <span style="background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.2); padding: 6px 14px; border-radius: 100px; font-size: 0.8rem; color: rgba(200,168,75,0.8);">luxury condo pool lifestyle Brazil</span>
+        <span style="background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.2); padding: 6px 14px; border-radius: 100px; font-size: 0.8rem; color: rgba(200,168,75,0.8);">tropical park tower architecture</span>
+        <span style="background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.2); padding: 6px 14px; border-radius: 100px; font-size: 0.8rem; color: rgba(200,168,75,0.8);">gated community entrance Brazil</span>
+        <span style="background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.2); padding: 6px 14px; border-radius: 100px; font-size: 0.8rem; color: rgba(200,168,75,0.8);">alto padrão lobby mármore</span>
+        <span style="background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.2); padding: 6px 14px; border-radius: 100px; font-size: 0.8rem; color: rgba(200,168,75,0.8);">rooftop pool city view Brazil</span>
+        <span style="background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.2); padding: 6px 14px; border-radius: 100px; font-size: 0.8rem; color: rgba(200,168,75,0.8);">brickell city centre residential</span>
+        <span style="background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.2); padding: 6px 14px; border-radius: 100px; font-size: 0.8rem; color: rgba(200,168,75,0.8);">condominio alto padrao jardim vertical</span>
+        <span style="background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.2); padding: 6px 14px; border-radius: 100px; font-size: 0.8rem; color: rgba(200,168,75,0.8);">luxury night view residential Brazil</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PALETA ===== -->
+<section class="aldora-section" id="paleta">
+  <div class="container">
+    <div class="aldora-section__tag">04 — Identidade Visual</div>
+    <h2 class="aldora-section__title">Paleta de Cores · AL'DORA Reserva</h2>
+    <p class="aldora-section__lead">
+      Use estas cores como referência ao selecionar renders. Prefira imagens
+      que evoquem esta paleta naturalmente.
+    </p>
+
+    <div class="palette">
+      <div class="swatch">
+        <div class="swatch__color" style="background: #0A2416;"></div>
+        <div class="swatch__name">Verde Noite</div>
+        <div class="swatch__hex">#0A2416</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__color" style="background: #C8A84B;"></div>
+        <div class="swatch__name">Ouro Clássico</div>
+        <div class="swatch__hex">#C8A84B</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__color" style="background: #E6D7AF;"></div>
+        <div class="swatch__name">Bege Areia</div>
+        <div class="swatch__hex">#E6D7AF</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__color" style="background: #1A4A28;"></div>
+        <div class="swatch__name">Verde Profundo</div>
+        <div class="swatch__hex">#1A4A28</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__color" style="background: #040E09;"></div>
+        <div class="swatch__name">Preto Floresta</div>
+        <div class="swatch__hex">#040E09</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__color" style="background: #F5F0E8;"></div>
+        <div class="swatch__name">Marfim</div>
+        <div class="swatch__hex">#F5F0E8</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__color" style="background: #3B6B4A;"></div>
+        <div class="swatch__name">Verde Parque</div>
+        <div class="swatch__hex">#3B6B4A</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__color" style="background: #8A7234;"></div>
+        <div class="swatch__name">Ouro Escuro</div>
+        <div class="swatch__hex">#8A7234</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORKFLOW ===== -->
+<section class="aldora-section aldora-section--dark" id="workflow">
+  <div class="container">
+    <div class="aldora-section__tag">05 — Workflow</div>
+    <h2 class="aldora-section__title">Fluxo de Produção de Renders AI</h2>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--space-md); margin-top: var(--space-xl);">
+      <div style="background: rgba(200,168,75,0.05); border: 1px solid rgba(200,168,75,0.15); border-radius: 14px; padding: var(--space-lg);">
+        <div style="font-family: var(--font-display); font-size: 2rem; color: var(--aldora-ouro); margin-bottom: var(--space-sm);">01</div>
+        <div style="font-size: 0.85rem; color: rgba(230,215,175,0.7); line-height: 1.6;">
+          <strong style="color: var(--aldora-bege); display: block; margin-bottom: 6px;">Prompt Base</strong>
+          Copie o prompt da cena desejada acima. Ajuste para a ferramenta escolhida (MJ, DALL-E ou Gemini).
+        </div>
+      </div>
+      <div style="background: rgba(200,168,75,0.05); border: 1px solid rgba(200,168,75,0.15); border-radius: 14px; padding: var(--space-lg);">
+        <div style="font-family: var(--font-display); font-size: 2rem; color: var(--aldora-ouro); margin-bottom: var(--space-sm);">02</div>
+        <div style="font-size: 0.85rem; color: rgba(230,215,175,0.7); line-height: 1.6;">
+          <strong style="color: var(--aldora-bege); display: block; margin-bottom: 6px;">Gerar 4 Variações</strong>
+          Sempre gere ao menos 4 variações. No MJ, use o botão V1-V4 na variação mais promissora.
+        </div>
+      </div>
+      <div style="background: rgba(200,168,75,0.05); border: 1px solid rgba(200,168,75,0.15); border-radius: 14px; padding: var(--space-lg);">
+        <div style="font-family: var(--font-display); font-size: 2rem; color: var(--aldora-ouro); margin-bottom: var(--space-sm);">03</div>
+        <div style="font-size: 0.85rem; color: rgba(230,215,175,0.7); line-height: 1.6;">
+          <strong style="color: var(--aldora-bege); display: block; margin-bottom: 6px;">Selecionar + Upscale</strong>
+          Escolha a melhor variação e faça upscale (Subtle no MJ). Resolução mínima alvo: 3840×2160.
+        </div>
+      </div>
+      <div style="background: rgba(200,168,75,0.05); border: 1px solid rgba(200,168,75,0.15); border-radius: 14px; padding: var(--space-lg);">
+        <div style="font-family: var(--font-display); font-size: 2rem; color: var(--aldora-ouro); margin-bottom: var(--space-sm);">04</div>
+        <div style="font-size: 0.85rem; color: rgba(230,215,175,0.7); line-height: 1.6;">
+          <strong style="color: var(--aldora-bege); display: block; margin-bottom: 6px;">Pós-produção</strong>
+          Use Adobe Photoshop ou Lightroom para: ajuste de cores, logo AL'DORA, remoção de erros AI.
+        </div>
+      </div>
+      <div style="background: rgba(200,168,75,0.05); border: 1px solid rgba(200,168,75,0.15); border-radius: 14px; padding: var(--space-lg);">
+        <div style="font-family: var(--font-display); font-size: 2rem; color: var(--aldora-ouro); margin-bottom: var(--space-sm);">05</div>
+        <div style="font-size: 0.85rem; color: rgba(230,215,175,0.7); line-height: 1.6;">
+          <strong style="color: var(--aldora-bege); display: block; margin-bottom: 6px;">Vídeo 3D</strong>
+          Use Runway ML (Gen-3), Kling ou Pika Labs para animar o render estático. Duração ideal: 5–10s por cena.
+        </div>
+      </div>
+      <div style="background: rgba(200,168,75,0.05); border: 1px solid rgba(200,168,75,0.15); border-radius: 14px; padding: var(--space-lg);">
+        <div style="font-family: var(--font-display); font-size: 2rem; color: var(--aldora-ouro); margin-bottom: var(--space-sm);">06</div>
+        <div style="font-size: 0.85rem; color: rgba(230,215,175,0.7); line-height: 1.6;">
+          <strong style="color: var(--aldora-bege); display: block; margin-bottom: 6px;">Compilar Tour</strong>
+          Monte um tour virtual com os 8 renders em sequência. Use DaVinci Resolve ou CapCut para edição final com trilha.
+        </div>
+      </div>
+    </div>
+
+    <!-- Video AI tools -->
+    <div style="margin-top: var(--space-xl); background: rgba(200,168,75,0.06); border: 1px solid rgba(200,168,75,0.2); border-radius: 16px; padding: var(--space-xl);">
+      <h3 style="font-family: var(--font-display); color: var(--aldora-ouro); font-size: 1.1rem; margin-bottom: var(--space-md);">
+        🎬 Ferramentas para Vídeo 3D / Animação
+      </h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--space-md);">
+        <div>
+          <strong style="color: var(--aldora-bege); font-size: 0.9rem;">Runway ML Gen-3</strong>
+          <p style="font-size: 0.8rem; color: rgba(230,215,175,0.6); margin-top: 4px; line-height: 1.5;">Melhor para animar renders estáticos. Text-to-video e image-to-video. Recomendado.</p>
+        </div>
+        <div>
+          <strong style="color: var(--aldora-bege); font-size: 0.9rem;">Kling AI</strong>
+          <p style="font-size: 0.8rem; color: rgba(230,215,175,0.6); margin-top: 4px; line-height: 1.5;">Alternativa ao Runway. Bom para câmera orbital em edifícios. Plano gratuito disponível.</p>
+        </div>
+        <div>
+          <strong style="color: var(--aldora-bege); font-size: 0.9rem;">Pika Labs</strong>
+          <p style="font-size: 0.8rem; color: rgba(230,215,175,0.6); margin-top: 4px; line-height: 1.5;">Image-to-video com controle de câmera. Ideal para drone flyby simulado.</p>
+        </div>
+        <div>
+          <strong style="color: var(--aldora-bege); font-size: 0.9rem;">Luma Dream Machine</strong>
+          <p style="font-size: 0.8rem; color: rgba(230,215,175,0.6); margin-top: 4px; line-height: 1.5;">3D gaussian splatting. Transforma fotos em tours 3D interativos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="aldora-footer">
+  <div class="container">
+    <div class="aldora-footer__brand">AL'DORA City</div>
+    <div class="aldora-footer__sub">Cidade Jardim Urbanismo · Jardim Versailles · Uberlândia/MG</div>
+    <div class="aldora-footer__links">
+      <a href="INDEX.html">Hub</a>
+      <a href="aldora-qc02-focus.html">QC02 Focus</a>
+      <a href="aldora-qc02-3d.html">Visualização 3D</a>
+    </div>
+    <div class="aldora-footer__copy">
+      © 2026 Cidade Jardim Urbanismo · Material interno — Uso autorizado para parceiros
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('aldora-nav--scrolled', window.scrollY > 50);
+});
+
+// Copy prompt function
+function copyPrompt(id, btn) {
+  const el = document.getElementById(id);
+  const text = el.textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copiado!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '📋 Copiar';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// Tool selector (visual only - all prompts shown, tabs for filtering)
+function selectTool(tool) {
+  document.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  // Could hide/show specific prompt boxes by tool - for now just visual
+}
+</script>
+</body>
+</html>
