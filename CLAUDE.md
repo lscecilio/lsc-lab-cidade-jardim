@@ -12,19 +12,20 @@ Produto principal: **AL'DORA City** — Masterplan Vertical Escalonado, Jardim V
 - Email: lscecilio@gmail.com
 - Produto: AL'DORA City (marca master do masterplan)
 - Sub-marcas: AL'DORA Jardins / Versailles / Reserva / Signature
-- Estrutura: 4 empreendimentos, 8 torres, 3 quadras (QC01/QC02/QC03)
+- Estrutura: 4 empreendimentos, **14 torres**, 3 quadras (QC01/QC02/QC03)
+- Distribuição: QC01 = 6 torres (A–F) · QC02 = 4 torres (foco estratégico) · QC03 = 4 torres
 - Parceiro de tech/dados: LSC-Lab (empresa separada)
 
 ---
 
 ## O ATIVO
 
-| Quadra | Terreno | Privativa | Construída | Fase |
-|--------|---------|-----------|------------|------|
-| QC01 | 20.598 m² | 49.908 m² | 81.816 m² | 1 — Entrada |
-| QC02 | 11.953 m² | 43.033 m² | 70.546 m² | 2 — Expansão |
-| QC03 | 10.232 m² | 32.743 m² | 53.678 m² | 3 — Coroamento |
-| **TOTAL** | **42.783 m²** | **125.684 m²** | **171.138 m²** | CA 4,0 · ZR2/SVA |
+| Quadra | Terreno | Privativa | Construída | Torres | Fase |
+|--------|---------|-----------|------------|--------|------|
+| QC01 | 20.598 m² | 49.908 m² | 81.816 m² | 6 (A–F) | 1 — Entrada |
+| QC02 | 11.953 m² | 43.033 m² | 70.546 m² | 4 | 2 — Coração (Foco) |
+| QC03 | 10.232 m² | 32.743 m² | 53.678 m² | 4 | 3 — Coroamento |
+| **TOTAL** | **42.783 m²** | **125.684 m²** | **171.138 m²** | **14** | CA 4,0 · ZR2/SVA |
 
 ---
 
@@ -32,10 +33,10 @@ Produto principal: **AL'DORA City** — Masterplan Vertical Escalonado, Jardim V
 
 | Empreendimento | Nome | Quadra | Torres | Mix Principal |
 |----------------|------|--------|--------|---------------|
-| EMP 1 | AL'DORA Jardins | QC01 | A + B | P1/P2 (volume) |
-| EMP 2 | AL'DORA Versailles | QC01 | C + D | P2/P3 (equilíbrio) |
-| EMP 3 | AL'DORA Reserva | QC02 | E + F | P3 focus (família) |
-| EMP 4 | AL'DORA Signature | QC03 | G + H | P4/P5 (premium) |
+| EMP 1 | AL'DORA Jardins | QC01 | A + B + C | P1/P2 (volume) |
+| EMP 2 | AL'DORA Versailles | QC01 | D + E + F | P2/P3 (equilíbrio) |
+| EMP 3 | AL'DORA Reserva | QC02 | 4 Torres (G–J) | P3 focus · **CORAÇÃO** |
+| EMP 4 | AL'DORA Signature | QC03 | 4 Torres (K–N) | P4/P5 (premium) |
 
 ---
 

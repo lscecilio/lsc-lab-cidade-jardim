@@ -10,15 +10,16 @@
     "sub_marcas": ["AL'DORA Jardins", "AL'DORA Versailles", "AL'DORA Reserva", "AL'DORA Signature"],
     "estrutura": {
       "empreendimentos": 4,
-      "torres": 8,
+      "torres": 14,
+      "torres_distribuicao": { "QC01": 6, "QC02": 4, "QC03": 4 },
       "quadras": 3
     }
   },
   "ativo": {
     "quadras": [
-      { "id": "QC01", "terreno_m2": 20598, "privativa_m2": 49908, "construida_m2": 81816, "fase": 1, "fase_nome": "Entrada" },
-      { "id": "QC02", "terreno_m2": 11953, "privativa_m2": 43033, "construida_m2": 70546, "fase": 2, "fase_nome": "Expansão" },
-      { "id": "QC03", "terreno_m2": 10232, "privativa_m2": 32743, "construida_m2": 53678, "fase": 3, "fase_nome": "Coroamento" }
+      { "id": "QC01", "terreno_m2": 20598, "privativa_m2": 49908, "construida_m2": 81816, "torres": 6, "torres_ids": ["A","B","C","D","E","F"], "fase": 1, "fase_nome": "Entrada" },
+      { "id": "QC02", "terreno_m2": 11953, "privativa_m2": 43033, "construida_m2": 70546, "torres": 4, "torres_ids": ["G","H","I","J"], "fase": 2, "fase_nome": "Coração — Foco Estratégico", "destaque": true, "parque_frontal": true, "rua_privada": true },
+      { "id": "QC03", "terreno_m2": 10232, "privativa_m2": 32743, "construida_m2": 53678, "torres": 4, "torres_ids": ["K","L","M","N"], "fase": 3, "fase_nome": "Coroamento" }
     ],
     "totais": {
       "terreno_m2": 42783,
@@ -27,10 +28,10 @@
     }
   },
   "empreendimentos": [
-    { "id": "EMP1", "nome": "AL'DORA Jardins", "quadra": "QC01", "torres": ["A", "B"], "mix": "P1/P2 (volume)" },
-    { "id": "EMP2", "nome": "AL'DORA Versailles", "quadra": "QC01", "torres": ["C", "D"], "mix": "P2/P3 (equilíbrio)" },
-    { "id": "EMP3", "nome": "AL'DORA Reserva", "quadra": "QC02", "torres": ["E", "F"], "mix": "P3 (família)" },
-    { "id": "EMP4", "nome": "AL'DORA Signature", "quadra": "QC03", "torres": ["G", "H"], "mix": "P4/P5 (premium)" }
+    { "id": "EMP1", "nome": "AL'DORA Jardins", "quadra": "QC01", "torres": ["A", "B", "C"], "mix": "P1/P2 (volume)" },
+    { "id": "EMP2", "nome": "AL'DORA Versailles", "quadra": "QC01", "torres": ["D", "E", "F"], "mix": "P2/P3 (equilíbrio)" },
+    { "id": "EMP3", "nome": "AL'DORA Reserva", "quadra": "QC02", "torres": ["G", "H", "I", "J"], "mix": "P3 focus (família) · CORAÇÃO DO MASTERPLAN", "destaque": true },
+    { "id": "EMP4", "nome": "AL'DORA Signature", "quadra": "QC03", "torres": ["K", "L", "M", "N"], "mix": "P4/P5 (premium)" }
   ],
   "tipologias": [
     { "codigo": "P1", "nome": "Studio Urban", "config": "Studio · 1 vaga", "area_min": 28, "area_max": 35, "ticket_min": 230000, "ticket_max": 290000 },
