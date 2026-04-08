@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AL'DORA Reserva QC02 — Plano de Lançamento Completo</title>
+<meta name="description" content="Plano completo de lançamento do AL'DORA Reserva QC02 — estratégia, VGV, parceria, esteira — Cidade Jardim Urbanismo">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a2416'/%3E%3Ctext x='16' y='22' font-size='18' fill='%23C8A84B' text-anchor='middle' font-family='serif'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/aldora-tokens.css">
+<link rel="stylesheet" href="assets/css/aldora-components.css">
+
+<style>
+body { background: var(--aldora-verde); color: var(--aldora-bege); }
+
+/* ── Summary Card (header) ── */
+.plan-hero {
+  padding: 120px var(--space-lg) var(--space-2xl);
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 0%, rgba(200,168,75,0.1) 0%, transparent 60%);
+}
+
+/* ── VGV Calculator / Matrix ── */
+.vgv-matrix {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+  margin: var(--space-xl) 0;
+}
+
+.vgv-cell {
+  background: rgba(200,168,75,0.05);
+  border: 1px solid rgba(200,168,75,0.12);
+  border-radius: 14px;
+  padding: var(--space-lg);
+  text-align: center;
+}
+
+.vgv-cell--header {
+  background: rgba(200,168,75,0.1);
+  border-color: rgba(200,168,75,0.3);
+}
+
+.vgv-cell--total {
+  background: linear-gradient(135deg, rgba(200,168,75,0.15) 0%, rgba(200,168,75,0.05) 100%);
+  border-color: rgba(200,168,75,0.45);
+  grid-column: span 4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+}
+
+.vgv-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(200,168,75,0.5);
+  margin-bottom: 6px;
+}
+
+.vgv-value {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--aldora-ouro);
+  line-height: 1;
+}
+
+.vgv-sub {
+  font-size: 0.78rem;
+  color: rgba(230,215,175,0.55);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* ── Timeline / Gates ── */
+.gates-track {
+  display: flex;
+  gap: 0;
+  margin: var(--space-xl) 0;
+  position: relative;
+}
+
+.gates-track::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: 6%;
+  width: 88%;
+  height: 2px;
+  background: linear-gradient(to right, rgba(200,168,75,0.5), rgba(200,168,75,0.1));
+}
+
+.gate-step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  padding: 0 var(--space-sm);
+}
+
+.gate-dot {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(200,168,75,0.1);
+  border: 2px solid rgba(200,168,75,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-md);
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--aldora-ouro);
+  position: relative;
+  z-index: 1;
+}
+
+.gate-dot--active {
+  background: rgba(200,168,75,0.2);
+  border-color: var(--aldora-ouro);
+  box-shadow: 0 0 24px rgba(200,168,75,0.3);
+}
+
+.gate-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--aldora-ouro);
+  margin-bottom: 4px;
+}
+
+.gate-desc {
+  font-size: 0.75rem;
+  color: rgba(230,215,175,0.6);
+  line-height: 1.5;
+}
+
+/* ── Mix de Tipologias ── */
+.mix-bar {
+  display: flex;
+  height: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: var(--space-lg) 0 var(--space-sm);
+}
+
+.mix-segment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: rgba(4,14,9,0.9);
+  transition: flex 0.5s ease;
+}
+
+.mix-segment.p3 { background: #C8A84B; }
+.mix-segment.p4 { background: #8A7234; color: rgba(230,215,175,0.9); }
+.mix-segment.p2 { background: #DFC87A; }
+
+.mix-legend {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.mix-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: rgba(230,215,175,0.75);
+}
+
+.mix-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+/* ── Parceria Models ── */
+.parceria-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+}
+
+.parceria-card {
+  background: rgba(200,168,75,0.04);
+  border: 1px solid rgba(200,168,75,0.12);
+  border-radius: 16px;
+  padding: var(--space-xl);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.parceria-card:hover {
+  border-color: rgba(200,168,75,0.3);
+  background: rgba(200,168,75,0.07);
+}
+
+.parceria-card--recomendado {
+  border-color: rgba(200,168,75,0.4);
+  background: rgba(200,168,75,0.08);
+}
+
+.parceria-card--recomendado::before {
+  content: '★ Recomendado';
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  background: var(--aldora-ouro);
+  color: var(--aldora-verde);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 4px 12px;
+  border-radius: 100px;
+}
+
+.parceria-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--aldora-ouro);
+  margin-bottom: var(--space-sm);
+}
+
+.parceria-split {
+  font-size: 1.5rem;
+  font-family: var(--font-display);
+  color: var(--aldora-bege);
+  margin-bottom: var(--space-sm);
+}
+
+.parceria-pros, .parceria-cons {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-sm);
+}
+
+.parceria-pros li::before { content: '✓ '; color: #4caf50; }
+.parceria-cons li::before { content: '△ '; color: rgba(200,168,75,0.6); }
+.parceria-pros li, .parceria-cons li {
+  font-size: 0.82rem;
+  color: rgba(230,215,175,0.7);
+  line-height: 1.7;
+}
+
+/* ── Esteira de Lançamento ── */
+.esteira-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+  position: relative;
+}
+
+.esteira-step {
+  background: rgba(200,168,75,0.04);
+  border: 1px solid rgba(200,168,75,0.12);
+  border-radius: 16px;
+  padding: var(--space-xl);
+}
+
+.esteira-num {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: rgba(200,168,75,0.2);
+  line-height: 1;
+  margin-bottom: var(--space-sm);
+}
+
+.esteira-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--aldora-ouro);
+  margin-bottom: var(--space-sm);
+}
+
+.esteira-prazo {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(200,168,75,0.5);
+  margin-bottom: var(--space-md);
+}
+
+.esteira-tasks {
+  list-style: none;
+  padding: 0;
+}
+
+.esteira-tasks li {
+  font-size: 0.82rem;
+  color: rgba(230,215,175,0.7);
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(200,168,75,0.08);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.4;
+}
+
+.esteira-tasks li::before {
+  content: '→';
+  color: var(--aldora-ouro);
+  font-size: 0.7rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── Pitch Section ── */
+.pitch-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+}
+
+.pitch-card {
+  background: rgba(200,168,75,0.04);
+  border: 1px solid rgba(200,168,75,0.12);
+  border-radius: 14px;
+  padding: var(--space-lg);
+}
+
+.pitch-card__q {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(200,168,75,0.5);
+  margin-bottom: var(--space-sm);
+}
+
+.pitch-card__a {
+  font-size: 0.88rem;
+  color: rgba(230,215,175,0.8);
+  line-height: 1.6;
+}
+
+.pitch-card__a strong {
+  color: var(--aldora-ouro);
+}
+
+/* ── Print / Export strip ── */
+.print-strip {
+  background: rgba(200,168,75,0.08);
+  border: 1px solid rgba(200,168,75,0.2);
+  border-radius: 14px;
+  padding: var(--space-lg) var(--space-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-xl);
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.print-strip p {
+  font-size: 0.85rem;
+  color: rgba(230,215,175,0.65);
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+.btn-print {
+  padding: 12px 28px;
+  background: rgba(200,168,75,0.15);
+  border: 1px solid rgba(200,168,75,0.4);
+  border-radius: 100px;
+  color: var(--aldora-ouro);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all 0.2s;
+}
+
+.btn-print:hover {
+  background: rgba(200,168,75,0.25);
+  border-color: var(--aldora-ouro);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .vgv-matrix { grid-template-columns: repeat(2, 1fr); }
+  .vgv-cell--total { grid-column: span 2; flex-direction: column; gap: var(--space-md); }
+  .gates-track { flex-direction: column; }
+  .gates-track::before { display: none; }
+  .parceria-cards { grid-template-columns: 1fr; }
+  .esteira-steps { grid-template-columns: 1fr; }
+  .pitch-grid { grid-template-columns: 1fr; }
+}
+
+@media print {
+  .aldora-nav, .print-strip { display: none; }
+  body { background: white; color: black; }
+  .aldora-section--dark { background: #f5f5f5; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="aldora-nav" id="main-nav">
+  <a class="aldora-nav__brand" href="INDEX.html">AL'DORA City</a>
+  <ul class="aldora-nav__links">
+    <li><a href="#vgv">VGV</a></li>
+    <li><a href="#gates">Gates</a></li>
+    <li><a href="#mix">Tipologias</a></li>
+    <li><a href="#parceria">Parceria</a></li>
+    <li><a href="#esteira">Esteira</a></li>
+    <li><a href="#pitch">Pitch</a></li>
+  </ul>
+  <span class="aldora-nav__tag">QC02 · Lançamento</span>
+</nav>
+
+<!-- HERO -->
+<section class="plan-hero">
+  <div class="aldora-section__tag">Documento Confidencial · Cidade Jardim Urbanismo</div>
+  <h1 class="aldora-section__title" style="font-size: clamp(2.2rem, 5vw, 4rem);">
+    Plano de Lançamento<br>
+    <span style="color: var(--aldora-ouro); font-style: italic;">AL'DORA Reserva · QC02</span>
+  </h1>
+  <p class="aldora-section__lead">
+    Estratégia completa de go-to-market · VGV projetado · Mix de tipologias ·
+    Modelo de parceria para construtora · Esteira por gates de performance
+  </p>
+
+  <!-- KPIs rápidos -->
+  <div style="display: flex; gap: var(--space-xl); justify-content: center; flex-wrap: wrap; margin-top: var(--space-xl);">
+    <div style="text-align: center;">
+      <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--aldora-ouro);">R$ 115–145M</div>
+      <div style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(200,168,75,0.5);">VGV Projetado QC02</div>
+    </div>
+    <div style="width: 1px; background: rgba(200,168,75,0.2); align-self: center; height: 50px;"></div>
+    <div style="text-align: center;">
+      <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--aldora-ouro);">~320</div>
+      <div style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(200,168,75,0.5);">Unidades Estimadas</div>
+    </div>
+    <div style="width: 1px; background: rgba(200,168,75,0.2); align-self: center; height: 50px;"></div>
+    <div style="text-align: center;">
+      <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--aldora-ouro);">18–25%</div>
+      <div style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(200,168,75,0.5);">TIR Estimada</div>
+    </div>
+    <div style="width: 1px; background: rgba(200,168,75,0.2); align-self: center; height: 50px;"></div>
+    <div style="text-align: center;">
+      <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--aldora-ouro);">36–42m</div>
+      <div style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(200,168,75,0.5);">Prazo Total</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VGV ===== -->
+<section class="aldora-section aldora-section--dark" id="vgv">
+  <div class="container">
+    <div class="aldora-section__tag">01 — VGV Projetado</div>
+    <h2 class="aldora-section__title">Matriz de Valor Geral de Vendas · QC02</h2>
+    <p class="aldora-section__lead">
+      Baseado em 43.033 m² privativos, mix P3/P4, ticket de mercado com
+      premium de parque (+15–20%) sobre a referência Brain Research 2025.
+    </p>
+
+    <div class="vgv-matrix">
+      <!-- Cabeçalho -->
+      <div class="vgv-cell vgv-cell--header">
+        <div class="vgv-label">Tipologia</div>
+        <div class="vgv-value" style="font-size: 1rem;">P2</div>
+        <div class="vgv-sub">Compacto Smart</div>
+      </div>
+      <div class="vgv-cell vgv-cell--header">
+        <div class="vgv-label">Tipologia</div>
+        <div class="vgv-value" style="font-size: 1rem;">P3</div>
+        <div class="vgv-sub">Garden Suite ★</div>
+      </div>
+      <div class="vgv-cell vgv-cell--header">
+        <div class="vgv-label">Tipologia</div>
+        <div class="vgv-value" style="font-size: 1rem;">P4</div>
+        <div class="vgv-sub">Alto Padrão</div>
+      </div>
+      <div class="vgv-cell vgv-cell--header">
+        <div class="vgv-label">Tipologia</div>
+        <div class="vgv-value" style="font-size: 1rem;">P5</div>
+        <div class="vgv-sub">Cobertura</div>
+      </div>
+
+      <!-- Dados -->
+      <div class="vgv-cell">
+        <div class="vgv-label">Unidades estimadas</div>
+        <div class="vgv-value">32</div>
+        <div class="vgv-sub">10% do mix · torres I e J apenas</div>
+      </div>
+      <div class="vgv-cell">
+        <div class="vgv-label">Unidades estimadas</div>
+        <div class="vgv-value">200</div>
+        <div class="vgv-sub">62% do mix · foco estratégico QC02</div>
+      </div>
+      <div class="vgv-cell">
+        <div class="vgv-label">Unidades estimadas</div>
+        <div class="vgv-value">72</div>
+        <div class="vgv-sub">23% do mix · torres I e J superiores</div>
+      </div>
+      <div class="vgv-cell">
+        <div class="vgv-label">Unidades estimadas</div>
+        <div class="vgv-value">16</div>
+        <div class="vgv-sub">5% · coberturas duplex por torre</div>
+      </div>
+
+      <div class="vgv-cell">
+        <div class="vgv-label">Ticket médio</div>
+        <div class="vgv-value">R$ 450K</div>
+        <div class="vgv-sub">42–55 m² · 2 dorms</div>
+      </div>
+      <div class="vgv-cell">
+        <div class="vgv-label">Ticket médio</div>
+        <div class="vgv-value">R$ 780K</div>
+        <div class="vgv-sub">68–85 m² + premium parque</div>
+      </div>
+      <div class="vgv-cell">
+        <div class="vgv-label">Ticket médio</div>
+        <div class="vgv-value">R$ 1,35M</div>
+        <div class="vgv-sub">105–135 m² · alto padrão</div>
+      </div>
+      <div class="vgv-cell">
+        <div class="vgv-label">Ticket médio</div>
+        <div class="vgv-value">R$ 3,5M</div>
+        <div class="vgv-sub">200–280 m² · duplex premium</div>
+      </div>
+
+      <div class="vgv-cell">
+        <div class="vgv-label">VGV por segmento</div>
+        <div class="vgv-value">R$ 14M</div>
+        <div class="vgv-sub">12% do VGV total</div>
+      </div>
+      <div class="vgv-cell">
+        <div class="vgv-label">VGV por segmento</div>
+        <div class="vgv-value" style="color: var(--aldora-ouro);">R$ 156M</div>
+        <div class="vgv-sub">58% do VGV total · motor do projeto</div>
+      </div>
+      <div class="vgv-cell">
+        <div class="vgv-label">VGV por segmento</div>
+        <div class="vgv-value">R$ 97M</div>
+        <div class="vgv-sub">36% do VGV total</div>
+      </div>
+      <div class="vgv-cell">
+        <div class="vgv-label">VGV por segmento</div>
+        <div class="vgv-value">R$ 56M</div>
+        <div class="vgv-sub">21% do VGV total</div>
+      </div>
+
+      <!-- Total row -->
+      <div class="vgv-cell vgv-cell--total">
+        <div>
+          <div class="vgv-label">VGV Total QC02 · Cenário Base</div>
+          <div class="vgv-value" style="font-size: 2.5rem;">R$ 115–145M</div>
+          <div class="vgv-sub">320 unidades · mix P2/P3/P4/P5 · 4 torres · 43.033 m² privativos</div>
+        </div>
+        <div style="text-align: right;">
+          <div class="vgv-label">Custo Construção Estimado</div>
+          <div style="font-family: var(--font-display); font-size: 1.8rem; color: var(--aldora-bege);">R$ 45–58M</div>
+          <div class="vgv-sub">CUB-MG R$2.839/m² × 70.546 m² × fator alto padrão</div>
+          <br>
+          <div class="vgv-label">Margem Bruta Estimada</div>
+          <div style="font-family: var(--font-display); font-size: 1.8rem; color: var(--aldora-ouro);">R$ 57–87M · 28–38%</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: var(--space-lg); background: rgba(200,168,75,0.06); border-left: 3px solid rgba(200,168,75,0.4); border-radius: 0 12px 12px 0; padding: var(--space-md) var(--space-lg);">
+      <p style="font-size: 0.85rem; color: rgba(230,215,175,0.65); line-height: 1.7;">
+        <strong style="color: var(--aldora-ouro);">Base de cálculo:</strong> Ticket médio de mercado UDI (R$ 8.341/m² · Brain Research 2T25) com premium de localização de 10–20% para unidades com vista parque (P3/P4) e desconto de escala para P2. VGV de R$ 299,68M para QC01 rateia ~R$125–145M para QC02 proporcionalmente pela área privativa (43.033 m² = 34% do total de 125.684 m²).
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GATES ===== -->
+<section class="aldora-section" id="gates">
+  <div class="container">
+    <div class="aldora-section__tag">02 — Gates de Performance</div>
+    <h2 class="aldora-section__title">Esteira de Execução por Gates · QC01 → QC02</h2>
+    <p class="aldora-section__lead">
+      QC02 entra após QC01 atingir o Gate G2 — preço testado, marca estabelecida,
+      aprovação QC02 em andamento. O timing é estratégico, não cronológico.
+    </p>
+
+    <div class="gates-track">
+      <div class="gate-step">
+        <div class="gate-dot gate-dot--active">G1</div>
+        <div class="gate-label">QC01 · Partida</div>
+        <div class="gate-desc">Aprovação municipal · Financiamento · 30% pré-vendas EMP1</div>
+      </div>
+      <div class="gate-step">
+        <div class="gate-dot gate-dot--active">G2</div>
+        <div class="gate-label">QC01 · Momentum</div>
+        <div class="gate-desc">Preço testado e aprovado · Vendas EMP1 em ritmo · Aprovação QC02 iniciada</div>
+      </div>
+      <div class="gate-step">
+        <div class="gate-dot" style="border-color: rgba(200,168,75,0.6); background: rgba(200,168,75,0.08);">★</div>
+        <div class="gate-label" style="color: rgba(200,168,75,0.9);">QC02 · Lançamento</div>
+        <div class="gate-desc">AL'DORA Reserva entra no mercado com marca consolidada por QC01</div>
+      </div>
+      <div class="gate-step">
+        <div class="gate-dot">G3</div>
+        <div class="gate-label">QC02 · Expansão</div>
+        <div class="gate-desc">Revenda QC01 acima do projetado · QC02 construção &gt;50% · QC03 aprovação</div>
+      </div>
+      <div class="gate-step">
+        <div class="gate-dot">G4</div>
+        <div class="gate-label">Bairro Completo</div>
+        <div class="gate-desc">AL'DORA brand premium estabelecida · QC03 Signature em pré-venda</div>
+      </div>
+    </div>
+
+    <!-- QC02 specific timeline -->
+    <h3 style="font-family: var(--font-display); color: var(--aldora-ouro); font-size: 1.3rem; margin: var(--space-xl) 0 var(--space-lg);">
+      Cronograma QC02 — Fases Operacionais
+    </h3>
+
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-sm);">
+      <div style="background: rgba(200,168,75,0.06); border: 1px solid rgba(200,168,75,0.15); border-radius: 12px; padding: var(--space-md); text-align: center;">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(200,168,75,0.5); margin-bottom: 8px;">Fase 0</div>
+        <div style="font-family: var(--font-display); font-size: 0.95rem; color: var(--aldora-bege); margin-bottom: 6px;">Estruturação</div>
+        <div style="font-size: 0.75rem; color: rgba(230,215,175,0.55); line-height: 1.5;">Seleção construtora · SPE · Projeto arquitetônico · Aprovação prefeitura</div>
+        <div style="font-size: 10px; color: rgba(200,168,75,0.4); margin-top: 8px; letter-spacing: 1px;">MESES 1–12</div>
+      </div>
+      <div style="background: rgba(200,168,75,0.06); border: 1px solid rgba(200,168,75,0.15); border-radius: 12px; padding: var(--space-md); text-align: center;">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(200,168,75,0.5); margin-bottom: 8px;">Fase 1</div>
+        <div style="font-family: var(--font-display); font-size: 0.95rem; color: var(--aldora-bege); margin-bottom: 6px;">Pré-venda</div>
+        <div style="font-size: 0.75rem; color: rgba(230,215,175,0.55); line-height: 1.5;">VGV mínimo 30% · R$35–43M · Foco P3 com vista parque · Lista VIP</div>
+        <div style="font-size: 10px; color: rgba(200,168,75,0.4); margin-top: 8px; letter-spacing: 1px;">MESES 10–16</div>
+      </div>
+      <div style="background: rgba(200,168,75,0.08); border: 1px solid rgba(200,168,75,0.3); border-radius: 12px; padding: var(--space-md); text-align: center;">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(200,168,75,0.6); margin-bottom: 8px;">Fase 2 ★</div>
+        <div style="font-family: var(--font-display); font-size: 0.95rem; color: var(--aldora-ouro); margin-bottom: 6px;">Lançamento Oficial</div>
+        <div style="font-size: 0.75rem; color: rgba(230,215,175,0.65); line-height: 1.5;">Evento de lançamento · Parque anunciado publicamente · Abertura mesa de vendas</div>
+        <div style="font-size: 10px; color: rgba(200,168,75,0.5); margin-top: 8px; letter-spacing: 1px;">MÊS 14–18</div>
+      </div>
+      <div style="background: rgba(200,168,75,0.06); border: 1px solid rgba(200,168,75,0.15); border-radius: 12px; padding: var(--space-md); text-align: center;">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(200,168,75,0.5); margin-bottom: 8px;">Fase 3</div>
+        <div style="font-family: var(--font-display); font-size: 0.95rem; color: var(--aldora-bege); margin-bottom: 6px;">Construção</div>
+        <div style="font-size: 0.75rem; color: rgba(230,215,175,0.55); line-height: 1.5;">Obra das 4 torres · 24–36 meses · Parque iniciado em paralelo com prefeitura</div>
+        <div style="font-size: 10px; color: rgba(200,168,75,0.4); margin-top: 8px; letter-spacing: 1px;">MESES 16–48</div>
+      </div>
+      <div style="background: rgba(200,168,75,0.06); border: 1px solid rgba(200,168,75,0.15); border-radius: 12px; padding: var(--space-md); text-align: center;">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(200,168,75,0.5); margin-bottom: 8px;">Fase 4</div>
+        <div style="font-family: var(--font-display); font-size: 0.95rem; color: var(--aldora-bege); margin-bottom: 6px;">Entrega</div>
+        <div style="font-size: 0.75rem; color: rgba(230,215,175,0.55); line-height: 1.5;">Habite-se · Entrega das 4 torres · Parque entregue · Valorização QC03 turbinada</div>
+        <div style="font-size: 10px; color: rgba(200,168,75,0.4); margin-top: 8px; letter-spacing: 1px;">MESES 42–54</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MIX ===== -->
+<section class="aldora-section aldora-section--dark" id="mix">
+  <div class="container">
+    <div class="aldora-section__tag">03 — Mix de Tipologias</div>
+    <h2 class="aldora-section__title">Composição Recomendada · QC02</h2>
+
+    <div class="mix-bar">
+      <div class="mix-segment p2" style="flex: 10;">P2 · 10%</div>
+      <div class="mix-segment p3" style="flex: 62;">P3 Garden Suite · 62%</div>
+      <div class="mix-segment p4" style="flex: 23;">P4 · 23%</div>
+      <div class="mix-segment" style="flex: 5; background: #5a4a2a; color: rgba(230,215,175,0.9);">P5</div>
+    </div>
+
+    <div class="mix-legend">
+      <div class="mix-legend-item"><div class="mix-dot" style="background:#DFC87A"></div>P2 Compacto Smart (32 un. · R$450K médio)</div>
+      <div class="mix-legend-item"><div class="mix-dot" style="background:#C8A84B"></div>P3 Garden Suite (200 un. · R$780K médio) ★ foco</div>
+      <div class="mix-legend-item"><div class="mix-dot" style="background:#8A7234"></div>P4 Alto Padrão (72 un. · R$1,35M médio)</div>
+      <div class="mix-legend-item"><div class="mix-dot" style="background:#5a4a2a"></div>P5 Cobertura Signature (16 un. · R$3,5M médio)</div>
+    </div>
+
+    <!-- Justificativa do mix -->
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); margin-top: var(--space-xl);">
+      <div style="background: rgba(200,168,75,0.05); border: 1px solid rgba(200,168,75,0.12); border-radius: 14px; padding: var(--space-lg);">
+        <div style="font-family: var(--font-display); font-size: 1rem; color: var(--aldora-ouro); margin-bottom: var(--space-sm);">
+          Por que P3 é o foco do QC02?
+        </div>
+        <ul style="list-style: none; padding: 0;">
+          <li style="font-size: 0.82rem; color: rgba(230,215,175,0.7); padding: 5px 0; border-bottom: 1px solid rgba(200,168,75,0.08);">✦ Demanda mais alta (11% do mercado) com melhor ticket/margem</li>
+          <li style="font-size: 0.82rem; color: rgba(230,215,175,0.7); padding: 5px 0; border-bottom: 1px solid rgba(200,168,75,0.08);">✦ Família com filhos = público do parque frontal</li>
+          <li style="font-size: 0.82rem; color: rgba(230,215,175,0.7); padding: 5px 0; border-bottom: 1px solid rgba(200,168,75,0.08);">✦ Vista parque = premium de +15–18% sobre P3 sem diferencial</li>
+          <li style="font-size: 0.82rem; color: rgba(230,215,175,0.7); padding: 5px 0; border-bottom: 1px solid rgba(200,168,75,0.08);">✦ 3 dorms = velocidade de revenda (liquidez)</li>
+          <li style="font-size: 0.82rem; color: rgba(230,215,175,0.7); padding: 5px 0;">✦ Absorção: 8–12 unidades/mês no IVV atual de Uberlândia</li>
+        </ul>
+      </div>
+      <div style="background: rgba(200,168,75,0.05); border: 1px solid rgba(200,168,75,0.12); border-radius: 14px; padding: var(--space-lg);">
+        <div style="font-family: var(--font-display); font-size: 1rem; color: var(--aldora-ouro); margin-bottom: var(--space-sm);">
+          Público-alvo do QC02
+        </div>
+        <div style="font-size: 0.82rem; color: rgba(230,215,175,0.7); line-height: 1.7;">
+          <strong style="color: var(--aldora-bege);">P3 · Família Versailles</strong> — Casal 35–50 anos, 2 filhos, renda familiar R$ 18–35K/mês, upgrade residencial, prioriza lazer, segurança e escola próxima. Localização Versailles = aspiracional.<br><br>
+          <strong style="color: var(--aldora-bege);">P4 · Executivo Upgrade</strong> — Profissional liberal 40–55 anos, busca status + lazer. Varanda gourmet e vista diferenciada são decisivos.<br><br>
+          <strong style="color: var(--aldora-bege);">P5 · Investidor Premium</strong> — Compra como ativo, uso eventual, interesse em revenda valorizada por bairro consolidado.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PARCERIA ===== -->
+<section class="aldora-section" id="parceria">
+  <div class="container">
+    <div class="aldora-section__tag">04 — Modelo de Parceria</div>
+    <h2 class="aldora-section__title">Estrutura para Construtora Parceira · QC02</h2>
+
+    <div class="parceria-cards">
+      <!-- SPE — Recomendado -->
+      <div class="parceria-card parceria-card--recomendado">
+        <div class="parceria-title">SPE — Sociedade de Propósito Específico</div>
+        <div class="parceria-split">CJU: terreno (valor) + marca + aprovações<br>Construtora: execução + RRT + financiamento</div>
+        <ul class="parceria-pros">
+          <li>Proteção patrimonial de ambas as partes</li>
+          <li>Separação de risco do projeto</li>
+          <li>Participação proporcional nos lucros</li>
+          <li>Estrutura aceita por bancos (SFH/SFI)</li>
+          <li>Governança clara via quotas</li>
+        </ul>
+        <ul class="parceria-cons">
+          <li>Maior complexidade jurídica inicial</li>
+          <li>Custos de constituição e auditoria</li>
+        </ul>
+        <div style="margin-top: var(--space-md); padding: var(--space-md); background: rgba(200,168,75,0.08); border-radius: 10px; font-size: 0.82rem; color: rgba(230,215,175,0.7);">
+          <strong style="color: var(--aldora-ouro);">Split indicativo:</strong> CJU 35–45% (terreno avaliado + marca + licenças) · Construtora 55–65% (execução + financiamento)
+        </div>
+      </div>
+
+      <!-- Permuta Financeira -->
+      <div class="parceria-card">
+        <div class="parceria-title">Permuta Financeira</div>
+        <div class="parceria-split">12–20% do VGV em dinheiro conforme vendas realizadas</div>
+        <ul class="parceria-pros">
+          <li>Simples e rápido de estruturar</li>
+          <li>Liquidez para CJU sem risco de inventário</li>
+          <li>Construtora tem controle total operacional</li>
+          <li>Bom para construtoras que preferem autonomia</li>
+        </ul>
+        <ul class="parceria-cons">
+          <li>CJU não participa do upside</li>
+          <li>Risco de velocidade de vendas da construtora</li>
+        </ul>
+        <div style="margin-top: var(--space-md); padding: var(--space-md); background: rgba(200,168,75,0.04); border-radius: 10px; font-size: 0.82rem; color: rgba(230,215,175,0.6);">
+          <strong style="color: var(--aldora-ouro);">Valor estimado:</strong> 15% do VGV de R$115–145M = R$17–22M para CJU
+        </div>
+      </div>
+
+      <!-- Permuta Física -->
+      <div class="parceria-card">
+        <div class="parceria-title">Permuta Física</div>
+        <div class="parceria-split">15–25% das unidades prontas do empreendimento</div>
+        <ul class="parceria-pros">
+          <li>Sem desembolso imediato de caixa</li>
+          <li>CJU pode reter unidades premium (P4/P5)</li>
+          <li>Participação indireta na valorização futura</li>
+        </ul>
+        <ul class="parceria-cons">
+          <li>Risco de comercialização do portfólio recebido</li>
+          <li>Exposição ao mercado imobiliário pós-entrega</li>
+          <li>Menos flexibilidade fiscal</li>
+        </ul>
+        <div style="margin-top: var(--space-md); padding: var(--space-md); background: rgba(200,168,75,0.04); border-radius: 10px; font-size: 0.82rem; color: rgba(230,215,175,0.6);">
+          <strong style="color: var(--aldora-ouro);">Estratégia:</strong> Reter coberturas P5 e unidades com vista parque P4 para revenda futura ou uso corporativo
+        </div>
+      </div>
+
+      <!-- SPE Premium -->
+      <div class="parceria-card">
+        <div class="parceria-title">Joint Venture Premium</div>
+        <div class="parceria-split">CJU: terreno + marca + parque + rua privada<br>Parceiro: construtora + incorporadora + capital</div>
+        <ul class="parceria-pros">
+          <li>Máximo upside para CJU</li>
+          <li>Permite atrair parceiro financeiro (fundo imobiliário)</li>
+          <li>Ideal se o projeto for securitizado (CRI)</li>
+          <li>VGV base para FII ou CRI: viável acima de R$80M</li>
+        </ul>
+        <ul class="parceria-cons">
+          <li>Complexidade alta — requer assessoria jurídica premium</li>
+          <li>Prazo longo para estruturação (6–12 meses)</li>
+        </ul>
+        <div style="margin-top: var(--space-md); padding: var(--space-md); background: rgba(200,168,75,0.04); border-radius: 10px; font-size: 0.82rem; color: rgba(230,215,175,0.6);">
+          <strong style="color: var(--aldora-ouro);">Nota:</strong> QC02 (R$115–145M VGV) já ultrapassa o threshold para securitização via CRI ou FII de desenvolvimento.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ESTEIRA ===== -->
+<section class="aldora-section aldora-section--dark" id="esteira">
+  <div class="container">
+    <div class="aldora-section__tag">05 — Esteira de Lançamento</div>
+    <h2 class="aldora-section__title">Go-to-Market QC02 · 18 Passos em 3 Fases</h2>
+
+    <div class="esteira-steps">
+      <div class="esteira-step">
+        <div class="esteira-num">I</div>
+        <div class="esteira-title">Preparação (Meses 1–8)</div>
+        <div class="esteira-prazo">Antes do lançamento</div>
+        <ul class="esteira-tasks">
+          <li>Selecionar construtora parceira (short list de 3)</li>
+          <li>Constituir SPE ou assinar MoU de parceria</li>
+          <li>Contratar escritório de arquitetura para projeto</li>
+          <li>Dar entrada na aprovação municipal QC02</li>
+          <li>Elaborar memorial descritivo completo</li>
+          <li>Definir tabela de preços por unidade e andar</li>
+          <li>Criar material de vendas: book, tour 3D, renders</li>
+          <li>Treinar equipe de vendas (incorporadora / imobiliária)</li>
+          <li>Protocolar parque com prefeitura (doação/comodato área)</li>
+        </ul>
+      </div>
+
+      <div class="esteira-step" style="border-color: rgba(200,168,75,0.25);">
+        <div class="esteira-num">II</div>
+        <div class="esteira-title">Pré-venda e Lançamento (Meses 8–18)</div>
+        <div class="esteira-prazo">Fase crítica de velocidade</div>
+        <ul class="esteira-tasks">
+          <li>Lançar lista VIP (clientes AL'DORA QC01 + investidores)</li>
+          <li>Evento de lançamento no próprio terreno QC02</li>
+          <li>Tour 3D e renders em telas gigantes</li>
+          <li>Atingir 30% VGV em pré-venda (Gate G2 para QC02)</li>
+          <li>Aprovar financiamento SFH/SFI com banco parceiro</li>
+          <li>Publicar anúncio do parque em conjunto com prefeitura</li>
+          <li>Campanha: "Mora de frente para o parque"</li>
+          <li>Ativar imobiliárias regionais com comissão diferenciada</li>
+          <li>Iniciar obra de fundação (sinal de credibilidade)</li>
+        </ul>
+      </div>
+
+      <div class="esteira-step">
+        <div class="esteira-num">III</div>
+        <div class="esteira-title">Construção e Entrega (Meses 16–54)</div>
+        <div class="esteira-prazo">Execução e valorização</div>
+        <ul class="esteira-tasks">
+          <li>Ritmo de obra: relatórios mensais para compradores</li>
+          <li>Visitas técnicas guiadas a cada 6 meses</li>
+          <li>Conteúdo: documentário da construção (YouTube/Reel)</li>
+          <li>Vender unidades remanescentes com ágio de obra</li>
+          <li>Parque executado em paralelo (acordo prefeitura)</li>
+          <li>Habite-se + entrega das 4 torres</li>
+          <li>Evento de inauguração do complexo + parque</li>
+          <li>Ativar marketing de revenda para proprietários P4/P5</li>
+          <li>Lançar QC03 aproveitando momentum QC02</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PITCH ===== -->
+<section class="aldora-section" id="pitch">
+  <div class="container">
+    <div class="aldora-section__tag">06 — Argumentos para Construtora</div>
+    <h2 class="aldora-section__title">Pitch Deck · QC02 para Construtores Parceiros</h2>
+    <p class="aldora-section__lead">
+      Perguntas mais frequentes de construtoras e as respostas estratégicas do projeto.
+    </p>
+
+    <div class="pitch-grid">
+      <div class="pitch-card">
+        <div class="pitch-card__q">Por que QC02 e não QC01?</div>
+        <div class="pitch-card__a">
+          QC01 é o volume de entrada. <strong>QC02 é o coração do negócio</strong>: maior VGV/m² (premium parque), product mix mais nobre (P3/P4), e a construtora entra numa marca já testada e com reputação estabelecida. Menos risco, mais upside.
+        </div>
+      </div>
+
+      <div class="pitch-card">
+        <div class="pitch-card__q">O parque é garantido?</div>
+        <div class="pitch-card__a">
+          O parque faz parte do masterplan aprovado. A Cidade Jardim Urbanismo comprometeu em protocolo com a prefeitura de Uberlândia a doação/cessão da área frontal ao QC02 para implantação do parque linear — condição do plano diretor e do masterplan AL'DORA. <strong>Não é promessa: é cláusula do plano urbanístico.</strong>
+        </div>
+      </div>
+
+      <div class="pitch-card">
+        <div class="pitch-card__q">Qual o risco de velocidade de vendas?</div>
+        <div class="pitch-card__a">
+          IVV Uberlândia: 24,5% (2T25). Brain Research projeta absorção de <strong>1.000+ unidades/ano</strong> no raio de influência de Versailles. P3 (3 dorms) é o produto mais demandado. QC02 entra com marca estabelecida por QC01 — velocidade histórica de projetos com diferencial: 10–15 un/mês.
+        </div>
+      </div>
+
+      <div class="pitch-card">
+        <div class="pitch-card__q">Como fica a precificação com o parque?</div>
+        <div class="pitch-card__a">
+          Benchmarks nacionais (Parque Global/SP, Bosque do Futuro/BH): unidades com vista parque têm <strong>premium médio de 15–22%</strong> sobre unidades sem diferencial. Em QC02, isso representa ~R$120–150K a mais por P3 — diretamente na margem da construtora.
+        </div>
+      </div>
+
+      <div class="pitch-card">
+        <div class="pitch-card__q">O que a Cidade Jardim Urbanismo entrega?</div>
+        <div class="pitch-card__a">
+          <strong>Terreno de 11.953 m²</strong> (avaliado a preço de mercado na SPE), marca AL'DORA consolidada, licenças e aprovações, projeto de parque com prefeitura, acesso a investidores qualificados, todo o material de marketing (renders, 3D, documentos), e know-how do produto premium em Versailles.
+        </div>
+      </div>
+
+      <div class="pitch-card">
+        <div class="pitch-card__q">Por que agora? Selic alta prejudica?</div>
+        <div class="pitch-card__a">
+          Selic elevada reduz velocidade — não elimina mercado premium. Comprador P3/P4 tem menor dependência de financiamento. O período de aprovação (6–18 meses) permite lançar quando o cenário macroeconômico já terá melhorado. <strong>Preparar agora = lançar no momento certo.</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Construtoras alvo -->
+    <h3 style="font-family: var(--font-display); color: var(--aldora-ouro); font-size: 1.2rem; margin: var(--space-xl) 0 var(--space-lg);">
+      Construtoras Alvo · Short List Uberlândia
+    </h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--space-md);">
+      <div style="background: rgba(200,168,75,0.05); border: 1px solid rgba(200,168,75,0.12); border-radius: 12px; padding: var(--space-md);">
+        <div style="font-weight: 700; color: var(--aldora-bege); margin-bottom: 6px;">Perplan</div>
+        <div style="font-size: 0.78rem; color: rgba(230,215,175,0.6); line-height: 1.5;">Maior incorporadora local · 2 lançamentos verticais previstos · Match por porte e perfil</div>
+      </div>
+      <div style="background: rgba(200,168,75,0.05); border: 1px solid rgba(200,168,75,0.12); border-radius: 12px; padding: var(--space-md);">
+        <div style="font-weight: 700; color: var(--aldora-bege); margin-bottom: 6px;">ZP Empreendimentos</div>
+        <div style="font-size: 0.78rem; color: rgba(230,215,175,0.6); line-height: 1.5;">Médio e alto padrão desde 2002 · Experiência P3/P4 · Portfólio compatível</div>
+      </div>
+      <div style="background: rgba(200,168,75,0.05); border: 1px solid rgba(200,168,75,0.12); border-radius: 12px; padding: var(--space-md);">
+        <div style="font-weight: 700; color: var(--aldora-bege); margin-bottom: 6px;">Senza Construtora</div>
+        <div style="font-size: 0.78rem; color: rgba(230,215,175,0.6); line-height: 1.5;">Design moderno · lazer completo · Linguagem compatível com AL'DORA</div>
+      </div>
+      <div style="background: rgba(200,168,75,0.05); border: 1px solid rgba(200,168,75,0.12); border-radius: 12px; padding: var(--space-md);">
+        <div style="font-weight: 700; color: var(--aldora-bege); margin-bottom: 6px;">Construtoras SP/BH</div>
+        <div style="font-size: 0.78rem; color: rgba(230,215,175,0.6); line-height: 1.5;">Cyrela · Even · EZTEC · EZTec expandindo para interior · trazem capital nacional</div>
+      </div>
+      <div style="background: rgba(200,168,75,0.05); border: 1px solid rgba(200,168,75,0.12); border-radius: 12px; padding: var(--space-md);">
+        <div style="font-weight: 700; color: var(--aldora-bege); margin-bottom: 6px;">Manzan Construtora</div>
+        <div style="font-size: 0.78rem; color: rgba(230,215,175,0.6); line-height: 1.5;">Padrão elevado UDI · Experiência em condomínios verticais de alto nível</div>
+      </div>
+      <div style="background: rgba(200,168,75,0.05); border: 1px solid rgba(200,168,75,0.12); border-radius: 12px; padding: var(--space-md);">
+        <div style="font-weight: 700; color: var(--aldora-bege); margin-bottom: 6px;">DRF Incorporação</div>
+        <div style="font-size: 0.78rem; color: rgba(230,215,175,0.6); line-height: 1.5;">Médio e alto padrão desde 2010 · Experiência com projetos de R$50–80M VGV</div>
+      </div>
+    </div>
+
+    <!-- Print strip -->
+    <div class="print-strip">
+      <p>
+        Este documento é confidencial e de uso exclusivo da Cidade Jardim Urbanismo e parceiros autorizados.
+        Para apresentação a construtoras, use o dossiê completo + renders QC02 + tour 3D.
+      </p>
+      <button class="btn-print" onclick="window.print()">🖨️ Imprimir / PDF</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="aldora-footer">
+  <div class="container">
+    <div class="aldora-footer__brand">AL'DORA City</div>
+    <div class="aldora-footer__sub">Cidade Jardim Urbanismo · Leandro Cecílio · lscecilio@gmail.com</div>
+    <div class="aldora-footer__links">
+      <a href="INDEX.html">Hub Central</a>
+      <a href="aldora-qc02-focus.html">QC02 Focus</a>
+      <a href="aldora-dossie-investidor.html">Dossiê Investidor</a>
+      <a href="aldora-governance.html">Governança</a>
+    </div>
+    <div class="aldora-footer__copy">
+      © 2026 Cidade Jardim Urbanismo · Material confidencial · Não distribuir sem autorização
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('aldora-nav--scrolled', window.scrollY > 50);
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
