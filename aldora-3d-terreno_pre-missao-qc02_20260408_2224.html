@@ -96,7 +96,7 @@
     <div class="row">Terreno total: <b>42.783 m²</b></div>
     <div class="row">Área privativa: <b>125.684 m²</b></div>
     <div class="row">Construída: <b>171.138 m²</b></div>
-    <div class="row">Torres: <b>14 (A–F, G–J, L–O)</b></div>
+    <div class="row">Torres: <b>8 (A–H)</b></div>
     <div class="row">Zoneamento: <b>ZR2/SVA · CA 4,0</b></div>
   </div>
 
@@ -308,30 +308,22 @@ function makeTower(cx, cz, w, d, h, colTop, colBase) {
   return g;
 }
 
-// QC01: 6 torres (A,B = EMP1 Jardins; C,D,E,F = EMP2 Versailles)
+// QC01: 4 torres (A,B = EMP1 Jardins; C,D = EMP2 Versailles)
 const t1w=2.8, t1d=3.2, t1h=17.0;
-// EMP1 AL'DORA Jardins — braço norte (55m)
-makeTower(C1.x-3.5, C1.z-28, t1w, t1d, t1h,              0xC8A84B, 0x1a3a2a); // A
-makeTower(C1.x+3.5, C1.z-28, t1w, t1d, t1h,              0xC8A84B, 0x1a3a2a); // B
-// EMP2 AL'DORA Versailles — costas leste + braço sul (48m)
-makeTower(C1.x+5.0, C1.z-12, t1w*0.9, t1d*0.9, t1h*0.87, 0xB8921A, 0x163020); // C
-makeTower(C1.x+5.0, C1.z+2,  t1w*0.9, t1d*0.9, t1h*0.87, 0xB8921A, 0x163020); // D
-makeTower(C1.x-3.5, C1.z+8,  t1w*0.9, t1d*0.9, t1h*0.87, 0xB8921A, 0x163020); // E
-makeTower(C1.x+3.5, C1.z+8,  t1w*0.9, t1d*0.9, t1h*0.87, 0xB8921A, 0x163020); // F
+makeTower(C1.x-3.0, C1.z-12, t1w, t1d, t1h,   0xC8A84B, 0x1a3a2a); // A
+makeTower(C1.x+3.0, C1.z-12, t1w, t1d, t1h,   0xC8A84B, 0x1a3a2a); // B
+makeTower(C1.x-3.0, C1.z+6,  t1w*0.9, t1d*0.9, t1h*0.88, 0xB8921A, 0x163020); // C
+makeTower(C1.x+3.0, C1.z+6,  t1w*0.9, t1d*0.9, t1h*0.88, 0xB8921A, 0x163020); // D
 
-// QC02: 4 torres G,H,I,J (EMP3 Reserva — 50m)
+// QC02: Torres E, F (EMP3 Reserva)
 const t2w=3.0, t2d=3.5, t2h=15.0;
-makeTower(C2.x-3.0, C2.z-4, t2w, t2d, t2h, 0xA07020, 0x132a1a); // G
-makeTower(C2.x+3.0, C2.z-4, t2w, t2d, t2h, 0xA07020, 0x132a1a); // H
-makeTower(C2.x-3.0, C2.z+4, t2w, t2d, t2h, 0xA07020, 0x132a1a); // I
-makeTower(C2.x+3.0, C2.z+4, t2w, t2d, t2h, 0xA07020, 0x132a1a); // J
+makeTower(C2.x-2.8, C2.z, t2w, t2d, t2h, 0xA07020, 0x132a1a); // E
+makeTower(C2.x+2.8, C2.z, t2w, t2d, t2h, 0xA07020, 0x132a1a); // F
 
-// QC03: 4 torres L,M,N,O (EMP4 Signature — 72m, mais altas)
+// QC03: Torres G, H (EMP4 Signature — mais altas)
 const t3w=2.4, t3d=3.0, t3h=22.0;
-makeTower(C3.x-3.0, C3.z-4, t3w, t3d, t3h, 0xFFD060, 0x0e1e10); // L
-makeTower(C3.x+3.0, C3.z-4, t3w, t3d, t3h, 0xFFD060, 0x0e1e10); // M
-makeTower(C3.x-3.0, C3.z+4, t3w, t3d, t3h, 0xFFD060, 0x0e1e10); // N
-makeTower(C3.x+3.0, C3.z+4, t3w, t3d, t3h, 0xFFD060, 0x0e1e10); // O
+makeTower(C3.x-2.4, C3.z, t3w, t3d, t3h, 0xFFD060, 0x0e1e10); // G
+makeTower(C3.x+2.4, C3.z, t3w, t3d, t3h, 0xFFD060, 0x0e1e10); // H
 
 // ── Árvores ──
 function makeTree(x, z, h) {
@@ -445,9 +437,9 @@ document.addEventListener('touchmove',e=>{
 // Focus nas fases
 window.focusQuadra=function(n) {
   const cfg=[
-    {t:[C1.x,0,C1.z], r:70, ph:0.7,  th:0.15},
-    {t:[C2.x,0,C2.z], r:50, ph:0.65, th:0.0},
-    {t:[C3.x,0,C3.z], r:50, ph:0.65, th:-0.1},
+    {t:[C1.x,0,C1.z], r:55, ph:0.7,  th:0.15},
+    {t:[C2.x,0,C2.z], r:45, ph:0.65, th:0.0},
+    {t:[C3.x,0,C3.z], r:45, ph:0.65, th:-0.1},
   ][n-1];
   target.set(...cfg.t); radius=cfg.r; phi=cfg.ph; theta=cfg.th;
   updateCam();

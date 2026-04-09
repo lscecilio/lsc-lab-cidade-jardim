@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AL'DORA City · Flythrough Cinemático</title>
+<meta property="og:title" content="AL'DORA City · Flythrough Cinemático">
+<meta property="og:description" content="Flythrough 3D cinematográfico das 14 torres do Masterplan Vertical Escalonado · Jardim Versailles, Uberlândia/MG">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js"></script>
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
+  :root{
+    --gold:#C8A84B;--gold-light:#FFD060;--gold-dark:#A07020;
+    --bg:#0a0d14;--bg-panel:rgba(10,13,20,0.88);--text:#f0ece4;
+    --font-display:'Playfair Display',Georgia,serif;
+    --font-ui:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  }
+  html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:var(--font-ui);color:var(--text)}
+  #map{width:100%;height:100%;position:absolute;top:0;left:0}
+
+  /* Letterbox bars */
+  .letterbox{position:fixed;left:0;right:0;height:48px;background:#000;z-index:20;pointer-events:none;transition:height .8s ease}
+  .letterbox.top{top:0}.letterbox.bottom{bottom:0}
+
+  /* Vignette */
+  #vignette{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:15;
+    background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,0.45) 100%)}
+
+  /* Corner branding */
+  #corner-brand{position:fixed;top:60px;left:24px;z-index:25;opacity:0;transition:opacity 1s ease;pointer-events:none}
+  #corner-brand.visible{opacity:1}
+  #corner-brand .logo-text{font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--gold);letter-spacing:3px;text-shadow:0 2px 12px rgba(0,0,0,.7)}
+  #corner-brand .logo-sub{font-family:var(--font-ui);font-size:10px;font-weight:400;color:rgba(240,236,228,.5);letter-spacing:2px;margin-top:2px}
+
+  /* Text overlay container */
+  #overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:18;pointer-events:none;display:flex;align-items:center;justify-content:center;flex-direction:column}
+  .overlay-line{text-align:center;opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease;text-shadow:0 3px 20px rgba(0,0,0,.8),0 1px 4px rgba(0,0,0,.6)}
+  .overlay-line.visible{opacity:1;transform:translateY(0)}
+  .overlay-line.title{font-family:var(--font-display);font-size:clamp(32px,6vw,64px);font-weight:700;color:var(--gold);letter-spacing:6px}
+  .overlay-line.subtitle{font-family:var(--font-ui);font-size:clamp(14px,2.5vw,22px);font-weight:300;color:rgba(240,236,228,.85);letter-spacing:4px;margin-top:8px}
+  .overlay-line.data{font-family:var(--font-ui);font-size:clamp(13px,2vw,18px);font-weight:500;color:var(--gold-light);letter-spacing:2px;margin-top:6px}
+  .overlay-line.small{font-family:var(--font-ui);font-size:clamp(11px,1.6vw,15px);font-weight:400;color:rgba(240,236,228,.6);letter-spacing:1.5px;margin-top:4px}
+
+  /* End card overlay */
+  #endcard{position:fixed;top:0;left:0;width:100%;height:100%;z-index:22;background:rgba(6,8,16,.82);display:flex;align-items:center;justify-content:center;flex-direction:column;opacity:0;pointer-events:none;transition:opacity 1.2s ease}
+  #endcard.visible{opacity:1;pointer-events:auto}
+  #endcard .ec-title{font-family:var(--font-display);font-size:clamp(36px,7vw,72px);font-weight:700;color:var(--gold);letter-spacing:8px}
+  #endcard .ec-sub{font-family:var(--font-ui);font-size:clamp(13px,2vw,20px);font-weight:300;color:rgba(240,236,228,.7);letter-spacing:4px;margin-top:10px}
+  #endcard .ec-line{width:60px;height:1px;background:var(--gold);margin:20px auto}
+  #endcard .ec-contact{font-family:var(--font-ui);font-size:13px;font-weight:400;color:rgba(240,236,228,.5);letter-spacing:1px;margin-top:6px}
+
+  /* Controls panel */
+  #controls{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);z-index:30;
+    background:var(--bg-panel);backdrop-filter:blur(20px);border:1px solid rgba(200,168,75,.2);
+    border-radius:16px;padding:12px 20px;display:flex;align-items:center;gap:14px;
+    transition:opacity .5s ease;min-width:min(680px,92vw)}
+  #controls.hidden{opacity:0;pointer-events:none}
+
+  /* Buttons */
+  .ctrl-btn{background:none;border:1px solid rgba(200,168,75,.3);color:var(--text);width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .25s ease;flex-shrink:0}
+  .ctrl-btn:hover{background:rgba(200,168,75,.15);border-color:var(--gold)}
+  .ctrl-btn.active{background:rgba(200,168,75,.25);border-color:var(--gold)}
+  .ctrl-btn.rec{border-color:rgba(220,50,50,.5)}
+  .ctrl-btn.rec.recording{border-color:#e33;background:rgba(220,50,50,.2);animation:pulse-rec 1s infinite}
+  @keyframes pulse-rec{0%,100%{box-shadow:0 0 0 0 rgba(220,50,50,.4)}50%{box-shadow:0 0 0 8px rgba(220,50,50,0)}}
+
+  /* Progress bar */
+  #progress-wrap{flex:1;height:6px;background:rgba(255,255,255,.1);border-radius:3px;cursor:pointer;position:relative;min-width:100px}
+  #progress-bar{height:100%;background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light));border-radius:3px;width:0%;transition:none;position:relative}
+  #progress-bar::after{content:'';position:absolute;right:-5px;top:-4px;width:14px;height:14px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px rgba(200,168,75,.5);opacity:0;transition:opacity .2s}
+  #progress-wrap:hover #progress-bar::after{opacity:1}
+
+  /* Chapter markers */
+  .chapter-marker{position:absolute;top:-2px;width:3px;height:10px;background:rgba(240,236,228,.35);border-radius:1px;transform:translateX(-50%);pointer-events:none}
+
+  /* Time display */
+  #time-display{font-size:11px;color:rgba(240,236,228,.5);font-variant-numeric:tabular-nums;min-width:70px;text-align:center;flex-shrink:0}
+
+  /* Speed control */
+  #speed-btn{width:auto;padding:0 10px;border-radius:12px;font-size:11px;font-weight:600;letter-spacing:.5px}
+
+  /* Extra buttons row */
+  #extra-controls{position:fixed;bottom:110px;right:24px;z-index:30;display:flex;gap:8px;flex-direction:column}
+  .extra-btn{background:var(--bg-panel);backdrop-filter:blur(16px);border:1px solid rgba(200,168,75,.2);color:var(--text);padding:8px 14px;border-radius:10px;cursor:pointer;font-size:11px;font-family:var(--font-ui);letter-spacing:.5px;transition:all .25s;white-space:nowrap;text-align:center}
+  .extra-btn:hover{background:rgba(200,168,75,.15);border-color:var(--gold)}
+  .extra-btn .icon{margin-right:4px}
+
+  /* Recording indicator */
+  #rec-indicator{position:fixed;top:60px;right:24px;z-index:30;display:none;align-items:center;gap:8px;background:rgba(220,50,50,.15);border:1px solid rgba(220,50,50,.4);border-radius:20px;padding:6px 14px;font-size:12px;color:#f55;letter-spacing:1px}
+  #rec-indicator.visible{display:flex}
+  #rec-dot{width:10px;height:10px;border-radius:50%;background:#e33;animation:pulse-dot 1s infinite}
+  @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.3}}
+
+  /* Loading screen */
+  #loader{position:fixed;top:0;left:0;width:100%;height:100%;z-index:100;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity 1s ease}
+  #loader.hidden{opacity:0;pointer-events:none}
+  #loader .load-title{font-family:var(--font-display);font-size:clamp(28px,5vw,48px);font-weight:700;color:var(--gold);letter-spacing:8px;animation:load-glow 2s ease-in-out infinite}
+  @keyframes load-glow{0%,100%{opacity:.6;text-shadow:0 0 20px rgba(200,168,75,.3)}50%{opacity:1;text-shadow:0 0 40px rgba(200,168,75,.6)}}
+  #loader .load-sub{font-size:13px;color:rgba(240,236,228,.4);letter-spacing:3px;margin-top:12px}
+  #loader .load-bar{width:200px;height:2px;background:rgba(255,255,255,.08);border-radius:1px;margin-top:24px;overflow:hidden}
+  #loader .load-bar-inner{height:100%;width:0%;background:var(--gold);border-radius:1px;transition:width .3s ease}
+
+  /* Chapter tooltip */
+  .chapter-tooltip{position:absolute;bottom:16px;background:var(--bg-panel);border:1px solid rgba(200,168,75,.3);border-radius:6px;padding:4px 8px;font-size:10px;color:var(--gold);white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s;transform:translateX(-50%)}
+
+  /* Responsive */
+  @media(max-width:600px){
+    #controls{flex-wrap:wrap;padding:10px 14px;gap:8px;min-width:auto;width:calc(100% - 32px);border-radius:12px;bottom:16px}
+    .letterbox{height:28px}
+    #extra-controls{bottom:140px;right:12px}
+    #corner-brand{top:36px;left:14px}
+  }
+  @media(max-width:400px){
+    #speed-btn,#time-display{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div id="loader">
+  <div class="load-title">AL'DORA</div>
+  <div class="load-sub">CARREGANDO MASTERPLAN</div>
+  <div class="load-bar"><div class="load-bar-inner" id="load-progress"></div></div>
+</div>
+
+<!-- Letterbox Bars -->
+<div class="letterbox top"></div>
+<div class="letterbox bottom"></div>
+
+<!-- Vignette -->
+<div id="vignette"></div>
+
+<!-- Corner Branding -->
+<div id="corner-brand">
+  <div class="logo-text">AL'DORA CITY</div>
+  <div class="logo-sub">CIDADE JARDIM URBANISMO</div>
+</div>
+
+<!-- Text Overlay -->
+<div id="overlay"></div>
+
+<!-- End Card -->
+<div id="endcard">
+  <div class="ec-title">AL'DORA CITY</div>
+  <div class="ec-sub">Jardim Versailles · Uberlândia/MG</div>
+  <div class="ec-line"></div>
+  <div class="ec-contact">cidadejardimurbanismo.com.br</div>
+  <div class="ec-contact" style="margin-top:4px">Leandro Cecílio · lscecilio@gmail.com</div>
+</div>
+
+<!-- Recording indicator -->
+<div id="rec-indicator"><div id="rec-dot"></div><span>REC</span><span id="rec-time">00:00</span></div>
+
+<!-- Map -->
+<div id="map"></div>
+
+<!-- Controls -->
+<div id="controls" class="hidden">
+  <button class="ctrl-btn" id="btn-play" title="Play / Pause">▶</button>
+  <button class="ctrl-btn" id="btn-restart" title="Reiniciar" style="font-size:12px">⟲</button>
+  <div id="progress-wrap">
+    <div id="progress-bar"></div>
+  </div>
+  <div id="time-display">0:00 / 1:00</div>
+  <button class="ctrl-btn" id="speed-btn" title="Velocidade">1×</button>
+</div>
+
+<!-- Extra Controls -->
+<div id="extra-controls">
+  <button class="extra-btn" id="btn-screenshot" title="Capturar tela"><span class="icon">📷</span> Screenshot</button>
+  <button class="extra-btn rec" id="btn-record" title="Gravar vídeo"><span class="icon">⏺</span> Gravar</button>
+  <button class="extra-btn" id="btn-music" title="Adicionar música"><span class="icon">🎵</span> Música</button>
+</div>
+
+<script>
+// ───── CONFIG ─────
+mapboxgl.accessToken = 'pk.eyJ1IjoibHNjZWNpbGlvIiwiYSI6ImNtbXowaXJuZDAzMjMycm41YWp5Y2xwM3cifQ.NEBFt8fQIl3LoDidMyr9fg';
+
+const TOTAL_DURATION = 60000; // 60 seconds in ms
+const FPS_TARGET = 60;
+
+// ───── TOWER DATA ─────
+function towerPoly(lng, lat, hw, hd) {
+  hw = hw || 0.000095; hd = hd || 0.000068;
+  return [[lng-hw,lat-hd],[lng+hw,lat-hd],[lng+hw,lat+hd],[lng-hw,lat+hd],[lng-hw,lat-hd]];
+}
+
+const towers = [
+  // QC01 - Jardins (A,B)
+  {id:'A',lng:-48.30642,lat:-18.95700,h:75,floors:25,color:'#C8A84B',quadra:'QC01',emp:'Jardins'},
+  {id:'B',lng:-48.30608,lat:-18.95700,h:75,floors:25,color:'#C8A84B',quadra:'QC01',emp:'Jardins'},
+  // QC01 - Versailles (C,D,E,F)
+  {id:'C',lng:-48.30642,lat:-18.95780,h:84,floors:28,color:'#B8921A',quadra:'QC01',emp:'Versailles'},
+  {id:'D',lng:-48.30608,lat:-18.95780,h:84,floors:28,color:'#B8921A',quadra:'QC01',emp:'Versailles'},
+  {id:'E',lng:-48.30642,lat:-18.95860,h:84,floors:28,color:'#B8921A',quadra:'QC01',emp:'Versailles'},
+  {id:'F',lng:-48.30608,lat:-18.95860,h:84,floors:28,color:'#B8921A',quadra:'QC01',emp:'Versailles'},
+  // QC02 - Reserva (G,H,I,J)
+  {id:'G',lng:-48.30630,lat:-18.95980,h:90,floors:30,color:'#A07020',quadra:'QC02',emp:'Reserva'},
+  {id:'H',lng:-48.30590,lat:-18.95980,h:90,floors:30,color:'#A07020',quadra:'QC02',emp:'Reserva'},
+  {id:'I',lng:-48.30630,lat:-18.96045,h:96,floors:32,color:'#A07020',quadra:'QC02',emp:'Reserva'},
+  {id:'J',lng:-48.30590,lat:-18.96045,h:96,floors:32,color:'#A07020',quadra:'QC02',emp:'Reserva'},
+  // QC03 - Signature (L,M,N,O)
+  {id:'L',lng:-48.30628,lat:-18.96140,h:105,floors:35,color:'#FFD060',quadra:'QC03',emp:'Signature'},
+  {id:'M',lng:-48.30585,lat:-18.96140,h:105,floors:35,color:'#FFD060',quadra:'QC03',emp:'Signature'},
+  {id:'N',lng:-48.30628,lat:-18.96195,h:114,floors:38,color:'#FFD060',quadra:'QC03',emp:'Signature'},
+  {id:'O',lng:-48.30585,lat:-18.96195,h:114,floors:38,color:'#FFD060',quadra:'QC03',emp:'Signature'},
+];
+
+// ───── QUADRA POLYGONS ─────
+const quadras = {
+  QC01: [[-48.30661248476868,-18.95637548103209],[-48.30661283296286,-18.95912750380069],[-48.30659420143432,-18.95910812448526],[-48.30658211769109,-18.9589564381425],[-48.30660548837058,-18.95888119381422],[-48.30662132436068,-18.95895747653577],[-48.30661754614533,-18.95903312038229],[-48.30663334695388,-18.95910916093079],[-48.30662857304971,-18.95920345864959],[-48.30662661013304,-18.95924123537784],[-48.30586672241777,-18.95916477945059],[-48.30599422069318,-18.95666063429275],[-48.30661248476868,-18.95637548103209]],
+  QC02: [[-48.30649698590301,-18.96068399537968],[-48.30570204425496,-18.96080819354113],[-48.30580263702252,-18.9592948397472],[-48.3064822051777,-18.95938839506466],[-48.30649698590301,-18.96068399537968]],
+  QC03: [[-48.30653455159076,-18.9622476389247],[-48.30564296247557,-18.96225907775669],[-48.30568865204588,-18.96113452087073],[-48.30648108701291,-18.9610109976692],[-48.30653455159076,-18.9622476389247]]
+};
+
+const park = [[-48.30665,-18.95920],[-48.30580,-18.95914],[-48.30572,-18.95942],[-48.30652,-18.95945],[-48.30665,-18.95920]];
+
+const macroBoundary = [[-48.30663152248352,-18.9563962855908],[-48.30675359935989,-18.96830603602463],[-48.30969133435216,-18.9792995868442],[-48.30213820992651,-18.98238476278312],[-48.29105253225089,-18.97512719755233],[-48.29350239742982,-18.97094466996406],[-48.29316698073505,-18.96704384149165],[-48.29270352459724,-18.96453196849883],[-48.29184122872005,-18.96324974106761],[-48.29117868836932,-18.96259133217615],[-48.2916916139812,-18.96101637217126],[-48.29269931482375,-18.96116718518692],[-48.29373496768546,-18.96545110721832],[-48.29403130834654,-18.96768902613709],[-48.30057601827118,-18.96765171465563],[-48.30090063395427,-18.965967217515],[-48.29906502897369,-18.96357639028897],[-48.29832625002222,-18.9625607042466],[-48.2981265299552,-18.9618217472342],[-48.30135903586346,-18.96193180185874],[-48.30565368852372,-18.96263857022372],[-48.30663152248352,-18.9563962855908]];
+
+// ───── CAMERA KEYFRAMES ─────
+// Each: { t (0-1 progress), center, zoom, pitch, bearing, duration (transition ms) }
+const keyframes = [
+  // Act 1 — APPROACH
+  { t: 0.000, center:[-48.3062,-18.9600], zoom:13, pitch:0, bearing:0 },
+  { t: 0.083, center:[-48.3062,-18.9600], zoom:15, pitch:45, bearing:10 },
+  { t: 0.167, center:[-48.3062,-18.9590], zoom:16.5, pitch:58, bearing:25 },
+  // Act 2 — QUADRAS
+  { t: 0.250, center:[-48.3063,-18.9577], zoom:17.5, pitch:60, bearing:-20 },
+  { t: 0.417, center:[-48.3063,-18.9577], zoom:17.5, pitch:60, bearing:60 },
+  // Park
+  { t: 0.450, center:[-48.3062,-18.9593], zoom:17.2, pitch:55, bearing:70 },
+  // QC02
+  { t: 0.467, center:[-48.3061,-18.9600], zoom:17.5, pitch:60, bearing:60 },
+  { t: 0.617, center:[-48.3061,-18.9600], zoom:17.5, pitch:60, bearing:140 },
+  // QC03
+  { t: 0.617, center:[-48.3061,-18.9617], zoom:17.5, pitch:60, bearing:140 },
+  { t: 0.750, center:[-48.3061,-18.9617], zoom:17.5, pitch:60, bearing:220 },
+  // Act 3 — SKYLINE
+  { t: 0.767, center:[-48.3062,-18.9600], zoom:15.5, pitch:70, bearing:180 },
+  { t: 0.833, center:[-48.3062,-18.9595], zoom:16, pitch:45, bearing:160 },
+  // Finale
+  { t: 0.917, center:[-48.3062,-18.9600], zoom:15.8, pitch:40, bearing:140 },
+  { t: 1.000, center:[-48.3062,-18.9600], zoom:15.8, pitch:40, bearing:120 },
+];
+
+// ───── TEXT OVERLAYS (keyed by progress ranges) ─────
+const textCues = [
+  // Act 1
+  { tStart:0.00, tEnd:0.08, lines:[
+    {cls:'title', text:"AL'DORA CITY"},
+    {cls:'subtitle', text:'Jardim Versailles · Uberlândia/MG'}
+  ]},
+  { tStart:0.08, tEnd:0.17, lines:[
+    {cls:'subtitle', text:'Masterplan Vertical Escalonado'},
+    {cls:'data', text:'42.783 m² · 14 Torres · R$ 511M VGV'}
+  ]},
+  { tStart:0.17, tEnd:0.25, lines:[
+    {cls:'subtitle', text:'3 Quadras · 4 Empreendimentos'},
+    {cls:'small', text:'O maior complexo vertical de Uberlândia'}
+  ]},
+  // QC01
+  { tStart:0.25, tEnd:0.42, lines:[
+    {cls:'data', text:'QC01 · 20.598 m² · Torres A–F'},
+    {cls:'subtitle', text:"AL'DORA Jardins + Versailles"},
+    {cls:'small', text:'R$ 180M VGV · Fase 1 — Entrada'}
+  ]},
+  // Park
+  { tStart:0.42, tEnd:0.47, lines:[
+    {cls:'subtitle', text:"Parque Central AL'DORA"},
+    {cls:'small', text:'O coração verde do masterplan'}
+  ]},
+  // QC02
+  { tStart:0.47, tEnd:0.62, lines:[
+    {cls:'data', text:'QC02 · 11.953 m² · Torres G–J'},
+    {cls:'subtitle', text:"AL'DORA Reserva"},
+    {cls:'small', text:'R$ 143M VGV · Fase 2 — Expansão'}
+  ]},
+  // QC03
+  { tStart:0.62, tEnd:0.75, lines:[
+    {cls:'data', text:'QC03 · 10.232 m² · Torres L–O'},
+    {cls:'subtitle', text:"AL'DORA Signature"},
+    {cls:'small', text:'R$ 189M VGV · Fase 3 — Premium'}
+  ]},
+  // Skyline
+  { tStart:0.75, tEnd:0.83, lines:[
+    {cls:'subtitle', text:'Skyline Ascendente'},
+    {cls:'small', text:'Norte → Sul · 75m a 114m'}
+  ]},
+  // Final overview
+  { tStart:0.83, tEnd:0.92, lines:[
+    {cls:'subtitle', text:'Cidade Jardim Urbanismo'},
+    {cls:'small', text:'Construindo o futuro de Uberlândia'}
+  ]},
+];
+
+// Chapter labels for progress bar
+const chapters = [
+  { t:0.00, label:'Abertura' },
+  { t:0.08, label:'Descida' },
+  { t:0.17, label:'Aproximação' },
+  { t:0.25, label:'QC01' },
+  { t:0.42, label:'Parque' },
+  { t:0.47, label:'QC02' },
+  { t:0.62, label:'QC03' },
+  { t:0.75, label:'Skyline' },
+  { t:0.83, label:'Visão Final' },
+  { t:0.92, label:'Encerramento' },
+];
+
+// ───── STATE ─────
+let map;
+let playing = false;
+let progress = 0; // 0-1
+let speed = 1;
+let lastFrameTime = null;
+let animId = null;
+let mediaRecorder = null;
+let recordedChunks = [];
+let recStartTime = 0;
+let recTimerInterval = null;
+
+// ───── EASING ─────
+function easeInOutCubic(t) {
+  return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2;
+}
+function lerp(a,b,t) { return a + (b - a) * t; }
+
+function getCameraAt(p) {
+  // Find surrounding keyframes
+  let i = 0;
+  for (let k = 0; k < keyframes.length - 1; k++) {
+    if (p >= keyframes[k].t && p <= keyframes[k+1].t) { i = k; break; }
+    if (k === keyframes.length - 2) i = k;
+  }
+  const kf0 = keyframes[i], kf1 = keyframes[i+1];
+  const segLen = kf1.t - kf0.t;
+  const localT = segLen > 0 ? Math.min(1, Math.max(0, (p - kf0.t) / segLen)) : 0;
+  const e = easeInOutCubic(localT);
+  return {
+    center: [lerp(kf0.center[0],kf1.center[0],e), lerp(kf0.center[1],kf1.center[1],e)],
+    zoom: lerp(kf0.zoom, kf1.zoom, e),
+    pitch: lerp(kf0.pitch, kf1.pitch, e),
+    bearing: lerp(kf0.bearing, kf1.bearing, e),
+  };
+}
+
+// ───── MAP INITIALIZATION ─────
+const map_config = {
+  container: 'map',
+  style: 'mapbox://styles/mapbox/satellite-streets-v12',
+  center: [-48.3062, -18.9600],
+  zoom: 13,
+  pitch: 0,
+  bearing: 0,
+  antialias: true,
+  preserveDrawingBuffer: true, // needed for screenshot/recording
+};
+
+map = new mapboxgl.Map(map_config);
+
+// Loading progress simulation
+let loadProg = 0;
+const loadInterval = setInterval(() => {
+  loadProg = Math.min(loadProg + Math.random()*12, 90);
+  document.getElementById('load-progress').style.width = loadProg + '%';
+}, 200);
+
+map.on('load', () => {
+  clearInterval(loadInterval);
+  document.getElementById('load-progress').style.width = '100%';
+
+  // Add terrain
+  map.addSource('mapbox-dem', {
+    type: 'raster-dem',
+    url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
+    tileSize: 512,
+    maxzoom: 14
+  });
+  map.setTerrain({ source: 'mapbox-dem', exaggeration: 1.3 });
+
+  // Atmosphere
+  map.setFog({
+    range: [0.5, 10],
+    color: '#12182a',
+    'high-color': '#0a0d14',
+    'horizon-blend': 0.15,
+    'space-color': '#060810',
+    'star-intensity': 0.3
+  });
+
+  // Sky layer
+  if (!map.getLayer('sky')) {
+    map.addLayer({
+      id: 'sky',
+      type: 'sky',
+      paint: {
+        'sky-type': 'atmosphere',
+        'sky-atmosphere-sun': [0, 30],
+        'sky-atmosphere-sun-intensity': 5
+      }
+    });
+  }
+
+  // ── Macro Boundary ──
+  map.addSource('macro-boundary', {
+    type: 'geojson',
+    data: { type:'Feature', geometry:{ type:'Polygon', coordinates:[macroBoundary] }}
+  });
+  map.addLayer({
+    id:'macro-fill', type:'fill', source:'macro-boundary',
+    paint:{ 'fill-color':'rgba(200,168,75,0.04)', 'fill-opacity':0.8 }
+  });
+  map.addLayer({
+    id:'macro-line', type:'line', source:'macro-boundary',
+    paint:{ 'line-color':'rgba(200,168,75,0.25)', 'line-width':1.5, 'line-dasharray':[8,6] }
+  });
+
+  // ── Quadra fills ──
+  const qStyles = {
+    QC01: { fill:'rgba(200,168,75,0.18)', line:'#C8A84B' },
+    QC02: { fill:'rgba(160,112,32,0.18)', line:'#A07020' },
+    QC03: { fill:'rgba(255,208,96,0.12)', line:'#FFD060' },
+  };
+  Object.entries(quadras).forEach(([qid, coords]) => {
+    map.addSource('quadra-'+qid, {
+      type:'geojson',
+      data:{type:'Feature',geometry:{type:'Polygon',coordinates:[coords]}}
+    });
+    map.addLayer({
+      id:'quadra-fill-'+qid, type:'fill', source:'quadra-'+qid,
+      paint:{'fill-color':qStyles[qid].fill,'fill-opacity':0.8}
+    });
+    map.addLayer({
+      id:'quadra-line-'+qid, type:'line', source:'quadra-'+qid,
+      paint:{'line-color':qStyles[qid].line,'line-width':1.5,'line-dasharray':[5,3],'line-opacity':0.8}
+    });
+  });
+
+  // ── Park ──
+  map.addSource('park', {
+    type:'geojson',
+    data:{type:'Feature',geometry:{type:'Polygon',coordinates:[park]}}
+  });
+  map.addLayer({
+    id:'park-fill', type:'fill', source:'park',
+    paint:{'fill-color':'rgba(58,122,69,0.35)','fill-opacity':0.8}
+  });
+  map.addLayer({
+    id:'park-line', type:'line', source:'park',
+    paint:{'line-color':'#3a7a45','line-width':1.5,'line-dasharray':[4,3]}
+  });
+
+  // ── Tower extrusions ──
+  const towerFeatures = towers.map(t => ({
+    type:'Feature',
+    properties:{ id:t.id, height:t.h, color:t.color, floors:t.floors, quadra:t.quadra, emp:t.emp },
+    geometry:{ type:'Polygon', coordinates:[towerPoly(t.lng, t.lat)] }
+  }));
+  map.addSource('towers', {
+    type:'geojson',
+    data:{ type:'FeatureCollection', features:towerFeatures }
+  });
+  map.addLayer({
+    id:'tower-extrusions', type:'fill-extrusion', source:'towers',
+    paint:{
+      'fill-extrusion-color':['get','color'],
+      'fill-extrusion-height':['get','height'],
+      'fill-extrusion-base':0,
+      'fill-extrusion-opacity':0.78,
+      'fill-extrusion-vertical-gradient':true
+    }
+  });
+
+  // ── Tower labels ──
+  const labelFeatures = towers.map(t => ({
+    type:'Feature',
+    properties:{ label: t.id, height:t.h },
+    geometry:{ type:'Point', coordinates:[t.lng, t.lat] }
+  }));
+  map.addSource('tower-labels', {
+    type:'geojson',
+    data:{ type:'FeatureCollection', features:labelFeatures }
+  });
+  map.addLayer({
+    id:'tower-label-layer', type:'symbol', source:'tower-labels',
+    layout:{
+      'text-field':['get','label'],
+      'text-font':['DIN Pro Bold','Arial Unicode MS Bold'],
+      'text-size':11,
+      'text-anchor':'center',
+      'symbol-sort-key':['-',['get','height']]
+    },
+    paint:{
+      'text-color':'#f0ece4',
+      'text-halo-color':'rgba(10,13,20,0.9)',
+      'text-halo-width':2
+    }
+  });
+
+  // ── Existing buildings ──
+  const layers = map.getStyle().layers;
+  let labelLayerId;
+  for (const l of layers) {
+    if (l.type === 'symbol' && l.layout && l.layout['text-field']) { labelLayerId = l.id; break; }
+  }
+  map.addLayer({
+    id:'3d-buildings', source:'composite', 'source-layer':'building', type:'fill-extrusion',
+    minzoom:13,
+    filter:['==','extrude','true'],
+    paint:{
+      'fill-extrusion-color':'#1a2a3a',
+      'fill-extrusion-height':['interpolate',['linear'],['zoom'],13,0,13.05,['get','height']],
+      'fill-extrusion-base':['interpolate',['linear'],['zoom'],13,0,13.05,['get','min_height']],
+      'fill-extrusion-opacity':0.55
+    }
+  }, labelLayerId);
+
+  // Done loading – show UI
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+    document.getElementById('controls').classList.remove('hidden');
+    document.getElementById('corner-brand').classList.add('visible');
+    buildChapterMarkers();
+  }, 800);
+});
+
+// ───── CHAPTER MARKERS ─────
+function buildChapterMarkers() {
+  const wrap = document.getElementById('progress-wrap');
+  chapters.forEach(ch => {
+    const m = document.createElement('div');
+    m.className = 'chapter-marker';
+    m.style.left = (ch.t * 100) + '%';
+    wrap.appendChild(m);
+  });
+}
+
+// ───── TEXT OVERLAY ENGINE ─────
+const overlayEl = document.getElementById('overlay');
+let currentCueIdx = -1;
+
+function updateOverlay(p) {
+  let idx = -1;
+  for (let i = 0; i < textCues.length; i++) {
+    if (p >= textCues[i].tStart && p < textCues[i].tEnd) { idx = i; break; }
+  }
+  if (idx === currentCueIdx) return;
+  currentCueIdx = idx;
+
+  // Fade out existing
+  const existing = overlayEl.querySelectorAll('.overlay-line');
+  existing.forEach(el => el.classList.remove('visible'));
+
+  setTimeout(() => {
+    overlayEl.innerHTML = '';
+    if (idx < 0) return;
+    const cue = textCues[idx];
+    cue.lines.forEach((line, li) => {
+      const div = document.createElement('div');
+      div.className = 'overlay-line ' + line.cls;
+      div.textContent = line.text;
+      overlayEl.appendChild(div);
+      setTimeout(() => div.classList.add('visible'), 80 + li * 150);
+    });
+  }, 300);
+}
+
+// ───── END CARD ─────
+function showEndCard(show) {
+  document.getElementById('endcard').classList.toggle('visible', show);
+}
+
+// ───── ANIMATION LOOP ─────
+function animate(timestamp) {
+  if (!playing) return;
+  if (!lastFrameTime) lastFrameTime = timestamp;
+  const dt = (timestamp - lastFrameTime) * speed;
+  lastFrameTime = timestamp;
+
+  progress += dt / TOTAL_DURATION;
+  if (progress >= 1) {
+    progress = 1;
+    playing = false;
+    document.getElementById('btn-play').textContent = '▶';
+    showEndCard(true);
+  }
+
+  applyCamera(progress);
+  updateOverlay(progress);
+  updateProgressUI();
+
+  if (playing) animId = requestAnimationFrame(animate);
+}
+
+function applyCamera(p) {
+  const cam = getCameraAt(Math.min(p, 1));
+  map.jumpTo({
+    center: cam.center,
+    zoom: cam.zoom,
+    pitch: cam.pitch,
+    bearing: cam.bearing
+  });
+}
+
+// ───── UI UPDATES ─────
+function updateProgressUI() {
+  const bar = document.getElementById('progress-bar');
+  bar.style.width = (progress * 100) + '%';
+  const elapsed = Math.floor(progress * 60);
+  const total = 60;
+  const eMin = Math.floor(elapsed / 60);
+  const eSec = (elapsed % 60).toString().padStart(2,'0');
+  document.getElementById('time-display').textContent = eMin+':'+eSec+' / 1:00';
+}
+
+// ───── CONTROLS ─────
+document.getElementById('btn-play').addEventListener('click', () => {
+  if (progress >= 1) {
+    progress = 0;
+    showEndCard(false);
+  }
+  playing = !playing;
+  document.getElementById('btn-play').textContent = playing ? '⏸' : '▶';
+  if (playing) {
+    lastFrameTime = null;
+    animId = requestAnimationFrame(animate);
+  }
+});
+
+document.getElementById('btn-restart').addEventListener('click', () => {
+  progress = 0;
+  playing = false;
+  lastFrameTime = null;
+  document.getElementById('btn-play').textContent = '▶';
+  showEndCard(false);
+  applyCamera(0);
+  updateOverlay(0);
+  updateProgressUI();
+});
+
+// Speed toggle
+const speeds = [0.5, 1, 1.5, 2];
+let speedIdx = 1;
+document.getElementById('speed-btn').addEventListener('click', () => {
+  speedIdx = (speedIdx + 1) % speeds.length;
+  speed = speeds[speedIdx];
+  document.getElementById('speed-btn').textContent = speed + '×';
+});
+
+// Progress bar scrub
+document.getElementById('progress-wrap').addEventListener('click', (e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width;
+  progress = Math.max(0, Math.min(1, x));
+  showEndCard(progress >= 1);
+  applyCamera(progress);
+  updateOverlay(progress);
+  updateProgressUI();
+});
+
+// ── Scrub drag ──
+let scrubbing = false;
+document.getElementById('progress-wrap').addEventListener('mousedown', (e) => {
+  scrubbing = true;
+  const rect = e.currentTarget.getBoundingClientRect();
+  progress = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  applyCamera(progress);
+  updateOverlay(progress);
+  updateProgressUI();
+});
+document.addEventListener('mousemove', (e) => {
+  if (!scrubbing) return;
+  const rect = document.getElementById('progress-wrap').getBoundingClientRect();
+  progress = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  showEndCard(false);
+  applyCamera(progress);
+  updateOverlay(progress);
+  updateProgressUI();
+});
+document.addEventListener('mouseup', () => { scrubbing = false; });
+
+// ───── SCREENSHOT ─────
+document.getElementById('btn-screenshot').addEventListener('click', () => {
+  try {
+    const canvas = map.getCanvas();
+    const link = document.createElement('a');
+    link.download = 'aldora-flythrough-' + Date.now() + '.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  } catch(err) {
+    console.error('Screenshot failed:', err);
+    alert('Erro ao capturar screenshot. Tente abrir via HTTP server.');
+  }
+});
+
+// ───── VIDEO RECORDING ─────
+document.getElementById('btn-record').addEventListener('click', () => {
+  if (mediaRecorder && mediaRecorder.state === 'recording') {
+    mediaRecorder.stop();
+    return;
+  }
+  try {
+    const canvas = map.getCanvas();
+    const stream = canvas.captureStream(30);
+    recordedChunks = [];
+    mediaRecorder = new MediaRecorder(stream, { mimeType:'video/webm;codecs=vp9', videoBitsPerSecond: 8000000 });
+    mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) recordedChunks.push(e.data); };
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(recordedChunks, { type:'video/webm' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'aldora-flythrough-' + Date.now() + '.webm';
+      a.click();
+      URL.revokeObjectURL(url);
+      document.getElementById('rec-indicator').classList.remove('visible');
+      document.getElementById('btn-record').classList.remove('recording');
+      document.getElementById('btn-record').innerHTML = '<span class="icon">⏺</span> Gravar';
+      clearInterval(recTimerInterval);
+    };
+    mediaRecorder.start();
+    recStartTime = Date.now();
+    document.getElementById('rec-indicator').classList.add('visible');
+    document.getElementById('btn-record').classList.add('recording');
+    document.getElementById('btn-record').innerHTML = '<span class="icon">⏹</span> Parar';
+    recTimerInterval = setInterval(() => {
+      const s = Math.floor((Date.now() - recStartTime) / 1000);
+      const m = Math.floor(s / 60);
+      document.getElementById('rec-time').textContent =
+        m.toString().padStart(2,'0') + ':' + (s % 60).toString().padStart(2,'0');
+    }, 500);
+  } catch(err) {
+    console.error('Recording failed:', err);
+    alert('Gravação não suportada neste navegador.');
+  }
+});
+
+// ───── MUSIC PLACEHOLDER ─────
+document.getElementById('btn-music').addEventListener('click', () => {
+  alert('🎵 Recurso de música será adicionado em breve.\n\nDica: Use um editor de vídeo para adicionar trilha sonora ao arquivo .webm exportado.');
+});
+
+// ───── KEYBOARD SHORTCUTS ─────
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space') { e.preventDefault(); document.getElementById('btn-play').click(); }
+  if (e.code === 'KeyR') document.getElementById('btn-restart').click();
+  if (e.code === 'KeyS') document.getElementById('btn-screenshot').click();
+  if (e.code === 'ArrowRight') { progress = Math.min(1, progress + 0.02); applyCamera(progress); updateOverlay(progress); updateProgressUI(); }
+  if (e.code === 'ArrowLeft') { progress = Math.max(0, progress - 0.02); applyCamera(progress); updateOverlay(progress); updateProgressUI(); }
+});
+</script>
+</body>
+</html>

@@ -110,16 +110,16 @@
 
 <div id="phases">
   <button class="pb on" onclick="flyTo(0)">🌐 OVERVIEW</button>
-  <button class="pb"    onclick="flyTo(1)">QC01 · JARDINS + VERSAILLES</button>
-  <button class="pb"    onclick="flyTo(2)">QC02 · RESERVA</button>
-  <button class="pb"    onclick="flyTo(3)">QC03 · SIGNATURE</button>
+  <button class="pb"    onclick="flyTo(1)">FASE 1 · JARDINS</button>
+  <button class="pb"    onclick="flyTo(2)">FASE 2 · VERSAILLES</button>
+  <button class="pb"    onclick="flyTo(3)">FASE 3 · SIGNATURE</button>
 </div>
 
 <div id="legend">
   <div class="lt">QUADRAS · AL'DORA CITY</div>
-  <div class="li"><div class="ld" style="background:#C8A84B"></div>QC01 · Jardins + Versailles · Torres A–F</div>
-  <div class="li"><div class="ld" style="background:#A07020"></div>QC02 · Reserva · Torres G–J</div>
-  <div class="li"><div class="ld" style="background:#FFD060"></div>QC03 · Signature · Torres L–O</div>
+  <div class="li"><div class="ld" style="background:#C8A84B"></div>QC01 · Jardins · Torres A–D</div>
+  <div class="li"><div class="ld" style="background:#A07020"></div>QC02 · Reserva · Torres E+F</div>
+  <div class="li"><div class="ld" style="background:#FFD060"></div>QC03 · Signature · Torres G+H</div>
 </div>
 
 <div id="hint">ARRASTAR — rotacionar &nbsp; SCROLL — zoom &nbsp; 0–3 — focar fases</div>
@@ -822,9 +822,9 @@ function buildTower(cx, cz, w, d, floors, color, texIdx, mode) {
 function buildPlots(mode) {
   if(mode==='day') return;
   var plotData=[
-    {x:  0, z:-17, w:72, d:34, c:0xC8A84B, label:'QC01'},
-    {x:  0, z: 12, w:48, d:28, c:0xA07020, label:'QC02'},
-    {x:  0, z: 34, w:42, d:28, c:0xFFD060, label:'QC03'},
+    {x:  0, z:-17, w:62, d:30, c:0xC8A84B, label:'QC01'},
+    {x:  0, z: 12, w:46, d:22, c:0xA07020, label:'QC02'},
+    {x:  0, z: 34, w:36, d:20, c:0xFFD060, label:'QC03'},
   ];
   plotData.forEach(function(pd){
     var pMat=new THREE.MeshBasicMaterial({color:pd.c,transparent:true,opacity:0.07});
@@ -854,29 +854,20 @@ function buildScene(mode) {
   buildTrees(mode);
   buildPlots(mode);
 
-  // ── TOWERS — 14 torres · 3 quadras · 4 empreendimentos ──
+  // ── TOWERS ──
+  // QC01 — AL'DORA Jardins — 4 torres A/B/C/D
+  buildTower(-12,-22, 8, 9, 18, 0xC8A84B, 0, mode); // A
+  buildTower(  4,-22, 8, 9, 18, 0xC8A84B, 1, mode); // B
+  buildTower(-12,-8,  7, 8, 16, 0xB8921A, 2, mode); // C
+  buildTower(  4,-8,  7, 8, 16, 0xB8921A, 3, mode); // D
 
-  // QC01 — EMP1 AL'DORA Jardins — Torres A, B (golden, 18 pav, 8×9)
-  buildTower(-16,-24, 8, 9, 18, 0xC8A84B, 0, mode); // A
-  buildTower(  0,-24, 8, 9, 18, 0xC8A84B, 1, mode); // B
+  // QC02 — AL'DORA Reserva — torres E/F
+  buildTower(-7,  12, 9,10, 16, 0xA07020, 0, mode); // E
+  buildTower( 8,  12, 9,10, 16, 0xA07020, 1, mode); // F
 
-  // QC01 — EMP2 AL'DORA Versailles — Torres C, D, E, F (darker gold, 16 pav, 7×8)
-  buildTower( 16,-24, 7, 8, 16, 0xB8921A, 2, mode); // C
-  buildTower(-16,-10, 7, 8, 16, 0xB8921A, 3, mode); // D
-  buildTower(  0,-10, 7, 8, 16, 0xB8921A, 0, mode); // E
-  buildTower( 16,-10, 7, 8, 16, 0xB8921A, 1, mode); // F
-
-  // QC02 — EMP3 AL'DORA Reserva — Torres G, H, I, J (brown, 16 pav, 9×10)
-  buildTower(-10,  6, 9,10, 16, 0xA07020, 2, mode); // G
-  buildTower( 10,  6, 9,10, 16, 0xA07020, 3, mode); // H
-  buildTower(-10, 18, 9,10, 16, 0xA07020, 0, mode); // I
-  buildTower( 10, 18, 9,10, 16, 0xA07020, 1, mode); // J
-
-  // QC03 — EMP4 AL'DORA Signature — Torres L, M, N, O (bright gold, 24 pav, 7×8)
-  buildTower( -9, 28, 7, 8, 24, 0xFFD060, 2, mode); // L
-  buildTower(  9, 28, 7, 8, 24, 0xFFD060, 3, mode); // M
-  buildTower( -9, 40, 7, 8, 24, 0xFFD060, 0, mode); // N
-  buildTower(  9, 40, 7, 8, 24, 0xFFD060, 1, mode); // O
+  // QC03 — AL'DORA Signature — torres G/H (premium)
+  buildTower(-6,  32, 7, 8, 24, 0xFFD060, 2, mode); // G
+  buildTower( 6,  32, 7, 8, 24, 0xFFD060, 3, mode); // H
 }
 
 // ─────────────────────────────────────────────────────────────────
@@ -928,10 +919,10 @@ function eio(t){ return t<0.5?2*t*t:-1+(4-2*t)*t; }
 function flyTo(n) {
   document.querySelectorAll('.pb').forEach(function(b,i){ b.classList.toggle('on',i===n); });
   var views=[
-    {theta:-0.38,phi:0.70,radius:185,tx:0,  ty:12,tz:10},
-    {theta: 0.25,phi:0.62,radius:110,tx:0,  ty:14,tz:-17},
-    {theta:-0.2, phi:0.60,radius:90, tx:0,  ty:12,tz:12 },
-    {theta:-0.5, phi:0.56,radius:85, tx:0,  ty:16,tz:34 },
+    {theta:-0.38,phi:0.70,radius:175,tx:0,  ty:10,tz:6 },
+    {theta: 0.25,phi:0.62,radius:95, tx:-4, ty:12,tz:-15},
+    {theta:-0.2, phi:0.60,radius:85, tx:1,  ty:10,tz:12 },
+    {theta:-0.5, phi:0.56,radius:80, tx:0,  ty:14,tz:32 },
   ][n];
   flyFrom={theta:theta,phi:phi,radius:radius,tx:target.x,ty:target.y,tz:target.z};
   flyTo_=views;

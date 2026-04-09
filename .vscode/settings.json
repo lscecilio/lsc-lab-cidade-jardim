@@ -1,0 +1,10 @@
+{
+  "tasksync.alwaysAppendAskUserReminder": true,
+  "tasksync.maxConsecutiveAutoResponses": 100,
+  "tasksync.responseTimeout": "480",
+  "github.copilot.chat.codeGeneration.instructions": [
+    {
+      "file": ".github/copilot-instructions.md"
+    }
+  ]
+}
