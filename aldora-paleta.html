@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AL'DORA City — Paleta de Cores & Design Tokens</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a2416'/%3E%3Ctext x='16' y='22' font-size='18' fill='%23C8A84B' text-anchor='middle' font-family='serif'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/aldora-tokens.css">
+<style>
+  body {
+    background: #0a2416;
+    color: #F5F0E8;
+    font-family: 'Inter', -apple-system, sans-serif;
+    padding: 0;
+    margin: 0;
+  }
+
+  .palette-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(10, 36, 22, 0.97);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(200, 168, 75, 0.12);
+    padding: 0 48px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .palette-nav__logo {
+    font-family: 'Playfair Display', serif;
+    color: #C8A84B;
+    font-size: 16px;
+    letter-spacing: 4px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .palette-nav__back {
+    color: #C8A84B;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: 1px solid rgba(200,168,75,0.25);
+    padding: 6px 16px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .palette-nav__back:hover {
+    background: rgba(200,168,75,0.1);
+    border-color: rgba(200,168,75,0.5);
+  }
+
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .hero {
+    padding: 100px 0 48px;
+    text-align: center;
+    border-bottom: 1px solid rgba(200,168,75,0.15);
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 42px);
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .hero h1 em {
+    color: #C8A84B;
+    font-style: italic;
+  }
+
+  .hero p {
+    font-size: 15px;
+    color: rgba(245,240,232,0.55);
+    letter-spacing: 0.3px;
+  }
+
+  .section {
+    padding: 48px 0;
+    border-bottom: 1px solid rgba(200,168,75,0.08);
+  }
+
+  .section-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #C8A84B;
+    border-bottom: 1px solid rgba(200,168,75,0.3);
+    padding-bottom: 6px;
+    margin-bottom: 32px;
+    display: inline-block;
+  }
+
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .section p.desc {
+    font-size: 14px;
+    color: rgba(245,240,232,0.55);
+    margin-bottom: 32px;
+    max-width: 600px;
+  }
+
+  /* Color Swatches */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  .swatch {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(200,168,75,0.12);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .swatch:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+
+  .swatch__color {
+    height: 100px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .swatch__color span {
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .swatch:hover .swatch__color span {
+    opacity: 1;
+  }
+
+  .swatch__info {
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .swatch__name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #F5F0E8;
+    margin-bottom: 2px;
+  }
+
+  .swatch__var {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #C8A84B;
+    margin-bottom: 4px;
+  }
+
+  .swatch__hex {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: rgba(245,240,232,0.45);
+  }
+
+  /* Transparency Scale */
+  .transparency-row {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    align-items: center;
+  }
+
+  .transparency-row__label {
+    width: 120px;
+    font-size: 12px;
+    color: rgba(245,240,232,0.55);
+    flex-shrink: 0;
+  }
+
+  .transparency-strip {
+    flex: 1;
+    display: flex;
+    gap: 2px;
+    height: 48px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .transparency-strip__cell {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', monospace;
+    font-size: 9px;
+    color: #F5F0E8;
+    cursor: pointer;
+    transition: transform 0.2s;
+    position: relative;
+  }
+
+  .transparency-strip__cell:hover {
+    transform: scaleY(1.15);
+    z-index: 1;
+  }
+
+  .transparency-strip__cell:hover::after {
+    content: attr(data-var);
+    position: absolute;
+    bottom: -22px;
+    font-size: 9px;
+    color: #C8A84B;
+    white-space: nowrap;
+  }
+
+  /* Typography Preview */
+  .typo-grid {
+    display: grid;
+    gap: 24px;
+  }
+
+  .typo-sample {
+    padding: 20px 24px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(200,168,75,0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+  }
+
+  .typo-sample__preview {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .typo-sample__meta {
+    flex-shrink: 0;
+    text-align: right;
+    min-width: 160px;
+  }
+
+  .typo-sample__meta .var-name {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #C8A84B;
+  }
+
+  .typo-sample__meta .var-value {
+    font-size: 11px;
+    color: rgba(245,240,232,0.45);
+  }
+
+  /* Spacing Bars */
+  .spacing-grid {
+    display: grid;
+    gap: 12px;
+  }
+
+  .spacing-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .spacing-bar__label {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #C8A84B;
+    width: 120px;
+    flex-shrink: 0;
+  }
+
+  .spacing-bar__visual {
+    height: 24px;
+    background: rgba(200,168,75,0.2);
+    border: 1px solid rgba(200,168,75,0.3);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+  }
+
+  .spacing-bar__value {
+    font-size: 10px;
+    color: rgba(245,240,232,0.65);
+  }
+
+  /* Usage Examples */
+  .usage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .usage-card {
+    padding: 24px;
+    border-radius: 8px;
+    border: 1px solid rgba(200,168,75,0.12);
+  }
+
+  .usage-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: #C8A84B;
+    margin-bottom: 8px;
+  }
+
+  .usage-card p {
+    font-size: 13px;
+    color: rgba(245,240,232,0.55);
+    line-height: 1.5;
+  }
+
+  .usage-card code {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    background: rgba(200,168,75,0.08);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: #C8A84B;
+  }
+
+  /* Hub Links */
+  .hub-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .hub-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(200,168,75,0.12);
+    border-radius: 8px;
+    text-decoration: none;
+    color: #F5F0E8;
+    transition: all 0.3s;
+  }
+
+  .hub-link:hover {
+    background: rgba(200,168,75,0.06);
+    border-color: rgba(200,168,75,0.3);
+    transform: translateY(-1px);
+  }
+
+  .hub-link__icon {
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .hub-link__text h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    color: #C8A84B;
+    margin-bottom: 2px;
+  }
+
+  .hub-link__text p {
+    font-size: 12px;
+    color: rgba(245,240,232,0.45);
+  }
+
+  .hub-link__arrow {
+    margin-left: auto;
+    color: rgba(200,168,75,0.4);
+    font-size: 16px;
+  }
+
+  /* Gradient Previews */
+  .gradient-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .gradient-card {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(200,168,75,0.12);
+  }
+
+  .gradient-card__preview {
+    height: 80px;
+  }
+
+  .gradient-card__info {
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .gradient-card__name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #F5F0E8;
+    margin-bottom: 4px;
+  }
+
+  .gradient-card__css {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    color: rgba(245,240,232,0.45);
+    word-break: break-all;
+  }
+
+  /* Footer */
+  .palette-footer {
+    padding: 32px 0;
+    text-align: center;
+    color: rgba(245,240,232,0.35);
+    font-size: 12px;
+  }
+
+  /* Copy Toast */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #C8A84B;
+    color: #0a2416;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    z-index: 3000;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .container { padding: 0 24px; }
+    .palette-nav { padding: 0 24px; }
+    .color-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+    .typo-sample { flex-direction: column; gap: 8px; }
+    .typo-sample__meta { text-align: left; }
+    .hub-links { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="palette-nav">
+  <a href="index.html" class="palette-nav__logo">AL'DORA</a>
+  <a href="index.html" class="palette-nav__back">← Hub Central</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <h1>Paleta & <em>Design Tokens</em></h1>
+    <p>Sistema visual completo do Hub AL'DORA City — Cidade Jardim Urbanismo</p>
+  </div>
+</section>
+
+<!-- ════ CORES PRIMÁRIAS ════ -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">01 · Cores Primárias</span>
+    <h2>Base Cromática</h2>
+    <p class="desc">As cores fundacionais do AL'DORA City. Verde floresta + ouro evocam luxo, natureza e exclusividade.</p>
+
+    <div class="color-grid">
+      <div class="swatch">
+        <div class="swatch__color" style="background:#0a2416;">
+          <span style="background:rgba(255,255,255,0.15);color:#F5F0E8;" onclick="copyColor('#0a2416')">Copiar</span>
+        </div>
+        <div class="swatch__info">
+          <div class="swatch__name">Verde AL'DORA</div>
+          <div class="swatch__var">--aldora-verde</div>
+          <div class="swatch__hex">#0a2416</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__color" style="background:#1a4a2e;">
+          <span style="background:rgba(255,255,255,0.15);color:#F5F0E8;" onclick="copyColor('#1a4a2e')">Copiar</span>
+        </div>
+        <div class="swatch__info">
+          <div class="swatch__name">Verde Médio</div>
+          <div class="swatch__var">--aldora-verde-medio</div>
+          <div class="swatch__hex">#1a4a2e</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__color" style="background:#2d6b40;">
+          <span style="background:rgba(255,255,255,0.15);color:#F5F0E8;" onclick="copyColor('#2d6b40')">Copiar</span>
+        </div>
+        <div class="swatch__info">
+          <div class="swatch__name">Verde Claro</div>
+          <div class="swatch__var">--aldora-verde-claro</div>
+          <div class="swatch__hex">#2d6b40</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__color" style="background:#C8A84B;">
+          <span style="background:rgba(10,36,22,0.7);color:#C8A84B;" onclick="copyColor('#C8A84B')">Copiar</span>
+        </div>
+        <div class="swatch__info">
+          <div class="swatch__name">Ouro AL'DORA</div>
+          <div class="swatch__var">--aldora-ouro</div>
+          <div class="swatch__hex">#C8A84B</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__color" style="background:#E8C876;">
+          <span style="background:rgba(10,36,22,0.7);color:#E8C876;" onclick="copyColor('#E8C876')">Copiar</span>
+        </div>
+        <div class="swatch__info">
+          <div class="swatch__name">Ouro Claro</div>
+          <div class="swatch__var">--aldora-ouro-claro</div>
+          <div class="swatch__hex">#E8C876</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__color" style="background:#F5F0E8;">
+          <span style="background:rgba(10,36,22,0.7);color:#F5F0E8;" onclick="copyColor('#F5F0E8')">Copiar</span>
+        </div>
+        <div class="swatch__info">
+          <div class="swatch__name">Bege Quente</div>
+          <div class="swatch__var">--aldora-bege</div>
+          <div class="swatch__hex">#F5F0E8</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__color" style="background:#ffffff;border:1px solid rgba(200,168,75,0.2);">
+          <span style="background:rgba(10,36,22,0.7);color:#fff;" onclick="copyColor('#ffffff')">Copiar</span>
+        </div>
+        <div class="swatch__info">
+          <div class="swatch__name">Branco Puro</div>
+          <div class="swatch__var">--aldora-branco</div>
+          <div class="swatch__hex">#ffffff</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__color" style="background:#f8f5f0;border:1px solid rgba(200,168,75,0.2);">
+          <span style="background:rgba(10,36,22,0.7);color:#f8f5f0;" onclick="copyColor('#f8f5f0')">Copiar</span>
+        </div>
+        <div class="swatch__info">
+          <div class="swatch__name">Background Light</div>
+          <div class="swatch__var">--aldora-bg</div>
+          <div class="swatch__hex">#f8f5f0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CORES NEUTRAS & FUNCIONAIS ════ -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">02 · Neutros & Funcionais</span>
+    <h2>Cinzas & Status</h2>
+    <p class="desc">Cores neutras para texto e cinzas, e cores funcionais para feedback (sucesso, alerta, erro).</p>
+
+    <div class="color-grid">
+      <div class="swatch">
+        <div class="swatch__color" style="background:#1a1a1a;">
+          <span style="background:rgba(255,255,255,0.15);color:#F5F0E8;" onclick="copyColor('#1a1a1a')">Copiar</span>
+        </div>
+        <div class="swatch__info">
+          <div class="swatch__name">Texto Principal</div>
+          <div class="swatch__var">--aldora-texto</div>
+          <div class="swatch__hex">#1a1a1a</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__color" style="background:#8a8a8a;">
+          <span style="background:rgba(10,36,22,0.7);color:#fff;" onclick="copyColor('#8a8a8a')">Copiar</span>
+        </div>
+        <div class="swatch__info">
+          <div class="swatch__name">Cinza</div>
+          <div class="swatch__var">--aldora-cinza</div>
+          <div class="swatch__hex">#8a8a8a</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__color" style="background:#2a2a2a;">
+          <span style="background:rgba(255,255,255,0.15);color:#F5F0E8;" onclick="copyColor('#2a2a2a')">Copiar</span>
+        </div>
+        <div class="swatch__info">
+          <div class="swatch__name">Cinza Escuro</div>
+          <div class="swatch__var">--aldora-cinza-escuro</div>
+          <div class="swatch__hex">#2a2a2a</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__color" style="background:#2d6b40;">
+          <span style="background:rgba(255,255,255,0.15);color:#F5F0E8;" onclick="copyColor('#2d6b40')">Copiar</span>
+        </div>
+        <div class="swatch__info">
+          <div class="swatch__name">Sucesso</div>
+          <div class="swatch__var">--aldora-sucesso</div>
+          <div class="swatch__hex">#2d6b40</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__color" style="background:#C8A84B;">
+          <span style="background:rgba(10,36,22,0.7);color:#C8A84B;" onclick="copyColor('#C8A84B')">Copiar</span>
+        </div>
+        <div class="swatch__info">
+          <div class="swatch__name">Alerta</div>
+          <div class="swatch__var">--aldora-alerta</div>
+          <div class="swatch__hex">#C8A84B</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__color" style="background:#8a2a2a;">
+          <span style="background:rgba(255,255,255,0.15);color:#F5F0E8;" onclick="copyColor('#8a2a2a')">Copiar</span>
+        </div>
+        <div class="swatch__info">
+          <div class="swatch__name">Erro</div>
+          <div class="swatch__var">--aldora-erro</div>
+          <div class="swatch__hex">#8a2a2a</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ ESCALA DE TRANSPARÊNCIA ════ -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">03 · Transparências</span>
+    <h2>Escala de Opacidade</h2>
+    <p class="desc">Variações de transparência do ouro e branco usadas em bordas, backgrounds e hover states.</p>
+
+    <!-- Ouro Scale -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#C8A84B;margin-bottom:16px;">Ouro (rgba 200, 168, 75)</h3>
+
+    <div style="display:grid;gap:8px;margin-bottom:32px;">
+      <div class="transparency-row">
+        <span class="transparency-row__label">6% — Hover bg</span>
+        <div class="transparency-strip">
+          <div class="transparency-strip__cell" style="background:rgba(200,168,75,0.06);flex:1;" data-var="--aldora-ouro-06" onclick="copyColor('rgba(200,168,75,0.06)')">6%</div>
+        </div>
+      </div>
+      <div class="transparency-row">
+        <span class="transparency-row__label">12% — Bordas sutis</span>
+        <div class="transparency-strip">
+          <div class="transparency-strip__cell" style="background:rgba(200,168,75,0.12);flex:1;" data-var="--border-ouro-sutil" onclick="copyColor('rgba(200,168,75,0.12)')">12%</div>
+        </div>
+      </div>
+      <div class="transparency-row">
+        <span class="transparency-row__label">15% — Badges</span>
+        <div class="transparency-strip">
+          <div class="transparency-strip__cell" style="background:rgba(200,168,75,0.15);flex:1;" data-var="--aldora-ouro-15" onclick="copyColor('rgba(200,168,75,0.15)')">15%</div>
+        </div>
+      </div>
+      <div class="transparency-row">
+        <span class="transparency-row__label">30% — Bordas</span>
+        <div class="transparency-strip">
+          <div class="transparency-strip__cell" style="background:rgba(200,168,75,0.30);flex:1;" data-var="--aldora-ouro-30" onclick="copyColor('rgba(200,168,75,0.30)')">30%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ouro full strip -->
+    <div style="display:flex;gap:2px;height:64px;border-radius:6px;overflow:hidden;margin-bottom:40px;">
+      <div style="flex:1;background:rgba(200,168,75,0.02);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:monospace;color:#F5F0E8;" onclick="copyColor('rgba(200,168,75,0.02)')">2%</div>
+      <div style="flex:1;background:rgba(200,168,75,0.05);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:monospace;color:#F5F0E8;" onclick="copyColor('rgba(200,168,75,0.05)')">5%</div>
+      <div style="flex:1;background:rgba(200,168,75,0.06);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:monospace;color:#F5F0E8;" onclick="copyColor('rgba(200,168,75,0.06)')">6%</div>
+      <div style="flex:1;background:rgba(200,168,75,0.08);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:monospace;color:#F5F0E8;" onclick="copyColor('rgba(200,168,75,0.08)')">8%</div>
+      <div style="flex:1;background:rgba(200,168,75,0.10);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:monospace;color:#F5F0E8;" onclick="copyColor('rgba(200,168,75,0.10)')">10%</div>
+      <div style="flex:1;background:rgba(200,168,75,0.12);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:monospace;color:#F5F0E8;" onclick="copyColor('rgba(200,168,75,0.12)')">12%</div>
+      <div style="flex:1;background:rgba(200,168,75,0.15);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:monospace;color:#F5F0E8;" onclick="copyColor('rgba(200,168,75,0.15)')">15%</div>
+      <div style="flex:1;background:rgba(200,168,75,0.20);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:monospace;color:#F5F0E8;" onclick="copyColor('rgba(200,168,75,0.20)')">20%</div>
+      <div style="flex:1;background:rgba(200,168,75,0.25);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:monospace;color:#F5F0E8;" onclick="copyColor('rgba(200,168,75,0.25)')">25%</div>
+      <div style="flex:1;background:rgba(200,168,75,0.30);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:monospace;color:#0a2416;" onclick="copyColor('rgba(200,168,75,0.30)')">30%</div>
+      <div style="flex:1;background:rgba(200,168,75,0.40);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:monospace;color:#0a2416;" onclick="copyColor('rgba(200,168,75,0.40)')">40%</div>
+      <div style="flex:1;background:rgba(200,168,75,0.50);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:monospace;color:#0a2416;" onclick="copyColor('rgba(200,168,75,0.50)')">50%</div>
+      <div style="flex:1;background:rgba(200,168,75,0.60);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:monospace;color:#0a2416;" onclick="copyColor('rgba(200,168,75,0.60)')">60%</div>
+      <div style="flex:1;background:rgba(200,168,75,0.80);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:monospace;color:#0a2416;" onclick="copyColor('rgba(200,168,75,0.80)')">80%</div>
+      <div style="flex:1;background:rgba(200,168,75,1.0);display:flex;align-items:center;justify-content:center;font-size:9px;font-family:monospace;color:#0a2416;" onclick="copyColor('#C8A84B')">100%</div>
+    </div>
+
+    <!-- Branco Scale -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:16px;color:#fff;margin-bottom:16px;">Branco (rgba 245, 240, 232 / 255, 255, 255)</h3>
+
+    <div style="display:grid;gap:8px;">
+      <div class="transparency-row">
+        <span class="transparency-row__label">40% — Breadcrumbs</span>
+        <div class="transparency-strip">
+          <div class="transparency-strip__cell" style="background:rgba(255,255,255,0.40);flex:1;" onclick="copyColor('rgba(255,255,255,0.40)')">40%</div>
+        </div>
+      </div>
+      <div class="transparency-row">
+        <span class="transparency-row__label">55% — Subtítulos</span>
+        <div class="transparency-strip">
+          <div class="transparency-strip__cell" style="background:rgba(245,240,232,0.55);flex:1;" onclick="copyColor('rgba(245,240,232,0.55)')">55%</div>
+        </div>
+      </div>
+      <div class="transparency-row">
+        <span class="transparency-row__label">65% — Texto corpo</span>
+        <div class="transparency-strip">
+          <div class="transparency-strip__cell" style="background:rgba(245,240,232,0.65);flex:1;" onclick="copyColor('rgba(245,240,232,0.65)')">65%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ GRADIENTES ════ -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">04 · Gradientes</span>
+    <h2>Backgrounds & Atmosfera</h2>
+    <p class="desc">Gradientes usados nos heroes, nav e fundos das páginas do hub.</p>
+
+    <div class="gradient-grid">
+      <div class="gradient-card">
+        <div class="gradient-card__preview" style="background: radial-gradient(ellipse at 30% 60%, #0f3020 0%, #0a2416 40%, #040e09 100%);"></div>
+        <div class="gradient-card__info">
+          <div class="gradient-card__name">Hero Principal</div>
+          <div class="gradient-card__css">radial-gradient(ellipse at 30% 60%, #0f3020, #0a2416, #040e09)</div>
+        </div>
+      </div>
+
+      <div class="gradient-card">
+        <div class="gradient-card__preview" style="background: linear-gradient(160deg, #061410 0%, #0a2416 45%, #0d2e1c 100%);"></div>
+        <div class="gradient-card__info">
+          <div class="gradient-card__name">Hero QC02</div>
+          <div class="gradient-card__css">linear-gradient(160deg, #061410, #0a2416, #0d2e1c)</div>
+        </div>
+      </div>
+
+      <div class="gradient-card">
+        <div class="gradient-card__preview" style="background: rgba(10, 36, 22, 0.97);backdrop-filter:blur(16px);"></div>
+        <div class="gradient-card__info">
+          <div class="gradient-card__name">Nav Bar (blur)</div>
+          <div class="gradient-card__css">rgba(10, 36, 22, 0.97) + backdrop-filter: blur(16px)</div>
+        </div>
+      </div>
+
+      <div class="gradient-card">
+        <div class="gradient-card__preview" style="background: linear-gradient(90deg, transparent, #C8A84B, transparent);"></div>
+        <div class="gradient-card__info">
+          <div class="gradient-card__name">Divider Ouro</div>
+          <div class="gradient-card__css">linear-gradient(90deg, transparent, #C8A84B, transparent)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ TIPOGRAFIA ════ -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">05 · Tipografia</span>
+    <h2>Fontes & Escalas</h2>
+    <p class="desc">Duas famílias tipográficas: Playfair Display para display/títulos e Inter para corpo/UI.</p>
+
+    <div class="typo-grid">
+      <div class="typo-sample">
+        <div class="typo-sample__preview" style="font-family:'Playfair Display',serif;font-size:clamp(48px,6vw,72px);color:#fff;line-height:1;">AL'DORA</div>
+        <div class="typo-sample__meta">
+          <div class="var-name">--fs-hero</div>
+          <div class="var-value">clamp(48px, 6vw, 88px)</div>
+          <div class="var-value">Playfair Display</div>
+        </div>
+      </div>
+
+      <div class="typo-sample">
+        <div class="typo-sample__preview" style="font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,42px);color:#fff;line-height:1;">Masterplan Vertical</div>
+        <div class="typo-sample__meta">
+          <div class="var-name">--fs-h1</div>
+          <div class="var-value">clamp(32px, 4vw, 52px)</div>
+          <div class="var-value">Playfair Display</div>
+        </div>
+      </div>
+
+      <div class="typo-sample">
+        <div class="typo-sample__preview" style="font-family:'Playfair Display',serif;font-size:clamp(24px,3vw,32px);color:#fff;line-height:1.1;">AL'DORA Reserva · QC02</div>
+        <div class="typo-sample__meta">
+          <div class="var-name">--fs-h2</div>
+          <div class="var-value">clamp(24px, 3vw, 36px)</div>
+          <div class="var-value">Playfair Display</div>
+        </div>
+      </div>
+
+      <div class="typo-sample">
+        <div class="typo-sample__preview" style="font-family:'Playfair Display',serif;font-size:22px;color:#C8A84B;line-height:1.2;">Torres G · H · I · J</div>
+        <div class="typo-sample__meta">
+          <div class="var-name">--fs-h3</div>
+          <div class="var-value">22px</div>
+          <div class="var-value">Playfair Display</div>
+        </div>
+      </div>
+
+      <div class="typo-sample">
+        <div class="typo-sample__preview" style="font-family:'Inter',sans-serif;font-size:17px;color:rgba(245,240,232,0.65);line-height:1.6;">Jardim Versailles, Uberlândia/MG — 42.783 m² de terreno, 125.684 m² privativos em 14 torres distribuídas por 3 quadras.</div>
+        <div class="typo-sample__meta">
+          <div class="var-name">--fs-body</div>
+          <div class="var-value">17px</div>
+          <div class="var-value">Inter</div>
+        </div>
+      </div>
+
+      <div class="typo-sample">
+        <div class="typo-sample__preview" style="font-family:'Inter',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#C8A84B;">MASTERPLAN · QUADRA 02</div>
+        <div class="typo-sample__meta">
+          <div class="var-name">--fs-tag</div>
+          <div class="var-value">10px · tracking 3px</div>
+          <div class="var-value">Inter · Uppercase</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ ESPAÇAMENTO ════ -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">06 · Espaçamento</span>
+    <h2>Escala de Espaço</h2>
+    <p class="desc">Escala consistente de espaçamento usada em padding, margin e gap.</p>
+
+    <div class="spacing-grid">
+      <div class="spacing-bar">
+        <span class="spacing-bar__label">--space-xs</span>
+        <div class="spacing-bar__visual" style="width:8px;"><span class="spacing-bar__value"></span></div>
+        <span class="spacing-bar__value" style="font-size:11px;color:rgba(245,240,232,0.45);margin-left:8px;">8px</span>
+      </div>
+      <div class="spacing-bar">
+        <span class="spacing-bar__label">--space-sm</span>
+        <div class="spacing-bar__visual" style="width:16px;"><span class="spacing-bar__value"></span></div>
+        <span class="spacing-bar__value" style="font-size:11px;color:rgba(245,240,232,0.45);margin-left:8px;">16px</span>
+      </div>
+      <div class="spacing-bar">
+        <span class="spacing-bar__label">--space-md</span>
+        <div class="spacing-bar__visual" style="width:24px;"><span class="spacing-bar__value"></span></div>
+        <span class="spacing-bar__value" style="font-size:11px;color:rgba(245,240,232,0.45);margin-left:8px;">24px</span>
+      </div>
+      <div class="spacing-bar">
+        <span class="spacing-bar__label">--space-lg</span>
+        <div class="spacing-bar__visual" style="width:48px;"><span class="spacing-bar__value"></span></div>
+        <span class="spacing-bar__value" style="font-size:11px;color:rgba(245,240,232,0.45);margin-left:8px;">48px</span>
+      </div>
+      <div class="spacing-bar">
+        <span class="spacing-bar__label">--space-xl</span>
+        <div class="spacing-bar__visual" style="width:80px;"><span class="spacing-bar__value"></span></div>
+        <span class="spacing-bar__value" style="font-size:11px;color:rgba(245,240,232,0.45);margin-left:8px;">80px</span>
+      </div>
+      <div class="spacing-bar">
+        <span class="spacing-bar__label">--space-2xl</span>
+        <div class="spacing-bar__visual" style="width:100px;"><span class="spacing-bar__value"></span></div>
+        <span class="spacing-bar__value" style="font-size:11px;color:rgba(245,240,232,0.45);margin-left:8px;">100px</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ USO RECOMENDADO ════ -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">07 · Uso</span>
+    <h2>Onde Cada Cor Aparece</h2>
+
+    <div class="usage-grid">
+      <div class="usage-card" style="background:rgba(255,255,255,0.03);">
+        <h4>Backgrounds Escuros (Hub)</h4>
+        <p>Body: <code>--aldora-verde</code> (#0a2416)<br>
+          Hero: radial-gradient com <code>#0f3020</code> → <code>#0a2416</code> → <code>#040e09</code><br>
+          Nav: <code>rgba(10,36,22,0.97)</code> + blur(16px)</p>
+      </div>
+
+      <div class="usage-card" style="background:rgba(255,255,255,0.03);">
+        <h4>Backgrounds Claros (Docs)</h4>
+        <p>Body: <code>--aldora-bg</code> (#f8f5f0)<br>
+          Cards: <code>#ffffff</code> com borda <code>#e0d8cc</code><br>
+          Texto: <code>--aldora-texto</code> (#1a1a1a)</p>
+      </div>
+
+      <div class="usage-card" style="background:rgba(255,255,255,0.03);">
+        <h4>Acentos & Destaques</h4>
+        <p>Tags, labels, links, ícones: <code>--aldora-ouro</code><br>
+          Itálicos em títulos: <code>--aldora-ouro</code><br>
+          Bordas ativas: <code>--aldora-ouro-30</code></p>
+      </div>
+
+      <div class="usage-card" style="background:rgba(255,255,255,0.03);">
+        <h4>Interações</h4>
+        <p>Hover cards: <code>--aldora-ouro-06</code> bg + <code>--aldora-ouro-30</code> borda<br>
+          Glow QC02: <code>rgba(200,168,75,0.1→0.25)</code> animado<br>
+          Focus: outline <code>--aldora-ouro</code> 2px</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ MATERIAIS DO HUB ════ -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">08 · Materiais Disponíveis</span>
+    <h2>O que Já Fizemos no Hub</h2>
+    <p class="desc">Todos os materiais produzidos e disponíveis no Hub AL'DORA City (cdj.lsc-lab.com/hub).</p>
+
+    <h3 style="font-family:'Playfair Display',serif;font-size:18px;color:#C8A84B;margin:24px 0 16px;">Hub Central</h3>
+    <div class="hub-links">
+      <a href="index.html" class="hub-link">
+        <span class="hub-link__icon">🏠</span>
+        <div class="hub-link__text">
+          <h4>Hub Central — index.html</h4>
+          <p>Central de materiais com busca, categorias e KPIs</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+
+      <a href="cidade-jardim-apresentacao.html" class="hub-link">
+        <span class="hub-link__icon">📊</span>
+        <div class="hub-link__text">
+          <h4>Apresentação ao Investidor</h4>
+          <p>Visão completa do masterplan para investidores</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+
+      <a href="aldora-documento-final.html" class="hub-link">
+        <span class="hub-link__icon">📋</span>
+        <div class="hub-link__text">
+          <h4>Documento Final Completo</h4>
+          <p>Documento master com todos os módulos integrados</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+
+      <a href="aldora-dossie-investidor.html" class="hub-link">
+        <span class="hub-link__icon">💼</span>
+        <div class="hub-link__text">
+          <h4>Dossiê do Investidor</h4>
+          <p>Material executivo para captação e parcerias</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+    </div>
+
+    <h3 style="font-family:'Playfair Display',serif;font-size:18px;color:#C8A84B;margin:32px 0 16px;">Projeto & Implantação</h3>
+    <div class="hub-links">
+      <a href="aldora-plantas-baixas.html" class="hub-link">
+        <span class="hub-link__icon">📐</span>
+        <div class="hub-link__text">
+          <h4>Plantas Baixas P1–P5</h4>
+          <p>Plantas sugeridas para todas as tipologias</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+
+      <a href="aldora-implantacao.html" class="hub-link">
+        <span class="hub-link__icon">🏗️</span>
+        <div class="hub-link__text">
+          <h4>Diagrama de Implantação</h4>
+          <p>Posicionamento das 14 torres nas 3 quadras</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+
+      <a href="aldora-amenities.html" class="hub-link">
+        <span class="hub-link__icon">🌿</span>
+        <div class="hub-link__text">
+          <h4>Memorial de Amenities</h4>
+          <p>Áreas comuns, tendências e diferenciação</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+
+      <a href="aldora-governance.html" class="hub-link">
+        <span class="hub-link__icon">⚖️</span>
+        <div class="hub-link__text">
+          <h4>Modelo de Governança</h4>
+          <p>Estrutura de governança AL'DORA</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+    </div>
+
+    <h3 style="font-family:'Playfair Display',serif;font-size:18px;color:#C8A84B;margin:32px 0 16px;">QC02 — AL'DORA Reserva</h3>
+    <div class="hub-links">
+      <a href="QC02/" class="hub-link" style="border-color:rgba(200,168,75,0.35);">
+        <span class="hub-link__icon">🏢</span>
+        <div class="hub-link__text">
+          <h4>Hub QC02 — Torres G·H·I·J</h4>
+          <p>Central dedicada da Quadra 02</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+
+      <a href="aldora-qc02-focus.html" class="hub-link">
+        <span class="hub-link__icon">🎯</span>
+        <div class="hub-link__text">
+          <h4>QC02 Focus</h4>
+          <p>QC02 como coração do masterplan</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+
+      <a href="aldora-qc02-incorporador.html" class="hub-link">
+        <span class="hub-link__icon">🤝</span>
+        <div class="hub-link__text">
+          <h4>Material Incorporador</h4>
+          <p>Proposta para parceiro incorporador QC02</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+
+      <a href="aldora-qc02-estrategia.html" class="hub-link">
+        <span class="hub-link__icon">📈</span>
+        <div class="hub-link__text">
+          <h4>Estratégia QC02</h4>
+          <p>Plano estratégico da quadra de expansão</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+
+      <a href="aldora-qc02-launch.html" class="hub-link">
+        <span class="hub-link__icon">🚀</span>
+        <div class="hub-link__text">
+          <h4>Plano de Lançamento</h4>
+          <p>Cronograma e estratégia de lançamento QC02</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+
+      <a href="aldora-qc02-renders.html" class="hub-link">
+        <span class="hub-link__icon">🎨</span>
+        <div class="hub-link__text">
+          <h4>Renders & Prompts AI</h4>
+          <p>Mood board e prompts Midjourney</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+
+      <a href="aldora-qc02-3d-v2.html" class="hub-link">
+        <span class="hub-link__icon">🔮</span>
+        <div class="hub-link__text">
+          <h4>Tour 3D Interativo v2</h4>
+          <p>Three.js r168 com post-processing e TOD</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+    </div>
+
+    <h3 style="font-family:'Playfair Display',serif;font-size:18px;color:#C8A84B;margin:32px 0 16px;">Visualizações 3D & Mapas</h3>
+    <div class="hub-links">
+      <a href="aldora-3d-avancado.html" class="hub-link">
+        <span class="hub-link__icon">🌐</span>
+        <div class="hub-link__text">
+          <h4>3D Avançado</h4>
+          <p>Visualização 3D com Three.js</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+
+      <a href="aldora-3d-terreno.html" class="hub-link">
+        <span class="hub-link__icon">🗺️</span>
+        <div class="hub-link__text">
+          <h4>3D Terreno</h4>
+          <p>Modelagem do terreno e topografia</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+
+      <a href="aldora-mapbox-terreno.html" class="hub-link">
+        <span class="hub-link__icon">📍</span>
+        <div class="hub-link__text">
+          <h4>Mapbox Terreno</h4>
+          <p>Mapa interativo com Mapbox GL</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+
+      <a href="aldora-satellite-real.html" class="hub-link">
+        <span class="hub-link__icon">🛰️</span>
+        <div class="hub-link__text">
+          <h4>Satélite Real</h4>
+          <p>Imagem satelital da área do projeto</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+
+      <a href="aldora-midjourney-prompts.html" class="hub-link">
+        <span class="hub-link__icon">✨</span>
+        <div class="hub-link__text">
+          <h4>Prompts Midjourney</h4>
+          <p>Prompts para geração de imagens AI</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+    </div>
+
+    <h3 style="font-family:'Playfair Display',serif;font-size:18px;color:#C8A84B;margin:32px 0 16px;">Pesquisa & Mercado</h3>
+    <div class="hub-links">
+      <a href="pesquisa-cj-2026.html" class="hub-link">
+        <span class="hub-link__icon">📊</span>
+        <div class="hub-link__text">
+          <h4>Pesquisa CJ 2026</h4>
+          <p>Dados de mercado Uberlândia</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+
+      <a href="ecossistema-leandro.html" class="hub-link">
+        <span class="hub-link__icon">🔗</span>
+        <div class="hub-link__text">
+          <h4>Ecossistema Leandro</h4>
+          <p>Mapa do ecossistema de negócios</p>
+        </div>
+        <span class="hub-link__arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CSS TOKENS REF ════ -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">09 · Referência Rápida</span>
+    <h2>Arquivo de Tokens</h2>
+    <p class="desc">O design system está centralizado em <code style="font-size:12px;background:rgba(200,168,75,0.08);padding:2px 6px;border-radius:3px;color:#C8A84B;">assets/css/aldora-tokens.css</code> + <code style="font-size:12px;background:rgba(200,168,75,0.08);padding:2px 6px;border-radius:3px;color:#C8A84B;">assets/css/aldora-components.css</code></p>
+
+    <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(200,168,75,0.15);border-radius:8px;padding:24px;font-family:'Courier New',monospace;font-size:12px;line-height:1.8;color:rgba(245,240,232,0.7);overflow-x:auto;">
+<span style="color:#555;">/* Cores Primárias */</span>
+<span style="color:#C8A84B;">--aldora-verde</span>:       <span style="color:#F5F0E8;">#0a2416</span>;
+<span style="color:#C8A84B;">--aldora-verde-medio</span>: <span style="color:#F5F0E8;">#1a4a2e</span>;
+<span style="color:#C8A84B;">--aldora-verde-claro</span>: <span style="color:#F5F0E8;">#2d6b40</span>;
+<span style="color:#C8A84B;">--aldora-ouro</span>:        <span style="color:#F5F0E8;">#C8A84B</span>;
+<span style="color:#C8A84B;">--aldora-ouro-claro</span>:  <span style="color:#F5F0E8;">#E8C876</span>;
+<span style="color:#C8A84B;">--aldora-bege</span>:        <span style="color:#F5F0E8;">#F5F0E8</span>;
+<span style="color:#C8A84B;">--aldora-branco</span>:      <span style="color:#F5F0E8;">#ffffff</span>;
+<span style="color:#C8A84B;">--aldora-bg</span>:          <span style="color:#F5F0E8;">#f8f5f0</span>;
+
+<span style="color:#555;">/* Transparências */</span>
+<span style="color:#C8A84B;">--aldora-ouro-06</span>:     <span style="color:#F5F0E8;">rgba(200, 168, 75, 0.06)</span>;
+<span style="color:#C8A84B;">--aldora-ouro-15</span>:     <span style="color:#F5F0E8;">rgba(200, 168, 75, 0.15)</span>;
+<span style="color:#C8A84B;">--aldora-ouro-30</span>:     <span style="color:#F5F0E8;">rgba(200, 168, 75, 0.30)</span>;
+<span style="color:#C8A84B;">--aldora-branco-40</span>:   <span style="color:#F5F0E8;">rgba(255, 255, 255, 0.40)</span>;
+<span style="color:#C8A84B;">--aldora-branco-55</span>:   <span style="color:#F5F0E8;">rgba(245, 240, 232, 0.55)</span>;
+<span style="color:#C8A84B;">--aldora-branco-65</span>:   <span style="color:#F5F0E8;">rgba(245, 240, 232, 0.65)</span>;
+
+<span style="color:#555;">/* Tipografia */</span>
+<span style="color:#C8A84B;">--font-display</span>:       <span style="color:#F5F0E8;">'Playfair Display', Georgia, serif</span>;
+<span style="color:#C8A84B;">--font-body</span>:          <span style="color:#F5F0E8;">'Inter', sans-serif</span>;
+    </div>
+  </div>
+</section>
+
+<footer class="palette-footer">
+  <div class="container">
+    AL'DORA City · Cidade Jardim Urbanismo · Design System v2.0
+  </div>
+</footer>
+
+<!-- Copy Toast -->
+<div class="toast" id="toast">✓ Copiado!</div>
+
+<script>
+function copyColor(value) {
+  navigator.clipboard.writeText(value).then(() => {
+    const toast = document.getElementById('toast');
+    toast.textContent = '✓ ' + value + ' copiado!';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  });
+}
+</script>
+
+</body>
+</html>
