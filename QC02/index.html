@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QC02 · AL'DORA Reserva — Torres G·H·I·J</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde-escuro: #0a2416;
+    --verde-medio: #0f3320;
+    --verde-claro: #1a4d30;
+    --ouro: #C8A84B;
+    --ouro-claro: #e0c06a;
+    --branco: #F5F0E8;
+    --cinza: rgba(245,240,232,0.55);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--verde-escuro);
+    color: var(--branco);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, #061410 0%, #0a2416 45%, #0d2e1c 100%);
+    padding: 64px 48px 56px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(200,168,75,0.15);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(200,168,75,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .hero-logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .logo-mark {
+    width: 48px; height: 48px;
+    border: 2px solid var(--ouro);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .logo-mark svg { width: 28px; height: 28px; }
+
+  .logo-text {
+    display: flex; flex-direction: column;
+  }
+
+  .logo-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    letter-spacing: 4px;
+    color: var(--ouro);
+    line-height: 1;
+  }
+
+  .logo-sub {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cinza);
+    margin-top: 4px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ouro);
+    text-decoration: none;
+    padding: 8px 18px;
+    border: 1px solid rgba(200,168,75,0.25);
+    transition: background 0.25s, border-color 0.25s;
+  }
+
+  .back-link:hover {
+    background: rgba(200,168,75,0.08);
+    border-color: rgba(200,168,75,0.5);
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--branco);
+    margin-bottom: 8px;
+    max-width: 700px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--ouro);
+  }
+
+  .hero-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ouro-claro);
+    margin-bottom: 16px;
+    opacity: 0.8;
+  }
+
+  .hero-desc {
+    font-size: 15px;
+    color: var(--cinza);
+    max-width: 580px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: rgba(200,168,75,0.05);
+    border-top: 1px solid rgba(200,168,75,0.1);
+    border-bottom: 1px solid rgba(200,168,75,0.1);
+    padding: 28px 48px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 900px) {
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .stats-bar { grid-template-columns: 1fr; }
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--ouro);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cinza);
+  }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 64px 48px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 8px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ouro);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--branco);
+    margin-bottom: 6px;
+  }
+
+  .section-desc {
+    font-size: 13px;
+    color: var(--cinza);
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+
+  /* ── CARDS ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 800px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .hero { padding: 40px 24px; }
+    .section { padding: 48px 24px; }
+    .stats-bar { padding: 24px; }
+  }
+
+  .card {
+    background: rgba(15,51,32,0.4);
+    border: 1px solid rgba(200,168,75,0.12);
+    padding: 36px 32px;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s, background 0.3s;
+    cursor: pointer;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--ouro), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .card:hover {
+    border-color: rgba(200,168,75,0.35);
+    background: rgba(15,51,32,0.65);
+    transform: translateY(-3px);
+  }
+
+  .card:hover::before { opacity: 1; }
+
+  .card-icon {
+    width: 44px; height: 44px;
+    border: 1px solid rgba(200,168,75,0.25);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  .card-icon svg { width: 22px; height: 22px; }
+
+  .card-badge {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--verde-escuro);
+    background: var(--ouro);
+    padding: 3px 10px;
+    margin-bottom: 14px;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--branco);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--cinza);
+    line-height: 1.65;
+    margin-bottom: 28px;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    border-top: 1px solid rgba(200,168,75,0.1);
+  }
+
+  .card-pages {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(200,168,75,0.6);
+  }
+
+  .card-arrow {
+    width: 28px; height: 28px;
+    border: 1px solid rgba(200,168,75,0.3);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.25s, border-color 0.25s;
+  }
+
+  .card:hover .card-arrow {
+    background: var(--ouro);
+    border-color: var(--ouro);
+  }
+
+  .card:hover .card-arrow svg path { stroke: var(--verde-escuro); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(200,168,75,0.08);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    letter-spacing: 3px;
+    color: var(--ouro);
+  }
+
+  .footer-info {
+    font-size: 12px;
+    color: rgba(200,168,75,0.45);
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-nav">
+    <div class="hero-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="14,2 26,24 2,24" stroke="#C8A84B" stroke-width="1.5" fill="none"/>
+          <line x1="14" y1="2" x2="14" y2="24" stroke="#C8A84B" stroke-width="0.75" opacity="0.4"/>
+          <line x1="2" y1="24" x2="26" y2="24" stroke="#C8A84B" stroke-width="0.75" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <div class="logo-brand">AL'DORA</div>
+        <div class="logo-sub">Cidade Jardim Urbanismo · Uberlândia MG</div>
+      </div>
+    </div>
+    <a href="../INDEX.html" class="back-link">← Voltar ao Hub Principal</a>
+  </div>
+
+  <div class="hero-subtitle">Torres G · H · I · J — O Coração do Masterplan</div>
+  <h1 class="hero-title">QC02 · <em>AL'DORA Reserva</em></h1>
+  <p class="hero-desc">4 torres, 30-32 pavimentos, foco família. Quadra estratégica entre o Parque Central e a QC03 Signature.</p>
+</div>
+
+<!-- ── STATS BAR ── -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-value">11.953 m²</div>
+    <div class="stat-label">Terreno</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">43.033 m²</div>
+    <div class="stat-label">Área Privativa</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">70.546 m²</div>
+    <div class="stat-label">Área Construída</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">4 Torres</div>
+    <div class="stat-label">G · H · I · J</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">EMP 3</div>
+    <div class="stat-label">AL'DORA Reserva</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">P3 Focus</div>
+    <div class="stat-label">Mix Família</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">R$142,8M</div>
+    <div class="stat-label">VGV Estimado</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">G3</div>
+    <div class="stat-label">Gate de Liberação</div>
+  </div>
+</div>
+
+<!-- ── VISUALIZAÇÕES ── -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-label">Visualizações</span>
+  </div>
+  <h2 class="section-title">Materiais QC02</h2>
+  <p class="section-desc">Documentos visuais e técnicos da Quadra QC02 — AL'DORA Reserva. Clique para abrir.</p>
+
+  <div class="cards-grid">
+
+    <!-- Masterplan 3D v2 -->
+    <a href="aldora-mapa-3d-v2.html" class="card">
+      <div class="card-icon">
+        <svg viewBox="0 0 22 22" fill="none" stroke="#C8A84B" stroke-width="1.5">
+          <polygon points="11,2 20,7 20,15 11,20 2,15 2,7"/>
+          <circle cx="11" cy="11" r="3"/>
+          <line x1="11" y1="2" x2="11" y2="8"/><line x1="11" y1="14" x2="11" y2="20"/>
+          <line x1="2" y1="7" x2="8" y2="9.5"/><line x1="14" y1="12.5" x2="20" y2="15"/>
+          <line x1="2" y1="15" x2="8" y2="12.5"/><line x1="14" y1="9.5" x2="20" y2="7"/>
+        </svg>
+      </div>
+      <div class="card-badge">3D Interativo</div>
+      <div class="card-title">Masterplan 3D v2</div>
+      <div class="card-desc">Mapa 3D com as 14 torres do masterplan posicionadas com coordenadas reais dos KMZ. Sidebar interativa, presets de câmera e layer toggles.</div>
+      <div class="card-footer">
+        <span class="card-pages">14 torres · Coordenadas KMZ</span>
+        <div class="card-arrow">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="#C8A84B" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- Flythrough Cinemático -->
+    <a href="aldora-flythrough.html" class="card">
+      <div class="card-icon">
+        <svg viewBox="0 0 22 22" fill="none" stroke="#C8A84B" stroke-width="1.5">
+          <rect x="2" y="4" width="18" height="14" rx="1"/>
+          <polygon points="9,8 9,16 16,12" fill="none"/>
+        </svg>
+      </div>
+      <div class="card-badge">Vídeo</div>
+      <div class="card-title">Flythrough Cinemático</div>
+      <div class="card-desc">Animação cinematográfica de 60 segundos sobrevoando as 3 quadras. Play/pause, gravação WebM, controle de velocidade.</div>
+      <div class="card-footer">
+        <span class="card-pages">60s · WebM · 3 quadras</span>
+        <div class="card-arrow">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="#C8A84B" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- Parque Central -->
+    <a href="aldora-parque-central.html" class="card">
+      <div class="card-icon">
+        <svg viewBox="0 0 22 22" fill="none" stroke="#C8A84B" stroke-width="1.5">
+          <path d="M11 2C6 2 3 6 3 11s3 9 8 9 8-4 8-9-3-9-8-9z"/>
+          <path d="M7 11c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4z"/>
+          <line x1="11" y1="2" x2="11" y2="6"/>
+          <line x1="11" y1="16" x2="11" y2="20"/>
+        </svg>
+      </div>
+      <div class="card-badge">Paisagismo</div>
+      <div class="card-title">Parque Central AL'DORA</div>
+      <div class="card-desc">Esboço conceitual do parque entre QC01 e QC02. Planta humanizada com espécies nativas do cerrado, playground, fitness, espelho d'água.</div>
+      <div class="card-footer">
+        <span class="card-pages">QC01–QC02 · Cerrado nativo</span>
+        <div class="card-arrow">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="#C8A84B" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- Skyline Escalonado -->
+    <a href="aldora-skyline.html" class="card">
+      <div class="card-icon">
+        <svg viewBox="0 0 22 22" fill="none" stroke="#C8A84B" stroke-width="1.5">
+          <rect x="2" y="14" width="4" height="6"/>
+          <rect x="7" y="10" width="4" height="10"/>
+          <rect x="12" y="6" width="4" height="14"/>
+          <rect x="17" y="2" width="3" height="18"/>
+        </svg>
+      </div>
+      <div class="card-badge">Elevação</div>
+      <div class="card-title">Skyline Escalonado</div>
+      <div class="card-desc">Vista lateral das 14 torres mostrando o perfil ascendente Norte → Sul. QC01 (75-84m) → QC02 (90-96m) → QC03 (105-114m).</div>
+      <div class="card-footer">
+        <span class="card-pages">14 torres · N→S · 75–114m</span>
+        <div class="card-arrow">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="#C8A84B" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-brand">AL'DORA</div>
+  <div class="footer-info">Cidade Jardim Urbanismo · Jardim Versailles · Uberlândia/MG</div>
+  <div class="footer-info">AL'DORA City · Missão QC02 · 2026</div>
+</footer>
+
+</body>
+</html>
