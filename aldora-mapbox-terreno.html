@@ -246,18 +246,19 @@
 <!-- PHASE BUTTONS -->
 <div id="phase-btns" style="display:none">
   <button class="pbtn active" onclick="focusPhase(0)">🗺️ VISÃO GERAL</button>
-  <button class="pbtn" onclick="focusPhase(1)">FASE 1 · JARDINS</button>
-  <button class="pbtn" onclick="focusPhase(2)">FASE 2 · VERSAILLES</button>
+  <button class="pbtn" onclick="focusPhase(1)">FASE 1 · JARDINS + VERSAILLES</button>
+  <button class="pbtn" onclick="focusPhase(2)">FASE 2 · RESERVA</button>
   <button class="pbtn" onclick="focusPhase(3)">FASE 3 · SIGNATURE</button>
 </div>
 
 <!-- LEGEND -->
 <div id="legend" style="display:none">
-  <div class="leg-title">QUADRAS · AL'DORA CITY</div>
-  <div class="leg-item"><div class="leg-dot" style="background:#C8A84B"></div>QC01 — AL'DORA Jardins · 49.908 m²</div>
-  <div class="leg-item"><div class="leg-dot" style="background:#A07020"></div>QC02 — AL'DORA Versailles · 43.033 m²</div>
-  <div class="leg-item"><div class="leg-dot" style="background:#FFD060"></div>QC03 — AL'DORA Signature · 32.743 m²</div>
-  <div class="leg-item"><div class="leg-dot" style="background:#1a5a2a;border:1px solid #C8A84B66"></div>Masterplan Total · 42.783 m²</div>
+  <div class="leg-title">TORRES · AL'DORA CITY · 14 TORRES</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#C8A84B"></div>EMP1 Jardins — A, B · 55m</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#B89030"></div>EMP2 Versailles — C, D, E, F · 48m</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#A07020"></div>EMP3 Reserva — G, H, I, J · 50m</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#FFD060"></div>EMP4 Signature — L, M, N, O · 72m</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#1a5a2a;border:1px solid #C8A84B66"></div>Masterplan · 42.783 m² terreno · 14 torres</div>
 </div>
 
 <!-- INFO PANEL (shown on phase focus) -->
@@ -349,9 +350,33 @@ const C3 = centroid(QC03);
 // Phase info
 const PHASE_INFO = [
   null,
-  { title: 'QC01 · AL\'DORA Jardins', priv: '49.908 m²', constr: '81.816 m²', torres: 'A + B (EMP1) · C + D (EMP2)', tipo: 'P1 / P2 / P3', alt: '~55m (EMP1) · ~48m (EMP2)' },
-  { title: 'QC02 · AL\'DORA Reserva', priv: '43.033 m²', constr: '70.546 m²', torres: 'E + F', tipo: 'P3 focus (família)', alt: '~50m' },
-  { title: 'QC03 · AL\'DORA Signature', priv: '32.743 m²', constr: '53.678 m²', torres: 'G + H', tipo: 'P4 / P5 premium', alt: '~72m' },
+  { title: 'QC01 · Jardins + Versailles', priv: '49.908 m²', constr: '81.816 m²', torres: 'A, B (Jardins) · C, D, E, F (Versailles)', tipo: 'P1/P2 · P2/P3', alt: '55m (A,B) · 48m (C–F)' },
+  { title: 'QC02 · AL\'DORA Reserva', priv: '43.033 m²', constr: '70.546 m²', torres: 'G, H, I, J', tipo: 'P3 Garden Suite (família)', alt: '50m' },
+  { title: 'QC03 · AL\'DORA Signature', priv: '32.743 m²', constr: '53.678 m²', torres: 'L, M, N, O', tipo: 'P4/P5 Alto Padrão + Cobertura', alt: '72m' },
+];
+
+// ─────────────────────────────────────────────────────────
+// TORRES INDIVIDUAIS · 14 TORRES · DISTRIBUIÇÃO CORRETA
+// ─────────────────────────────────────────────────────────
+const TOWERS = [
+  // QC01 — EMP1 AL'DORA Jardins (Torres A, B)
+  { id: 'tower-a', name: 'Torre A', emp: 'EMP1 · Jardins', height: 55, color: '#C8A84B', topColor: '#FFE090', center: [-48.30645, -18.95700], tipo: 'P1/P2 Studio + Compacto' },
+  { id: 'tower-b', name: 'Torre B', emp: 'EMP1 · Jardins', height: 55, color: '#C8A84B', topColor: '#FFE090', center: [-48.30610, -18.95700], tipo: 'P1/P2 Studio + Compacto' },
+  // QC01 — EMP2 AL'DORA Versailles (Torres C, D, E, F)
+  { id: 'tower-c', name: 'Torre C', emp: 'EMP2 · Versailles', height: 48, color: '#B89030', topColor: '#D8B860', center: [-48.30645, -18.95770], tipo: 'P2/P3 Compacto + Garden' },
+  { id: 'tower-d', name: 'Torre D', emp: 'EMP2 · Versailles', height: 48, color: '#B89030', topColor: '#D8B860', center: [-48.30610, -18.95770], tipo: 'P2/P3 Compacto + Garden' },
+  { id: 'tower-e', name: 'Torre E', emp: 'EMP2 · Versailles', height: 48, color: '#B89030', topColor: '#D8B860', center: [-48.30645, -18.95840], tipo: 'P2/P3 Compacto + Garden' },
+  { id: 'tower-f', name: 'Torre F', emp: 'EMP2 · Versailles', height: 48, color: '#B89030', topColor: '#D8B860', center: [-48.30610, -18.95840], tipo: 'P2/P3 Compacto + Garden' },
+  // QC02 — EMP3 AL'DORA Reserva (Torres G, H, I, J)
+  { id: 'tower-g', name: 'Torre G', emp: 'EMP3 · Reserva', height: 50, color: '#A07020', topColor: '#C89040', center: [-48.30630, -18.95975], tipo: 'P3 Garden Suite (família)' },
+  { id: 'tower-h', name: 'Torre H', emp: 'EMP3 · Reserva', height: 50, color: '#A07020', topColor: '#C89040', center: [-48.30590, -18.95975], tipo: 'P3 Garden Suite (família)' },
+  { id: 'tower-i', name: 'Torre I', emp: 'EMP3 · Reserva', height: 50, color: '#A07020', topColor: '#C89040', center: [-48.30630, -18.96045], tipo: 'P3 Garden Suite (família)' },
+  { id: 'tower-j', name: 'Torre J', emp: 'EMP3 · Reserva', height: 50, color: '#A07020', topColor: '#C89040', center: [-48.30590, -18.96045], tipo: 'P3 Garden Suite (família)' },
+  // QC03 — EMP4 AL'DORA Signature (Torres L, M, N, O)
+  { id: 'tower-l', name: 'Torre L', emp: 'EMP4 · Signature', height: 72, color: '#FFD060', topColor: '#FFF0A0', center: [-48.30625, -18.96135], tipo: 'P4/P5 Alto Padrão + Cobertura' },
+  { id: 'tower-m', name: 'Torre M', emp: 'EMP4 · Signature', height: 72, color: '#FFD060', topColor: '#FFF0A0', center: [-48.30585, -18.96135], tipo: 'P4/P5 Alto Padrão + Cobertura' },
+  { id: 'tower-n', name: 'Torre N', emp: 'EMP4 · Signature', height: 72, color: '#FFD060', topColor: '#FFF0A0', center: [-48.30625, -18.96195], tipo: 'P4/P5 Alto Padrão + Cobertura' },
+  { id: 'tower-o', name: 'Torre O', emp: 'EMP4 · Signature', height: 72, color: '#FFD060', topColor: '#FFF0A0', center: [-48.30585, -18.96195], tipo: 'P4/P5 Alto Padrão + Cobertura' },
 ];
 
 let map = null;
@@ -436,18 +461,17 @@ function onMapLoad() {
     paint: { 'line-color': '#C8A84B', 'line-width': 1.2, 'line-dasharray': [5, 3] }
   });
 
-  // ── QC01 — AL'DORA JARDINS ──
-  addQuadra('qc01', QC01, '#C8A84B', '#FFE090', 56, 'QC01 · AL\'DORA Jardins');
+  // ── QUADRA BOUNDARIES (flat fills + outlines) ──
+  addQuadraOutline('qc01', QC01, '#C8A84B', '#FFE090', 'QC01 · Jardins + Versailles');
+  addQuadraOutline('qc02', QC02, '#A07020', '#C89040', 'QC02 · AL\'DORA Reserva');
+  addQuadraOutline('qc03', QC03, '#FFD060', '#FFF0A0', 'QC03 · AL\'DORA Signature');
 
-  // ── QC02 — AL'DORA VERSAILLES ──
-  addQuadra('qc02', QC02, '#B07A20', '#D4A040', 50, 'QC02 · AL\'DORA Versailles');
-
-  // ── QC03 — AL'DORA SIGNATURE ──
-  addQuadra('qc03', QC03, '#FFD060', '#FFF0A0', 72, 'QC03 · AL\'DORA Signature');
+  // ── 14 TORRES INDIVIDUAIS ──
+  TOWERS.forEach(t => addTower(t));
 
   // ── LABELS ──
-  addLabel('label-qc01', C1, 'AL\'DORA\nJARDINS', '#C8A84B');
-  addLabel('label-qc02', C2, 'AL\'DORA\nVERSAILLES', '#D4A040');
+  addLabel('label-qc01', C1, 'JARDINS\n+VERSAILLES', '#C8A84B');
+  addLabel('label-qc02', C2, 'AL\'DORA\nRESERVA', '#D4A040');
   addLabel('label-qc03', C3, 'AL\'DORA\nSIGNATURE', '#FFD060');
 
   // ── UI ──
@@ -469,12 +493,12 @@ function onMapLoad() {
   }, 600);
 }
 
-function addQuadra(id, coords, fillColor, topColor, height, name) {
+function addQuadraOutline(id, coords, fillColor, lineColor, name) {
   map.addSource(id, {
     type: 'geojson',
     data: {
       type: 'Feature',
-      properties: { name, height },
+      properties: { name },
       geometry: { type: 'Polygon', coordinates: [coords] }
     }
   });
@@ -482,48 +506,70 @@ function addQuadra(id, coords, fillColor, topColor, height, name) {
   // Base fill glow
   map.addLayer({
     id: id + '-glow', type: 'fill', source: id,
-    paint: { 'fill-color': fillColor, 'fill-opacity': 0.18 }
+    paint: { 'fill-color': fillColor, 'fill-opacity': 0.12 }
+  });
+
+  // Dashed outline for quadra boundary
+  map.addLayer({
+    id: id + '-outline', type: 'line', source: id,
+    paint: {
+      'line-color': lineColor,
+      'line-width': ['interpolate', ['linear'], ['zoom'], 14, 1, 17, 2.5],
+      'line-dasharray': [4, 2],
+    }
+  });
+}
+
+function towerFootprint(lng, lat) {
+  const h = 0.00009; // ~10m half-width
+  return [
+    [lng - h, lat - h],
+    [lng + h, lat - h],
+    [lng + h, lat + h],
+    [lng - h, lat + h],
+    [lng - h, lat - h],
+  ];
+}
+
+function addTower(t) {
+  const coords = towerFootprint(t.center[0], t.center[1]);
+  map.addSource(t.id, {
+    type: 'geojson',
+    data: {
+      type: 'Feature',
+      properties: { name: t.name, emp: t.emp, height: t.height, tipo: t.tipo },
+      geometry: { type: 'Polygon', coordinates: [coords] }
+    }
   });
 
   // 3D extrusion — tower body
   map.addLayer({
-    id: id + '-extrusion', type: 'fill-extrusion', source: id,
+    id: t.id + '-extrusion', type: 'fill-extrusion', source: t.id,
     paint: {
-      'fill-extrusion-color': [
-        'interpolate', ['linear'], ['zoom'],
-        14, fillColor,
-        17, fillColor,
-      ],
-      'fill-extrusion-height': height,
+      'fill-extrusion-color': t.color,
+      'fill-extrusion-height': t.height,
       'fill-extrusion-base': 0,
-      'fill-extrusion-opacity': [
-        'interpolate', ['linear'], ['zoom'],
-        13, 0.6, 16, 0.88, 18, 0.92
-      ],
+      'fill-extrusion-opacity': 0.9,
       'fill-extrusion-vertical-gradient': true,
     }
   });
 
-  // Outline
+  // Outline at base
   map.addLayer({
-    id: id + '-outline', type: 'line', source: id,
-    paint: {
-      'line-color': topColor,
-      'line-width': ['interpolate', ['linear'], ['zoom'], 14, 1, 17, 2.5],
-    }
+    id: t.id + '-outline', type: 'line', source: t.id,
+    paint: { 'line-color': t.topColor, 'line-width': 1.5 }
   });
 
-  // Click interaction
-  map.on('click', id + '-extrusion', (e) => {
-    const info = e.features[0].properties;
+  // Click popup with tower details
+  map.on('click', t.id + '-extrusion', (e) => {
     new mapboxgl.Popup({ closeButton: false, className: 'aldora-popup' })
       .setLngLat(e.lngLat)
-      .setHTML(`<strong style="color:#C8A84B">${info.name}</strong><br>Altura estimada: <span style="color:#e8d47a">${info.height}m</span>`)
+      .setHTML(`<strong style="color:#C8A84B">${t.name}</strong> · ${t.emp}<br>Tipo: <span style="color:#e8d47a">${t.tipo}</span><br>Altura: <span style="color:#e8d47a">${t.height}m</span>`)
       .addTo(map);
   });
 
-  map.on('mouseenter', id + '-extrusion', () => { map.getCanvas().style.cursor = 'pointer'; });
-  map.on('mouseleave', id + '-extrusion', () => { map.getCanvas().style.cursor = ''; });
+  map.on('mouseenter', t.id + '-extrusion', () => { map.getCanvas().style.cursor = 'pointer'; });
+  map.on('mouseleave', t.id + '-extrusion', () => { map.getCanvas().style.cursor = ''; });
 }
 
 function addLabel(id, center, text, color) {
@@ -604,10 +650,10 @@ function setLighting(preset) {
     map.setPaintProperty('sky', 'sky-atmosphere-sun', sunPositions[preset]);
     map.setPaintProperty('sky', 'sky-atmosphere-sun-intensity', sunIntensities[preset]);
 
-    // Adjust extrusion opacity for night mood
-    ['qc01','qc02','qc03'].forEach(id => {
-      map.setPaintProperty(id + '-extrusion', 'fill-extrusion-opacity',
-        preset === 'night' ? 0.95 : 0.88
+    // Adjust tower extrusion opacity for night mood
+    TOWERS.forEach(t => {
+      map.setPaintProperty(t.id + '-extrusion', 'fill-extrusion-opacity',
+        preset === 'night' ? 0.95 : 0.9
       );
     });
   }

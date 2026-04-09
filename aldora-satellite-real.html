@@ -146,10 +146,10 @@
 
 <div id="phases">
   <button class="pb on" onclick="focusPhase(0)">🛰️ GERAL</button>
-  <button class="pb"    onclick="focusPhase(1)">EMP1 · JARDINS · A–C</button>
-  <button class="pb"    onclick="focusPhase(2)">EMP2 · VERSAILLES · D–F</button>
+  <button class="pb"    onclick="focusPhase(1)">EMP1 · JARDINS · A–B</button>
+  <button class="pb"    onclick="focusPhase(2)">EMP2 · VERSAILLES · C–F</button>
   <button class="pb"    onclick="focusPhase(3)">EMP3 · RESERVA · G–J</button>
-  <button class="pb"    onclick="focusPhase(4)">EMP4 · SIGNATURE · K–N</button>
+  <button class="pb"    onclick="focusPhase(4)">EMP4 · SIGNATURE · L–O</button>
 </div>
 
 <div id="legend">
@@ -162,9 +162,9 @@
   <div class="lg">QC01 · EMP1 · AL'DORA JARDINS</div>
   <div class="li"><div class="ld" style="background:#C8A84B"></div>Torre A · braço norte W · 55m</div>
   <div class="li"><div class="ld" style="background:#D4B455"></div>Torre B · braço norte E · 55m</div>
-  <div class="li"><div class="ld" style="background:#BFA045"></div>Torre C · costas leste N · 55m</div>
 
   <div class="lg">QC01 · EMP2 · AL'DORA VERSAILLES</div>
+  <div class="li"><div class="ld" style="background:#BFA045"></div>Torre C · costas leste N · 48m</div>
   <div class="li"><div class="ld" style="background:#B89535"></div>Torre D · costas leste S · 48m</div>
   <div class="li"><div class="ld" style="background:#C0A040"></div>Torre E · braço sul W · 48m</div>
   <div class="li"><div class="ld" style="background:#B09030"></div>Torre F · braço sul E · 48m</div>
@@ -176,10 +176,10 @@
   <div class="li"><div class="ld" style="background:#A87528"></div>Torre J · 50m · P3</div>
 
   <div class="lg">QC03 · EMP4 · AL'DORA SIGNATURE</div>
-  <div class="li"><div class="ld" style="background:#FFD060"></div>Torre K · 72m · P4/P5</div>
-  <div class="li"><div class="ld" style="background:#FFE070"></div>Torre L · 72m · P4/P5</div>
-  <div class="li"><div class="ld" style="background:#EFC050"></div>Torre M · 72m · P4/P5</div>
-  <div class="li"><div class="ld" style="background:#FFD870"></div>Torre N · 72m · P4/P5</div>
+  <div class="li"><div class="ld" style="background:#FFD060"></div>Torre L · 72m · P4/P5</div>
+  <div class="li"><div class="ld" style="background:#FFE070"></div>Torre M · 72m · P4/P5</div>
+  <div class="li"><div class="ld" style="background:#EFC050"></div>Torre N · 72m · P4/P5</div>
+  <div class="li"><div class="ld" style="background:#FFD870"></div>Torre O · 72m · P4/P5</div>
 </div>
 
 <div id="infopanel" style="position:relative">
@@ -256,15 +256,16 @@ var MASTER_COORDS = [
 // ─────────────────────────────────────────────────────────
 // 14 TORRES — posições dentro dos polígonos KMZ
 //
-// QC01 (78m × 318m): 6 torres em 2 fileiras de 3
-//   EMP1 Jardins   (norte): A, B, C  lat~-18.9572  h=55m
-//   EMP2 Versailles(sul):   D, E, F  lat~-18.9585  h=48m
+// QC01 (78m × 318m): 6 torres em layout U
+//   EMP1 Jardins   (braço norte):      A, B       h=55m
+//   EMP2 Versailles(costas+braço sul): C, D, E, F h=48m
 //
 // QC02 (84m × 168m): 4 torres em grade 2×2
 //   EMP3 Reserva: G,H (norte) · I,J (sul)  h=50m
 //
 // QC03 (93m × 139m): 4 torres em grade 2×2
-//   EMP4 Signature: K,L (norte) · M,N (sul) h=72m
+//   EMP4 Signature: L,M (norte) · N,O (sul) h=72m
+//   (letra K omitida por convenção)
 //
 // dlng = metade-largura em graus (1m lng ≈ 9.5e-6 deg @ lat -19)
 // dlat = metade-profundidade em graus (1m lat ≈ 9.0e-6 deg)
@@ -274,52 +275,46 @@ var MASTER_COORDS = [
 //
 //  OESTE (AV.)            LESTE
 //  [LOTES 1-15]
-//  [A]        [B]    ← braço norte (fecha U por cima)
-//              [C]   ← costas leste, top (EMP1)
-//              [D]   ← costas leste, bot (EMP2)
-//  [E]        [F]   ← braço sul (fecha U por baixo)
+//  [A]        [B]    ← braço norte (EMP1 Jardins)
+//              [C]   ← costas leste, top (EMP2 Versailles)
+//              [D]   ← costas leste, bot (EMP2 Versailles)
+//  [E]        [F]    ← braço sul (EMP2 Versailles)
 //
 //  Interior do U = pátio/rua interna (Rua das Craviúnas)
 // ─────────────────────────────────────────────────────────
 
 var TOWERS = [
-  // ── EMP1 AL'DORA JARDINS ── (braço norte + costas leste top)
+  // ── EMP1 AL'DORA JARDINS ── (braço norte, 2 torres, 55m)
   { id:'tA', name:'Torre A', emp:"EMP1 · AL'DORA JARDINS",
     tipo:'P1/P2 · Studio Urban + Compacto Smart',
     ticket:'R$230–500K', andares:'~18 andares', priv:'~8.318 m²',
-    // Braço norte, lado oeste
     cx:-48.30640, cy:-18.95685, dlng:0.000095, dlat:0.000090,
     height:55, podH:7, color:'#C8A84B' },
   { id:'tB', name:'Torre B', emp:"EMP1 · AL'DORA JARDINS",
     tipo:'P1/P2 · Studio Urban + Compacto Smart',
     ticket:'R$230–500K', andares:'~18 andares', priv:'~8.318 m²',
-    // Braço norte, lado leste
     cx:-48.30608, cy:-18.95685, dlng:0.000095, dlat:0.000090,
     height:55, podH:7, color:'#D4B455' },
-  { id:'tC', name:'Torre C', emp:"EMP1 · AL'DORA JARDINS",
-    tipo:'P1/P2 · Studio Urban + Compacto Smart',
-    ticket:'R$230–500K', andares:'~18 andares', priv:'~8.318 m²',
-    // Costas leste — topo (dentro do U, alinhada com B)
-    cx:-48.30602, cy:-18.95770, dlng:0.000080, dlat:0.000115,
-    height:55, podH:7, color:'#BFA045' },
 
-  // ── EMP2 AL'DORA VERSAILLES ── (costas leste bot + braço sul)
+  // ── EMP2 AL'DORA VERSAILLES ── (costas leste + braço sul, 4 torres, 48m)
+  { id:'tC', name:'Torre C', emp:"EMP2 · AL'DORA VERSAILLES",
+    tipo:'P2/P3 · Compacto Smart + Garden Suite',
+    ticket:'R$380–820K', andares:'~16 andares', priv:'~8.318 m²',
+    cx:-48.30602, cy:-18.95770, dlng:0.000080, dlat:0.000115,
+    height:48, podH:6, color:'#BFA045' },
   { id:'tD', name:'Torre D', emp:"EMP2 · AL'DORA VERSAILLES",
     tipo:'P2/P3 · Compacto Smart + Garden Suite',
     ticket:'R$380–820K', andares:'~16 andares', priv:'~8.318 m²',
-    // Costas leste — base (dentro do U, alinhada com F)
     cx:-48.30602, cy:-18.95870, dlng:0.000080, dlat:0.000115,
     height:48, podH:6, color:'#B89535' },
   { id:'tE', name:'Torre E', emp:"EMP2 · AL'DORA VERSAILLES",
     tipo:'P2/P3 · Compacto Smart + Garden Suite',
     ticket:'R$380–820K', andares:'~16 andares', priv:'~8.318 m²',
-    // Braço sul, lado oeste
     cx:-48.30640, cy:-18.95908, dlng:0.000095, dlat:0.000090,
     height:48, podH:6, color:'#C0A040' },
   { id:'tF', name:'Torre F', emp:"EMP2 · AL'DORA VERSAILLES",
     tipo:'P2/P3 · Compacto Smart + Garden Suite',
     ticket:'R$380–820K', andares:'~16 andares', priv:'~8.318 m²',
-    // Braço sul, lado leste
     cx:-48.30608, cy:-18.95908, dlng:0.000095, dlat:0.000090,
     height:48, podH:6, color:'#B09030' },
 
@@ -346,22 +341,22 @@ var TOWERS = [
     height:50, podH:6, color:'#A87528' },
 
   // ── EMP4 AL'DORA SIGNATURE ── (QC03, grade 2×2, 72m — mais altas)
-  { id:'tK', name:'Torre K', emp:"EMP4 · AL'DORA SIGNATURE",
+  { id:'tL', name:'Torre L', emp:"EMP4 · AL'DORA SIGNATURE",
     tipo:'P4/P5 · Alto Padrão + Cobertura Signature',
     ticket:'R$1,1M–4,2M', andares:'~24 andares', priv:'~8.186 m²',
     cx:-48.30630, cy:-18.96135, dlng:0.000119, dlat:0.000140,
     height:72, podH:9, color:'#FFD060' },
-  { id:'tL', name:'Torre L', emp:"EMP4 · AL'DORA SIGNATURE",
+  { id:'tM', name:'Torre M', emp:"EMP4 · AL'DORA SIGNATURE",
     tipo:'P4/P5 · Alto Padrão + Cobertura Signature',
     ticket:'R$1,1M–4,2M', andares:'~24 andares', priv:'~8.186 m²',
     cx:-48.30590, cy:-18.96135, dlng:0.000119, dlat:0.000140,
     height:72, podH:9, color:'#FFE070' },
-  { id:'tM', name:'Torre M', emp:"EMP4 · AL'DORA SIGNATURE",
+  { id:'tN', name:'Torre N', emp:"EMP4 · AL'DORA SIGNATURE",
     tipo:'P4/P5 · Alto Padrão + Cobertura Signature',
     ticket:'R$1,1M–4,2M', andares:'~24 andares', priv:'~8.186 m²',
     cx:-48.30630, cy:-18.96200, dlng:0.000119, dlat:0.000140,
     height:72, podH:9, color:'#EFC050' },
-  { id:'tN', name:'Torre N', emp:"EMP4 · AL'DORA SIGNATURE",
+  { id:'tO', name:'Torre O', emp:"EMP4 · AL'DORA SIGNATURE",
     tipo:'P4/P5 · Alto Padrão + Cobertura Signature',
     ticket:'R$1,1M–4,2M', andares:'~24 andares', priv:'~8.186 m²',
     cx:-48.30590, cy:-18.96200, dlng:0.000119, dlat:0.000140,
@@ -399,7 +394,7 @@ var PHASE_VIEWS = [
   { center:[-48.30610,-18.96168],      zoom:19.5, pitch:68, bearing:-35, duration:2500 },
 ];
 // 1ª torre de cada fase (para abrir infopanel)
-var PHASE_FIRST_TOWER = [null, 'tA', 'tD', 'tG', 'tK'];
+var PHASE_FIRST_TOWER = [null, 'tA', 'tC', 'tG', 'tL'];
 
 var currentFactor = 1;
 
@@ -473,8 +468,8 @@ function buildEmpLabelsFC() {
   return {
     type:'FeatureCollection',
     features:[
-      { type:'Feature', properties:{name:'JARDINS'},    geometry:{type:'Point', coordinates:[-48.30626,-18.95720]} },
-      { type:'Feature', properties:{name:'VERSAILLES'},  geometry:{type:'Point', coordinates:[-48.30626,-18.95855]} },
+      { type:'Feature', properties:{name:'JARDINS'},    geometry:{type:'Point', coordinates:[-48.30624,-18.95685]} },
+      { type:'Feature', properties:{name:'VERSAILLES'},  geometry:{type:'Point', coordinates:[-48.30622,-18.95840]} },
       { type:'Feature', properties:{name:'RESERVA'},    geometry:{type:'Point', coordinates:[-48.30610,-18.96006]} },
       { type:'Feature', properties:{name:'SIGNATURE'},  geometry:{type:'Point', coordinates:[-48.30610,-18.96168]} },
     ]

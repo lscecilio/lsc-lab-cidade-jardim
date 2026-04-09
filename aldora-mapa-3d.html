@@ -199,7 +199,7 @@ setTimeout(() => { document.getElementById('loader').classList.add('fade'); }, 2
 
 // ── Coordinates — Jardim Versailles / Cidade Jardim, Uberlândia/MG
 // Ruas: Champagne, Croisette, Louvre, La Seine — setor premium oeste de Uberlândia
-const CENTER = [-48.2828, -18.9168];
+const CENTER = [-48.3062, -18.9600];
 
 const map = new mapboxgl.Map({
   container: 'map',
@@ -219,7 +219,7 @@ const QC01 = {
   properties: {
     name: 'QC01 — AL\'DORA Jardins + Versailles',
     area: '20.598 m²',
-    torres: 'A · B · C · D',
+    torres: 'A · B · C · D · E · F',
     ca: 'CA 4,0 · TO 70%',
     privativa: '49.908 m²',
     construida: '81.816 m²',
@@ -229,11 +229,19 @@ const QC01 = {
   geometry: {
     type: 'Polygon',
     coordinates: [[
-      [-48.2848, -18.9154],
-      [-48.2808, -18.9154],
-      [-48.2808, -18.9178],
-      [-48.2848, -18.9178],
-      [-48.2848, -18.9154]
+      [-48.30661248476868, -18.95637548103209],
+      [-48.30661283296286, -18.95912750380069],
+      [-48.30659420143432, -18.95910812448526],
+      [-48.30658211769109, -18.95895643814250],
+      [-48.30660548837058, -18.95888119381422],
+      [-48.30662132436068, -18.95895747653577],
+      [-48.30661754614533, -18.95903312038229],
+      [-48.30663334695388, -18.95910916093079],
+      [-48.30662857304971, -18.95920345864959],
+      [-48.30662661013304, -18.95924123537784],
+      [-48.30586672241777, -18.95916477945059],
+      [-48.30599422069318, -18.95666063429275],
+      [-48.30661248476868, -18.95637548103209]
     ]]
   }
 };
@@ -243,7 +251,7 @@ const QC02 = {
   properties: {
     name: 'QC02 — AL\'DORA Reserva',
     area: '11.953 m²',
-    torres: 'E · F',
+    torres: 'G · H · I · J',
     ca: 'CA 4,0 · TO 70%',
     privativa: '43.033 m²',
     construida: '70.546 m²',
@@ -253,11 +261,11 @@ const QC02 = {
   geometry: {
     type: 'Polygon',
     coordinates: [[
-      [-48.2808, -18.9157],
-      [-48.2784, -18.9157],
-      [-48.2784, -18.9175],
-      [-48.2808, -18.9175],
-      [-48.2808, -18.9157]
+      [-48.30649698590301, -18.96068399537968],
+      [-48.30570204425496, -18.96080819354113],
+      [-48.30580263702252, -18.95929483974720],
+      [-48.30648220517770, -18.95938839506466],
+      [-48.30649698590301, -18.96068399537968]
     ]]
   }
 };
@@ -267,7 +275,7 @@ const QC03 = {
   properties: {
     name: 'QC03 — AL\'DORA Signature',
     area: '10.232 m²',
-    torres: 'G · H',
+    torres: 'L · M · N · O',
     ca: 'CA 4,0 · TO 70%',
     privativa: '32.743 m²',
     construida: '53.678 m²',
@@ -278,11 +286,11 @@ const QC03 = {
   geometry: {
     type: 'Polygon',
     coordinates: [[
-      [-48.2784, -18.9159],
-      [-48.2764, -18.9159],
-      [-48.2764, -18.9174],
-      [-48.2784, -18.9174],
-      [-48.2784, -18.9159]
+      [-48.30653455159076, -18.96224763892470],
+      [-48.30564296247557, -18.96225907775669],
+      [-48.30568865204588, -18.96113452087073],
+      [-48.30648108701291, -18.96101099766920],
+      [-48.30653455159076, -18.96224763892470]
     ]]
   }
 };
@@ -365,6 +373,100 @@ map.on('load', () => {
     });
   });
 
+  // ── Individual 14 Tower Extrusions
+  const TOWER_HALF = 0.00006; // ~6.7m half-side → ~13m footprint
+  const towersData = [
+    // QC01 — EMP1 AL'DORA Jardins (A, B) · 18 pavimentos
+    { id:'A', emp:'EMP1 Jardins',   qc:'QC01', lng:-48.30645, lat:-18.95700, floors:18, h:54, color:'#C8A84B' },
+    { id:'B', emp:'EMP1 Jardins',   qc:'QC01', lng:-48.30610, lat:-18.95700, floors:18, h:54, color:'#C8A84B' },
+    // QC01 — EMP2 AL'DORA Versailles (C, D, E, F) · 16 pavimentos
+    { id:'C', emp:'EMP2 Versailles', qc:'QC01', lng:-48.30645, lat:-18.95780, floors:16, h:48, color:'#B89A3F' },
+    { id:'D', emp:'EMP2 Versailles', qc:'QC01', lng:-48.30610, lat:-18.95780, floors:16, h:48, color:'#B89A3F' },
+    { id:'E', emp:'EMP2 Versailles', qc:'QC01', lng:-48.30645, lat:-18.95860, floors:16, h:48, color:'#B89A3F' },
+    { id:'F', emp:'EMP2 Versailles', qc:'QC01', lng:-48.30610, lat:-18.95860, floors:16, h:48, color:'#B89A3F' },
+    // QC02 — EMP3 AL'DORA Reserva (G, H, I, J) · 16 pavimentos
+    { id:'G', emp:'EMP3 Reserva',    qc:'QC02', lng:-48.30635, lat:-18.95975, floors:16, h:48, color:'#6D4C2E' },
+    { id:'H', emp:'EMP3 Reserva',    qc:'QC02', lng:-48.30590, lat:-18.95975, floors:16, h:48, color:'#6D4C2E' },
+    { id:'I', emp:'EMP3 Reserva',    qc:'QC02', lng:-48.30635, lat:-18.96040, floors:16, h:48, color:'#6D4C2E' },
+    { id:'J', emp:'EMP3 Reserva',    qc:'QC02', lng:-48.30590, lat:-18.96040, floors:16, h:48, color:'#6D4C2E' },
+    // QC03 — EMP4 AL'DORA Signature (L, M, N, O) · 24 pavimentos
+    { id:'L', emp:'EMP4 Signature',  qc:'QC03', lng:-48.30635, lat:-18.96135, floors:24, h:72, color:'#DAB94D' },
+    { id:'M', emp:'EMP4 Signature',  qc:'QC03', lng:-48.30585, lat:-18.96135, floors:24, h:72, color:'#DAB94D' },
+    { id:'N', emp:'EMP4 Signature',  qc:'QC03', lng:-48.30635, lat:-18.96195, floors:24, h:72, color:'#DAB94D' },
+    { id:'O', emp:'EMP4 Signature',  qc:'QC03', lng:-48.30585, lat:-18.96195, floors:24, h:72, color:'#DAB94D' },
+  ];
+
+  const towerFeatures = towersData.map(t => {
+    const s = TOWER_HALF;
+    return {
+      type: 'Feature',
+      properties: { id: t.id, emp: t.emp, qc: t.qc, floors: t.floors, height: t.h, color: t.color },
+      geometry: {
+        type: 'Polygon',
+        coordinates: [[
+          [t.lng - s, t.lat - s],
+          [t.lng + s, t.lat - s],
+          [t.lng + s, t.lat + s],
+          [t.lng - s, t.lat + s],
+          [t.lng - s, t.lat - s]
+        ]]
+      }
+    };
+  });
+
+  map.addSource('towers', {
+    type: 'geojson',
+    data: { type: 'FeatureCollection', features: towerFeatures }
+  });
+
+  map.addLayer({
+    id: 'towers-extrusion',
+    type: 'fill-extrusion',
+    source: 'towers',
+    paint: {
+      'fill-extrusion-color': ['get', 'color'],
+      'fill-extrusion-height': ['get', 'height'],
+      'fill-extrusion-base': 0,
+      'fill-extrusion-opacity': 0.85
+    }
+  });
+
+  map.addLayer({
+    id: 'tower-labels',
+    type: 'symbol',
+    source: 'towers',
+    layout: {
+      'text-field': ['concat', 'Torre ', ['get', 'id']],
+      'text-size': 11,
+      'text-font': ['DIN Pro Medium', 'Arial Unicode MS Regular'],
+      'text-offset': [0, -2],
+      'text-anchor': 'bottom',
+      'text-allow-overlap': true
+    },
+    paint: {
+      'text-color': '#f5f0e8',
+      'text-halo-color': 'rgba(10,36,22,0.9)',
+      'text-halo-width': 1.5
+    }
+  });
+
+  // Tower click popup
+  map.on('click', 'towers-extrusion', (e) => {
+    e.originalEvent.stopPropagation();
+    const p = e.features[0].properties;
+    new mapboxgl.Popup({ closeButton: false, offset: 10 })
+      .setLngLat(e.lngLat)
+      .setHTML(`
+        <div class="popup-title">Torre ${p.id} — ${p.emp}</div>
+        <div class="popup-row"><span>Quadra</span><span class="popup-val">${p.qc}</span></div>
+        <div class="popup-row"><span>Pavimentos</span><span class="popup-val">${p.floors} andares</span></div>
+        <div class="popup-row"><span>Altura</span><span class="popup-val">${p.height}m</span></div>
+      `)
+      .addTo(map);
+  });
+  map.on('mouseenter', 'towers-extrusion', () => { map.getCanvas().style.cursor = 'pointer'; });
+  map.on('mouseleave', 'towers-extrusion', () => { map.getCanvas().style.cursor = ''; });
+
   // ── 3D Buildings layer
   const layers = map.getStyle().layers;
   let labelLayerId;
@@ -415,8 +517,8 @@ map.on('load', () => {
 
   // ── POI Markers
   const pois = [
-    { coords: [-48.2380, -18.9450], label: 'Uberlândia Shopping', sub: '9 min · 5,4 km', color: '#9C27B0' },
-    { coords: [-48.2600, -18.9500], label: 'Jardim Versailles', sub: 'Renda dom. R$23.050/mês', color: '#4CAF50' },
+    { coords: [-48.2780, -18.9450], label: 'Uberlândia Shopping', sub: '9 min · 5,4 km', color: '#9C27B0' },
+    { coords: [-48.3062, -18.9600], label: 'Jardim Versailles', sub: 'Renda dom. R$23.050/mês', color: '#4CAF50' },
     { coords: [-48.2590, -18.9290], label: 'Centro de Uberlândia', sub: 'Zona Central', color: '#2196F3' },
   ];
 
@@ -464,7 +566,7 @@ map.on('load', () => {
         <div class="popup-title">AL'DORA City — Masterplan</div>
         <div class="popup-row"><span>Terreno total</span><span class="popup-val">42.783 m²</span></div>
         <div class="popup-row"><span>Potencial construtivo</span><span class="popup-val">171.138 m²</span></div>
-        <div class="popup-row"><span>Empreendimentos</span><span class="popup-val">4 emp · 14 torres A–N</span></div>
+        <div class="popup-row"><span>Empreendimentos</span><span class="popup-val">4 emp · 14 torres</span></div>
         <div class="popup-row"><span>VGV Total</span><span class="popup-val">R$ 512M est.</span></div>
         <div class="popup-row"><span>Zoneamento</span><span class="popup-val">ZR2 + SVA · CA 4,0</span></div>
       `))
@@ -512,7 +614,7 @@ function flyToTerrain() {
 }
 
 function flyOverview() {
-  map.flyTo({ center: [-48.2600, -18.9300], zoom: 13, pitch: 40, bearing: -15, duration: 2500 });
+  map.flyTo({ center: [-48.3000, -18.9500], zoom: 13, pitch: 40, bearing: -15, duration: 2500 });
 }
 
 let buildingsVisible = true;

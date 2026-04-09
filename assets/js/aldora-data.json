@@ -10,7 +10,7 @@
     "sub_marcas": ["AL'DORA Jardins", "AL'DORA Versailles", "AL'DORA Reserva", "AL'DORA Signature"],
     "estrutura": {
       "empreendimentos": 4,
-      "torres": 8,
+      "torres": 14,
       "quadras": 3
     }
   },
@@ -28,9 +28,9 @@
   },
   "empreendimentos": [
     { "id": "EMP1", "nome": "AL'DORA Jardins", "quadra": "QC01", "torres": ["A", "B"], "mix": "P1/P2 (volume)" },
-    { "id": "EMP2", "nome": "AL'DORA Versailles", "quadra": "QC01", "torres": ["C", "D"], "mix": "P2/P3 (equilíbrio)" },
-    { "id": "EMP3", "nome": "AL'DORA Reserva", "quadra": "QC02", "torres": ["E", "F"], "mix": "P3 (família)" },
-    { "id": "EMP4", "nome": "AL'DORA Signature", "quadra": "QC03", "torres": ["G", "H"], "mix": "P4/P5 (premium)" }
+    { "id": "EMP2", "nome": "AL'DORA Versailles", "quadra": "QC01", "torres": ["C", "D", "E", "F"], "mix": "P2/P3 (equilíbrio)" },
+    { "id": "EMP3", "nome": "AL'DORA Reserva", "quadra": "QC02", "torres": ["G", "H", "I", "J"], "mix": "P3 (família)" },
+    { "id": "EMP4", "nome": "AL'DORA Signature", "quadra": "QC03", "torres": ["L", "M", "N", "O"], "mix": "P4/P5 (premium)" }
   ],
   "tipologias": [
     { "codigo": "P1", "nome": "Studio Urban", "config": "Studio · 1 vaga", "area_min": 28, "area_max": 35, "ticket_min": 230000, "ticket_max": 290000 },

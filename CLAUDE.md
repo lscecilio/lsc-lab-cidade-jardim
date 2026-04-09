@@ -12,7 +12,7 @@ Produto principal: **AL'DORA City** — Masterplan Vertical Escalonado, Jardim V
 - Email: lscecilio@gmail.com
 - Produto: AL'DORA City (marca master do masterplan)
 - Sub-marcas: AL'DORA Jardins / Versailles / Reserva / Signature
-- Estrutura: 4 empreendimentos, 8 torres, 3 quadras (QC01/QC02/QC03)
+- Estrutura: 4 empreendimentos, 14 torres, 3 quadras (QC01/QC02/QC03)
 - Parceiro de tech/dados: LSC-Lab (empresa separada)
 
 ---
@@ -33,9 +33,9 @@ Produto principal: **AL'DORA City** — Masterplan Vertical Escalonado, Jardim V
 | Empreendimento | Nome | Quadra | Torres | Mix Principal |
 |----------------|------|--------|--------|---------------|
 | EMP 1 | AL'DORA Jardins | QC01 | A + B | P1/P2 (volume) |
-| EMP 2 | AL'DORA Versailles | QC01 | C + D | P2/P3 (equilíbrio) |
-| EMP 3 | AL'DORA Reserva | QC02 | E + F | P3 focus (família) |
-| EMP 4 | AL'DORA Signature | QC03 | G + H | P4/P5 (premium) |
+| EMP 2 | AL'DORA Versailles | QC01 | C + D + E + F | P2/P3 (equilíbrio) |
+| EMP 3 | AL'DORA Reserva | QC02 | G + H + I + J | P3 focus (família) |
+| EMP 4 | AL'DORA Signature | QC03 | L + M + N + O | P4/P5 (premium) |
 
 ---
 
