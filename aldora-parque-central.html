@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parque Central AL'DORA — O Coração Verde do Masterplan</title>
+<meta property="og:title" content="Parque Central AL'DORA — O Coração Verde do Masterplan">
+<meta property="og:description" content="Visualização do Parque Central entre QC01 e QC02 · Paisagismo tropical · Cerrado nativo · Masterplan Vertical Escalonado">
+<style>
+:root {
+  --green-dark: #2D5F2D;
+  --green-mid: #4A8B4A;
+  --green-light: #7BC67B;
+  --green-lawn: #5DA55D;
+  --path-color: #D4C5A9;
+  --path-stroke: #B8A88C;
+  --water-deep: #4A90C4;
+  --water-light: #6DB5E5;
+  --water-shimmer: #A8D8F0;
+  --bg-dark: #1A1A2E;
+  --bg-light: #F5F0E8;
+  --gold: #C8A84B;
+  --gold-light: #E0C878;
+  --text-dark: #1A1A2E;
+  --text-light: #F5F0E8;
+  --tower-fill: #3A3A5C;
+  --tower-stroke: #5A5A8C;
+  --surface: #FFFFFF;
+  --surface-dark: #16213E;
+  --card-bg: rgba(255,255,255,0.95);
+  --card-bg-dark: rgba(22,33,62,0.95);
+  --shadow: 0 8px 32px rgba(0,0,0,0.12);
+  --shadow-dark: 0 8px 32px rgba(0,0,0,0.4);
+  --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-light);
+  color: var(--text-dark);
+  transition: background var(--transition), color var(--transition);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+body.dark {
+  background: var(--bg-dark);
+  color: var(--text-light);
+}
+
+/* ─── HEADER ─── */
+.hero {
+  position: relative;
+  text-align: center;
+  padding: 60px 20px 40px;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, var(--green-dark) 0%, #1a3a1a 50%, var(--bg-dark) 100%);
+  opacity: 0.08;
+  transition: opacity var(--transition);
+}
+
+body.dark .hero::before { opacity: 0.3; }
+
+.hero-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--bg-dark);
+  padding: 6px 20px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.hero h1 span {
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+body.dark .hero h1 span {
+  background: linear-gradient(135deg, var(--green-light), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.hero .subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: var(--green-mid);
+  font-style: italic;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.hero .quote {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ─── CONTROLS ─── */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-light);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  transition: background var(--transition);
+}
+
+body.dark .controls {
+  background: var(--bg-dark);
+  border-bottom-color: rgba(255,255,255,0.06);
+}
+
+.btn {
+  padding: 8px 20px;
+  border: 1.5px solid var(--green-mid);
+  border-radius: 24px;
+  background: transparent;
+  color: var(--green-dark);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.5px;
+}
+
+body.dark .btn { color: var(--green-light); border-color: var(--green-light); }
+
+.btn:hover, .btn.active {
+  background: var(--green-mid);
+  color: white;
+  border-color: var(--green-mid);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(74,139,74,0.3);
+}
+
+.btn-gold {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn-gold:hover, .btn-gold.active {
+  background: var(--gold);
+  color: var(--bg-dark);
+  border-color: var(--gold);
+  box-shadow: 0 4px 12px rgba(200,168,75,0.3);
+}
+
+/* ─── SECTIONS ─── */
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.section-desc {
+  text-align: center;
+  font-size: 1rem;
+  opacity: 0.7;
+  margin-bottom: 32px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ─── MAP CONTAINER ─── */
+.map-container {
+  position: relative;
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: background var(--transition), box-shadow var(--transition);
+}
+
+body.dark .map-container {
+  background: var(--card-bg-dark);
+  box-shadow: var(--shadow-dark);
+}
+
+.map-container svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ─── TOOLTIP ─── */
+.tooltip {
+  position: fixed;
+  pointer-events: none;
+  background: var(--card-bg);
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 13px;
+  max-width: 260px;
+  box-shadow: var(--shadow);
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+body.dark .tooltip {
+  background: var(--card-bg-dark);
+  box-shadow: var(--shadow-dark);
+}
+
+.tooltip.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tooltip-title {
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.tooltip-body {
+  opacity: 0.8;
+  line-height: 1.4;
+}
+
+/* ─── DETAIL MODAL ─── */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  padding: 20px;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 32px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+body.dark .modal { background: var(--surface-dark); }
+
+.modal-overlay.show .modal {
+  transform: scale(1) translateY(0);
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 32px; height: 32px;
+  border: none;
+  background: rgba(0,0,0,0.05);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+body.dark .modal-close { background: rgba(255,255,255,0.1); color: white; }
+.modal-close:hover { background: rgba(0,0,0,0.1); }
+
+.modal-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.modal h3 {
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+  color: var(--green-dark);
+}
+
+body.dark .modal h3 { color: var(--green-light); }
+
+.modal p {
+  opacity: 0.8;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.modal-specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+body.dark .modal-specs { border-top-color: rgba(255,255,255,0.08); }
+
+.modal-spec {
+  font-size: 12px;
+}
+
+.modal-spec strong {
+  color: var(--gold);
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+
+/* ─── STATS GRID ─── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.stat-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+  border: 1px solid transparent;
+}
+
+body.dark .stat-card {
+  background: var(--card-bg-dark);
+  box-shadow: var(--shadow-dark);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+}
+
+.stat-icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+body.dark .stat-value {
+  background: linear-gradient(135deg, var(--green-light), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.6;
+  margin-top: 4px;
+}
+
+.stat-sub {
+  font-size: 0.85rem;
+  opacity: 0.5;
+  margin-top: 2px;
+}
+
+/* ─── ELEVATION ─── */
+.elevation-container {
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: all var(--transition);
+}
+
+body.dark .elevation-container {
+  background: var(--card-bg-dark);
+  box-shadow: var(--shadow-dark);
+}
+
+/* ─── TREE LEGEND ─── */
+.tree-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.tree-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  transition: all 0.3s;
+  cursor: default;
+}
+
+body.dark .tree-card {
+  background: var(--card-bg-dark);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+.tree-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.tree-swatch {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.tree-info h4 {
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.tree-info .latin {
+  font-style: italic;
+  font-size: 0.78rem;
+  opacity: 0.5;
+}
+
+.tree-info p {
+  font-size: 0.82rem;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  opacity: 0.6;
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  margin-top: 40px;
+}
+
+body.dark .footer { border-top-color: rgba(255,255,255,0.06); }
+
+.footer .brand {
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+
+/* ─── SVG Interactive Elements ─── */
+.park-element {
+  cursor: pointer;
+  transition: filter 0.3s, opacity 0.3s;
+}
+
+.park-element:hover {
+  filter: brightness(1.15) drop-shadow(0 0 8px rgba(200,168,75,0.4));
+}
+
+/* ─── WATER ANIMATION ─── */
+@keyframes water-shimmer {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes water-ripple {
+  0% { r: 2; opacity: 0.8; }
+  100% { r: 18; opacity: 0; }
+}
+
+@keyframes fountain-jet {
+  0%, 100% { transform: scaleY(1); opacity: 0.9; }
+  50% { transform: scaleY(1.3); opacity: 0.6; }
+}
+
+.water-shimmer {
+  animation: water-shimmer 3s ease-in-out infinite;
+}
+
+.water-ripple {
+  animation: water-ripple 2.5s ease-out infinite;
+}
+
+.fountain-jet {
+  animation: fountain-jet 1.5s ease-in-out infinite;
+}
+
+/* ─── NIGHT MODE SVG OVERRIDES ─── */
+body.dark .sky-gradient-light { opacity: 0; }
+body.dark .sky-gradient-dark { opacity: 1; }
+
+body.dark .lawn-fill { fill: #1E3B1E; }
+body.dark .path-fill { fill: #8B7D6B; }
+body.dark .tower-fill-cls { fill: #2A2A4C; stroke: #4A4A7C; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .hero { padding: 40px 16px 24px; }
+  .section { padding: 24px 16px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .stat-card { padding: 16px; }
+  .stat-value { font-size: 1.5rem; }
+  .controls { gap: 8px; }
+  .btn { padding: 6px 14px; font-size: 12px; }
+  .modal { padding: 24px; }
+}
+
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .tree-legend { grid-template-columns: 1fr; }
+}
+
+/* ─── SMOOTH SCROLL ─── */
+html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+<!-- TOOLTIP -->
+<div class="tooltip" id="tooltip">
+  <div class="tooltip-title" id="tooltip-title"></div>
+  <div class="tooltip-body" id="tooltip-body"></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-icon" id="modal-icon"></div>
+    <h3 id="modal-title"></h3>
+    <p id="modal-desc"></p>
+    <div class="modal-specs" id="modal-specs"></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-badge">AL'DORA City · Masterplan Vertical</div>
+  <h1><span>Parque Central</span> AL'DORA</h1>
+  <p class="subtitle">O coração verde do masterplan</p>
+  <p class="quote">"Um oásis urbano entre as torres — onde a vida acontece ao ar livre"</p>
+</header>
+
+<!-- CONTROLS -->
+<nav class="controls">
+  <button class="btn active" onclick="scrollToSection('plan')">🗺 Planta</button>
+  <button class="btn" onclick="scrollToSection('elevation')">🏙 Elevação</button>
+  <button class="btn" onclick="scrollToSection('stats')">📊 Dados</button>
+  <button class="btn" onclick="scrollToSection('species')">🌳 Espécies</button>
+  <button class="btn btn-gold" onclick="toggleTheme()" id="theme-btn">🌙 Noturno</button>
+</nav>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- BIRD'S EYE VIEW                        -->
+<!-- ═══════════════════════════════════════ -->
+<section class="section" id="plan">
+  <p class="section-title">Planta Humanizada</p>
+  <p class="section-desc">Vista superior do Parque Central — conectando as quadras QC01 e QC02 do masterplan AL'DORA City</p>
+
+  <div class="map-container">
+    <svg viewBox="0 0 1000 720" xmlns="http://www.w3.org/2000/svg" id="park-svg">
+      <defs>
+        <!-- Gradients -->
+        <linearGradient id="skyDay" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#E8F0E0"/>
+          <stop offset="100%" stop-color="#F5F0E8"/>
+        </linearGradient>
+        <linearGradient id="skyNight" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0D1B2A"/>
+          <stop offset="100%" stop-color="#1A1A2E"/>
+        </linearGradient>
+        <linearGradient id="lawnGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#5DA55D"/>
+          <stop offset="100%" stop-color="#4A8B4A"/>
+        </linearGradient>
+        <linearGradient id="waterGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#4A90C4"/>
+          <stop offset="100%" stop-color="#6DB5E5"/>
+        </linearGradient>
+        <linearGradient id="pathGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#D4C5A9"/>
+          <stop offset="100%" stop-color="#C8B898"/>
+        </linearGradient>
+        <radialGradient id="treeGrad1" cx="50%" cy="40%" r="50%">
+          <stop offset="0%" stop-color="#7BC67B"/>
+          <stop offset="100%" stop-color="#2D5F2D"/>
+        </radialGradient>
+        <radialGradient id="treeGrad2" cx="50%" cy="40%" r="50%">
+          <stop offset="0%" stop-color="#E8D44D"/>
+          <stop offset="40%" stop-color="#C8A84B"/>
+          <stop offset="100%" stop-color="#8B6914"/>
+        </radialGradient>
+        <radialGradient id="treeGrad3" cx="50%" cy="40%" r="50%">
+          <stop offset="0%" stop-color="#6DBF6D"/>
+          <stop offset="100%" stop-color="#3A7A3A"/>
+        </radialGradient>
+        <radialGradient id="fountainGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#A8D8F0"/>
+          <stop offset="60%" stop-color="#6DB5E5"/>
+          <stop offset="100%" stop-color="#4A90C4"/>
+        </radialGradient>
+
+        <!-- Patterns -->
+        <pattern id="grassPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+          <rect width="20" height="20" fill="#5DA55D"/>
+          <circle cx="5" cy="5" r="1" fill="#4A8B4A" opacity="0.3"/>
+          <circle cx="15" cy="15" r="0.8" fill="#6DBF6D" opacity="0.2"/>
+          <circle cx="10" cy="2" r="0.6" fill="#7BC67B" opacity="0.2"/>
+        </pattern>
+
+        <pattern id="sandPattern" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+          <rect width="8" height="8" fill="#D4C5A9"/>
+          <circle cx="2" cy="2" r="0.4" fill="#C8B898" opacity="0.3"/>
+          <circle cx="6" cy="6" r="0.3" fill="#B8A88C" opacity="0.2"/>
+        </pattern>
+
+        <filter id="softShadow">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+        </filter>
+        <filter id="treeShadow">
+          <feDropShadow dx="2" dy="3" stdDeviation="2" flood-opacity="0.2"/>
+        </filter>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Background -->
+      <rect width="1000" height="720" fill="url(#skyDay)" class="sky-gradient-light"/>
+      <rect width="1000" height="720" fill="url(#skyNight)" class="sky-gradient-dark" opacity="0"/>
+
+      <!-- ─── QC01 TOWERS (NORTH) ─── -->
+      <g class="park-element" data-name="QC01 — AL'DORA Jardins + Versailles"
+         data-desc="Quadra norte com Torres A–F: Studios, Compactos e Garden Suites. Fase 1 do masterplan."
+         data-icon="🏗️" data-area="20.598 m²" data-towers="6 torres" data-units="~640 unidades" data-status="Gate G1"
+         onclick="showModal(this)" onmouseenter="showTooltip(event, this)" onmouseleave="hideTooltip()">
+        <!-- Tower A -->
+        <rect x="120" y="40" width="80" height="100" rx="4" fill="#3A3A5C" stroke="#5A5A8C" stroke-width="1.5" class="tower-fill-cls"/>
+        <text x="160" y="85" text-anchor="middle" fill="white" font-size="11" font-weight="700" opacity="0.8">TORRE A</text>
+        <text x="160" y="100" text-anchor="middle" fill="#C8A84B" font-size="8" opacity="0.7">Jardins</text>
+        <!-- Tower B -->
+        <rect x="240" y="30" width="80" height="110" rx="4" fill="#3A3A5C" stroke="#5A5A8C" stroke-width="1.5" class="tower-fill-cls"/>
+        <text x="280" y="80" text-anchor="middle" fill="white" font-size="11" font-weight="700" opacity="0.8">TORRE B</text>
+        <text x="280" y="95" text-anchor="middle" fill="#C8A84B" font-size="8" opacity="0.7">Jardins</text>
+        <!-- Tower C -->
+        <rect x="420" y="35" width="85" height="105" rx="4" fill="#4A4A6C" stroke="#6A6A9C" stroke-width="1.5" class="tower-fill-cls"/>
+        <text x="462" y="82" text-anchor="middle" fill="white" font-size="11" font-weight="700" opacity="0.8">TORRE C</text>
+        <text x="462" y="97" text-anchor="middle" fill="#C8A84B" font-size="8" opacity="0.7">Versailles</text>
+        <!-- Tower D -->
+        <rect x="560" y="40" width="80" height="100" rx="4" fill="#4A4A6C" stroke="#6A6A9C" stroke-width="1.5" class="tower-fill-cls"/>
+        <text x="600" y="85" text-anchor="middle" fill="white" font-size="11" font-weight="700" opacity="0.8">TORRE D</text>
+        <text x="600" y="100" text-anchor="middle" fill="#C8A84B" font-size="8" opacity="0.7">Versailles</text>
+
+        <!-- QC01 Label -->
+        <rect x="700" y="55" width="120" height="50" rx="8" fill="none" stroke="#5A5A8C" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="760" y="76" text-anchor="middle" fill="#5A5A8C" font-size="10" font-weight="700" letter-spacing="2">QC01</text>
+        <text x="760" y="92" text-anchor="middle" fill="#5A5A8C" font-size="8" opacity="0.6">20.598 m²</text>
+      </g>
+
+      <!-- ─── PARK BUFFER NORTH ─── -->
+      <rect x="60" y="150" width="880" height="30" rx="0" fill="url(#lawnGrad)" opacity="0.4"/>
+
+      <!-- ═══ PARK MAIN AREA ═══ -->
+      <g id="park-main">
+        <!-- Park background lawn -->
+        <rect x="60" y="180" width="880" height="340" rx="20" fill="url(#grassPattern)" class="lawn-fill"/>
+        <!-- Subtle border -->
+        <rect x="60" y="180" width="880" height="340" rx="20" fill="none" stroke="#4A8B4A" stroke-width="1" opacity="0.3"/>
+
+        <!-- ─── CENTRAL PROMENADE ─── -->
+        <g class="park-element" data-name="Passeio Central"
+           data-desc="Calçada principal de 4m de largura em pedra portuguesa, conectando QC01 a QC02 com iluminação embutida no piso."
+           data-icon="🚶" data-area="480 m²" data-material="Pedra portuguesa clara" data-iluminacao="LED embutido" data-largura="4 metros"
+           onclick="showModal(this)" onmouseenter="showTooltip(event, this)" onmouseleave="hideTooltip()">
+          <rect x="470" y="180" width="60" height="340" fill="url(#sandPattern)" class="path-fill" opacity="0.9"/>
+          <line x1="475" y1="180" x2="475" y2="520" stroke="#B8A88C" stroke-width="0.5" opacity="0.5"/>
+          <line x1="525" y1="180" x2="525" y2="520" stroke="#B8A88C" stroke-width="0.5" opacity="0.5"/>
+          <!-- Paving detail -->
+          <line x1="470" y1="220" x2="530" y2="220" stroke="#B8A88C" stroke-width="0.3" opacity="0.3"/>
+          <line x1="470" y1="260" x2="530" y2="260" stroke="#B8A88C" stroke-width="0.3" opacity="0.3"/>
+          <line x1="470" y1="300" x2="530" y2="300" stroke="#B8A88C" stroke-width="0.3" opacity="0.3"/>
+          <line x1="470" y1="340" x2="530" y2="340" stroke="#B8A88C" stroke-width="0.3" opacity="0.3"/>
+          <line x1="470" y1="380" x2="530" y2="380" stroke="#B8A88C" stroke-width="0.3" opacity="0.3"/>
+          <line x1="470" y1="420" x2="530" y2="420" stroke="#B8A88C" stroke-width="0.3" opacity="0.3"/>
+          <line x1="470" y1="460" x2="530" y2="460" stroke="#B8A88C" stroke-width="0.3" opacity="0.3"/>
+          <line x1="470" y1="500" x2="530" y2="500" stroke="#B8A88C" stroke-width="0.3" opacity="0.3"/>
+          <text x="500" y="198" text-anchor="middle" fill="#8B7D6B" font-size="7" font-weight="600" letter-spacing="2">PASSEIO CENTRAL</text>
+        </g>
+
+        <!-- ─── SECONDARY PATHS ─── -->
+        <!-- West path -->
+        <path d="M 160,180 Q 160,350 160,520" stroke="#D4C5A9" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.7" class="path-fill"/>
+        <!-- East path -->
+        <path d="M 840,180 Q 840,350 840,520" stroke="#D4C5A9" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.7" class="path-fill"/>
+        <!-- Cross paths -->
+        <path d="M 60,350 L 940,350" stroke="#D4C5A9" stroke-width="10" fill="none" opacity="0.5" class="path-fill"/>
+        <!-- Curved connecting paths -->
+        <path d="M 160,280 Q 310,280 470,280" stroke="#D4C5A9" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.5"/>
+        <path d="M 530,420 Q 690,420 840,420" stroke="#D4C5A9" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.5"/>
+
+        <!-- ─── BIKE PATH ─── -->
+        <g class="park-element" data-name="Ciclovia"
+           data-desc="Pista de bicicleta de 2m com sinalização, conectando ao sistema cicloviário do bairro Versailles."
+           data-icon="🚴" data-area="240 m²" data-extensao="120m linear" data-largura="2 metros" data-piso="Pavimento permeável"
+           onclick="showModal(this)" onmouseenter="showTooltip(event, this)" onmouseleave="hideTooltip()">
+          <path d="M 60,260 Q 250,240 500,260 Q 750,280 940,260" stroke="#E85D3A" stroke-width="5" fill="none" stroke-dasharray="12,6" opacity="0.7"/>
+          <path d="M 60,264 Q 250,244 500,264 Q 750,284 940,264" stroke="#E85D3A" stroke-width="1" fill="none" opacity="0.4"/>
+          <text x="85" y="254" fill="#E85D3A" font-size="7" font-weight="700" opacity="0.8">CICLOVIA</text>
+          <!-- Bike icon -->
+          <circle cx="300" cy="252" r="8" fill="#E85D3A" opacity="0.6"/>
+          <text x="300" y="256" text-anchor="middle" fill="white" font-size="9">🚴</text>
+        </g>
+
+        <!-- ─── MEDITATION GARDEN (West) ─── -->
+        <g class="park-element" data-name="Jardim de Meditação"
+           data-desc="Espaço zen com pedras ornamentais, areia branca, bambu e banco contemplativo. Som de água corrente ao fundo."
+           data-icon="🧘" data-area="180 m²" data-estilo="Zen / Contemplativo" data-vegetacao="Bambu, Palmeiras" data-mobiliario="Bancos em madeira de demolição"
+           onclick="showModal(this)" onmouseenter="showTooltip(event, this)" onmouseleave="hideTooltip()">
+          <!-- Garden base -->
+          <ellipse cx="260" cy="350" rx="85" ry="55" fill="#E8E0D0" opacity="0.6"/>
+          <ellipse cx="260" cy="350" rx="80" ry="50" fill="#F0E8D8" opacity="0.5"/>
+          <!-- Sand ripple lines -->
+          <ellipse cx="260" cy="340" rx="55" ry="20" fill="none" stroke="#C8B898" stroke-width="0.5" opacity="0.4"/>
+          <ellipse cx="260" cy="350" rx="45" ry="16" fill="none" stroke="#C8B898" stroke-width="0.5" opacity="0.4"/>
+          <ellipse cx="260" cy="360" rx="35" ry="12" fill="none" stroke="#C8B898" stroke-width="0.5" opacity="0.4"/>
+          <!-- Stones -->
+          <ellipse cx="240" cy="345" rx="8" ry="5" fill="#8B8B8B" opacity="0.7"/>
+          <ellipse cx="275" cy="355" rx="6" ry="4" fill="#7A7A7A" opacity="0.7"/>
+          <ellipse cx="255" cy="362" rx="5" ry="3" fill="#9A9A9A" opacity="0.6"/>
+          <!-- Meditation platform -->
+          <rect x="230" y="330" width="20" height="20" rx="3" fill="#A0785A" opacity="0.5"/>
+          <!-- Bamboo -->
+          <line x1="200" y1="310" x2="200" y2="330" stroke="#6DBF6D" stroke-width="3" opacity="0.8"/>
+          <line x1="206" y1="315" x2="206" y2="332" stroke="#5DA55D" stroke-width="2.5" opacity="0.7"/>
+          <circle cx="200" cy="308" r="10" fill="url(#treeGrad3)" opacity="0.7" filter="url(#treeShadow)"/>
+          <circle cx="206" cy="313" r="8" fill="url(#treeGrad3)" opacity="0.6"/>
+          <text x="260" y="380" text-anchor="middle" fill="#8B7D6B" font-size="6.5" font-weight="600" letter-spacing="1">MEDITAÇÃO</text>
+        </g>
+
+        <!-- ─── WATER FEATURE (Center) ─── -->
+        <g class="park-element" data-name="Espelho d'Água & Fonte"
+           data-desc="Espelho d'água de 120 m² com fonte central interativa. Iluminação subaquática LED cria espetáculo noturno."
+           data-icon="💧" data-area="120 m²" data-profundidade="15 cm (espelho) + 60 cm (fonte)" data-iluminacao="LED RGB subaquático" data-tratamento="Recirculação com UV"
+           onclick="showModal(this)" onmouseenter="showTooltip(event, this)" onmouseleave="hideTooltip()">
+          <!-- Reflecting pool -->
+          <ellipse cx="500" cy="350" rx="65" ry="40" fill="url(#waterGrad)" opacity="0.8"/>
+          <ellipse cx="500" cy="350" rx="60" ry="36" fill="url(#fountainGrad)" opacity="0.6"/>
+          <!-- Water shimmer effects -->
+          <ellipse cx="485" cy="340" rx="20" ry="8" fill="#A8D8F0" opacity="0.3" class="water-shimmer"/>
+          <ellipse cx="515" cy="360" rx="15" ry="6" fill="#A8D8F0" opacity="0.2" class="water-shimmer" style="animation-delay: 1s"/>
+          <ellipse cx="500" cy="345" rx="12" ry="5" fill="white" opacity="0.15" class="water-shimmer" style="animation-delay: 1.5s"/>
+          <!-- Fountain center -->
+          <circle cx="500" cy="350" r="10" fill="#4A90C4" opacity="0.7"/>
+          <circle cx="500" cy="350" r="6" fill="#6DB5E5" opacity="0.8"/>
+          <!-- Fountain jets -->
+          <line x1="500" y1="350" x2="500" y2="332" stroke="#A8D8F0" stroke-width="2" opacity="0.6" class="fountain-jet"/>
+          <line x1="500" y1="350" x2="490" y2="336" stroke="#A8D8F0" stroke-width="1.5" opacity="0.5" class="fountain-jet" style="animation-delay: 0.3s"/>
+          <line x1="500" y1="350" x2="510" y2="336" stroke="#A8D8F0" stroke-width="1.5" opacity="0.5" class="fountain-jet" style="animation-delay: 0.6s"/>
+          <!-- Ripple circles -->
+          <circle cx="500" cy="350" r="5" fill="none" stroke="white" stroke-width="0.5" class="water-ripple"/>
+          <circle cx="500" cy="350" r="5" fill="none" stroke="white" stroke-width="0.5" class="water-ripple" style="animation-delay: 0.8s"/>
+          <circle cx="500" cy="350" r="5" fill="none" stroke="white" stroke-width="0.5" class="water-ripple" style="animation-delay: 1.6s"/>
+          <!-- Pool edge -->
+          <ellipse cx="500" cy="350" rx="66" ry="41" fill="none" stroke="#4A90C4" stroke-width="2" opacity="0.4"/>
+          <text x="500" y="400" text-anchor="middle" fill="#4A90C4" font-size="6.5" font-weight="600" letter-spacing="1">ESPELHO D'ÁGUA</text>
+        </g>
+
+        <!-- ─── ART INSTALLATION ─── -->
+        <g class="park-element" data-name="Escultura Central — Semente de Ouro"
+           data-desc="Escultura de 5m em aço corten e dourado representando uma semente brotando — símbolo do crescimento AL'DORA."
+           data-icon="🎨" data-area="25 m²" data-altura="5 metros" data-material="Aço corten + folha de ouro" data-artista="A definir (curadoria SESC/MAPU)"
+           onclick="showModal(this)" onmouseenter="showTooltip(event, this)" onmouseleave="hideTooltip()">
+          <!-- Sculpture base -->
+          <circle cx="500" cy="300" r="14" fill="#8B6914" opacity="0.3"/>
+          <circle cx="500" cy="300" r="10" fill="#C8A84B" opacity="0.5"/>
+          <!-- Sculpture form (abstract seed) -->
+          <path d="M 500,275 Q 508,282 506,295 Q 504,305 500,310 Q 496,305 494,295 Q 492,282 500,275Z" fill="#C8A84B" opacity="0.8" filter="url(#glow)"/>
+          <path d="M 500,278 Q 505,283 504,293 Q 502,300 500,303 Q 498,300 496,293 Q 495,283 500,278Z" fill="#E0C878" opacity="0.6"/>
+          <!-- Gold sparkle -->
+          <circle cx="500" cy="282" r="1.5" fill="#FFFFD0" opacity="0.9" class="water-shimmer"/>
+          <text x="500" y="326" text-anchor="middle" fill="#C8A84B" font-size="6" font-weight="700" letter-spacing="1">SEMENTE DE OURO</text>
+        </g>
+
+        <!-- ─── CHILDREN'S PLAYGROUND (SW) ─── -->
+        <g class="park-element" data-name="Playground Infantil"
+           data-desc="Área de brinquedos para crianças de 2–10 anos com piso emborrachado, tobogã, escalada e casinha na árvore."
+           data-icon="🧒" data-area="120 m²" data-faixa-etaria="2–10 anos" data-piso="Emborrachado EPDM colorido" data-equipamentos="Tobogã, escalada, casinha, balanço"
+           onclick="showModal(this)" onmouseenter="showTooltip(event, this)" onmouseleave="hideTooltip()">
+          <!-- Play area base -->
+          <rect x="80" y="420" width="140" height="85" rx="14" fill="#F5D66A" opacity="0.25"/>
+          <rect x="85" y="425" width="130" height="75" rx="12" fill="#E8C84A" opacity="0.15"/>
+          <!-- Rubber floor patches -->
+          <circle cx="115" cy="455" r="12" fill="#E85D3A" opacity="0.2"/>
+          <circle cx="145" cy="470" r="10" fill="#4A90C4" opacity="0.2"/>
+          <circle cx="180" cy="450" r="11" fill="#7BC67B" opacity="0.2"/>
+          <!-- Slide -->
+          <line x1="110" y1="440" x2="130" y2="465" stroke="#E85D3A" stroke-width="3" stroke-linecap="round"/>
+          <line x1="110" y1="440" x2="110" y2="465" stroke="#E85D3A" stroke-width="2"/>
+          <!-- Swing -->
+          <line x1="160" y1="435" x2="180" y2="435" stroke="#8B6914" stroke-width="2"/>
+          <line x1="165" y1="435" x2="165" y2="455" stroke="#8B6914" stroke-width="1"/>
+          <line x1="175" y1="435" x2="175" y2="455" stroke="#8B6914" stroke-width="1"/>
+          <rect x="161" y="453" width="8" height="3" rx="1" fill="#8B6914"/>
+          <rect x="171" y="453" width="8" height="3" rx="1" fill="#8B6914"/>
+          <!-- Climbing structure -->
+          <polygon points="195,440 205,460 185,460" fill="none" stroke="#4A90C4" stroke-width="1.5"/>
+          <line x1="190" y1="450" x2="200" y2="450" stroke="#4A90C4" stroke-width="1"/>
+          <text x="150" y="513" text-anchor="middle" fill="#C8A84B" font-size="6.5" font-weight="600" letter-spacing="1">PLAYGROUND</text>
+        </g>
+
+        <!-- ─── FITNESS ZONE (SE) ─── -->
+        <g class="park-element" data-name="Fitness Zone"
+           data-desc="Academia ao ar livre com equipamentos de última geração para musculação, funcional e alongamento."
+           data-icon="💪" data-area="100 m²" data-equipamentos="12 estações" data-piso="Emborrachado anti-impacto" data-horario="24h (iluminado)"
+           onclick="showModal(this)" onmouseenter="showTooltip(event, this)" onmouseleave="hideTooltip()">
+          <!-- Fitness area base -->
+          <rect x="760" y="420" width="150" height="85" rx="14" fill="#4A8B4A" opacity="0.15"/>
+          <rect x="765" y="425" width="140" height="75" rx="12" fill="#5DA55D" opacity="0.1"/>
+          <!-- Equipment silhouettes -->
+          <!-- Pull-up bar -->
+          <line x1="790" y1="440" x2="820" y2="440" stroke="#5A5A8C" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="793" y1="440" x2="793" y2="460" stroke="#5A5A8C" stroke-width="1.5"/>
+          <line x1="817" y1="440" x2="817" y2="460" stroke="#5A5A8C" stroke-width="1.5"/>
+          <!-- Bench press -->
+          <rect x="840" y="445" width="25" height="6" rx="2" fill="#5A5A8C" opacity="0.5"/>
+          <line x1="845" y1="451" x2="845" y2="460" stroke="#5A5A8C" stroke-width="1.5"/>
+          <line x1="860" y1="451" x2="860" y2="460" stroke="#5A5A8C" stroke-width="1.5"/>
+          <!-- Yoga/stretch mat -->
+          <rect x="790" y="470" width="24" height="14" rx="3" fill="#6DB5E5" opacity="0.3"/>
+          <!-- Bike station -->
+          <circle cx="860" cy="477" r="8" fill="none" stroke="#5A5A8C" stroke-width="1.5" opacity="0.5"/>
+          <line x1="856" y1="477" x2="864" y2="477" stroke="#5A5A8C" stroke-width="1"/>
+          <text x="835" y="513" text-anchor="middle" fill="#C8A84B" font-size="6.5" font-weight="600" letter-spacing="1">FITNESS</text>
+        </g>
+
+        <!-- ─── PET AREA (NE) ─── -->
+        <g class="park-element" data-name="Pet Park"
+           data-desc="Área cercada de 150 m² para cães com divisão para pequenos e grandes portes. Bebedouro e agility."
+           data-icon="🐕" data-area="150 m²" data-divisoes="Porte pequeno + porte grande" data-equipamentos="Agility, bebedouro, porta dupla" data-cercamento="Tela verde 1.2m"
+           onclick="showModal(this)" onmouseenter="showTooltip(event, this)" onmouseleave="hideTooltip()">
+          <!-- Pet area base -->
+          <rect x="700" y="200" width="140" height="80" rx="14" fill="#7BC67B" opacity="0.2"/>
+          <!-- Fence -->
+          <rect x="705" y="205" width="130" height="70" rx="12" fill="none" stroke="#4A8B4A" stroke-width="1.5" stroke-dasharray="6,3" opacity="0.5"/>
+          <!-- Division -->
+          <line x1="775" y1="210" x2="775" y2="270" stroke="#4A8B4A" stroke-width="1" stroke-dasharray="4,3" opacity="0.4"/>
+          <!-- Gate -->
+          <rect x="760" y="272" width="30" height="4" rx="2" fill="#8B6914" opacity="0.5"/>
+          <!-- Dog silhouette small -->
+          <ellipse cx="740" cy="240" rx="6" ry="4" fill="#8B6914" opacity="0.4"/>
+          <circle cx="746" cy="237" r="3" fill="#8B6914" opacity="0.4"/>
+          <!-- Dog silhouette big -->
+          <ellipse cx="800" cy="240" rx="9" ry="5" fill="#5A3A1A" opacity="0.3"/>
+          <circle cx="809" cy="236" r="4" fill="#5A3A1A" opacity="0.3"/>
+          <!-- Agility obstacle -->
+          <line x1="815" y1="250" x2="825" y2="250" stroke="#C8A84B" stroke-width="2" stroke-linecap="round"/>
+          <line x1="815" y1="250" x2="815" y2="260" stroke="#C8A84B" stroke-width="1"/>
+          <line x1="825" y1="250" x2="825" y2="260" stroke="#C8A84B" stroke-width="1"/>
+          <text x="770" y="291" text-anchor="middle" fill="#C8A84B" font-size="6.5" font-weight="600" letter-spacing="1">PET PARK</text>
+        </g>
+
+        <!-- ─── SEATING AREAS ─── -->
+        <g class="park-element" data-name="Áreas de Estar"
+           data-desc="30 bancos em madeira de demolição com apoio, espalhados ao longo dos passeios. Tomadas USB disponíveis."
+           data-icon="💺" data-area="Distribuída" data-bancos="30 unidades" data-material="Madeira de demolição + aço" data-extras="Tomada USB solar"
+           onclick="showModal(this)" onmouseenter="showTooltip(event, this)" onmouseleave="hideTooltip()">
+          <!-- Bench symbols along paths -->
+          <rect x="455" y="215" width="14" height="5" rx="2" fill="#A0785A" opacity="0.7"/>
+          <rect x="531" y="240" width="14" height="5" rx="2" fill="#A0785A" opacity="0.7"/>
+          <rect x="455" y="310" width="14" height="5" rx="2" fill="#A0785A" opacity="0.7"/>
+          <rect x="531" y="370" width="14" height="5" rx="2" fill="#A0785A" opacity="0.7"/>
+          <rect x="455" y="430" width="14" height="5" rx="2" fill="#A0785A" opacity="0.7"/>
+          <rect x="531" y="480" width="14" height="5" rx="2" fill="#A0785A" opacity="0.7"/>
+          <!-- Side benches -->
+          <rect x="153" y="310" width="14" height="5" rx="2" fill="#A0785A" opacity="0.6"/>
+          <rect x="153" y="400" width="14" height="5" rx="2" fill="#A0785A" opacity="0.6"/>
+          <rect x="833" y="350" width="14" height="5" rx="2" fill="#A0785A" opacity="0.6"/>
+          <rect x="833" y="390" width="14" height="5" rx="2" fill="#A0785A" opacity="0.6"/>
+        </g>
+
+        <!-- ─── NATIVE TREES ─── -->
+        <!-- Ipê Amarelo trees (golden canopy) -->
+        <g class="park-element" data-name="Ipê-Amarelo" data-desc="Handroanthus albus — Árvore símbolo do Cerrado, floração espetacular em julho-setembro. Tons dourados que ecoam a marca AL'DORA."
+           data-icon="🌳" data-especie="Handroanthus albus" data-altura="8–12m" data-floracao="Jul–Set" data-copa="6m diâmetro"
+           onclick="showModal(this)" onmouseenter="showTooltip(event, this)" onmouseleave="hideTooltip()">
+          <circle cx="130" cy="220" r="18" fill="url(#treeGrad2)" opacity="0.85" filter="url(#treeShadow)"/>
+          <circle cx="130" cy="218" r="14" fill="#E8D44D" opacity="0.4"/>
+          <circle cx="360" cy="310" r="20" fill="url(#treeGrad2)" opacity="0.85" filter="url(#treeShadow)"/>
+          <circle cx="360" cy="308" r="16" fill="#E8D44D" opacity="0.4"/>
+          <circle cx="640" cy="400" r="18" fill="url(#treeGrad2)" opacity="0.85" filter="url(#treeShadow)"/>
+          <circle cx="640" cy="398" r="14" fill="#E8D44D" opacity="0.4"/>
+          <circle cx="880" cy="310" r="17" fill="url(#treeGrad2)" opacity="0.85" filter="url(#treeShadow)"/>
+          <circle cx="880" cy="308" r="13" fill="#E8D44D" opacity="0.4"/>
+        </g>
+
+        <!-- Jatobá trees (large dark green canopy) -->
+        <g class="park-element" data-name="Jatobá" data-desc="Hymenaea courbaril — Árvore majestosa do Cerrado, frutos comestíveis, sombra generosa. Copa densa ideal para áreas de estar."
+           data-icon="🌳" data-especie="Hymenaea courbaril" data-altura="10–15m" data-copa="8m diâmetro" data-caracteristica="Frutos comestíveis"
+           onclick="showModal(this)" onmouseenter="showTooltip(event, this)" onmouseleave="hideTooltip()">
+          <circle cx="320" cy="210" r="22" fill="url(#treeGrad1)" opacity="0.9" filter="url(#treeShadow)"/>
+          <circle cx="320" cy="207" r="17" fill="#5DA55D" opacity="0.4"/>
+          <circle cx="680" cy="480" r="24" fill="url(#treeGrad1)" opacity="0.9" filter="url(#treeShadow)"/>
+          <circle cx="680" cy="477" r="19" fill="#5DA55D" opacity="0.4"/>
+          <circle cx="100" cy="350" r="20" fill="url(#treeGrad1)" opacity="0.9" filter="url(#treeShadow)"/>
+          <circle cx="100" cy="347" r="15" fill="#5DA55D" opacity="0.4"/>
+        </g>
+
+        <!-- Aroeira trees -->
+        <g class="park-element" data-name="Aroeira" data-desc="Myracrodruon urundeuva — Madeira nobre do Cerrado, copa elegante e rala. Atrai pássaros e borboletas."
+           data-icon="🌳" data-especie="Myracrodruon urundeuva" data-altura="6–10m" data-copa="5m diâmetro" data-caracteristica="Atrai avifauna"
+           onclick="showModal(this)" onmouseenter="showTooltip(event, this)" onmouseleave="hideTooltip()">
+          <circle cx="420" cy="470" r="15" fill="url(#treeGrad3)" opacity="0.8" filter="url(#treeShadow)"/>
+          <circle cx="420" cy="468" r="11" fill="#6DBF6D" opacity="0.35"/>
+          <circle cx="580" cy="230" r="16" fill="url(#treeGrad3)" opacity="0.8" filter="url(#treeShadow)"/>
+          <circle cx="580" cy="228" r="12" fill="#6DBF6D" opacity="0.35"/>
+          <circle cx="910" cy="420" r="14" fill="url(#treeGrad3)" opacity="0.8" filter="url(#treeShadow)"/>
+          <circle cx="910" cy="418" r="10" fill="#6DBF6D" opacity="0.35"/>
+          <circle cx="780" cy="370" r="15" fill="url(#treeGrad3)" opacity="0.8" filter="url(#treeShadow)"/>
+          <circle cx="780" cy="368" r="11" fill="#6DBF6D" opacity="0.35"/>
+        </g>
+
+        <!-- Palm trees (accent) -->
+        <g>
+          <circle cx="475" cy="195" r="10" fill="#3A7A3A" opacity="0.6" filter="url(#treeShadow)"/>
+          <circle cx="525" cy="195" r="10" fill="#3A7A3A" opacity="0.6" filter="url(#treeShadow)"/>
+          <circle cx="475" cy="500" r="10" fill="#3A7A3A" opacity="0.6" filter="url(#treeShadow)"/>
+          <circle cx="525" cy="500" r="10" fill="#3A7A3A" opacity="0.6" filter="url(#treeShadow)"/>
+        </g>
+
+        <!-- ─── LAWN LABELS ─── -->
+        <text x="350" cy="420" y="420" text-anchor="middle" fill="#2D5F2D" font-size="8" opacity="0.3" font-weight="600" letter-spacing="3">GRAMADO</text>
+        <text x="650" y="300" text-anchor="middle" fill="#2D5F2D" font-size="8" opacity="0.3" font-weight="600" letter-spacing="3">GRAMADO</text>
+
+        <!-- ─── LIGHTING (small dots along paths) ─── -->
+        <g opacity="0.4">
+          <circle cx="500" cy="200" r="2" fill="#F5D66A"/>
+          <circle cx="500" cy="250" r="2" fill="#F5D66A"/>
+          <circle cx="500" cy="300" r="2" fill="#F5D66A"/>
+          <circle cx="500" cy="400" r="2" fill="#F5D66A"/>
+          <circle cx="500" cy="450" r="2" fill="#F5D66A"/>
+          <circle cx="500" cy="500" r="2" fill="#F5D66A"/>
+          <circle cx="160" cy="250" r="1.5" fill="#F5D66A"/>
+          <circle cx="160" cy="350" r="1.5" fill="#F5D66A"/>
+          <circle cx="160" cy="450" r="1.5" fill="#F5D66A"/>
+          <circle cx="840" cy="250" r="1.5" fill="#F5D66A"/>
+          <circle cx="840" cy="350" r="1.5" fill="#F5D66A"/>
+          <circle cx="840" cy="450" r="1.5" fill="#F5D66A"/>
+        </g>
+
+      </g><!-- end park-main -->
+
+      <!-- ─── PARK BUFFER SOUTH ─── -->
+      <rect x="60" y="520" width="880" height="30" rx="0" fill="url(#lawnGrad)" opacity="0.4"/>
+
+      <!-- ─── QC02 TOWERS (SOUTH) ─── -->
+      <g class="park-element" data-name="QC02 — AL'DORA Reserva"
+         data-desc="Quadra sul com Torres G–J: foco em Garden Suites (P3) para famílias. Fase 2 do masterplan."
+         data-icon="🏗️" data-area="11.953 m²" data-towers="4 torres" data-units="~380 unidades" data-status="Gate G2"
+         onclick="showModal(this)" onmouseenter="showTooltip(event, this)" onmouseleave="hideTooltip()">
+        <!-- Tower E -->
+        <rect x="200" y="570" width="90" height="105" rx="4" fill="#3A5A3A" stroke="#5A8A5A" stroke-width="1.5" class="tower-fill-cls"/>
+        <text x="245" y="618" text-anchor="middle" fill="white" font-size="11" font-weight="700" opacity="0.8">TORRE G</text>
+        <text x="245" y="633" text-anchor="middle" fill="#C8A84B" font-size="8" opacity="0.7">Reserva</text>
+        <!-- Tower F -->
+        <rect x="460" y="565" width="90" height="110" rx="4" fill="#3A5A3A" stroke="#5A8A5A" stroke-width="1.5" class="tower-fill-cls"/>
+        <text x="505" y="616" text-anchor="middle" fill="white" font-size="11" font-weight="700" opacity="0.8">TORRE H</text>
+        <text x="505" y="631" text-anchor="middle" fill="#C8A84B" font-size="8" opacity="0.7">Reserva</text>
+
+        <!-- QC02 Label -->
+        <rect x="700" y="600" width="120" height="50" rx="8" fill="none" stroke="#5A8A5A" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="760" y="621" text-anchor="middle" fill="#5A8A5A" font-size="10" font-weight="700" letter-spacing="2">QC02</text>
+        <text x="760" y="637" text-anchor="middle" fill="#5A8A5A" font-size="8" opacity="0.6">11.953 m²</text>
+      </g>
+
+      <!-- ─── COMPASS ROSE ─── -->
+      <g transform="translate(55, 670)">
+        <circle cx="0" cy="0" r="18" fill="rgba(0,0,0,0.05)" stroke="var(--gold)" stroke-width="0.5"/>
+        <text x="0" y="-8" text-anchor="middle" fill="var(--gold)" font-size="9" font-weight="700">N</text>
+        <line x1="0" y1="-5" x2="0" y2="5" stroke="var(--gold)" stroke-width="1.5"/>
+        <polygon points="0,-6 -3,0 3,0" fill="var(--gold)" opacity="0.8"/>
+        <text x="0" y="14" text-anchor="middle" fill="var(--gold)" font-size="6" opacity="0.5">S</text>
+      </g>
+
+      <!-- ─── SCALE BAR ─── -->
+      <g transform="translate(870, 690)">
+        <line x1="0" y1="0" x2="80" y2="0" stroke="var(--gold)" stroke-width="1"/>
+        <line x1="0" y1="-3" x2="0" y2="3" stroke="var(--gold)" stroke-width="1"/>
+        <line x1="80" y1="-3" x2="80" y2="3" stroke="var(--gold)" stroke-width="1"/>
+        <text x="40" y="-6" text-anchor="middle" fill="var(--gold)" font-size="7" opacity="0.7">~80m</text>
+      </g>
+
+      <!-- ─── TITLE CARTOUCHE ─── -->
+      <g transform="translate(500, 700)">
+        <text x="0" y="0" text-anchor="middle" fill="var(--gold)" font-size="8" font-weight="600" letter-spacing="3" opacity="0.5">PARQUE CENTRAL AL'DORA · PLANTA HUMANIZADA · JARDIM VERSAILLES · UBERLÂNDIA/MG</text>
+      </g>
+
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- SIDE ELEVATION VIEW                    -->
+<!-- ═══════════════════════════════════════ -->
+<section class="section" id="elevation">
+  <p class="section-title">Corte Esquemático</p>
+  <p class="section-desc">Elevação lateral mostrando o parque como vale verde entre as torres — proporção e escala humana</p>
+
+  <div class="elevation-container">
+    <svg viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="elSky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#87CEEB" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#F5F0E8" stop-opacity="0.1"/>
+        </linearGradient>
+        <linearGradient id="elGround" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#4A8B4A"/>
+          <stop offset="100%" stop-color="#2D5F2D"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Sky -->
+      <rect width="1000" height="400" fill="url(#elSky)"/>
+
+      <!-- Ground line -->
+      <rect x="0" y="320" width="1000" height="80" fill="url(#elGround)" opacity="0.4"/>
+      <line x1="0" y1="320" x2="1000" y2="320" stroke="#4A8B4A" stroke-width="2" opacity="0.5"/>
+
+      <!-- QC01 Tower silhouettes (left) -->
+      <g opacity="0.6">
+        <!-- Torre A (18 floors ~54m) -->
+        <rect x="60" y="100" width="60" height="220" rx="3" fill="#3A3A5C" stroke="#5A5A8C" stroke-width="1"/>
+        <text x="90" y="210" text-anchor="middle" fill="white" font-size="9" opacity="0.6" transform="rotate(-90, 90, 210)">TORRE A · 18 pav.</text>
+        <!-- Windows -->
+        <g opacity="0.3">
+          <rect x="68" y="110" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="80" y="110" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="92" y="110" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="104" y="110" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="68" y="130" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="80" y="130" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="92" y="130" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="104" y="130" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="68" y="150" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="80" y="150" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="92" y="150" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="104" y="150" width="8" height="6" rx="1" fill="#87CEEB"/>
+        </g>
+
+        <!-- Torre B (20 floors ~60m) -->
+        <rect x="150" y="80" width="65" height="240" rx="3" fill="#3A3A5C" stroke="#5A5A8C" stroke-width="1"/>
+        <text x="182" y="200" text-anchor="middle" fill="white" font-size="9" opacity="0.6" transform="rotate(-90, 182, 200)">TORRE B · 20 pav.</text>
+        <!-- Windows -->
+        <g opacity="0.3">
+          <rect x="158" y="90" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="170" y="90" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="182" y="90" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="194" y="90" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="158" y="110" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="170" y="110" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="182" y="110" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="194" y="110" width="8" height="6" rx="1" fill="#87CEEB"/>
+        </g>
+      </g>
+
+      <!-- QC01 Label -->
+      <text x="140" y="75" text-anchor="middle" fill="#5A5A8C" font-size="10" font-weight="700" letter-spacing="2" opacity="0.6">QC01</text>
+
+      <!-- PARK ZONE (center) -->
+      <!-- Grass mound -->
+      <path d="M 280,320 Q 350,305 500,300 Q 650,305 720,320" fill="#5DA55D" opacity="0.6"/>
+      <path d="M 300,320 Q 400,310 500,308 Q 600,310 700,320" fill="#7BC67B" opacity="0.3"/>
+
+      <!-- Trees in elevation -->
+      <!-- Ipê Amarelo -->
+      <g filter="url(#treeShadow)">
+        <rect x="328" y="265" width="4" height="55" rx="2" fill="#8B6914" opacity="0.6"/>
+        <ellipse cx="330" cy="255" rx="22" ry="18" fill="#C8A84B" opacity="0.7"/>
+        <ellipse cx="330" cy="250" rx="18" ry="14" fill="#E8D44D" opacity="0.5"/>
+        <text x="330" y="288" text-anchor="middle" fill="#8B6914" font-size="6" opacity="0.5">Ipê</text>
+      </g>
+
+      <!-- Jatobá -->
+      <g filter="url(#treeShadow)">
+        <rect x="448" y="250" width="5" height="70" rx="2" fill="#5A3A1A" opacity="0.6"/>
+        <ellipse cx="450" cy="240" rx="28" ry="22" fill="#2D5F2D" opacity="0.8"/>
+        <ellipse cx="450" cy="235" rx="22" ry="17" fill="#4A8B4A" opacity="0.4"/>
+        <text x="450" y="275" text-anchor="middle" fill="#2D5F2D" font-size="6" opacity="0.5">Jatobá</text>
+      </g>
+
+      <!-- Aroeira -->
+      <g filter="url(#treeShadow)">
+        <rect x="548" y="268" width="4" height="52" rx="2" fill="#6B4A2A" opacity="0.6"/>
+        <ellipse cx="550" cy="258" rx="20" ry="16" fill="#3A7A3A" opacity="0.75"/>
+        <ellipse cx="550" cy="254" rx="15" ry="12" fill="#6DBF6D" opacity="0.35"/>
+        <text x="550" y="284" text-anchor="middle" fill="#3A7A3A" font-size="6" opacity="0.5">Aroeira</text>
+      </g>
+
+      <!-- Palm tree -->
+      <g filter="url(#treeShadow)">
+        <rect x="648" y="258" width="3" height="62" rx="1.5" fill="#8B6914" opacity="0.5"/>
+        <ellipse cx="650" cy="250" rx="18" ry="12" fill="#3A7A3A" opacity="0.6"/>
+        <path d="M 635,252 Q 650,240 665,252" fill="#5DA55D" opacity="0.4"/>
+      </g>
+
+      <!-- Water feature in elevation -->
+      <ellipse cx="500" cy="316" rx="30" ry="5" fill="#4A90C4" opacity="0.5"/>
+      <line x1="500" y1="316" x2="500" y2="296" stroke="#6DB5E5" stroke-width="2" opacity="0.4" class="fountain-jet"/>
+      <text x="500" y="330" text-anchor="middle" fill="#4A90C4" font-size="6" opacity="0.5">Fonte</text>
+
+      <!-- Sculpture -->
+      <path d="M 500,296 Q 504,288 502,278 Q 500,272 498,278 Q 496,288 500,296Z" fill="#C8A84B" opacity="0.6"/>
+
+      <!-- People silhouettes -->
+      <g opacity="0.35">
+        <!-- Walking person -->
+        <circle cx="380" cy="308" r="3" fill="#3A3A5C"/>
+        <line x1="380" y1="311" x2="380" y2="318" stroke="#3A3A5C" stroke-width="1.5"/>
+        <line x1="377" y1="318" x2="380" y2="315" stroke="#3A3A5C" stroke-width="1"/>
+        <line x1="383" y1="318" x2="380" y2="315" stroke="#3A3A5C" stroke-width="1"/>
+        <!-- Sitting person -->
+        <circle cx="420" cy="308" r="3" fill="#3A3A5C"/>
+        <line x1="420" y1="311" x2="420" y2="315" stroke="#3A3A5C" stroke-width="1.5"/>
+        <line x1="420" y1="315" x2="425" y2="318" stroke="#3A3A5C" stroke-width="1"/>
+        <!-- Child -->
+        <circle cx="580" cy="311" r="2.5" fill="#3A3A5C"/>
+        <line x1="580" y1="313" x2="580" y2="318" stroke="#3A3A5C" stroke-width="1"/>
+        <!-- Dog -->
+        <ellipse cx="600" cy="316" rx="5" ry="3" fill="#3A3A5C"/>
+        <circle cx="605" cy="313" r="2" fill="#3A3A5C"/>
+      </g>
+
+      <!-- Park label -->
+      <text x="500" y="345" text-anchor="middle" fill="#4A8B4A" font-size="10" font-weight="600" letter-spacing="3" opacity="0.4">PARQUE CENTRAL AL'DORA</text>
+
+      <!-- QC02 Tower silhouettes (right) -->
+      <g opacity="0.6">
+        <!-- Torre G (30 floors) -->
+        <rect x="780" y="120" width="60" height="200" rx="3" fill="#3A5A3A" stroke="#5A8A5A" stroke-width="1"/>
+        <text x="810" y="220" text-anchor="middle" fill="white" font-size="9" opacity="0.6" transform="rotate(-90, 810, 220)">TORRE G · 30 pav.</text>
+        <g opacity="0.3">
+          <rect x="788" y="130" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="800" y="130" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="812" y="130" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="824" y="130" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="788" y="150" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="800" y="150" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="812" y="150" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="824" y="150" width="8" height="6" rx="1" fill="#87CEEB"/>
+        </g>
+
+        <!-- Torre H (30 floors) -->
+        <rect x="870" y="100" width="65" height="220" rx="3" fill="#3A5A3A" stroke="#5A8A5A" stroke-width="1"/>
+        <text x="902" y="210" text-anchor="middle" fill="white" font-size="9" opacity="0.6" transform="rotate(-90, 902, 210)">TORRE H · 30 pav.</text>
+        <g opacity="0.3">
+          <rect x="878" y="110" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="890" y="110" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="902" y="110" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="914" y="110" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="878" y="130" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="890" y="130" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="902" y="130" width="8" height="6" rx="1" fill="#87CEEB"/>
+          <rect x="914" y="130" width="8" height="6" rx="1" fill="#87CEEB"/>
+        </g>
+      </g>
+
+      <!-- QC02 Label -->
+      <text x="860" y="95" text-anchor="middle" fill="#5A8A5A" font-size="10" font-weight="700" letter-spacing="2" opacity="0.6">QC02</text>
+
+      <!-- Height dimension lines -->
+      <g opacity="0.3" stroke="#5A5A8C" stroke-width="0.5">
+        <line x1="45" y1="80" x2="45" y2="320"/>
+        <line x1="40" y1="80" x2="50" y2="80"/>
+        <line x1="40" y1="320" x2="50" y2="320"/>
+        <text x="40" y="200" text-anchor="middle" fill="#5A5A8C" font-size="7" transform="rotate(-90, 40, 200)">~60m</text>
+      </g>
+
+      <!-- Park width dimension -->
+      <g opacity="0.3" stroke="#4A8B4A" stroke-width="0.5">
+        <line x1="280" y1="370" x2="720" y2="370"/>
+        <line x1="280" y1="365" x2="280" y2="375"/>
+        <line x1="720" y1="365" x2="720" y2="375"/>
+        <text x="500" y="385" text-anchor="middle" fill="#4A8B4A" font-size="8">~80m (Parque Central)</text>
+      </g>
+
+      <!-- Section label -->
+      <text x="500" y="395" text-anchor="middle" fill="#C8A84B" font-size="7" letter-spacing="2" opacity="0.4">CORTE ESQUEMÁTICO A–A' · SENTIDO LESTE-OESTE</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- STATS PANEL                            -->
+<!-- ═══════════════════════════════════════ -->
+<section class="section" id="stats">
+  <p class="section-title">Dados do Projeto</p>
+  <p class="section-desc">Distribuição de áreas e programa do Parque Central AL'DORA</p>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon">📐</div>
+      <div class="stat-value">2.400</div>
+      <div class="stat-label">Área Total</div>
+      <div class="stat-sub">metros quadrados</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🌿</div>
+      <div class="stat-value">65%</div>
+      <div class="stat-label">Área Verde</div>
+      <div class="stat-sub">~1.560 m²</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🪨</div>
+      <div class="stat-value">25%</div>
+      <div class="stat-label">Hardscape</div>
+      <div class="stat-sub">~600 m² · Passeios e praças</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">💧</div>
+      <div class="stat-value">5%</div>
+      <div class="stat-label">Água</div>
+      <div class="stat-sub">~120 m² · Espelho + fonte</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🎯</div>
+      <div class="stat-value">5%</div>
+      <div class="stat-label">Lazer Ativo</div>
+      <div class="stat-sub">~120 m² · Play + fitness</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🌳</div>
+      <div class="stat-value">45+</div>
+      <div class="stat-label">Árvores</div>
+      <div class="stat-sub">Nativas do Cerrado</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">💺</div>
+      <div class="stat-value">30</div>
+      <div class="stat-label">Bancos</div>
+      <div class="stat-sub">Madeira de demolição</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">💡</div>
+      <div class="stat-value">120</div>
+      <div class="stat-label">Luminárias</div>
+      <div class="stat-sub">LED de baixo consumo</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- TREE SPECIES                           -->
+<!-- ═══════════════════════════════════════ -->
+<section class="section" id="species">
+  <p class="section-title">Espécies Nativas</p>
+  <p class="section-desc">Paisagismo com espécies do Cerrado — identidade local e sustentabilidade</p>
+
+  <div class="tree-legend">
+    <div class="tree-card">
+      <div class="tree-swatch" style="background: linear-gradient(135deg, #E8D44D, #C8A84B);">🌼</div>
+      <div class="tree-info">
+        <h4>Ipê-Amarelo</h4>
+        <span class="latin">Handroanthus albus</span>
+        <p>Floração dourada jul–set. Copa 6m. Símbolo do Cerrado e da marca AL'DORA.</p>
+      </div>
+    </div>
+    <div class="tree-card">
+      <div class="tree-swatch" style="background: linear-gradient(135deg, #4A8B4A, #2D5F2D);">🌰</div>
+      <div class="tree-info">
+        <h4>Jatobá</h4>
+        <span class="latin">Hymenaea courbaril</span>
+        <p>Árvore majestosa 10–15m. Copa densa, frutos comestíveis. Sombra generosa.</p>
+      </div>
+    </div>
+    <div class="tree-card">
+      <div class="tree-swatch" style="background: linear-gradient(135deg, #6DBF6D, #3A7A3A);">🍃</div>
+      <div class="tree-info">
+        <h4>Aroeira</h4>
+        <span class="latin">Myracrodruon urundeuva</span>
+        <p>Madeira nobre 6–10m. Copa elegante. Atrai pássaros e borboletas.</p>
+      </div>
+    </div>
+    <div class="tree-card">
+      <div class="tree-swatch" style="background: linear-gradient(135deg, #C8A84B, #8B6914);">🌴</div>
+      <div class="tree-info">
+        <h4>Buriti</h4>
+        <span class="latin">Mauritia flexuosa</span>
+        <p>Palmeira das veredas, 10–15m. Fruto típico do Cerrado. Marca as entradas do parque.</p>
+      </div>
+    </div>
+    <div class="tree-card">
+      <div class="tree-swatch" style="background: linear-gradient(135deg, #D4A0D4, #8B4A8B);">🌸</div>
+      <div class="tree-info">
+        <h4>Ipê-Roxo</h4>
+        <span class="latin">Handroanthus impetiginosus</span>
+        <p>Floração rosa-púrpura ago–set. Complementa o Ipê-Amarelo nas alamedas.</p>
+      </div>
+    </div>
+    <div class="tree-card">
+      <div class="tree-swatch" style="background: linear-gradient(135deg, #7BC67B, #4A8B4A);">🌿</div>
+      <div class="tree-info">
+        <h4>Pequi</h4>
+        <span class="latin">Caryocar brasiliense</span>
+        <p>Árvore sagrada do Cerrado, 6–10m. Copa larga, fruto culinário tradicional.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p class="brand">AL'DORA CITY</p>
+  <p>Jardim Versailles · Uberlândia/MG</p>
+  <p style="margin-top: 8px; font-size: 0.75rem;">Parque Central — Conceito Paisagístico · Cidade Jardim Urbanismo © 2025</p>
+</footer>
+
+<script>
+// ─── THEME ───
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  const btn = document.getElementById('theme-btn');
+  btn.textContent = isDark ? '☀️ Diurno' : '🌙 Noturno';
+
+  // Animate SVG night elements
+  document.querySelectorAll('.sky-gradient-dark').forEach(el => {
+    el.setAttribute('opacity', isDark ? '1' : '0');
+  });
+  document.querySelectorAll('.sky-gradient-light').forEach(el => {
+    el.style.transition = 'opacity 0.4s';
+    el.style.opacity = isDark ? '0' : '1';
+  });
+}
+
+// ─── SCROLL ───
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Update active button
+    document.querySelectorAll('.btn:not(.btn-gold)').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+}
+
+// ─── TOOLTIP ───
+const tooltip = document.getElementById('tooltip');
+const tooltipTitle = document.getElementById('tooltip-title');
+const tooltipBody = document.getElementById('tooltip-body');
+
+function showTooltip(e, el) {
+  const name = el.dataset.name;
+  const desc = el.dataset.desc;
+  if (!name) return;
+
+  tooltipTitle.textContent = name;
+  tooltipBody.textContent = desc;
+  tooltip.classList.add('show');
+  positionTooltip(e);
+}
+
+function positionTooltip(e) {
+  const x = e.clientX + 16;
+  const y = e.clientY + 16;
+  const rect = tooltip.getBoundingClientRect();
+  const maxX = window.innerWidth - rect.width - 20;
+  const maxY = window.innerHeight - rect.height - 20;
+
+  tooltip.style.left = Math.min(x, maxX) + 'px';
+  tooltip.style.top = Math.min(y, maxY) + 'px';
+}
+
+function hideTooltip() {
+  tooltip.classList.remove('show');
+}
+
+document.addEventListener('mousemove', function(e) {
+  if (tooltip.classList.contains('show')) {
+    positionTooltip(e);
+  }
+});
+
+// ─── MODAL ───
+const overlay = document.getElementById('modal-overlay');
+
+function showModal(el) {
+  const d = el.dataset;
+  document.getElementById('modal-icon').textContent = d.icon || '📍';
+  document.getElementById('modal-title').textContent = d.name || '';
+  document.getElementById('modal-desc').textContent = d.desc || '';
+
+  const specsContainer = document.getElementById('modal-specs');
+  specsContainer.innerHTML = '';
+
+  // Build specs from all data attributes except name, desc, icon
+  const skip = ['name', 'desc', 'icon'];
+  Object.keys(d).forEach(key => {
+    if (skip.includes(key)) return;
+    const spec = document.createElement('div');
+    spec.className = 'modal-spec';
+    const label = key.replace(/-/g, ' ').replace(/^\w/, c => c.toUpperCase());
+    spec.innerHTML = '<strong>' + label + '</strong>' + d[key];
+    specsContainer.appendChild(spec);
+  });
+
+  overlay.classList.add('show');
+}
+
+function closeModal(e) {
+  if (e && e.target !== overlay && !e.target.classList.contains('modal-close')) return;
+  overlay.classList.remove('show');
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') overlay.classList.remove('show');
+});
+
+// ─── INTERSECTION OBSERVER (fade-in) ───
+const observerOptions = { threshold: 0.1 };
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.stat-card, .tree-card, .map-container, .elevation-container').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  observer.observe(el);
+});
+
+// ─── ACTIVE NAV ON SCROLL ───
+const sections = ['plan', 'elevation', 'stats', 'species'];
+const navBtns = document.querySelectorAll('.btn:not(.btn-gold)');
+
+window.addEventListener('scroll', function() {
+  let current = '';
+  sections.forEach(id => {
+    const section = document.getElementById(id);
+    if (section && section.getBoundingClientRect().top <= 200) {
+      current = id;
+    }
+  });
+
+  navBtns.forEach((btn, i) => {
+    btn.classList.toggle('active', sections[i] === current);
+  });
+}, { passive: true });
+</script>
+</body>
+</html>

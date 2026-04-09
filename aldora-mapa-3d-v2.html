@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AL'DORA City · Masterplan 3D Interativo · Jardim Versailles · Uberlândia/MG">
+<meta property="og:title" content="AL'DORA City · Masterplan 3D">
+<meta property="og:description" content="Visualização 3D interativa — 14 torres, 3 quadras, R$511,6M VGV">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%230a0d14'/%3E%3Ctext x='16' y='22' font-size='16' fill='%23C8A84B' text-anchor='middle' font-family='serif' font-weight='700'%3EA%3C/text%3E%3C/svg%3E">
+<title>AL'DORA City · Masterplan 3D</title>
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0d14;--bg2:#10141e;--bg3:#161b28;
+  --gold:#C8A84B;--gold-light:#FFD060;--gold-dark:#B8921A;--gold-glow:rgba(200,168,75,0.35);
+  --brown:#A07020;--green-park:#3a7a45;
+  --text:#f0ece4;--text-dim:rgba(240,236,228,0.5);--text-muted:rgba(240,236,228,0.3);
+  --border:rgba(200,168,75,0.15);--border-hover:rgba(200,168,75,0.4);
+  --sidebar-w:320px;
+  --radius:6px;
+}
+html,body{height:100%;overflow:hidden;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+
+/* ═══ LOADING SCREEN ═══ */
+#loader{position:fixed;inset:0;z-index:1000;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s ease,visibility .8s}
+#loader.done{opacity:0;visibility:hidden;pointer-events:none}
+.loader-brand{font-size:28px;letter-spacing:10px;color:var(--gold);font-weight:300;text-transform:uppercase;opacity:0;animation:fadeUp .8s .2s forwards}
+.loader-sub{font-size:12px;color:var(--text-dim);letter-spacing:4px;margin-top:8px;opacity:0;animation:fadeUp .8s .5s forwards}
+.loader-line{width:200px;height:1px;background:var(--border);margin-top:40px;overflow:hidden;opacity:0;animation:fadeUp .6s .8s forwards}
+.loader-line-fill{width:0;height:100%;background:var(--gold);transition:width 1.8s cubic-bezier(.4,0,.2,1)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+
+/* ═══ LAYOUT ═══ */
+#app{display:flex;height:100vh;width:100vw}
+#sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);height:100vh;background:var(--bg);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:20;transition:margin-left .35s cubic-bezier(.4,0,.2,1);overflow:hidden}
+#sidebar.collapsed{margin-left:calc(var(--sidebar-w) * -1)}
+#map-wrap{flex:1;position:relative;height:100vh}
+#map{width:100%;height:100%}
+
+/* Sidebar toggle */
+#sidebar-toggle{position:absolute;top:16px;left:16px;z-index:30;width:42px;height:42px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--gold);font-size:18px;cursor:pointer;display:none;align-items:center;justify-content:center;transition:all .2s;backdrop-filter:blur(12px)}
+#sidebar-toggle:hover{border-color:var(--border-hover);background:var(--bg2)}
+
+/* ─── Sidebar Sections ─── */
+.sb-header{padding:24px 20px 16px;border-bottom:1px solid var(--border)}
+.sb-logo{font-size:11px;letter-spacing:5px;color:var(--gold);font-weight:600;text-transform:uppercase}
+.sb-subtitle{font-size:10px;color:var(--text-muted);letter-spacing:2px;margin-top:4px}
+.sb-scroll{flex:1;overflow-y:auto;padding:0}
+.sb-scroll::-webkit-scrollbar{width:4px}
+.sb-scroll::-webkit-scrollbar-track{background:transparent}
+.sb-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.sb-section{padding:16px 20px;border-bottom:1px solid var(--border)}
+.sb-section-title{font-size:9px;letter-spacing:3px;color:var(--text-muted);text-transform:uppercase;margin-bottom:12px;font-weight:600}
+
+/* Metrics grid */
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.metric{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px}
+.metric-val{font-size:16px;color:var(--gold);font-weight:700;line-height:1.2}
+.metric-val.small{font-size:13px}
+.metric-label{font-size:9px;color:var(--text-dim);letter-spacing:1px;margin-top:2px;text-transform:uppercase}
+.metric.wide{grid-column:1/-1}
+
+/* Nav buttons */
+.nav-btn{width:100%;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-dim);font-size:11px;letter-spacing:1px;cursor:pointer;transition:all .2s;text-align:left;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.nav-btn:hover{background:var(--bg3);border-color:var(--border-hover);color:var(--gold)}
+.nav-btn:active{transform:scale(.98)}
+.nav-btn .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.nav-btn .arrow{margin-left:auto;opacity:.3;transition:opacity .2s}
+.nav-btn:hover .arrow{opacity:.8}
+
+/* Layer toggles */
+.layer-toggle{display:flex;align-items:center;gap:10px;padding:6px 0;cursor:pointer;font-size:11px;color:var(--text-dim);transition:color .2s}
+.layer-toggle:hover{color:var(--text)}
+.layer-toggle input{display:none}
+.toggle-track{width:32px;height:16px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;position:relative;transition:all .2s;flex-shrink:0}
+.toggle-track::after{content:'';position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:var(--text-muted);transition:all .2s}
+.layer-toggle input:checked+.toggle-track{background:rgba(200,168,75,0.2);border-color:var(--gold)}
+.layer-toggle input:checked+.toggle-track::after{left:18px;background:var(--gold)}
+
+/* Style selector */
+.style-btns{display:flex;gap:4px}
+.style-btn{flex:1;padding:8px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-dim);font-size:10px;cursor:pointer;transition:all .2s;text-align:center;letter-spacing:.5px}
+.style-btn:hover{border-color:var(--border-hover)}
+.style-btn.active{background:rgba(200,168,75,0.12);border-color:var(--gold);color:var(--gold)}
+
+/* Footer */
+.sb-footer{padding:12px 20px;border-top:1px solid var(--border);font-size:9px;color:var(--text-muted);letter-spacing:1.5px;text-align:center}
+
+/* ═══ MAP OVERLAY ELEMENTS ═══ */
+.map-gradient-top{position:absolute;top:0;left:0;right:0;height:80px;background:linear-gradient(180deg,rgba(10,13,20,0.5) 0%,transparent 100%);pointer-events:none;z-index:5}
+.map-gradient-bottom{position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(0deg,rgba(10,13,20,0.4) 0%,transparent 100%);pointer-events:none;z-index:5}
+
+/* Compass badge */
+#compass{position:absolute;top:16px;right:60px;z-index:10;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:8px 14px;font-size:10px;color:var(--text-dim);letter-spacing:1.5px;backdrop-filter:blur(12px);pointer-events:none;opacity:.7}
+
+/* ═══ MAPBOX OVERRIDES ═══ */
+.mapboxgl-ctrl-group{background:var(--bg)!important;border:1px solid var(--border)!important;border-radius:var(--radius)!important}
+.mapboxgl-ctrl-group button{color:var(--gold)!important}
+.mapboxgl-ctrl-group button+button{border-top:1px solid var(--border)!important}
+.mapboxgl-ctrl-attrib{background:rgba(10,13,20,0.7)!important;color:var(--text-muted)!important;font-size:9px!important}
+.mapboxgl-ctrl-attrib a{color:var(--text-dim)!important}
+.mapboxgl-popup-content{background:var(--bg)!important;border:1px solid var(--border-hover)!important;color:var(--text)!important;border-radius:var(--radius)!important;padding:0!important;min-width:240px;box-shadow:0 20px 60px rgba(0,0,0,0.6)!important;overflow:hidden}
+.mapboxgl-popup-tip{border-top-color:var(--bg)!important}
+.mapboxgl-popup-close-button{color:var(--text-dim)!important;font-size:18px!important;padding:4px 8px!important}
+.mapboxgl-popup-close-button:hover{color:var(--gold)!important;background:transparent!important}
+
+/* Popup internal */
+.popup-header{padding:14px 16px 10px;background:linear-gradient(135deg,rgba(200,168,75,0.08),transparent);border-bottom:1px solid var(--border)}
+.popup-emp{font-size:9px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;font-weight:600}
+.popup-title{font-size:15px;font-weight:700;color:var(--text);margin-top:2px}
+.popup-body{padding:10px 16px 14px}
+.popup-row{display:flex;justify-content:space-between;padding:5px 0;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.popup-row:last-child{border-bottom:none}
+.popup-row .label{color:var(--text-dim)}
+.popup-row .value{color:var(--gold);font-weight:600}
+.popup-vgv{margin-top:8px;padding:8px 12px;background:rgba(200,168,75,0.08);border:1px solid var(--border);border-radius:4px;display:flex;justify-content:space-between;align-items:center}
+.popup-vgv .label{font-size:9px;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase}
+.popup-vgv .value{font-size:16px;color:var(--gold);font-weight:700}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:768px){
+  :root{--sidebar-w:280px}
+  #sidebar-toggle{display:flex}
+  #sidebar{position:fixed;left:0;top:0;z-index:50;box-shadow:20px 0 60px rgba(0,0,0,0.5)}
+  #sidebar.collapsed{margin-left:calc(var(--sidebar-w) * -1)}
+  .hud-kpis{display:none!important}
+  #compass{display:none}
+}
+@media(min-width:769px){
+  #sidebar-toggle{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ LOADING SCREEN ═══ -->
+<div id="loader">
+  <div class="loader-brand">AL'DORA City</div>
+  <div class="loader-sub">Masterplan 3D · Uberlândia/MG</div>
+  <div class="loader-line"><div class="loader-line-fill" id="loader-fill"></div></div>
+</div>
+
+<!-- ═══ APP LAYOUT ═══ -->
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div class="sb-header">
+      <div class="sb-logo">AL'DORA City</div>
+      <div class="sb-subtitle">Jardim Versailles · Uberlândia/MG</div>
+    </div>
+
+    <div class="sb-scroll">
+      <!-- METRICS -->
+      <div class="sb-section">
+        <div class="sb-section-title">Indicadores do Masterplan</div>
+        <div class="metrics-grid">
+          <div class="metric wide">
+            <div class="metric-val">R$ 511,6M</div>
+            <div class="metric-label">VGV Total Estimado</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val">14</div>
+            <div class="metric-label">Torres</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val">3</div>
+            <div class="metric-label">Quadras</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val small">42.783 m²</div>
+            <div class="metric-label">Terreno</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val small">125.684 m²</div>
+            <div class="metric-label">Área Privativa</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val small">CA 4,0</div>
+            <div class="metric-label">Coef. Aproveit.</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val small">ZR2/SVA</div>
+            <div class="metric-label">Zoneamento</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NAVIGATION -->
+      <div class="sb-section">
+        <div class="sb-section-title">Navegação</div>
+        <button class="nav-btn" onclick="flyTo('qc01')">
+          <span class="dot" style="background:#C8A84B"></span>
+          <span>QC01 · Jardins + Versailles</span>
+          <span class="arrow">→</span>
+        </button>
+        <button class="nav-btn" onclick="flyTo('qc02')">
+          <span class="dot" style="background:#A07020"></span>
+          <span>QC02 · Reserva</span>
+          <span class="arrow">→</span>
+        </button>
+        <button class="nav-btn" onclick="flyTo('qc03')">
+          <span class="dot" style="background:#FFD060"></span>
+          <span>QC03 · Signature</span>
+          <span class="arrow">→</span>
+        </button>
+        <button class="nav-btn" onclick="flyTo('overview')">
+          <span class="dot" style="background:var(--text-muted)"></span>
+          <span>Visão Geral</span>
+          <span class="arrow">→</span>
+        </button>
+        <button class="nav-btn" onclick="flyTo('skyline')">
+          <span class="dot" style="background:var(--text-muted)"></span>
+          <span>Skyline · Progressão de Alturas</span>
+          <span class="arrow">→</span>
+        </button>
+      </div>
+
+      <!-- LAYER TOGGLES -->
+      <div class="sb-section">
+        <div class="sb-section-title">Camadas</div>
+        <label class="layer-toggle">
+          <input type="checkbox" checked onchange="toggleLayer('towers',this.checked)">
+          <span class="toggle-track"></span>
+          <span>Torres 3D</span>
+        </label>
+        <label class="layer-toggle">
+          <input type="checkbox" checked onchange="toggleLayer('quadras',this.checked)">
+          <span class="toggle-track"></span>
+          <span>Limites das Quadras</span>
+        </label>
+        <label class="layer-toggle">
+          <input type="checkbox" checked onchange="toggleLayer('macro',this.checked)">
+          <span class="toggle-track"></span>
+          <span>Perímetro AL'DORA City</span>
+        </label>
+        <label class="layer-toggle">
+          <input type="checkbox" checked onchange="toggleLayer('zones',this.checked)">
+          <span class="toggle-track"></span>
+          <span>Zonas de Influência</span>
+        </label>
+        <label class="layer-toggle">
+          <input type="checkbox" checked onchange="toggleLayer('park',this.checked)">
+          <span class="toggle-track"></span>
+          <span>Parque Central</span>
+        </label>
+        <label class="layer-toggle">
+          <input type="checkbox" checked onchange="toggleLayer('labels',this.checked)">
+          <span class="toggle-track"></span>
+          <span>Rótulos de Torres</span>
+        </label>
+        <label class="layer-toggle">
+          <input type="checkbox" checked onchange="toggleLayer('buildings',this.checked)">
+          <span class="toggle-track"></span>
+          <span>Prédios Existentes</span>
+        </label>
+      </div>
+
+      <!-- MAP STYLE -->
+      <div class="sb-section">
+        <div class="sb-section-title">Estilo do Mapa</div>
+        <div class="style-btns">
+          <button class="style-btn active" id="style-satellite" onclick="setMapStyle('satellite')">🛰 Satélite</button>
+          <button class="style-btn" id="style-dark" onclick="setMapStyle('dark')">🌙 Dark</button>
+          <button class="style-btn" id="style-streets" onclick="setMapStyle('streets')">🗺 Ruas</button>
+        </div>
+      </div>
+
+      <!-- TOWER LIST -->
+      <div class="sb-section">
+        <div class="sb-section-title">Torres do Masterplan</div>
+        <div id="tower-list"></div>
+      </div>
+    </div>
+
+    <div class="sb-footer">Cidade Jardim Urbanismo · 2026</div>
+  </aside>
+
+  <!-- MAP AREA -->
+  <div id="map-wrap">
+    <button id="sidebar-toggle" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+    <div class="map-gradient-top"></div>
+    <div id="compass">N ↑</div>
+    <div id="map"></div>
+    <div class="map-gradient-bottom"></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  AL'DORA City · Masterplan 3D · Mapbox GL JS
+//  Cidade Jardim Urbanismo · 2026
+// ═══════════════════════════════════════════════════════════
+
+mapboxgl.accessToken = 'pk.eyJ1IjoibHNjZWNpbGlvIiwiYSI6ImNtbXowaXJuZDAzMjMycm41YWp5Y2xwM3cifQ.NEBFt8fQIl3LoDidMyr9fg';
+
+const CENTER = [-48.3062, -18.9600];
+const INIT_ZOOM = 16.5;
+const INIT_PITCH = 58;
+const INIT_BEARING = -20;
+
+// ── Tower data ──────────────────────────────────────────
+const TOWERS = [
+  // QC01 — AL'DORA Jardins (A, B)
+  { id:'A', emp:"AL'DORA Jardins",   quadra:'QC01', floors:25, height:75, color:'#C8A84B', tipologia:'P1 / P2 · Studio + Compacto', vgv:25.8, lng:-48.30642, lat:-18.95700 },
+  { id:'B', emp:"AL'DORA Jardins",   quadra:'QC01', floors:25, height:75, color:'#C8A84B', tipologia:'P1 / P2 · Studio + Compacto', vgv:25.8, lng:-48.30608, lat:-18.95700 },
+  // QC01 — AL'DORA Versailles (C, D, E, F)
+  { id:'C', emp:"AL'DORA Versailles", quadra:'QC01', floors:28, height:84, color:'#B8921A', tipologia:'P2 / P3 · Compacto + Garden', vgv:31.2, lng:-48.30642, lat:-18.95780 },
+  { id:'D', emp:"AL'DORA Versailles", quadra:'QC01', floors:28, height:84, color:'#B8921A', tipologia:'P2 / P3 · Compacto + Garden', vgv:31.2, lng:-48.30608, lat:-18.95780 },
+  { id:'E', emp:"AL'DORA Versailles", quadra:'QC01', floors:28, height:84, color:'#B8921A', tipologia:'P2 / P3 · Compacto + Garden', vgv:31.2, lng:-48.30642, lat:-18.95860 },
+  { id:'F', emp:"AL'DORA Versailles", quadra:'QC01', floors:28, height:84, color:'#B8921A', tipologia:'P2 / P3 · Compacto + Garden', vgv:31.2, lng:-48.30608, lat:-18.95860 },
+  // QC02 — AL'DORA Reserva (G, H, I, J)
+  { id:'G', emp:"AL'DORA Reserva",   quadra:'QC02', floors:30, height:90, color:'#A07020', tipologia:'P3 · Garden Suite 68–85 m²', vgv:34.5, lng:-48.30630, lat:-18.95980 },
+  { id:'H', emp:"AL'DORA Reserva",   quadra:'QC02', floors:30, height:90, color:'#A07020', tipologia:'P3 · Garden Suite 68–85 m²', vgv:34.5, lng:-48.30590, lat:-18.95980 },
+  { id:'I', emp:"AL'DORA Reserva",   quadra:'QC02', floors:32, height:96, color:'#A07020', tipologia:'P3 · Garden Suite 68–85 m²', vgv:37.2, lng:-48.30630, lat:-18.96045 },
+  { id:'J', emp:"AL'DORA Reserva",   quadra:'QC02', floors:32, height:96, color:'#A07020', tipologia:'P3 · Garden Suite 68–85 m²', vgv:37.2, lng:-48.30590, lat:-18.96045 },
+  // QC03 — AL'DORA Signature (L, M, N, O)
+  { id:'L', emp:"AL'DORA Signature", quadra:'QC03', floors:35, height:105, color:'#FFD060', tipologia:'P4 / P5 · Alto Padrão + Cobertura', vgv:44.2, lng:-48.30628, lat:-18.96140 },
+  { id:'M', emp:"AL'DORA Signature", quadra:'QC03', floors:35, height:105, color:'#FFD060', tipologia:'P4 / P5 · Alto Padrão + Cobertura', vgv:44.2, lng:-48.30585, lat:-18.96140 },
+  { id:'N', emp:"AL'DORA Signature", quadra:'QC03', floors:38, height:114, color:'#FFD060', tipologia:'P4 / P5 · Alto Padrão + Cobertura', vgv:51.7, lng:-48.30628, lat:-18.96195 },
+  { id:'O', emp:"AL'DORA Signature", quadra:'QC03', floors:38, height:114, color:'#FFD060', tipologia:'P4 / P5 · Alto Padrão + Cobertura', vgv:51.7, lng:-48.30585, lat:-18.96195 },
+];
+
+// ── Quadra polygons ─────────────────────────────────────
+const QC01_COORDS = [[-48.30661248476868,-18.95637548103209],[-48.30661283296286,-18.95912750380069],[-48.30659420143432,-18.95910812448526],[-48.30658211769109,-18.9589564381425],[-48.30660548837058,-18.95888119381422],[-48.30662132436068,-18.95895747653577],[-48.30661754614533,-18.95903312038229],[-48.30663334695388,-18.95910916093079],[-48.30662857304971,-18.95920345864959],[-48.30662661013304,-18.95924123537784],[-48.30586672241777,-18.95916477945059],[-48.30599422069318,-18.95666063429275],[-48.30661248476868,-18.95637548103209]];
+const QC02_COORDS = [[-48.30649698590301,-18.96068399537968],[-48.30570204425496,-18.96080819354113],[-48.30580263702252,-18.9592948397472],[-48.3064822051777,-18.95938839506466],[-48.30649698590301,-18.96068399537968]];
+const QC03_COORDS = [[-48.30653455159076,-18.9622476389247],[-48.30564296247557,-18.96225907775669],[-48.30568865204588,-18.96113452087073],[-48.30648108701291,-18.9610109976692],[-48.30653455159076,-18.9622476389247]];
+
+const MACRO_COORDS = [[-48.30663152248352,-18.9563962855908],[-48.30675359935989,-18.96830603602463],[-48.30969133435216,-18.9792995868442],[-48.30213820992651,-18.98238476278312],[-48.29105253225089,-18.97512719755233],[-48.29350239742982,-18.97094466996406],[-48.29316698073505,-18.96704384149165],[-48.29270352459724,-18.96453196849883],[-48.29184122872005,-18.96324974106761],[-48.29117868836932,-18.96259133217615],[-48.2916916139812,-18.96101637217126],[-48.29269931482375,-18.96116718518692],[-48.29373496768546,-18.96545110721832],[-48.29403130834654,-18.96768902613709],[-48.30057601827118,-18.96765171465563],[-48.30090063395427,-18.965967217515],[-48.29906502897369,-18.96357639028897],[-48.29832625002222,-18.9625607042466],[-48.2981265299552,-18.9618217472342],[-48.30135903586346,-18.96193180185874],[-48.30565368852372,-18.96263857022372],[-48.30663152248352,-18.9563962855908]];
+
+// Park between QC01 and QC02
+const PARK_COORDS = [[-48.30665,-18.95920],[-48.30580,-18.95914],[-48.30572,-18.95942],[-48.30652,-18.95945],[-48.30665,-18.95920]];
+
+// ── Helper: generate circle polygon ─────────────────────
+function circleGeoJSON(center, radiusKm, steps) {
+  steps = steps || 80;
+  const coords = [];
+  for (let i = 0; i <= steps; i++) {
+    const a = (i / steps) * 2 * Math.PI;
+    coords.push([
+      center[0] + (radiusKm / (111.32 * Math.cos(center[1] * Math.PI / 180))) * Math.cos(a),
+      center[1] + (radiusKm / 110.574) * Math.sin(a)
+    ]);
+  }
+  return { type:'Feature', geometry:{ type:'Polygon', coordinates:[coords] }, properties:{} };
+}
+
+// ── Helper: tower footprint polygon ─────────────────────
+function towerFootprint(t) {
+  const hlng = 0.000095; // ~10m half-width (lng)
+  const hlat = 0.000068; // ~7.5m half-depth (lat) → 20m x 15m
+  return {
+    type: 'Feature',
+    properties: { id:t.id, emp:t.emp, quadra:t.quadra, floors:t.floors, height:t.height, color:t.color, tipologia:t.tipologia, vgv:t.vgv },
+    geometry: {
+      type: 'Polygon',
+      coordinates: [[
+        [t.lng - hlng, t.lat - hlat],
+        [t.lng + hlng, t.lat - hlat],
+        [t.lng + hlng, t.lat + hlat],
+        [t.lng - hlng, t.lat + hlat],
+        [t.lng - hlng, t.lat - hlat]
+      ]]
+    }
+  };
+}
+
+// ── Helper: tower label points ──────────────────────────
+function towerLabel(t) {
+  return {
+    type: 'Feature',
+    properties: { id:t.id, label:'Torre ' + t.id, height: t.height },
+    geometry: { type:'Point', coordinates:[t.lng, t.lat] }
+  };
+}
+
+// ── Populate tower list in sidebar ──────────────────────
+(function buildTowerList() {
+  const container = document.getElementById('tower-list');
+  let currentQuadra = '';
+  TOWERS.forEach(t => {
+    if (t.quadra !== currentQuadra) {
+      currentQuadra = t.quadra;
+      const qLabel = t.quadra === 'QC01' ? 'QC01 — Jardins + Versailles' : t.quadra === 'QC02' ? 'QC02 — Reserva' : 'QC03 — Signature';
+      const sep = document.createElement('div');
+      sep.style.cssText = 'font-size:9px;letter-spacing:2px;color:var(--gold);margin:12px 0 6px;text-transform:uppercase;font-weight:600;' + (t.quadra !== 'QC01' ? 'border-top:1px solid var(--border);padding-top:10px;' : '');
+      sep.textContent = qLabel;
+      container.appendChild(sep);
+    }
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:4px 0;font-size:11px;color:var(--text-dim);cursor:pointer;transition:color .15s;';
+    row.innerHTML = '<span style="width:6px;height:6px;border-radius:50%;background:' + t.color + ';flex-shrink:0"></span>' +
+      '<span style="font-weight:600;color:var(--text);min-width:14px">' + t.id + '</span>' +
+      '<span style="flex:1">' + t.floors + ' pav · ' + t.height + 'm</span>' +
+      '<span style="color:var(--gold);font-size:10px;font-weight:600">R$' + t.vgv + 'M</span>';
+    row.onmouseenter = function() { this.style.color = 'var(--text)'; };
+    row.onmouseleave = function() { this.style.color = 'var(--text-dim)'; };
+    row.onclick = function() { flyToTower(t); };
+    container.appendChild(row);
+  });
+})();
+
+// ── Loading animation ───────────────────────────────────
+setTimeout(function() { document.getElementById('loader-fill').style.width = '100%'; }, 100);
+setTimeout(function() { document.getElementById('loader').classList.add('done'); }, 2600);
+
+// ═══ MAP INITIALIZATION ═══════════════════════════════
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/satellite-streets-v12',
+  center: CENTER,
+  zoom: 14,
+  pitch: 0,
+  bearing: 0,
+  antialias: true,
+  attributionControl: true
+});
+
+map.addControl(new mapboxgl.NavigationControl({ showCompass: true, showZoom: true, visualizePitch: true }), 'top-right');
+map.addControl(new mapboxgl.ScaleControl({ maxWidth: 120, unit: 'metric' }), 'bottom-right');
+
+// Track current hover
+let hoveredTowerId = null;
+
+// ═══ MAP LOAD ═════════════════════════════════════════
+map.on('load', function() {
+
+  // ── 3D Terrain ──
+  map.addSource('mapbox-dem', { type:'raster-dem', url:'mapbox://mapbox.mapbox-terrain-dem-v1', tileSize:512, maxzoom:14 });
+  map.setTerrain({ source:'mapbox-dem', exaggeration:1.3 });
+
+  // ── Atmosphere ──
+  map.setFog({
+    range: [0.5, 10],
+    color: '#12182a',
+    'high-color': '#0a0d14',
+    'horizon-blend': 0.15,
+    'space-color': '#060810',
+    'star-intensity': 0.3
+  });
+
+  // ── Zone of influence circles ──
+  var ziColors = ['rgba(200,168,75,','rgba(160,112,32,','rgba(255,208,96,'];
+  var ziOpacity = [0.22, 0.15, 0.10];
+  var ziLabels = ['1 km','2 km','3 km'];
+  [1, 2, 3].forEach(function(r, i) {
+    var srcId = 'zi-' + r;
+    map.addSource(srcId, { type:'geojson', data:{ type:'FeatureCollection', features:[circleGeoJSON(CENTER, r)] } });
+    map.addLayer({ id:srcId+'-fill', type:'fill', source:srcId, paint:{ 'fill-color': ziColors[i]+'0.03)', 'fill-opacity':1 } });
+    map.addLayer({ id:srcId+'-line', type:'line', source:srcId, paint:{ 'line-color': ziColors[i]+ziOpacity[i]+')', 'line-width':1.5, 'line-dasharray':[6,4] } });
+  });
+
+  // ── Macro boundary ──
+  map.addSource('macro', { type:'geojson', data:{ type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'Polygon', coordinates:[MACRO_COORDS] }, properties:{} }] } });
+  map.addLayer({ id:'macro-fill', type:'fill', source:'macro', paint:{ 'fill-color':'rgba(200,168,75,0.04)', 'fill-opacity':1 } });
+  map.addLayer({ id:'macro-line', type:'line', source:'macro', paint:{ 'line-color':'rgba(200,168,75,0.25)', 'line-width':2, 'line-dasharray':[8,6] } });
+
+  // Macro label
+  map.addSource('macro-label', { type:'geojson', data:{ type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'Point', coordinates:[-48.2985, -18.9720] }, properties:{ label:"AL'DORA City · Perímetro" } }] } });
+  map.addLayer({ id:'macro-label-layer', type:'symbol', source:'macro-label', layout:{ 'text-field':['get','label'], 'text-size':12, 'text-font':['DIN Pro Medium','Arial Unicode MS Regular'], 'text-allow-overlap':true }, paint:{ 'text-color':'rgba(200,168,75,0.4)', 'text-halo-color':'rgba(10,13,20,0.8)', 'text-halo-width':1 } });
+
+  // ── Quadra polygons ──
+  var quadras = [
+    { id:'qc01', coords:QC01_COORDS, fill:'rgba(200,168,75,0.18)', line:'#C8A84B', label:'QC01 · Jardins + Versailles', labelPos:[-48.30625,-18.95770] },
+    { id:'qc02', coords:QC02_COORDS, fill:'rgba(160,112,32,0.18)', line:'#A07020', label:'QC02 · Reserva', labelPos:[-48.30610,-18.96010] },
+    { id:'qc03', coords:QC03_COORDS, fill:'rgba(255,208,96,0.12)', line:'#FFD060', label:'QC03 · Signature', labelPos:[-48.30608,-18.96168] }
+  ];
+
+  quadras.forEach(function(q) {
+    map.addSource(q.id, { type:'geojson', data:{ type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'Polygon', coordinates:[q.coords] }, properties:{ name:q.label } }] } });
+    map.addLayer({ id:q.id+'-fill', type:'fill', source:q.id, paint:{ 'fill-color':q.fill, 'fill-opacity':0.9 } });
+    map.addLayer({ id:q.id+'-line', type:'line', source:q.id, paint:{ 'line-color':q.line, 'line-width':2, 'line-dasharray':[5,3], 'line-opacity':0.8 } });
+
+    // Quadra label
+    map.addSource(q.id+'-lbl', { type:'geojson', data:{ type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'Point', coordinates:q.labelPos }, properties:{ label:q.label } }] } });
+    map.addLayer({ id:q.id+'-lbl-layer', type:'symbol', source:q.id+'-lbl', layout:{ 'text-field':['get','label'], 'text-size':10, 'text-font':['DIN Pro Bold','Arial Unicode MS Bold'], 'text-allow-overlap':true, 'text-letter-spacing':0.08 }, paint:{ 'text-color':q.line, 'text-halo-color':'rgba(10,13,20,0.85)', 'text-halo-width':1.5 } });
+  });
+
+  // ── Park area ──
+  map.addSource('park', { type:'geojson', data:{ type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'Polygon', coordinates:[PARK_COORDS] }, properties:{} }] } });
+  map.addLayer({ id:'park-fill', type:'fill', source:'park', paint:{ 'fill-color':'rgba(58,122,69,0.35)', 'fill-opacity':0.8 } });
+  map.addLayer({ id:'park-line', type:'line', source:'park', paint:{ 'line-color':'#3a7a45', 'line-width':1.5, 'line-dasharray':[4,3] } });
+
+  // Park label
+  map.addSource('park-lbl', { type:'geojson', data:{ type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'Point', coordinates:[-48.30618,-18.95930] }, properties:{ label:'Parque Central AL\'DORA' } }] } });
+  map.addLayer({ id:'park-lbl-layer', type:'symbol', source:'park-lbl', layout:{ 'text-field':['get','label'], 'text-size':9, 'text-font':['DIN Pro Medium','Arial Unicode MS Regular'], 'text-allow-overlap':true, 'text-letter-spacing':0.05 }, paint:{ 'text-color':'#5eac6a', 'text-halo-color':'rgba(10,13,20,0.8)', 'text-halo-width':1 } });
+
+  // ── Tower extrusions ──
+  var towerFeatures = TOWERS.map(towerFootprint);
+  map.addSource('towers', { type:'geojson', data:{ type:'FeatureCollection', features:towerFeatures }, generateId: true });
+
+  map.addLayer({
+    id: 'towers-extrusion',
+    type: 'fill-extrusion',
+    source: 'towers',
+    paint: {
+      'fill-extrusion-color': [
+        'case',
+        ['boolean', ['feature-state', 'hover'], false],
+        '#FFE899',
+        ['get', 'color']
+      ],
+      'fill-extrusion-height': ['get', 'height'],
+      'fill-extrusion-base': 0,
+      'fill-extrusion-opacity': [
+        'case',
+        ['boolean', ['feature-state', 'hover'], false],
+        0.95,
+        0.78
+      ],
+      'fill-extrusion-vertical-gradient': true
+    }
+  });
+
+  // ── Tower glow (base ring) ──
+  map.addLayer({
+    id: 'towers-glow',
+    type: 'fill',
+    source: 'towers',
+    paint: {
+      'fill-color': [
+        'case',
+        ['boolean', ['feature-state', 'hover'], false],
+        'rgba(255,232,153,0.25)',
+        'transparent'
+      ]
+    }
+  });
+
+  // ── Tower labels ──
+  var labelFeatures = TOWERS.map(towerLabel);
+  map.addSource('tower-labels', { type:'geojson', data:{ type:'FeatureCollection', features:labelFeatures } });
+  map.addLayer({
+    id: 'tower-labels-layer',
+    type: 'symbol',
+    source: 'tower-labels',
+    layout: {
+      'text-field': ['get', 'label'],
+      'text-size': 11,
+      'text-font': ['DIN Pro Bold', 'Arial Unicode MS Bold'],
+      'text-offset': [0, -1.5],
+      'text-anchor': 'bottom',
+      'text-allow-overlap': true,
+      'symbol-sort-key': ['*', -1, ['get', 'height']]
+    },
+    paint: {
+      'text-color': '#f0ece4',
+      'text-halo-color': 'rgba(10,13,20,0.9)',
+      'text-halo-width': 2
+    }
+  });
+
+  // ── Existing buildings layer ──
+  var layers = map.getStyle().layers;
+  var labelLayerId;
+  for (var i = 0; i < layers.length; i++) {
+    if (layers[i].type === 'symbol' && layers[i].layout && layers[i].layout['text-field']) {
+      labelLayerId = layers[i].id;
+      break;
+    }
+  }
+  map.addLayer({
+    id: '3d-buildings',
+    source: 'composite',
+    'source-layer': 'building',
+    filter: ['==', 'extrude', 'true'],
+    type: 'fill-extrusion',
+    minzoom: 13,
+    paint: {
+      'fill-extrusion-color': '#1a2a3a',
+      'fill-extrusion-height': ['interpolate', ['linear'], ['zoom'], 13, 0, 13.5, ['get', 'height']],
+      'fill-extrusion-base': ['interpolate', ['linear'], ['zoom'], 13, 0, 13.5, ['get', 'min_height']],
+      'fill-extrusion-opacity': 0.55
+    }
+  }, labelLayerId);
+
+  // ══ INTERACTIONS ══════════════════════════════════════
+
+  // Tower hover
+  map.on('mousemove', 'towers-extrusion', function(e) {
+    if (e.features.length > 0) {
+      if (hoveredTowerId !== null) {
+        map.setFeatureState({ source:'towers', id:hoveredTowerId }, { hover:false });
+      }
+      hoveredTowerId = e.features[0].id;
+      map.setFeatureState({ source:'towers', id:hoveredTowerId }, { hover:true });
+      map.getCanvas().style.cursor = 'pointer';
+    }
+  });
+  map.on('mouseleave', 'towers-extrusion', function() {
+    if (hoveredTowerId !== null) {
+      map.setFeatureState({ source:'towers', id:hoveredTowerId }, { hover:false });
+      hoveredTowerId = null;
+    }
+    map.getCanvas().style.cursor = '';
+  });
+
+  // Tower click popup
+  map.on('click', 'towers-extrusion', function(e) {
+    if (!e.features.length) return;
+    e.originalEvent.stopPropagation();
+    var p = e.features[0].properties;
+    var html = '<div class="popup-header">' +
+      '<div class="popup-emp">' + p.emp + '</div>' +
+      '<div class="popup-title">Torre ' + p.id + '</div>' +
+      '</div>' +
+      '<div class="popup-body">' +
+      '<div class="popup-row"><span class="label">Quadra</span><span class="value">' + p.quadra + '</span></div>' +
+      '<div class="popup-row"><span class="label">Pavimentos</span><span class="value">' + p.floors + ' andares</span></div>' +
+      '<div class="popup-row"><span class="label">Altura</span><span class="value">' + p.height + ' metros</span></div>' +
+      '<div class="popup-row"><span class="label">Tipologia</span><span class="value">' + p.tipologia + '</span></div>' +
+      '<div class="popup-vgv"><span class="label">VGV Estimado</span><span class="value">R$ ' + p.vgv + 'M</span></div>' +
+      '</div>';
+    new mapboxgl.Popup({ closeButton:true, offset:15, maxWidth:'280px' })
+      .setLngLat(e.lngLat)
+      .setHTML(html)
+      .addTo(map);
+  });
+
+  // Quadra click popup
+  ['qc01-fill','qc02-fill','qc03-fill'].forEach(function(layerId) {
+    map.on('click', layerId, function(e) {
+      var qId = layerId.replace('-fill','');
+      var qData = qId === 'qc01' ? { name:"QC01 — AL'DORA Jardins + Versailles", area:'20.598 m²', torres:'A · B · C · D · E · F (6)', privativa:'49.908 m²', construida:'81.816 m²', vgv:'R$ 176,4M', fase:'Fase 1 — Gate G1/G2' } :
+                  qId === 'qc02' ? { name:"QC02 — AL'DORA Reserva", area:'11.953 m²', torres:'G · H · I · J (4)', privativa:'43.033 m²', construida:'70.546 m²', vgv:'R$ 143,4M', fase:'Fase 2 — Gate G3' } :
+                                   { name:"QC03 — AL'DORA Signature", area:'10.232 m²', torres:'L · M · N · O (4)', privativa:'32.743 m²', construida:'53.678 m²', vgv:'R$ 191,8M', fase:'Fase 3 — Gate G4 · Premium' };
+      var html = '<div class="popup-header"><div class="popup-emp">Quadra</div><div class="popup-title">' + qData.name + '</div></div>' +
+        '<div class="popup-body">' +
+        '<div class="popup-row"><span class="label">Área terreno</span><span class="value">' + qData.area + '</span></div>' +
+        '<div class="popup-row"><span class="label">Torres</span><span class="value">' + qData.torres + '</span></div>' +
+        '<div class="popup-row"><span class="label">Área privativa</span><span class="value">' + qData.privativa + '</span></div>' +
+        '<div class="popup-row"><span class="label">Área construída</span><span class="value">' + qData.construida + '</span></div>' +
+        '<div class="popup-row"><span class="label">Fase</span><span class="value">' + qData.fase + '</span></div>' +
+        '<div class="popup-vgv"><span class="label">VGV Estimado</span><span class="value">' + qData.vgv + '</span></div>' +
+        '</div>';
+      new mapboxgl.Popup({ closeButton:true, offset:10, maxWidth:'300px' })
+        .setLngLat(e.lngLat)
+        .setHTML(html)
+        .addTo(map);
+    });
+    map.on('mouseenter', layerId, function() { map.getCanvas().style.cursor = 'pointer'; });
+    map.on('mouseleave', layerId, function() { map.getCanvas().style.cursor = ''; });
+  });
+
+  // ── Fly-in animation ──
+  setTimeout(function() {
+    map.flyTo({
+      center: CENTER,
+      zoom: INIT_ZOOM,
+      pitch: INIT_PITCH,
+      bearing: INIT_BEARING,
+      duration: 3200,
+      essential: true,
+      curve: 1.4
+    });
+  }, 2800);
+
+  // ── ZI labels ──
+  [1,2,3].forEach(function(r) {
+    var labelLng = CENTER[0] + (r / (111.32 * Math.cos(CENTER[1] * Math.PI / 180)));
+    map.addSource('zi-label-'+r, { type:'geojson', data:{ type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'Point', coordinates:[labelLng, CENTER[1]] }, properties:{ label:r+' km' } }] } });
+    map.addLayer({ id:'zi-label-'+r, type:'symbol', source:'zi-label-'+r, layout:{ 'text-field':['get','label'], 'text-size':10, 'text-font':['DIN Pro Medium','Arial Unicode MS Regular'], 'text-allow-overlap':true }, paint:{ 'text-color':'rgba(200,168,75,0.35)', 'text-halo-color':'rgba(10,13,20,0.7)', 'text-halo-width':1 } });
+  });
+});
+
+// ═══ NAVIGATION ═══════════════════════════════════════
+var flyTargets = {
+  qc01: { center:[-48.30625,-18.95775], zoom:17.5, pitch:60, bearing:-15, duration:2500 },
+  qc02: { center:[-48.30610,-18.96005], zoom:17.5, pitch:60, bearing:-10, duration:2500 },
+  qc03: { center:[-48.30608,-18.96165], zoom:17.5, pitch:60, bearing: -5, duration:2500 },
+  overview: { center:[-48.3020,-18.9680], zoom:14, pitch:45, bearing:-20, duration:3000 },
+  skyline: { center:[-48.3085,-18.9595], zoom:16.2, pitch:72, bearing:85, duration:3000 }
+};
+
+function flyTo(target) {
+  var t = flyTargets[target];
+  if (!t) return;
+  map.flyTo({ center:t.center, zoom:t.zoom, pitch:t.pitch, bearing:t.bearing, duration:t.duration, essential:true, curve:1.3 });
+  if (window.innerWidth < 769) toggleSidebar(true);
+}
+
+function flyToTower(t) {
+  map.flyTo({ center:[t.lng, t.lat], zoom:18.5, pitch:65, bearing:10, duration:2000, essential:true });
+  if (window.innerWidth < 769) toggleSidebar(true);
+}
+
+// ═══ LAYER TOGGLES ════════════════════════════════════
+var layerGroups = {
+  towers: ['towers-extrusion','towers-glow'],
+  quadras: ['qc01-fill','qc01-line','qc02-fill','qc02-line','qc03-fill','qc03-line','qc01-lbl-layer','qc02-lbl-layer','qc03-lbl-layer'],
+  macro: ['macro-fill','macro-line','macro-label-layer'],
+  zones: ['zi-1-fill','zi-1-line','zi-2-fill','zi-2-line','zi-3-fill','zi-3-line','zi-label-1','zi-label-2','zi-label-3'],
+  park: ['park-fill','park-line','park-lbl-layer'],
+  labels: ['tower-labels-layer'],
+  buildings: ['3d-buildings']
+};
+
+function toggleLayer(group, visible) {
+  var ids = layerGroups[group];
+  if (!ids) return;
+  ids.forEach(function(id) {
+    if (map.getLayer(id)) {
+      map.setLayoutProperty(id, 'visibility', visible ? 'visible' : 'none');
+    }
+  });
+}
+
+// ═══ MAP STYLE SWITCHER ═══════════════════════════════
+var mapStyles = {
+  satellite: 'mapbox://styles/mapbox/satellite-streets-v12',
+  dark: 'mapbox://styles/mapbox/dark-v11',
+  streets: 'mapbox://styles/mapbox/streets-v12'
+};
+var currentMapStyle = 'satellite';
+
+function setMapStyle(name) {
+  if (name === currentMapStyle) return;
+  currentMapStyle = name;
+  document.querySelectorAll('.style-btn').forEach(function(b) { b.classList.remove('active'); });
+  var btn = document.getElementById('style-' + name);
+  if (btn) btn.classList.add('active');
+  map.setStyle(mapStyles[name]);
+  map.once('style.load', rebuildLayers);
+}
+
+function rebuildLayers() {
+  // Re-add all custom sources and layers after style change
+  map.addSource('mapbox-dem', { type:'raster-dem', url:'mapbox://mapbox.mapbox-terrain-dem-v1', tileSize:512, maxzoom:14 });
+  map.setTerrain({ source:'mapbox-dem', exaggeration:1.3 });
+
+  if (currentMapStyle === 'satellite') {
+    map.setFog({ range:[0.5,10], color:'#12182a', 'high-color':'#0a0d14', 'horizon-blend':0.15, 'space-color':'#060810', 'star-intensity':0.3 });
+  } else if (currentMapStyle === 'dark') {
+    map.setFog({ range:[0.8,12], color:'#111', 'high-color':'#000', 'horizon-blend':0.1 });
+  }
+
+  // ZI circles
+  var ziColors = ['rgba(200,168,75,','rgba(160,112,32,','rgba(255,208,96,'];
+  var ziOpacity = [0.22,0.15,0.10];
+  [1,2,3].forEach(function(r, i) {
+    var srcId = 'zi-' + r;
+    map.addSource(srcId, { type:'geojson', data:{ type:'FeatureCollection', features:[circleGeoJSON(CENTER, r)] } });
+    map.addLayer({ id:srcId+'-fill', type:'fill', source:srcId, paint:{ 'fill-color': ziColors[i]+'0.03)', 'fill-opacity':1 } });
+    map.addLayer({ id:srcId+'-line', type:'line', source:srcId, paint:{ 'line-color': ziColors[i]+ziOpacity[i]+')', 'line-width':1.5, 'line-dasharray':[6,4] } });
+    var labelLng = CENTER[0] + (r / (111.32 * Math.cos(CENTER[1] * Math.PI / 180)));
+    map.addSource('zi-label-'+r, { type:'geojson', data:{ type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'Point', coordinates:[labelLng, CENTER[1]] }, properties:{ label:r+' km' } }] } });
+    map.addLayer({ id:'zi-label-'+r, type:'symbol', source:'zi-label-'+r, layout:{ 'text-field':['get','label'], 'text-size':10, 'text-font':['DIN Pro Medium','Arial Unicode MS Regular'], 'text-allow-overlap':true }, paint:{ 'text-color':'rgba(200,168,75,0.35)', 'text-halo-color':'rgba(10,13,20,0.7)', 'text-halo-width':1 } });
+  });
+
+  // Macro
+  map.addSource('macro', { type:'geojson', data:{ type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'Polygon', coordinates:[MACRO_COORDS] }, properties:{} }] } });
+  map.addLayer({ id:'macro-fill', type:'fill', source:'macro', paint:{ 'fill-color':'rgba(200,168,75,0.04)', 'fill-opacity':1 } });
+  map.addLayer({ id:'macro-line', type:'line', source:'macro', paint:{ 'line-color':'rgba(200,168,75,0.25)', 'line-width':2, 'line-dasharray':[8,6] } });
+  map.addSource('macro-label', { type:'geojson', data:{ type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'Point', coordinates:[-48.2985,-18.9720] }, properties:{ label:"AL'DORA City · Perímetro" } }] } });
+  map.addLayer({ id:'macro-label-layer', type:'symbol', source:'macro-label', layout:{ 'text-field':['get','label'], 'text-size':12, 'text-font':['DIN Pro Medium','Arial Unicode MS Regular'], 'text-allow-overlap':true }, paint:{ 'text-color':'rgba(200,168,75,0.4)', 'text-halo-color':'rgba(10,13,20,0.8)', 'text-halo-width':1 } });
+
+  // Quadras
+  var quadras = [
+    { id:'qc01', coords:QC01_COORDS, fill:'rgba(200,168,75,0.18)', line:'#C8A84B', label:'QC01 · Jardins + Versailles', labelPos:[-48.30625,-18.95770] },
+    { id:'qc02', coords:QC02_COORDS, fill:'rgba(160,112,32,0.18)', line:'#A07020', label:'QC02 · Reserva', labelPos:[-48.30610,-18.96010] },
+    { id:'qc03', coords:QC03_COORDS, fill:'rgba(255,208,96,0.12)', line:'#FFD060', label:'QC03 · Signature', labelPos:[-48.30608,-18.96168] }
+  ];
+  quadras.forEach(function(q) {
+    map.addSource(q.id, { type:'geojson', data:{ type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'Polygon', coordinates:[q.coords] }, properties:{ name:q.label } }] } });
+    map.addLayer({ id:q.id+'-fill', type:'fill', source:q.id, paint:{ 'fill-color':q.fill, 'fill-opacity':0.9 } });
+    map.addLayer({ id:q.id+'-line', type:'line', source:q.id, paint:{ 'line-color':q.line, 'line-width':2, 'line-dasharray':[5,3], 'line-opacity':0.8 } });
+    map.addSource(q.id+'-lbl', { type:'geojson', data:{ type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'Point', coordinates:q.labelPos }, properties:{ label:q.label } }] } });
+    map.addLayer({ id:q.id+'-lbl-layer', type:'symbol', source:q.id+'-lbl', layout:{ 'text-field':['get','label'], 'text-size':10, 'text-font':['DIN Pro Bold','Arial Unicode MS Bold'], 'text-allow-overlap':true, 'text-letter-spacing':0.08 }, paint:{ 'text-color':q.line, 'text-halo-color':'rgba(10,13,20,0.85)', 'text-halo-width':1.5 } });
+  });
+
+  // Park
+  map.addSource('park', { type:'geojson', data:{ type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'Polygon', coordinates:[PARK_COORDS] }, properties:{} }] } });
+  map.addLayer({ id:'park-fill', type:'fill', source:'park', paint:{ 'fill-color':'rgba(58,122,69,0.35)', 'fill-opacity':0.8 } });
+  map.addLayer({ id:'park-line', type:'line', source:'park', paint:{ 'line-color':'#3a7a45', 'line-width':1.5, 'line-dasharray':[4,3] } });
+  map.addSource('park-lbl', { type:'geojson', data:{ type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'Point', coordinates:[-48.30618,-18.95930] }, properties:{ label:'Parque Central AL\'DORA' } }] } });
+  map.addLayer({ id:'park-lbl-layer', type:'symbol', source:'park-lbl', layout:{ 'text-field':['get','label'], 'text-size':9, 'text-font':['DIN Pro Medium','Arial Unicode MS Regular'], 'text-allow-overlap':true }, paint:{ 'text-color':'#5eac6a', 'text-halo-color':'rgba(10,13,20,0.8)', 'text-halo-width':1 } });
+
+  // Towers
+  var towerFeatures = TOWERS.map(towerFootprint);
+  map.addSource('towers', { type:'geojson', data:{ type:'FeatureCollection', features:towerFeatures }, generateId:true });
+  map.addLayer({ id:'towers-extrusion', type:'fill-extrusion', source:'towers', paint:{ 'fill-extrusion-color':['case',['boolean',['feature-state','hover'],false],'#FFE899',['get','color']], 'fill-extrusion-height':['get','height'], 'fill-extrusion-base':0, 'fill-extrusion-opacity':['case',['boolean',['feature-state','hover'],false],0.95,0.78], 'fill-extrusion-vertical-gradient':true } });
+  map.addLayer({ id:'towers-glow', type:'fill', source:'towers', paint:{ 'fill-color':['case',['boolean',['feature-state','hover'],false],'rgba(255,232,153,0.25)','transparent'] } });
+
+  // Tower labels
+  var labelFeatures = TOWERS.map(towerLabel);
+  map.addSource('tower-labels', { type:'geojson', data:{ type:'FeatureCollection', features:labelFeatures } });
+  map.addLayer({ id:'tower-labels-layer', type:'symbol', source:'tower-labels', layout:{ 'text-field':['get','label'], 'text-size':11, 'text-font':['DIN Pro Bold','Arial Unicode MS Bold'], 'text-offset':[0,-1.5], 'text-anchor':'bottom', 'text-allow-overlap':true }, paint:{ 'text-color':'#f0ece4', 'text-halo-color':'rgba(10,13,20,0.9)', 'text-halo-width':2 } });
+
+  // 3D buildings
+  var layers = map.getStyle().layers;
+  var labelLayerId;
+  for (var i = 0; i < layers.length; i++) {
+    if (layers[i].type === 'symbol' && layers[i].layout && layers[i].layout['text-field']) { labelLayerId = layers[i].id; break; }
+  }
+  map.addLayer({ id:'3d-buildings', source:'composite', 'source-layer':'building', filter:['==','extrude','true'], type:'fill-extrusion', minzoom:13, paint:{ 'fill-extrusion-color':'#1a2a3a', 'fill-extrusion-height':['interpolate',['linear'],['zoom'],13,0,13.5,['get','height']], 'fill-extrusion-base':['interpolate',['linear'],['zoom'],13,0,13.5,['get','min_height']], 'fill-extrusion-opacity':0.55 } }, labelLayerId);
+
+  // Re-bind hover
+  hoveredTowerId = null;
+  map.on('mousemove', 'towers-extrusion', function(e) {
+    if (e.features.length > 0) {
+      if (hoveredTowerId !== null) map.setFeatureState({ source:'towers', id:hoveredTowerId }, { hover:false });
+      hoveredTowerId = e.features[0].id;
+      map.setFeatureState({ source:'towers', id:hoveredTowerId }, { hover:true });
+      map.getCanvas().style.cursor = 'pointer';
+    }
+  });
+  map.on('mouseleave', 'towers-extrusion', function() {
+    if (hoveredTowerId !== null) { map.setFeatureState({ source:'towers', id:hoveredTowerId }, { hover:false }); hoveredTowerId = null; }
+    map.getCanvas().style.cursor = '';
+  });
+  map.on('click', 'towers-extrusion', function(e) {
+    if (!e.features.length) return;
+    e.originalEvent.stopPropagation();
+    var p = e.features[0].properties;
+    var html = '<div class="popup-header"><div class="popup-emp">' + p.emp + '</div><div class="popup-title">Torre ' + p.id + '</div></div>' +
+      '<div class="popup-body">' +
+      '<div class="popup-row"><span class="label">Quadra</span><span class="value">' + p.quadra + '</span></div>' +
+      '<div class="popup-row"><span class="label">Pavimentos</span><span class="value">' + p.floors + ' andares</span></div>' +
+      '<div class="popup-row"><span class="label">Altura</span><span class="value">' + p.height + ' metros</span></div>' +
+      '<div class="popup-row"><span class="label">Tipologia</span><span class="value">' + p.tipologia + '</span></div>' +
+      '<div class="popup-vgv"><span class="label">VGV Estimado</span><span class="value">R$ ' + p.vgv + 'M</span></div></div>';
+    new mapboxgl.Popup({ closeButton:true, offset:15, maxWidth:'280px' }).setLngLat(e.lngLat).setHTML(html).addTo(map);
+  });
+
+  // Restore toggle states from checkboxes
+  document.querySelectorAll('.layer-toggle input').forEach(function(cb) {
+    var group = cb.getAttribute('onchange').match(/'(\w+)'/);
+    if (group) toggleLayer(group[1], cb.checked);
+  });
+}
+
+// ═══ SIDEBAR TOGGLE ═══════════════════════════════════
+var sidebarOpen = true;
+function toggleSidebar(forceClose) {
+  if (forceClose === true) sidebarOpen = true;
+  sidebarOpen = !sidebarOpen;
+  document.getElementById('sidebar').classList.toggle('collapsed', !sidebarOpen);
+  setTimeout(function() { map.resize(); }, 400);
+}
+
+// ── Initial responsive check ──
+if (window.innerWidth < 769) {
+  document.getElementById('sidebar').classList.add('collapsed');
+  sidebarOpen = false;
+}
+
+// ── Compass bearing update ──
+map.on('rotate', function() {
+  var b = map.getBearing();
+  var compassEl = document.getElementById('compass');
+  if (compassEl) {
+    var dir = b < 0 ? b + 360 : b;
+    compassEl.textContent = 'N ' + Math.round(dir) + '°';
+  }
+});
+
+// ── Keyboard shortcuts ──
+document.addEventListener('keydown', function(e) {
+  if (e.key === '1') flyTo('qc01');
+  else if (e.key === '2') flyTo('qc02');
+  else if (e.key === '3') flyTo('qc03');
+  else if (e.key === '0') flyTo('overview');
+  else if (e.key === 's' || e.key === 'S') flyTo('skyline');
+  else if (e.key === 'Escape') toggleSidebar();
+});
+</script>
+</body>
+</html>
