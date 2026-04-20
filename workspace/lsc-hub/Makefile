@@ -8,6 +8,6 @@ deploy:
 	scp Makefile server.py hub.html requirements.txt $(REMOTE):$(APP_DIR)/
 	scp $(DOC_FILES) $(REMOTE):$(APP_DIR)/docs/
 	scp $(PROCESS_FILES) $(REMOTE):$(APP_DIR)/data/
-	ssh $(REMOTE) "cd $(APP_DIR) && pip3 install -r requirements.txt -q && systemctl restart lsc-hub"
+	ssh $(REMOTE) "cd $(APP_DIR) && python3 -m pip install --break-system-packages -r requirements.txt -q && systemctl restart lsc-hub"
 
 .PHONY: deploy
